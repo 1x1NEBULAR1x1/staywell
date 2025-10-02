@@ -1,0 +1,15 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.sidebar {
+  width: 250px;
+  min-height: 100lvh;
+  background-color: $background-main;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $spacing-xl $spacing-lg;
+  }
+}

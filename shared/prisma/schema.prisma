@@ -1,0 +1,439 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/database"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  email          String  @unique
+  password_hash  String
+  image          String?
+  first_name     String?
+  last_name      String?
+  phone_number   String?
+  is_active      Boolean @default(true)
+  email_verified Boolean @default(false)
+  phone_verified Boolean @default(false)
+  role           Role    @default(USER)
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  reservations     Reservation[]
+  events           Event[]
+  bookings         Booking[]
+  transactions     Transaction[]
+  card_details     CardDetail[]
+  transfer_details TransferDetail[]
+  reviews          Review[]
+
+  @@map("users")
+}
+
+model Apartment {
+  id String @id @default(uuid())
+
+  image           String?
+  name            String?
+  description     String?
+  rules           String?
+  number          Int           @unique
+  floor           Int
+  rooms_count     Int
+  max_capacity    Int?
+  is_available    Boolean       @default(true)
+  is_smoking      Boolean       @default(false)
+  is_pet_friendly Boolean       @default(false)
+  deposit         Float         @default(0)
+  type            ApartmentType
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  images              ApartmentImage[]
+  apartment_beds      ApartmentBed[]
+  apartment_amenities ApartmentAmenity[]
+  reservations        Reservation[]
+  booking_variants    BookingVariant[]
+  reviews             Review[]
+
+  @@index([id])
+  @@index([number])
+  @@map("apartments")
+}
+
+enum ApartmentType {
+  BUDGET
+  STANDARD
+  EXCLUSIVE
+  SUPERIOR
+  LUXURY
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  user_id      String
+  apartment_id String?
+  booking_id   String?
+  rating       Int
+  comment      String?
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  user      User       @relation(fields: [user_id], references: [id])
+  apartment Apartment? @relation(fields: [apartment_id], references: [id])
+  booking   Booking?   @relation(fields: [booking_id], references: [id])
+
+  @@index([user_id])
+  @@index([apartment_id])
+  @@map("reviews")
+}
+
+model Amenity {
+  id String @id @default(uuid())
+
+  name        String  @unique
+  image       String
+  description String?
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  apartment_amenities ApartmentAmenity[]
+
+  @@map("amenities")
+}
+
+model ApartmentAmenity {
+  id String @id @default(uuid())
+
+  amenity_id   String
+  apartment_id String
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  apartment Apartment @relation(fields: [apartment_id], references: [id])
+  amenity   Amenity   @relation(fields: [amenity_id], references: [id])
+
+  @@unique([apartment_id, amenity_id])
+  @@map("apartment_amenities")
+}
+
+model ApartmentImage {
+  id String @id @default(uuid())
+
+  image        String
+  name         String?
+  description  String?
+  apartment_id String
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  apartment Apartment @relation(fields: [apartment_id], references: [id])
+
+  @@map("apartment_images")
+}
+
+model BedType {
+  id String @id @default(uuid())
+
+  name  String @unique
+  image String
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  apartment_beds ApartmentBed[]
+
+  @@map("bed_types")
+}
+
+model ApartmentBed {
+  id String @id @default(uuid())
+
+  apartment_id String
+  bed_type_id  String
+  count        Int
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  apartment Apartment @relation(fields: [apartment_id], references: [id])
+  bed_type  BedType   @relation(fields: [bed_type_id], references: [id])
+
+  @@unique([apartment_id, bed_type_id])
+  @@map("apartment_beds")
+}
+
+model BookingVariant {
+  id String @id @default(uuid())
+
+  apartment_id String
+  price        Float
+  capacity     Int
+  is_available Boolean @default(true)
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  apartment Apartment @relation(fields: [apartment_id], references: [id])
+  bookings  Booking[]
+
+  @@map("booking_variants")
+}
+
+model Reservation {
+  id String @id @default(uuid())
+
+  user_id      String
+  apartment_id String
+
+  start DateTime
+  end   DateTime
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  apartment Apartment @relation(fields: [apartment_id], references: [id])
+  user      User      @relation(fields: [user_id], references: [id])
+
+  @@index([apartment_id, start, end])
+  @@index([user_id])
+  @@map("reservations")
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Booking {
+  id String @id @default(uuid())
+
+  user_id            String
+  booking_variant_id String
+  transaction_id     String        @unique
+  status             BookingStatus @default(PENDING)
+
+  start DateTime
+  end   DateTime
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  booking_variant            BookingVariant            @relation(fields: [booking_variant_id], references: [id])
+  user                       User                      @relation(fields: [user_id], references: [id])
+  transaction                Transaction               @relation(fields: [transaction_id], references: [id])
+  booking_events             BookingEvent[]
+  booking_additional_options BookingAdditionalOption[]
+  reviews                    Review[]
+
+  @@index([user_id])
+  @@index([start, end])
+  @@index([status])
+  @@map("bookings")
+}
+
+model AdditionalOption {
+  id String @id @default(uuid())
+
+  name        String @unique
+  description String
+  image       String
+  price       Float
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  booking_additional_options BookingAdditionalOption[]
+
+  @@map("additional_options")
+}
+
+model BookingAdditionalOption {
+  id String @id @default(uuid())
+
+  amount     Int
+  option_id  String
+  booking_id String
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  booking           Booking          @relation(fields: [booking_id], references: [id])
+  additional_option AdditionalOption @relation(fields: [option_id], references: [id])
+
+  @@unique([booking_id, option_id])
+  @@map("booking_additional_options")
+}
+
+model BookingEvent {
+  id String @id @default(uuid())
+
+  number_of_people Int
+  booking_id       String
+  event_id         String
+  transaction_id   String @unique
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  booking     Booking     @relation(fields: [booking_id], references: [id])
+  event       Event       @relation(fields: [event_id], references: [id])
+  transaction Transaction @relation(fields: [transaction_id], references: [id])
+
+  @@map("booking_events")
+}
+
+model Transaction {
+  id String @id @default(uuid())
+
+  amount              Float
+  user_id             String
+  description         String
+  card_details_id     String?
+  transfer_details_id String?
+  transaction_type    TransactionType
+  transaction_status  TransactionStatus
+  payment_method      PaymentMethod
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  user            User            @relation(fields: [user_id], references: [id])
+  card_detail     CardDetail?     @relation(fields: [card_details_id], references: [id])
+  transfer_detail TransferDetail? @relation(fields: [transfer_details_id], references: [id])
+  booking         Booking?
+  booking_event   BookingEvent?
+
+  @@index([user_id])
+  @@index([transaction_status])
+  @@map("transactions")
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  TRANSFER
+}
+
+model TransferDetail {
+  id String @id @default(uuid())
+
+  bank_name      String
+  account_number String
+  swift          String
+  payer_name     String
+  user_id        String
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  transactions Transaction[]
+  user         User          @relation(fields: [user_id], references: [id])
+
+  @@map("transfer_details")
+}
+
+model CardDetail {
+  id String @id @default(uuid())
+
+  user_id      String
+  number       String @unique
+  expiry_month Int
+  expiry_year  Int
+  holder       String
+  token        String
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  transactions Transaction[]
+  user         User          @relation(fields: [user_id], references: [id])
+
+  @@map("card_details")
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  CANCELED
+  FAILED
+}
+
+enum TransactionType {
+  DEPOSIT
+  PAYMENT
+  REFUND
+  FINE
+}
+
+model Event {
+  id String @id @default(uuid())
+
+  name        String
+  image       String
+  description String
+  guide_id    String?
+  price       Float
+  capacity    Int
+  start       DateTime
+  end         DateTime
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  guide          User?          @relation(fields: [guide_id], references: [id])
+  images         EventImage[]
+  booking_events BookingEvent[]
+
+  @@index([start, end])
+  @@map("events")
+}
+
+model EventImage {
+  id String @id @default(uuid())
+
+  name        String
+  image       String?
+  description String?
+  event_id    String
+
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  is_excluded Boolean  @default(false)
+
+  event Event @relation(fields: [event_id], references: [id])
+
+  @@map("event_images")
+}
+
+enum Role {
+  USER
+  ADMIN
+  GUIDE
+}

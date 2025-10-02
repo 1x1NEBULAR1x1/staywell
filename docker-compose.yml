@@ -1,0 +1,35 @@
+services:
+    db:
+        container_name: postgres-staywell
+        image: postgres:latest
+        restart: always
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+        ports:
+            - 5433:5432
+        volumes:
+            - postgres_staywell_data:/var/lib/postgresql/data
+        networks:
+            - staywell-backend
+
+    redis:
+        container_name: redis-staywell
+        image: redis:7-alpine
+        restart: always
+        ports:
+            - 6379:6379
+        volumes:
+            - redis_staywell_data:/data
+        networks:
+            - staywell-backend
+        command: redis-server --appendonly yes
+
+volumes:
+    postgres_staywell_data:
+    redis_staywell_data:
+
+
+networks:
+    staywell-backend:

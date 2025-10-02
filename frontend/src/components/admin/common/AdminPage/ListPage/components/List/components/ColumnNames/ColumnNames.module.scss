@@ -1,0 +1,15 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.column_names {
+  width: 100%;
+  gap: $spacing-md;
+  background-color: $primary-disabled;
+  color: $foreground-secondary;
+  font-weight: $font-weight-semibold;
+  font-family: var(--font-open-sans);
+  font-size: $font-size-md;
+}
+
+.column_name:first-child {
+  width: 50%;
+}

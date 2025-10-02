@@ -1,0 +1,29 @@
+{
+  "name": "StayWell",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "pnpm --parallel --recursive dev",
+    "build": "pnpm --recursive build",
+    "start": "pnpm --recursive start"
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.13.0",
+    "@types/node": "^20",
+    "prisma": "^6.13.0",
+    "shared": "^0.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/swagger": "^11.2.0",
+    "argon2": "^0.43.1",
+    "backend": "^0.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "express": "^5.1.0",
+    "ioredis": "^5.7.0",
+    "tsx": "^4.19.2"
+  }
+}

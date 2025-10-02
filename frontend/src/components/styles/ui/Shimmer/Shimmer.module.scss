@@ -1,0 +1,50 @@
+@use '@/components/styles/_variables.scss' as *;
+
+// Базовый класс для анимации шиммера
+.shimmer {
+  position: relative;
+  overflow: hidden;
+
+  // Всегда серый фон для состояния загрузки
+  background-color: #E5E5E5;
+
+  // Анимированный градиент мерцания всегда активен
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0.2) 80%,
+        transparent 100%);
+    animation: shimmer-wave 2s infinite ease-in-out;
+    // Наследуем border-radius от родителя
+    border-radius: inherit;
+  }
+}
+
+// Анимация волны мерцания
+@keyframes shimmer-wave {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

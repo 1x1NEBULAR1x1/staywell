@@ -1,0 +1,15 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.logo {
+  font-family: var(--font-poppins);
+  font-style: normal;
+  font-weight: 500;
+  font-size: $font-size-2xl;
+
+  color: $primary-main;
+
+  & span {
+    color: $primary-dark;
+  }
+
+}

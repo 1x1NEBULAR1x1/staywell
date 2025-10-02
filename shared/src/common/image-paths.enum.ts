@@ -1,0 +1,11 @@
+export const ImagePaths = {
+  ADDITIONAL_OPTIONS: "ADDITIONAL_OPTIONS",
+  USERS: "USERS",
+  APARTMENTS: "APARTMENTS",
+  APARTMENT_IMAGES: "APARTMENT_IMAGES",
+  AMENITIES: "AMENITIES",
+  BED_TYPES: "BED_TYPES",
+  EVENTS: "EVENTS",
+  EVENT_IMAGES: "EVENT_IMAGES",
+} as const;
+export type ImagePaths = keyof typeof ImagePaths;

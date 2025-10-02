@@ -1,0 +1,85 @@
+.toastContainer {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: var(--z-tooltip);
+  display: flex;
+  align-items: center;
+  min-width: 320px;
+  max-width: 480px;
+  padding: 14px 16px;
+  margin: 0;
+  color: white;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal) cubic-bezier(0.2, 0.9, 0.3, 1.1);
+  backdrop-filter: blur(5px);
+}
+
+.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.messageContainer {
+  flex: 1;
+}
+
+.message {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.success {
+  background-color: rgba(34, 197, 94, 0.95);
+  border-top: 3px solid var(--success);
+}
+
+.error {
+  background-color: rgba(239, 68, 68, 0.95);
+  border-top: 3px solid var(--error);
+}
+
+.warning {
+  background-color: rgba(249, 115, 22, 0.95);
+  border-top: 3px solid var(--warning);
+}
+
+.info {
+  background-color: rgba(59, 130, 246, 0.95);
+  border-top: 3px solid var(--info);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 4px;
+  margin-left: 8px;
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.closeButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+@media (max-width: 520px) {
+  .toastContainer {
+    min-width: 95%;
+    max-width: 95%;
+  }
+} 

@@ -1,0 +1,11 @@
+@use '@/components/styles/_variables.scss' as *;
+
+
+.notification {
+  height: 100%;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  cursor: pointer;
+}

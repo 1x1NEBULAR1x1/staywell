@@ -1,0 +1,65 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.user_row {
+
+  &>td {
+    padding: $spacing-md;
+  }
+
+  &_avatar {
+    width: $font-size-4xl;
+    height: $font-size-4xl;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &_name_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-sm;
+    width: auto;
+
+    &_info {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+
+      &_name {
+        color: $foreground-main;
+        min-width: 6rem;
+        height: $font-size-lg;
+        font-size: calc($font-size-sm + 2px);
+        font-weight: $font-weight-semibold;
+        font-family: var(--font-open-sans);
+      }
+
+      &_email {
+        color: $foreground-light;
+        min-width: 7rem;
+        height: $font-size-md;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-light;
+      }
+    }
+
+
+  }
+
+  &_role {
+    color: $foreground-white !important;
+    background-color: $primary-light;
+    padding: $spacing-xs $spacing-lg;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm !important;
+    font-weight: $font-weight-semibold;
+    max-width: 8rem;
+  }
+
+  &_created {
+    color: $foreground-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
+  }
+}

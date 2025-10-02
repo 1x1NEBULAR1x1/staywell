@@ -1,0 +1,39 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.section {
+  width: $container-width-xl;
+  margin: $spacing-3xl auto;
+
+  .container {
+    padding: $spacing-lg $spacing-xl;
+    border-radius: $border-radius-2xl;
+    background-color: $primary-disabled;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .filter {
+      width: auto;
+      height: auto;
+      background-color: $background-main;
+      border-radius: $border-radius-md;
+      padding: $spacing-sm $spacing-xl;
+      height: 100%;
+      height: -webkit-fill-available;
+      font-size: $font-size-md;
+    }
+
+    .button {
+      background-color: $primary-main;
+      color: $foreground-white;
+      border-radius: $border-radius-md;
+      padding: $spacing-sm $spacing-xl;
+      margin: 0 $spacing-3xl 0 $spacing-lg;
+      font-size: $font-size-lg;
+      color: $foreground-white;
+      cursor: pointer;
+      border: none;
+    }
+  }
+}

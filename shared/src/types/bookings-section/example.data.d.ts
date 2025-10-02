@@ -1,0 +1,22 @@
+import { BaseListResult } from "../../common";
+import { AdditionalOption, Booking, BookingAdditionalOption, BookingVariant, Reservation } from "../../database";
+import { ExtendedBookingAdditionalOption, ExtendedBookingVariant } from "./extended.types";
+import { ExtendedBooking } from "./extended.types";
+import { ExtendedReservation } from "./extended.types";
+export declare const example_additional_option: AdditionalOption;
+export declare const example_additional_options_list_result: BaseListResult<AdditionalOption>;
+export declare const example_booking_additional_option: BookingAdditionalOption;
+export declare const example_extended_booking_additional_option: ExtendedBookingAdditionalOption;
+export declare const example_extended_booking_additional_options_list_result: BaseListResult<ExtendedBookingAdditionalOption>;
+export declare const example_total_price: {
+    total_price: number;
+};
+export declare const example_booking_variant: BookingVariant;
+export declare const example_extended_booking_variant: ExtendedBookingVariant;
+export declare const example_extended_booking_variants_list_result: BaseListResult<ExtendedBookingVariant>;
+export declare const example_booking: Booking;
+export declare const example_extended_booking: ExtendedBooking;
+export declare const example_extended_bookings_list_result: BaseListResult<ExtendedBooking>;
+export declare const example_reservation: Reservation;
+export declare const example_extended_reservation: ExtendedReservation;
+export declare const example_extended_reservations_list_result: BaseListResult<ExtendedReservation>;

@@ -1,0 +1,26 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-sm;
+    width: 100%;
+    justify-content: space-between;
+    padding-right: $spacing-md;
+    height: 100%;
+    border-right: $border-normal;
+  }
+
+  .right {
+    width: 35%;
+    display: flex;
+    padding-left: $spacing-md;
+  }
+}

@@ -1,0 +1,74 @@
+@use "@/components/styles/_variables.scss" as *;
+
+
+.page {
+  width: 100%;
+  height: 100lvh;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-lg;
+  background-color: $background-light;
+}
+
+.image_container {
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo_container {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  width: 80%;
+  height: 70%;
+  border-radius: $border-radius-2xl;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($background-main, 0.7);
+}
+
+.logo {
+  position: absolute;
+  font-size: $font-size-5xl !important;
+}
+
+.form_container {
+  width: 50%;
+  height: 100%;
+  padding: $spacing-3xl $spacing-4xl;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.from_title {
+  width: 100%;
+  text-align: center;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-normal;
+  font-family: var(--font-poppins);
+  color: $foreground-main;
+  padding-bottom: $spacing-3xl;
+}
+
+.form_container {
+  width: 50%;
+  padding: $spacing-sm $spacing-6xl;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  outline: none;
+}

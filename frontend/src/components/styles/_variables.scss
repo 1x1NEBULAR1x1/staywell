@@ -1,0 +1,82 @@
+// Accent colors
+$primary-dark: #152C5B;
+$primary-main: #3252DF;
+$primary-light: #4A85F6;
+$primary-disabled: #EAF1FF;
+
+$green: #1ABC9C;
+$red: #E74C3C;
+$yellow: #F1C40F;
+
+// Background colors
+$background-main: #FFFFFF;
+$background-light: #FAFAFA;
+$background-disabled: #F5F6F8;
+
+
+// Foreground colors
+$foreground-main: #1E1E1E;
+$foreground-secondary: #757575;
+$foreground-light: #B0B0B0;
+$foreground-white: #FFFFFF;
+
+
+// Border colors
+$border-color-main: #E5E5E5;
+$border-color-input: #D2D2D2;
+
+// Border styles
+$border-normal: 1px solid $border-color-main;
+$border-bold: 2px solid $border-color-main;
+$border-input: 2.5px solid $border-color-input;
+
+// Border radius
+$border-radius-2xl: 2.625rem;
+$border-radius-xl: 1.75rem;
+$border-radius-lg: 1rem;
+$border-radius-md: 0.75rem;
+$border-radius-sm: 0.5rem;
+$border-radius-xs: 0.25rem;
+
+// Breakpoints
+$breakpoint-2xl: 1920px;
+$breakpoint-xl: 1440px;
+$breakpoint-lg: 1024px;
+$breakpoint-md: 768px;
+$breakpoint-sm: 480px;
+$breakpoint-xs: 420px;
+
+//container
+$container-width-xl: 80%;
+
+
+// Spacing
+$spacing-6xl: 6rem;
+$spacing-5xl: 5rem;
+$spacing-4xl: 4rem;
+$spacing-3xl: 3rem;
+$spacing-2xl: 2.5rem;
+$spacing-xl: 2rem;
+$spacing-lg: 1.5rem;
+$spacing-md: 1rem;
+$spacing-sm: 0.5rem;
+$spacing-xs: 0.25rem;
+
+
+// Font sizes
+$font-size-5xl: 4rem;
+$font-size-4xl: 3rem;
+$font-size-3xl: 2.5rem;
+$font-size-2xl: 2rem;
+$font-size-xl: 1.5rem;
+$font-size-lg: 1.25rem;
+$font-size-md: 1rem;
+$font-size-sm: 0.75rem;
+$font-size-xs: 0.5rem;
+
+// Font weights
+$font-weight-bold: 700;
+$font-weight-semibold: 600;
+$font-weight-normal: 500;
+$font-weight-light: 400;
+$font-weight-thin: 300;

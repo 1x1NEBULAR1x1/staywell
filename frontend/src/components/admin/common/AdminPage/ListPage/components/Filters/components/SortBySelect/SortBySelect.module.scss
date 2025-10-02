@@ -1,0 +1,17 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.sort_by_select {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: $foreground-secondary;
+  font-size: $font-size-md;
+  font-family: var(--font-open-sans);
+  font-weight: $font-weight-semibold;
+  line-height: 150%;
+  cursor: pointer;
+
+  &:hover {
+    color: $foreground-main;
+  }
+}

@@ -1,0 +1,11 @@
+import { BaseListResult } from "../../common";
+import { BookingEvent, Event, EventImage } from "../../database";
+import { ExtendedBookingEvent, ExtendedEvent } from "./extended.types";
+export declare const example_event_image: EventImage;
+export declare const example_event_images_list_result: BaseListResult<EventImage>;
+export declare const example_event: Event;
+export declare const example_extended_event: ExtendedEvent;
+export declare const example_events_list_result: BaseListResult<Event>;
+export declare const example_booking_event: BookingEvent;
+export declare const example_extended_booking_event: ExtendedBookingEvent;
+export declare const example_booking_events_list_result: BaseListResult<ExtendedBookingEvent>;

@@ -1,0 +1,96 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-2xl;
+
+  &_group {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: $spacing-xs
+  }
+
+  &_input {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-light;
+    font-family: var(--font-poppins);
+    color: $foreground-main;
+    width: 80%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+
+    &_label {
+      font-size: $font-size-xl;
+      color: $foreground-main;
+      font-weight: $font-weight-light;
+      width: 100%;
+      text-align: left;
+    }
+
+    &_container {
+      border: $border-input;
+      border-radius: $border-radius-sm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-md $spacing-lg;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  &_error {
+    width: 100%;
+    text-align: left;
+    font-size: $font-size-sm;
+    color: $red;
+  }
+
+  &_button {
+    width: 100%;
+    background-color: $primary-main;
+    border-radius: $border-radius-md;
+    padding: $spacing-md $spacing-lg;
+
+    &_container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+
+  &_terms {
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+    color: $foreground-main;
+
+    &_link {
+      color: $primary-main;
+      cursor: pointer;
+    }
+  }
+
+  &_show_password_icon {
+    height: $font-size-xl;
+    width: $font-size-xl;
+    color: $foreground-secondary;
+    cursor: pointer;
+  }
+
+  &_register_link {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-light;
+    color: $primary-main;
+    cursor: pointer;
+  }
+}

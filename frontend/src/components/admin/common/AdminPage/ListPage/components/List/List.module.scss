@@ -1,0 +1,85 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md 0;
+  border-radius: $border-radius-lg;
+  background-color: $background-main;
+
+  &_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-md;
+    padding: 0 0 0 $spacing-md;
+    color: $foreground-main;
+    font-size: $font-size-lg;
+    font-family: var(--font-open-sans);
+    font-weight: $font-weight-semibold;
+  }
+
+  &_table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+
+    th,
+    td {
+      padding: $spacing-md;
+      text-align: left;
+      border-bottom: 1px solid $border-color-main;
+    }
+
+    th {
+      background-color: $primary-disabled;
+      color: $foreground-secondary;
+      font-weight: $font-weight-semibold;
+      font-family: var(--font-open-sans);
+      font-size: $font-size-md;
+    }
+
+    td {
+      color: $primary-dark;
+      font-size: $font-size-sm;
+      font-family: var(--font-open-sans);
+
+      &>span {
+        color: $foreground-light;
+        font-size: $font-size-xs;
+        font-family: var(--font-open-sans);
+      }
+    }
+
+    tbody tr {
+      &:hover {
+        background-color: $background-light;
+      }
+
+      &:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  &_body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    &_item {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: $spacing-md;
+    }
+  }
+}

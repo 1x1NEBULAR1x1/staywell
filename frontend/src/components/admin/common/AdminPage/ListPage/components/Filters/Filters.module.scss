@@ -1,0 +1,23 @@
+@use '@/components/styles/_variables.scss' as *;
+
+
+.filters {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-lg;
+
+  .left {
+    width: 100%;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+}

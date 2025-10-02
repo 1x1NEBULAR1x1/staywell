@@ -1,0 +1,1 @@
+export { ApartmentCard, ApartmentCardShimmer } from './ApartmentCard';
