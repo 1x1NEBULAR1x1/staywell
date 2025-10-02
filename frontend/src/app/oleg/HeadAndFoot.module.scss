@@ -99,7 +99,11 @@
             flex-direction: column;
 
             .add_text {
+<<<<<<< HEAD
                 color: $foreground-light;
+=======
+                color: var(--foreground-light);
+>>>>>>> refs/remotes/origin/oleg
             }
         }
 
