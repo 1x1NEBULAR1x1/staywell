@@ -1,0 +1,154 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.page {
+    width: 100%;
+    min-height: 100lvh;
+    height: auto;
+    background-color: $background-main;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-3xl;
+
+    .section {
+        width: $container-width-xl;
+        height: auto;
+        background-color: $background-main;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10rem;
+      
+        .about {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-2xl;
+      
+      
+          .title {
+            font-size: $font-size-3xl;
+            font-weight: $font-weight-bold;
+            line-height: 1.5;
+            color: $primary-dark;
+          }
+      
+          .description {
+            font-size: $font-size-md;
+            font-weight: $font-weight-light;
+            color: $foreground-light;
+            white-space: nowrap;
+          }
+      
+          .button {
+            background-color: $primary-main;
+            font-size: $font-size-lg;
+            color: $foreground-white;
+            border-radius: $border-radius-sm;
+            padding: $spacing-sm $spacing-xl;
+            cursor: pointer;
+            border: none;
+            width: max-content;
+          }
+      
+          .metrics {
+            margin-top: $spacing-2xl;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+      
+            .item {
+              display: flex;
+              flex-direction: column;
+              gap: $spacing-sm;
+      
+              &>img {
+                width: 2rem;
+                height: 2rem;
+              }
+      
+              .title {
+                font-size: $font-size-md;
+                font-weight: $font-weight-normal;
+                color: $primary-dark;
+      
+                &>span {
+                  color: $foreground-light;
+                }
+              }
+            }
+          }
+        }
+      
+        .banner {
+          position: relative;
+          z-index: 1;
+      
+          .image {
+            width: 100%;
+            height: max-content;
+            aspect-ratio: 5/4;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100px $border-radius-lg $border-radius-lg $border-radius-lg;
+      
+            &>img {
+              width: 100%;
+              height: 100%;
+              scale: 2;
+              translate: 50% -10%;
+              object-fit: fill;
+            }
+          }
+      
+          .frame {
+            width: 100%;
+            aspect-ratio: 5/4;
+            position: absolute;
+            z-index: -1;
+            top: $spacing-xl;
+            left: $spacing-xl;
+            border-radius: $border-radius-lg;
+            overflow: hidden;
+            border: $border-bold;
+            border-radius: $border-radius-lg;
+          }
+      
+      
+        }
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
