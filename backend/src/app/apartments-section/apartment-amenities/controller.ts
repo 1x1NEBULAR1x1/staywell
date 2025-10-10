@@ -67,6 +67,7 @@ export class ApartmentAmenitiesController {
     return this.listService.findAll(filters);
   }
 
+
   @Delete(":id")
   @AdminOnly()
   @ApiOperation({ summary: "Remove Apartment amenity by ID" })

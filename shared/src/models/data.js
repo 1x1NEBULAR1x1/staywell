@@ -4,7 +4,7 @@ exports.GETTABLE_DATA = exports.CRUDDABLE_DATA = void 0;
 exports.CRUDDABLE_DATA = {
     APARTMENT: "apartments",
     REVIEW: "reviews",
-    AMENITIE: "amenities",
+    AMENITY: "amenities",
     APARTMENT_IMAGE: "apartment-images",
     APARTMENT_BED: "apartment-beds",
     APARTMENT_AMENITY: "apartment-amenities",

@@ -1,0 +1,113 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.transaction_info {
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background: $background-light;
+  border-bottom: $border-normal;
+
+  .header_icon {
+    width: 20px;
+    height: 20px;
+    color: $primary-main;
+  }
+
+  .title {
+    flex: 1;
+    margin: 0;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    .status_icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    &.status_pending {
+      background: lighten($yellow, 40%);
+      color: darken($yellow, 20%);
+    }
+
+    &.status_success {
+      background: lighten($green, 40%);
+      color: darken($green, 20%);
+    }
+
+    &.status_canceled {
+      background: lighten($red, 40%);
+      color: darken($red, 20%);
+    }
+
+    &.status_failed {
+      background: lighten($red, 40%);
+      color: darken($red, 20%);
+    }
+  }
+}
+
+.content {
+  padding: $spacing-md;
+}
+
+.transaction_details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.detail_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-md;
+  font-size: $font-size-sm;
+
+  .detail_label {
+    color: $foreground-light;
+    font-weight: $font-weight-normal;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+
+  .detail_value {
+    color: $foreground-main;
+    font-weight: $font-weight-semibold;
+    text-align: right;
+    word-break: break-all;
+  }
+
+  .amount {
+    color: $primary-main;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-lg;
+  }
+}
+
+.no_transaction {
+  text-align: center;
+  color: $foreground-light;
+  font-style: italic;
+  padding: $spacing-lg;
+}

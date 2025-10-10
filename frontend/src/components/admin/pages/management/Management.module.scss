@@ -1,0 +1,42 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.management_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-xl;
+  padding: $spacing-xl;
+}
+
+.management_link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.management_card {
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-md;
+  padding: $spacing-xl;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-normal;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $box-shadow;
+    transform: translateY(-2px);
+  }
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+    margin-bottom: $spacing-sm;
+  }
+
+  p {
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+    line-height: 1.5;
+  }
+}
+

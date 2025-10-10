@@ -1,0 +1,131 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.user_info {
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background: $background-light;
+  border-bottom: $border-normal;
+
+  .header_icon {
+    width: 20px;
+    height: 20px;
+    color: $primary-main;
+  }
+
+  .title {
+    flex: 1;
+    margin: 0;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .link_button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background: $primary-main;
+    color: $background-main;
+    text-decoration: none;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background: darken($primary-main, 10%);
+    }
+
+    .link_icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+.content {
+  padding: $spacing-md;
+}
+
+.user_details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.user_header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.user_avatar {
+  flex-shrink: 0;
+}
+
+.avatar_image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user_name {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $foreground-main;
+}
+
+.contact_info {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.contact_item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  color: $foreground-secondary;
+  font-size: $font-size-sm;
+
+  .contact_icon {
+    width: 16px;
+    height: 16px;
+    color: $foreground-light;
+  }
+}
+
+.verification_status {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.status_item {
+  .status_badge {
+    display: inline-block;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+
+    &.verified {
+      background: lighten($green, 40%);
+      color: darken($green, 20%);
+    }
+
+    &.not_verified {
+      background: lighten($yellow, 40%);
+      color: darken($yellow, 20%);
+    }
+  }
+}

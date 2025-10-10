@@ -1,0 +1,75 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.title_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-md;
+  margin: 0;
+
+  .title_info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  .title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $foreground-main;
+    margin: 0;
+  }
+
+  .status {
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    align-self: flex-start;
+
+    &.status_pending {
+      background: lighten($yellow, 40%);
+      color: darken($yellow, 20%);
+    }
+
+    &.status_confirmed {
+      background: lighten($green, 40%);
+      color: darken($green, 20%);
+    }
+
+    &.status_completed {
+      background: lighten($primary-main, 40%);
+      color: darken($primary-main, 20%);
+    }
+
+    &.status_cancelled {
+      background: lighten($red, 40%);
+      color: darken($red, 20%);
+    }
+  }
+
+  .edit_btn {
+    padding: $spacing-sm $spacing-md;
+    background: $primary-main;
+    color: $background-main;
+    border: none;
+    border-radius: $border-radius-sm;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+    flex-shrink: 0;
+
+    &:hover {
+      background: darken($primary-main, 10%);
+    }
+  }
+}
+
+.apartment_name {
+  color: $foreground-secondary;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  margin: 0;
+}

@@ -37,6 +37,7 @@ export class CrudService {
     data: CreateAmenityDto;
     file?: Express.Multer.File;
   }): Promise<ExtendedAmenity> {
+    console.log(data)
     if (await this.prisma.amenity.findFirst({ where: { name: data.name } }))
       throw new ConflictException("Amenity with this name already exists");
     const image = file ? this.filesService.saveImage({ file, dir_name: "AMENITIES" }) : data.image;

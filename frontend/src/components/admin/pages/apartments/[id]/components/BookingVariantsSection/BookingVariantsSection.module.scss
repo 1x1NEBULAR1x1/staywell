@@ -1,0 +1,39 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.booking_variants {
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $box-shadow;
+  width: 100%;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+
+    .title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      color: $foreground-main;
+      margin: 0;
+    }
+
+    .add_button {
+      background: $primary-main;
+      color: $foreground-white;
+      border: none;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius-md;
+      font-weight: $font-weight-semibold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: $primary-dark;
+      }
+    }
+  }
+
+}

@@ -23,6 +23,24 @@
     font-weight: $font-weight-semibold;
   }
 
+  &_cards {
+    width: 100%;
+    display: grid;
+    padding: 0 $spacing-lg;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: $spacing-md;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: $spacing-md;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+      grid-template-columns: 1fr;
+      gap: $spacing-sm;
+    }
+  }
+
   &_table {
     width: 100%;
     border-collapse: collapse;

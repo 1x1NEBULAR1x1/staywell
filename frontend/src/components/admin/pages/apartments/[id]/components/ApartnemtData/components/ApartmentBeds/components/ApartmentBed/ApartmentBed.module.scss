@@ -1,0 +1,74 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.bed {
+  display: flex;
+  flex-direction: row;
+  gap: $spacing-xs;
+  align-items: center;
+  justify-content: space-between;
+
+  &_count {
+    width: 32px;
+    gap: $spacing-xs;
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+    padding: $spacing-xs;
+    color: $foreground-main;
+    text-align: center;
+    border: $border-normal;
+    border-radius: $border-radius-sm;
+    background: transparent;
+    outline: none;
+  }
+
+  &_container {
+    position: relative;
+    display: flex;
+    width: auto;
+    height: auto;
+
+
+    &:hover .delete_button {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &_icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: $border-radius-xs;
+    cursor: pointer;
+  }
+
+  .delete_button {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: $font-size-md;
+    height: $font-size-md;
+    border-radius: 50%;
+    background: rgba($red, 0.8);
+    border: none;
+    color: $foreground-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity $transition-fast, visibility $transition-fast;
+    z-index: 10;
+
+    &:hover {
+      background: $red;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($red, 0.3);
+    }
+  }
+}

@@ -2,7 +2,6 @@ import { BaseFiltersOptions, CreativeOmit } from "../../common";
 import { CardDetail, PaymentMethod, Transaction, TransactionStatus, TransactionType, TransferDetail } from "../../database";
 export type TransferDetailsFilters = BaseFiltersOptions<TransferDetail> & {
     user_id?: string;
-    search?: string;
     bank_name?: string;
     account_number?: string;
     swift?: string;
@@ -14,7 +13,6 @@ export type CreateTransferDetail = CreativeOmit<TransferDetail>;
 export type UpdateTransferDetail = Partial<CreateTransferDetail>;
 export type TransactionsFilters = BaseFiltersOptions<Transaction> & {
     user_id?: string;
-    search?: string;
     payment_method?: PaymentMethod;
     transaction_status?: TransactionStatus;
     transaction_type?: TransactionType;
@@ -32,7 +30,6 @@ export type UpdateTransaction = Partial<CreateTransaction> & {
 };
 export type CardDetailsFilters = BaseFiltersOptions<CardDetail> & {
     user_id?: string;
-    search?: string;
     number?: string;
     holder?: string;
     token?: string;

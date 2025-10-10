@@ -77,7 +77,7 @@ export class ApartmentBedsController {
   @ApiResponse({ status: 401, description: "Unauthorized." })
   @ApiResponse({ status: 404, description: "Apartment bed not found." })
   update(
-    @Param("bed_id", ParseUUIDPipe) id: string,
+    @Param("id", ParseUUIDPipe) id: string,
     @Body() data: UpdateApartmentBedDto,
   ) {
     return this.crudService.update({ id, data });

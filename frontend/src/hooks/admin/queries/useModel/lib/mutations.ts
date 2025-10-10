@@ -1,14 +1,16 @@
 import { CrudApi, query_client } from "@/lib/api";
-import { AxiosResponse, isAxiosError } from "axios";
+import { AxiosResponse } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { CachedList, MutationContext } from "./types";
 import { optimisticUpdateCache, prepareOptimisticUpdate, handleMutationError, optimisticRemoveFromList, getUpdateOperation } from "./utils";
 import { QUERY_KEYS } from "./query-keys";
 import { CruddableTypes, CRUDDABLE_NAMES } from "@shared/src";
+
+
 /**
  * Create mutation factory for updating items
  */
-export function createUpdateMutation<M extends CRUDDABLE_NAMES>({ api, model, id }: { api: CrudApi<M>, model: M, id: string }) {
+export function initUpdateMutation<M extends CRUDDABLE_NAMES>({ api, model, id }: { api: CrudApi<M>, model: M, id: string }) {
   return useMutation<
     AxiosResponse<CruddableTypes<M>["model"], unknown>,
     Error,
@@ -27,13 +29,13 @@ export function createUpdateMutation<M extends CRUDDABLE_NAMES>({ api, model, id
 
       return context;
     },
-    onError: (error, data, context) => handleMutationError({ error, context, model, id, operation: getUpdateOperation(data), status: isAxiosError(error) ? error.status : undefined })
+    onError: (error, data, context) => handleMutationError({ context, model, id })
   });
 }
 /**
  * Create mutation factory for creating items
  */
-export function createCreateMutation<M extends CRUDDABLE_NAMES>({ api, model }: { api: CrudApi<M>, model: M }) {
+export function initCreateMutation<M extends CRUDDABLE_NAMES>({ api, model }: { api: CrudApi<M>, model: M }) {
   return useMutation<
     AxiosResponse<CruddableTypes<M>["model"], unknown>,
     Error,
@@ -54,13 +56,13 @@ export function createCreateMutation<M extends CRUDDABLE_NAMES>({ api, model }: 
             : { ...old, data: { ...old.data, items: [new_item, ...old.data.items] } }
       );
     },
-    onError: (error, _, context) => handleMutationError({ error, context, model, id: '', operation: 'create', status: isAxiosError(error) ? error.status : undefined })
+    onError: (error, _, context) => handleMutationError({ context, model, id: '' })
   });
 }
 /**
  * Create mutation factory for deleting items
  */
-export function createDeleteMutation<M extends CRUDDABLE_NAMES>({ api, model, id }: { api: CrudApi<M>, model: M, id: string }) {
+export function initDeleteMutation<M extends CRUDDABLE_NAMES>({ api, model, id }: { api: CrudApi<M>, model: M, id: string }) {
   return useMutation<
     AxiosResponse<CruddableTypes<M>["model"], unknown>,
     Error,
@@ -76,6 +78,6 @@ export function createDeleteMutation<M extends CRUDDABLE_NAMES>({ api, model, id
       optimisticRemoveFromList<M, CruddableTypes<M>["model"]>({ model, id });
       return context;
     },
-    onError: (error, _, context) => handleMutationError({ error, context, model, id, operation: 'delete', status: isAxiosError(error) ? error.status : undefined })
+    onError: (error, _, context) => handleMutationError({ context, model, id })
   });
 }

@@ -5,28 +5,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const {
-  PrismaClientKnownRequestError,
-  PrismaClientUnknownRequestError,
-  PrismaClientRustPanicError,
-  PrismaClientInitializationError,
-  PrismaClientValidationError,
-  getPrismaClient,
-  sqltag,
-  empty,
-  join,
-  raw,
-  skip,
   Decimal,
-  Debug,
   objectEnumValues,
   makeStrictEnum,
-  Extensions,
-  warnOnce,
-  defineDmmfProperty,
   Public,
   getRuntime,
-  createParam,
-} = require('./runtime/wasm-engine-edge.js')
+  skip
+} = require('./runtime/index-browser.js')
 
 
 const Prisma = {}
@@ -35,35 +20,79 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.16.2
- * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+ * Prisma Client JS version: 6.13.0
+ * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
  */
 Prisma.prismaVersion = {
-  client: "6.16.2",
-  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
+  client: "6.13.0",
+  engine: "361e86d0ea4987e9f53a565309b3eed797a6bcbd"
 }
 
-Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
-Prisma.PrismaClientUnknownRequestError = PrismaClientUnknownRequestError
-Prisma.PrismaClientRustPanicError = PrismaClientRustPanicError
-Prisma.PrismaClientInitializationError = PrismaClientInitializationError
-Prisma.PrismaClientValidationError = PrismaClientValidationError
+Prisma.PrismaClientKnownRequestError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientKnownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)};
+Prisma.PrismaClientUnknownRequestError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientUnknownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientRustPanicError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientRustPanicError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientInitializationError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientInitializationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientValidationError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientValidationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
 Prisma.Decimal = Decimal
 
 /**
  * Re-export of sql-template-tag
  */
-Prisma.sql = sqltag
-Prisma.empty = empty
-Prisma.join = join
-Prisma.raw = raw
+Prisma.sql = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`sqltag is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.empty = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`empty is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.join = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`join is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.raw = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`raw is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
 Prisma.validator = Public.validator
 
 /**
 * Extensions
 */
-Prisma.getExtensionContext = Extensions.getExtensionContext
-Prisma.defineExtension = Extensions.defineExtension
+Prisma.getExtensionContext = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`Extensions.getExtensionContext is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.defineExtension = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`Extensions.defineExtension is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
 
 /**
  * Shorthand utilities for JSON filtering
@@ -80,11 +109,10 @@ Prisma.NullTypes = {
 
 
 
-
-
 /**
  * Enums
  */
+
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
@@ -215,6 +243,7 @@ exports.Prisma.BookingScalarFieldEnum = {
   user_id: 'user_id',
   booking_variant_id: 'booking_variant_id',
   transaction_id: 'transaction_id',
+  message: 'message',
   status: 'status',
   start: 'start',
   end: 'end',
@@ -331,6 +360,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Role = exports.$Enums.Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  GUIDE: 'GUIDE'
+};
+
 exports.ApartmentType = exports.$Enums.ApartmentType = {
   BUDGET: 'BUDGET',
   STANDARD: 'STANDARD',
@@ -346,10 +381,11 @@ exports.BookingStatus = exports.$Enums.BookingStatus = {
   CANCELLED: 'CANCELLED'
 };
 
-exports.PaymentMethod = exports.$Enums.PaymentMethod = {
-  CASH: 'CASH',
-  CARD: 'CARD',
-  TRANSFER: 'TRANSFER'
+exports.TransactionType = exports.$Enums.TransactionType = {
+  DEPOSIT: 'DEPOSIT',
+  PAYMENT: 'PAYMENT',
+  REFUND: 'REFUND',
+  FINE: 'FINE'
 };
 
 exports.TransactionStatus = exports.$Enums.TransactionStatus = {
@@ -359,17 +395,10 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   FAILED: 'FAILED'
 };
 
-exports.TransactionType = exports.$Enums.TransactionType = {
-  DEPOSIT: 'DEPOSIT',
-  PAYMENT: 'PAYMENT',
-  REFUND: 'REFUND',
-  FINE: 'FINE'
-};
-
-exports.Role = exports.$Enums.Role = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-  GUIDE: 'GUIDE'
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  CASH: 'CASH',
+  CARD: 'CARD',
+  TRANSFER: 'TRANSFER'
 };
 
 exports.Prisma.ModelName = {
@@ -393,83 +422,34 @@ exports.Prisma.ModelName = {
   Event: 'Event',
   EventImage: 'EventImage'
 };
+
 /**
- * Create the Client
+ * This is a stub Prisma Client that will error at runtime if called.
  */
-const config = {
-  "generator": {
-    "name": "client",
-    "provider": {
-      "fromEnvVar": null,
-      "value": "prisma-client-js"
-    },
-    "output": {
-      "value": "/Users/macbookair/Desktop/staywell_beta/shared/src/database",
-      "fromEnvVar": null
-    },
-    "config": {
-      "engineType": "library"
-    },
-    "binaryTargets": [
-      {
-        "fromEnvVar": null,
-        "value": "darwin",
-        "native": true
-      }
-    ],
-    "previewFeatures": [],
-    "sourceFilePath": "/Users/macbookair/Desktop/staywell_beta/shared/prisma/schema.prisma",
-    "isCustomOutput": true
-  },
-  "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
-    "schemaEnvPath": "../../.env"
-  },
-  "relativePath": "../../prisma",
-  "clientVersion": "6.16.2",
-  "engineVersion": "1c57fdcd7e44b29b9313256c76699e91c3ac3c43",
-  "datasourceNames": [
-    "db"
-  ],
-  "activeProvider": "postgresql",
-  "postinstall": false,
-  "inlineDatasources": {
-    "db": {
-      "url": {
-        "fromEnvVar": "DATABASE_URL",
-        "value": null
-      }
-    }
-  },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/database\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id String @id @default(uuid())\n\n  email          String  @unique\n  password_hash  String\n  image          String?\n  first_name     String?\n  last_name      String?\n  phone_number   String?\n  is_active      Boolean @default(true)\n  email_verified Boolean @default(false)\n  phone_verified Boolean @default(false)\n  role           Role    @default(USER)\n\n  created DateTime @default(now())\n  updated DateTime @updatedAt\n\n  reservations     Reservation[]\n  events           Event[]\n  bookings         Booking[]\n  transactions     Transaction[]\n  card_details     CardDetail[]\n  transfer_details TransferDetail[]\n  reviews          Review[]\n\n  @@map(\"users\")\n}\n\nmodel Apartment {\n  id String @id @default(uuid())\n\n  image           String?\n  name            String?\n  description     String?\n  rules           String?\n  number          Int           @unique\n  floor           Int\n  rooms_count     Int\n  max_capacity    Int?\n  is_available    Boolean       @default(true)\n  is_smoking      Boolean       @default(false)\n  is_pet_friendly Boolean       @default(false)\n  deposit         Float         @default(0)\n  type            ApartmentType\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  images              ApartmentImage[]\n  apartment_beds      ApartmentBed[]\n  apartment_amenities ApartmentAmenity[]\n  reservations        Reservation[]\n  booking_variants    BookingVariant[]\n  reviews             Review[]\n\n  @@index([id])\n  @@index([number])\n  @@map(\"apartments\")\n}\n\nenum ApartmentType {\n  BUDGET\n  STANDARD\n  EXCLUSIVE\n  SUPERIOR\n  LUXURY\n}\n\nmodel Review {\n  id String @id @default(uuid())\n\n  user_id      String\n  apartment_id String?\n  booking_id   String?\n  rating       Int\n  comment      String?\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  user      User       @relation(fields: [user_id], references: [id])\n  apartment Apartment? @relation(fields: [apartment_id], references: [id])\n  booking   Booking?   @relation(fields: [booking_id], references: [id])\n\n  @@index([user_id])\n  @@index([apartment_id])\n  @@map(\"reviews\")\n}\n\nmodel Amenity {\n  id String @id @default(uuid())\n\n  name        String  @unique\n  image       String\n  description String?\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  apartment_amenities ApartmentAmenity[]\n\n  @@map(\"amenities\")\n}\n\nmodel ApartmentAmenity {\n  id String @id @default(uuid())\n\n  amenity_id   String\n  apartment_id String\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  apartment Apartment @relation(fields: [apartment_id], references: [id])\n  amenity   Amenity   @relation(fields: [amenity_id], references: [id])\n\n  @@unique([apartment_id, amenity_id])\n  @@map(\"apartment_amenities\")\n}\n\nmodel ApartmentImage {\n  id String @id @default(uuid())\n\n  image        String\n  name         String?\n  description  String?\n  apartment_id String\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  apartment Apartment @relation(fields: [apartment_id], references: [id])\n\n  @@map(\"apartment_images\")\n}\n\nmodel BedType {\n  id String @id @default(uuid())\n\n  name  String @unique\n  image String\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  apartment_beds ApartmentBed[]\n\n  @@map(\"bed_types\")\n}\n\nmodel ApartmentBed {\n  id String @id @default(uuid())\n\n  apartment_id String\n  bed_type_id  String\n  count        Int\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  apartment Apartment @relation(fields: [apartment_id], references: [id])\n  bed_type  BedType   @relation(fields: [bed_type_id], references: [id])\n\n  @@unique([apartment_id, bed_type_id])\n  @@map(\"apartment_beds\")\n}\n\nmodel BookingVariant {\n  id String @id @default(uuid())\n\n  apartment_id String\n  price        Float\n  capacity     Int\n  is_available Boolean @default(true)\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  apartment Apartment @relation(fields: [apartment_id], references: [id])\n  bookings  Booking[]\n\n  @@map(\"booking_variants\")\n}\n\nmodel Reservation {\n  id String @id @default(uuid())\n\n  user_id      String\n  apartment_id String\n\n  start DateTime\n  end   DateTime\n\n  created DateTime @default(now())\n  updated DateTime @updatedAt\n\n  apartment Apartment @relation(fields: [apartment_id], references: [id])\n  user      User      @relation(fields: [user_id], references: [id])\n\n  @@index([apartment_id, start, end])\n  @@index([user_id])\n  @@map(\"reservations\")\n}\n\nenum BookingStatus {\n  PENDING\n  CONFIRMED\n  COMPLETED\n  CANCELLED\n}\n\nmodel Booking {\n  id String @id @default(uuid())\n\n  user_id            String\n  booking_variant_id String\n  transaction_id     String        @unique\n  status             BookingStatus @default(PENDING)\n\n  start DateTime\n  end   DateTime\n\n  created DateTime @default(now())\n  updated DateTime @updatedAt\n\n  booking_variant            BookingVariant            @relation(fields: [booking_variant_id], references: [id])\n  user                       User                      @relation(fields: [user_id], references: [id])\n  transaction                Transaction               @relation(fields: [transaction_id], references: [id])\n  booking_events             BookingEvent[]\n  booking_additional_options BookingAdditionalOption[]\n  reviews                    Review[]\n\n  @@index([user_id])\n  @@index([start, end])\n  @@index([status])\n  @@map(\"bookings\")\n}\n\nmodel AdditionalOption {\n  id String @id @default(uuid())\n\n  name        String @unique\n  description String\n  image       String\n  price       Float\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  booking_additional_options BookingAdditionalOption[]\n\n  @@map(\"additional_options\")\n}\n\nmodel BookingAdditionalOption {\n  id String @id @default(uuid())\n\n  amount     Int\n  option_id  String\n  booking_id String\n\n  created DateTime @default(now())\n  updated DateTime @updatedAt\n\n  booking           Booking          @relation(fields: [booking_id], references: [id])\n  additional_option AdditionalOption @relation(fields: [option_id], references: [id])\n\n  @@unique([booking_id, option_id])\n  @@map(\"booking_additional_options\")\n}\n\nmodel BookingEvent {\n  id String @id @default(uuid())\n\n  number_of_people Int\n  booking_id       String\n  event_id         String\n  transaction_id   String @unique\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  booking     Booking     @relation(fields: [booking_id], references: [id])\n  event       Event       @relation(fields: [event_id], references: [id])\n  transaction Transaction @relation(fields: [transaction_id], references: [id])\n\n  @@map(\"booking_events\")\n}\n\nmodel Transaction {\n  id String @id @default(uuid())\n\n  amount              Float\n  user_id             String\n  description         String\n  card_details_id     String?\n  transfer_details_id String?\n  transaction_type    TransactionType\n  transaction_status  TransactionStatus\n  payment_method      PaymentMethod\n\n  created DateTime @default(now())\n  updated DateTime @updatedAt\n\n  user            User            @relation(fields: [user_id], references: [id])\n  card_detail     CardDetail?     @relation(fields: [card_details_id], references: [id])\n  transfer_detail TransferDetail? @relation(fields: [transfer_details_id], references: [id])\n  booking         Booking?\n  booking_event   BookingEvent?\n\n  @@index([user_id])\n  @@index([transaction_status])\n  @@map(\"transactions\")\n}\n\nenum PaymentMethod {\n  CASH\n  CARD\n  TRANSFER\n}\n\nmodel TransferDetail {\n  id String @id @default(uuid())\n\n  bank_name      String\n  account_number String\n  swift          String\n  payer_name     String\n  user_id        String\n\n  created DateTime @default(now())\n  updated DateTime @updatedAt\n\n  transactions Transaction[]\n  user         User          @relation(fields: [user_id], references: [id])\n\n  @@map(\"transfer_details\")\n}\n\nmodel CardDetail {\n  id String @id @default(uuid())\n\n  user_id      String\n  number       String @unique\n  expiry_month Int\n  expiry_year  Int\n  holder       String\n  token        String\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  transactions Transaction[]\n  user         User          @relation(fields: [user_id], references: [id])\n\n  @@map(\"card_details\")\n}\n\nenum TransactionStatus {\n  PENDING\n  SUCCESS\n  CANCELED\n  FAILED\n}\n\nenum TransactionType {\n  DEPOSIT\n  PAYMENT\n  REFUND\n  FINE\n}\n\nmodel Event {\n  id String @id @default(uuid())\n\n  name        String\n  image       String\n  description String\n  guide_id    String?\n  price       Float\n  capacity    Int\n  start       DateTime\n  end         DateTime\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  guide          User?          @relation(fields: [guide_id], references: [id])\n  images         EventImage[]\n  booking_events BookingEvent[]\n\n  @@index([start, end])\n  @@map(\"events\")\n}\n\nmodel EventImage {\n  id String @id @default(uuid())\n\n  name        String\n  image       String?\n  description String?\n  event_id    String\n\n  created     DateTime @default(now())\n  updated     DateTime @updatedAt\n  is_excluded Boolean  @default(false)\n\n  event Event @relation(fields: [event_id], references: [id])\n\n  @@map(\"event_images\")\n}\n\nenum Role {\n  USER\n  ADMIN\n  GUIDE\n}\n",
-  "inlineSchemaHash": "bfabb82a590dd5ed180ac155cf47ebe925c5a3ca6ff933af2b286f379e1842f2",
-  "copyEngine": true
-}
-config.dirname = '/'
+class PrismaClient {
+  constructor() {
+    return new Proxy(this, {
+      get(target, prop) {
+        let message
+        const runtime = getRuntime()
+        if (runtime.isEdge) {
+          message = `PrismaClient is not configured to run in ${runtime.prettyName}. In order to run Prisma Client on edge runtime, either:
+- Use Prisma Accelerate: https://pris.ly/d/accelerate
+- Use Driver Adapters: https://pris.ly/d/driver-adapters
+`;
+        } else {
+          message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
+        }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password_hash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"first_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"last_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone_number\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"email_verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"phone_verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"reservations\",\"kind\":\"object\",\"type\":\"Reservation\",\"relationName\":\"ReservationToUser\"},{\"name\":\"events\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"EventToUser\"},{\"name\":\"bookings\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToUser\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"TransactionToUser\"},{\"name\":\"card_details\",\"kind\":\"object\",\"type\":\"CardDetail\",\"relationName\":\"CardDetailToUser\"},{\"name\":\"transfer_details\",\"kind\":\"object\",\"type\":\"TransferDetail\",\"relationName\":\"TransferDetailToUser\"},{\"name\":\"reviews\",\"kind\":\"object\",\"type\":\"Review\",\"relationName\":\"ReviewToUser\"}],\"dbName\":\"users\"},\"Apartment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rules\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"floor\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"rooms_count\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"max_capacity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"is_available\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"is_smoking\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"is_pet_friendly\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"deposit\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ApartmentType\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"ApartmentImage\",\"relationName\":\"ApartmentToApartmentImage\"},{\"name\":\"apartment_beds\",\"kind\":\"object\",\"type\":\"ApartmentBed\",\"relationName\":\"ApartmentToApartmentBed\"},{\"name\":\"apartment_amenities\",\"kind\":\"object\",\"type\":\"ApartmentAmenity\",\"relationName\":\"ApartmentToApartmentAmenity\"},{\"name\":\"reservations\",\"kind\":\"object\",\"type\":\"Reservation\",\"relationName\":\"ApartmentToReservation\"},{\"name\":\"booking_variants\",\"kind\":\"object\",\"type\":\"BookingVariant\",\"relationName\":\"ApartmentToBookingVariant\"},{\"name\":\"reviews\",\"kind\":\"object\",\"type\":\"Review\",\"relationName\":\"ApartmentToReview\"}],\"dbName\":\"apartments\"},\"Review\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apartment_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"booking_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"comment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReviewToUser\"},{\"name\":\"apartment\",\"kind\":\"object\",\"type\":\"Apartment\",\"relationName\":\"ApartmentToReview\"},{\"name\":\"booking\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToReview\"}],\"dbName\":\"reviews\"},\"Amenity\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"apartment_amenities\",\"kind\":\"object\",\"type\":\"ApartmentAmenity\",\"relationName\":\"AmenityToApartmentAmenity\"}],\"dbName\":\"amenities\"},\"ApartmentAmenity\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amenity_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apartment_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"apartment\",\"kind\":\"object\",\"type\":\"Apartment\",\"relationName\":\"ApartmentToApartmentAmenity\"},{\"name\":\"amenity\",\"kind\":\"object\",\"type\":\"Amenity\",\"relationName\":\"AmenityToApartmentAmenity\"}],\"dbName\":\"apartment_amenities\"},\"ApartmentImage\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apartment_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"apartment\",\"kind\":\"object\",\"type\":\"Apartment\",\"relationName\":\"ApartmentToApartmentImage\"}],\"dbName\":\"apartment_images\"},\"BedType\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"apartment_beds\",\"kind\":\"object\",\"type\":\"ApartmentBed\",\"relationName\":\"ApartmentBedToBedType\"}],\"dbName\":\"bed_types\"},\"ApartmentBed\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apartment_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bed_type_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"count\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"apartment\",\"kind\":\"object\",\"type\":\"Apartment\",\"relationName\":\"ApartmentToApartmentBed\"},{\"name\":\"bed_type\",\"kind\":\"object\",\"type\":\"BedType\",\"relationName\":\"ApartmentBedToBedType\"}],\"dbName\":\"apartment_beds\"},\"BookingVariant\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apartment_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"capacity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"is_available\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"apartment\",\"kind\":\"object\",\"type\":\"Apartment\",\"relationName\":\"ApartmentToBookingVariant\"},{\"name\":\"bookings\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToBookingVariant\"}],\"dbName\":\"booking_variants\"},\"Reservation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apartment_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"start\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"end\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"apartment\",\"kind\":\"object\",\"type\":\"Apartment\",\"relationName\":\"ApartmentToReservation\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReservationToUser\"}],\"dbName\":\"reservations\"},\"Booking\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"booking_variant_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"BookingStatus\"},{\"name\":\"start\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"end\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"booking_variant\",\"kind\":\"object\",\"type\":\"BookingVariant\",\"relationName\":\"BookingToBookingVariant\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"BookingToUser\"},{\"name\":\"transaction\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"BookingToTransaction\"},{\"name\":\"booking_events\",\"kind\":\"object\",\"type\":\"BookingEvent\",\"relationName\":\"BookingToBookingEvent\"},{\"name\":\"booking_additional_options\",\"kind\":\"object\",\"type\":\"BookingAdditionalOption\",\"relationName\":\"BookingToBookingAdditionalOption\"},{\"name\":\"reviews\",\"kind\":\"object\",\"type\":\"Review\",\"relationName\":\"BookingToReview\"}],\"dbName\":\"bookings\"},\"AdditionalOption\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"booking_additional_options\",\"kind\":\"object\",\"type\":\"BookingAdditionalOption\",\"relationName\":\"AdditionalOptionToBookingAdditionalOption\"}],\"dbName\":\"additional_options\"},\"BookingAdditionalOption\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"option_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"booking_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"booking\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToBookingAdditionalOption\"},{\"name\":\"additional_option\",\"kind\":\"object\",\"type\":\"AdditionalOption\",\"relationName\":\"AdditionalOptionToBookingAdditionalOption\"}],\"dbName\":\"booking_additional_options\"},\"BookingEvent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"number_of_people\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"booking_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"event_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"booking\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToBookingEvent\"},{\"name\":\"event\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"BookingEventToEvent\"},{\"name\":\"transaction\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"BookingEventToTransaction\"}],\"dbName\":\"booking_events\"},\"Transaction\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"card_details_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transfer_details_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction_type\",\"kind\":\"enum\",\"type\":\"TransactionType\"},{\"name\":\"transaction_status\",\"kind\":\"enum\",\"type\":\"TransactionStatus\"},{\"name\":\"payment_method\",\"kind\":\"enum\",\"type\":\"PaymentMethod\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TransactionToUser\"},{\"name\":\"card_detail\",\"kind\":\"object\",\"type\":\"CardDetail\",\"relationName\":\"CardDetailToTransaction\"},{\"name\":\"transfer_detail\",\"kind\":\"object\",\"type\":\"TransferDetail\",\"relationName\":\"TransactionToTransferDetail\"},{\"name\":\"booking\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToTransaction\"},{\"name\":\"booking_event\",\"kind\":\"object\",\"type\":\"BookingEvent\",\"relationName\":\"BookingEventToTransaction\"}],\"dbName\":\"transactions\"},\"TransferDetail\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bank_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"account_number\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"swift\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"payer_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"TransactionToTransferDetail\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TransferDetailToUser\"}],\"dbName\":\"transfer_details\"},\"CardDetail\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiry_month\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"expiry_year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"holder\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"CardDetailToTransaction\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CardDetailToUser\"}],\"dbName\":\"card_details\"},\"Event\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"guide_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"capacity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"start\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"end\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"guide\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"EventToUser\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"EventImage\",\"relationName\":\"EventToEventImage\"},{\"name\":\"booking_events\",\"kind\":\"object\",\"type\":\"BookingEvent\",\"relationName\":\"BookingEventToEvent\"}],\"dbName\":\"events\"},\"EventImage\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"event_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_excluded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"event\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"EventToEventImage\"}],\"dbName\":\"event_images\"}},\"enums\":{},\"types\":{}}")
-defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
-config.engineWasm = {
-  getRuntime: async () => require('./query_engine_bg.js'),
-  getQueryEngineWasmModule: async () => {
-    const loader = (await import('#wasm-engine-loader')).default
-    const engine = (await loader).default
-    return engine
+        message += `
+If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
+
+        throw new Error(message)
+      }
+    })
   }
 }
-config.compilerWasm = undefined
 
-config.injectableEdgeEnv = () => ({
-  parsed: {
-    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
-  }
-})
-
-if (typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined) {
-  Debug.enable(typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined)
-}
-
-const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
-Object.assign(exports, Prisma)
 
+Object.assign(exports, Prisma)

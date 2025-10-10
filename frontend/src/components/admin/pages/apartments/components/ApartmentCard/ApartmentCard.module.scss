@@ -1,6 +1,8 @@
 @use '@/components/styles/_variables.scss' as *;
 
 .apartment_row {
+  cursor: pointer;
+
   &>td {
     padding: $spacing-md;
   }

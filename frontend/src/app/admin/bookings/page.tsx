@@ -1,10 +1,8 @@
+import { Bookings } from "@/components/admin/pages/bookings";
 
 
-
-export default function page() {
+export default async function page() {
   return (
-    <div>
-      <h1>Bookings</h1>
-    </div>
+    <Bookings />
   )
 }

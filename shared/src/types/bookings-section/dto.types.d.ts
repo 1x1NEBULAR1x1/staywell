@@ -9,6 +9,7 @@ export type AdditionalOptionsFilters = BaseFiltersOptions<AdditionalOption> & {
 };
 export type CreateAdditionalOption = CreativeOmit<AdditionalOption> & {
     image?: string;
+    file?: File;
 };
 export type UpdateAdditionalOption = Partial<CreateAdditionalOption> & {
     is_excluded?: boolean;
@@ -41,7 +42,9 @@ export type BookingsFilters = BaseFiltersOptions<Booking> & {
     booking_variant_id?: string;
     transaction_id?: string;
 };
-export type CreateBooking = Omit<CreativeOmit<Booking>, "status">;
+export type CreateBooking = Omit<CreativeOmit<Booking>, "status" | "message"> & {
+    message?: string;
+};
 export type UpdateBooking = Partial<CreateBooking>;
 export type ReservationsFilters = BaseFiltersOptions<Reservation> & {
     user_id?: string;

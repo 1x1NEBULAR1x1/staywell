@@ -1,0 +1,26 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.amenities {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .amenities_label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .amenities_content {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-sm;
+
+
+
+    .add_container {
+      position: relative;
+    }
+
+  }
+}

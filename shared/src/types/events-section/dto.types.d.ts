@@ -10,12 +10,12 @@ export type EventsFilters = BaseFiltersOptions<Event> & {
     max_start?: Date;
     min_end?: Date;
     max_end?: Date;
-    search?: string;
     min_price?: number;
     max_price?: number;
 };
 export type CreateEvent = Omit<CreativeOmit<Event>, 'guide_id'> & {
     image?: string;
+    file?: File;
 };
 export type UpdateEvent = Partial<CreateEvent> & {
     is_excluded?: boolean;
@@ -24,11 +24,11 @@ export type EventImagesFilters = BaseFiltersOptions<EventImage> & {
     name?: string;
     description?: string;
     event_id?: string;
-    search?: string;
 };
 export type CreateEventImage = Omit<CreativeOmit<EventImage>, "description"> & {
     image?: string;
     description?: string;
+    file?: File;
 };
 export type UpdateEventImage = Partial<CreateEventImage> & {
     is_excluded?: boolean;

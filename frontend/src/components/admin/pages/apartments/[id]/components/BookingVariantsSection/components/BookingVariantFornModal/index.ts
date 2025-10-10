@@ -1,0 +1,1 @@
+export { BookingVariantFornModal } from './BookingVariantFornModal';

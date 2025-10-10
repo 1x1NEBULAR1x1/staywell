@@ -4,8 +4,6 @@ import { ApiProperty } from "@nestjs/swagger";
 
 interface ToUrlOptions {
   required?: boolean;
-  protocols?: string[];
-  require_protocol?: boolean;
   description?: string;
   example?: string;
 }
@@ -15,35 +13,34 @@ interface ToUrlOptions {
  */
 export function ToUrl(
   options: ToUrlOptions = {},
-  validationOptions?: ValidationOptions,
 ) {
   const {
     required = true,
-    protocols,
-    require_protocol = true,
     description,
     example,
   } = options;
 
-  return function (target: object, propertyKey: string | symbol) {
+  return function (target: object, property_key: string | symbol) {
     ApiProperty({
       type: "string",
       format: "url",
       description,
       example,
       required,
-    })(target, propertyKey);
+    })(target, property_key);
 
-    Transform(({ value }: { value: unknown }) => JSON.stringify(value).trim())(
+    Transform(({ value }: { value: unknown }) => String(value).trim())(
       target,
-      propertyKey,
+      property_key,
     );
 
-    if (!required) IsOptional()(target, propertyKey);
+    if (!required) IsOptional()(target, property_key);
 
-    IsUrl({ protocols, require_protocol, ...validationOptions })(
-      target,
-      propertyKey,
-    );
+    Transform(({ value }: { value: unknown }) => {
+      if (typeof value === "string" && value.trim().length > 1) {
+        IsUrl()(target, property_key);
+      }
+      return value;
+    })(target, property_key);
   };
 }

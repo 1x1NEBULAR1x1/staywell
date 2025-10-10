@@ -1,0 +1,17 @@
+@use '@/components/styles/_variables.scss' as *;
+
+
+
+.variants_list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  width: 100%;
+
+  .empty {
+    color: $foreground-light;
+    font-style: italic;
+    text-align: center;
+    padding: $spacing-xl;
+  }
+}

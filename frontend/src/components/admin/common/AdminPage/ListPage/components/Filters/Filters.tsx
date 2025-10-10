@@ -12,9 +12,16 @@ type FiltersProps<T extends GETTABLE_NAMES> = {
   filters: GettableTypes<T>['filters'];
   updateFilters: (filters: GettableTypes<T>['filters']) => void;
   filters_menu: ReactNode
+  create_button: ReactNode
 }
 
-export const Filters = <T extends GETTABLE_NAMES>({ filters, updateFilters, sort_by_list, filters_menu }: FiltersProps<T>) => {
+export const Filters = <T extends GETTABLE_NAMES>({
+  filters,
+  updateFilters,
+  sort_by_list,
+  filters_menu,
+  create_button
+}: FiltersProps<T>) => {
   return (
     <div className={classes.filters}>
       <div className={classes.left}>
@@ -24,6 +31,7 @@ export const Filters = <T extends GETTABLE_NAMES>({ filters, updateFilters, sort
         />
       </div>
       <div className={classes.right}>
+        {create_button}
         <SortBySelect
           sort_by_list={sort_by_list}
           setSortBy={(sort_field: string) => updateFilters({ ...filters, sort_field: sort_field as keyof GettableTypes<T>['model'] })}

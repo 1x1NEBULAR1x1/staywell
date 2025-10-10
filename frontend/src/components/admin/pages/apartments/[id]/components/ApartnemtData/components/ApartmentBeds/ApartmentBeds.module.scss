@@ -1,0 +1,24 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.beds {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .beds_label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .beds_content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-md;
+
+    .add_container {
+      position: relative;
+    }
+  }
+}

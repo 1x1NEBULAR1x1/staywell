@@ -1,0 +1,21 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.create_button {
+  background-color: rgba($primary-main, 0.95);
+  color: rgba($foreground-white, 0.95);
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-md;
+  border: none;
+  font-size: $font-size-md;
+  font-weight: $font-weight-light;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: $box-shadow-sm;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $foreground-white;
+    background-color: $primary-main;
+    box-shadow: $box-shadow-lg;
+  }
+}

@@ -9,7 +9,7 @@ export interface ExtendedApartmentAmenity extends ApartmentAmenity {
 export interface ExtendedApartmentBed extends ApartmentBed {
     bed_type: BedType;
 }
-export type ReviewWithRelations = Review & {
+export type ExtendedReview = Review & {
     user: SafeUser;
     apartment: Apartment;
 };

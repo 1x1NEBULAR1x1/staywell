@@ -33,7 +33,6 @@ export class CrudService {
   async update(id: string, data: UpdateBookingVariantDto) {
     await Promise.all([
       this.findOne(id),
-      this.checkApartment(data.apartment_id),
     ]);
     return await this.prisma.bookingVariant.update({
       where: { id },

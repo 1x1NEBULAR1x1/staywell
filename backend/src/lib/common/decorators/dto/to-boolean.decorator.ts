@@ -32,7 +32,7 @@ export function ToBoolean(
       required,
     })(target, propertyKey);
 
-    Transform(({ value }: { value: unknown }) => value == "true")(
+    Transform(({ value }: { value: unknown }) => String(value) == "true")(
       target,
       propertyKey,
     );

@@ -10,6 +10,7 @@ import {
   UploadedFile,
   UseInterceptors,
   ParseUUIDPipe,
+  Put,
 } from "@nestjs/common";
 import { ListService, CrudService } from "./services";
 import {
@@ -74,7 +75,7 @@ export class AmenitiesController {
     return this.crudService.findOne(id);
   }
 
-  @Patch(":id")
+  @Put(":id")
   @AdminOnly()
   @UseInterceptors(ImageUploadInterceptor)
   @ApiOperation({ summary: "Update amenity by ID" })

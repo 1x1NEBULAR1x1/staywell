@@ -1,0 +1,88 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.tooltip {
+  &_wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &_text {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+    border-radius: $border-radius-xs;
+    border: $border-normal;
+    background-color: $background-main;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+
+    &_position_top {
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    &_position_bottom {
+      top: 100%;
+      left: 50%;
+      bottom: auto;
+      transform: translateX(-50%) translateY(4px);
+    }
+
+    &_position_left {
+      right: 100%;
+      top: 50%;
+      left: auto;
+      bottom: auto;
+      transform: translateX(-4px) translateY(-50%);
+    }
+
+    &_position_right {
+      left: 100%;
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      transform: translateX(4px) translateY(-50%);
+    }
+
+    &_variant_white {
+      background: $background-light;
+      color: $primary-dark;
+    }
+
+    &_variant_main {
+      background: $primary-main;
+      color: $foreground-white;
+    }
+
+    &_variant_light {
+      background: $primary-light;
+      color: $foreground-white;
+    }
+
+    &_variant_green {
+      background: $green;
+      color: $foreground-white;
+    }
+
+    &_variant_red {
+      background: $red;
+      color: $foreground-white;
+    }
+
+    &_variant_yellow {
+      background: $yellow;
+      color: $foreground-white;
+    }
+  }
+
+  &_wrapper:hover &_text {
+    opacity: 1;
+  }
+}

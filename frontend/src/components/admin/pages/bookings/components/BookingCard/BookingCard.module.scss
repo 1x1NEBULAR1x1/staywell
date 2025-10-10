@@ -1,0 +1,244 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.booking_card {
+  display: flex;
+  flex-direction: column;
+  background-color: $background-main;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow;
+  overflow: hidden;
+  transition: $transition-normal;
+  border: 1px solid $border-color-main;
+
+  &:hover {
+    box-shadow: $box-shadow-md;
+    border-color: $primary-light;
+  }
+
+  &_price_badge {
+    position: absolute;
+    top: $spacing-sm;
+    right: $spacing-sm;
+    background-color: $primary-main;
+    color: $foreground-white;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    z-index: 2;
+    box-shadow: $box-shadow-sm;
+  }
+
+  &_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    &_container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    &_overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      padding: $spacing-md;
+      color: $foreground-white;
+    }
+
+    &_title {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      margin: 0;
+      font-family: var(--font-open-sans);
+      color: $foreground-white;
+      line-height: 1.2;
+    }
+
+    &_subtitle {
+      font-size: $font-size-sm;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: $font-weight-light;
+      margin-top: $spacing-xs;
+      display: block;
+    }
+  }
+
+  &_content {
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &_dates {
+    padding: $spacing-sm 0;
+    font-size: $font-size-sm;
+    color: $foreground-main;
+    font-weight: $font-weight-light;
+    border-bottom: 1px solid $border-color-main;
+  }
+
+  &_days {
+    padding: $spacing-sm 0;
+    font-size: $font-size-md;
+    color: $foreground-main;
+    font-weight: $font-weight-normal;
+    border-bottom: 1px solid $border-color-main;
+  }
+
+  &_message {
+    padding: $spacing-sm 0;
+    font-size: $font-size-sm;
+    color: $foreground-main;
+    font-weight: $font-weight-normal;
+    border-bottom: 1px solid $border-color-main;
+  }
+
+
+  &_user {
+    &_section {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      padding: $spacing-sm 0;
+      border-bottom: 1px solid $border-color-main;
+    }
+
+    &_avatar {
+      width: $font-size-3xl;
+      height: $font-size-3xl;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &_details {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+      min-width: 0;
+      flex: 1;
+    }
+
+    &_name {
+      font-size: $font-size-md;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
+    &_email {
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+  }
+
+  &_payment {
+    &_section {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+      padding: $spacing-sm 0;
+      border-bottom: 1px solid $border-color-main;
+    }
+
+    &_item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &_label {
+        font-size: $font-size-sm;
+        color: $foreground-main;
+        font-weight: $font-weight-normal;
+      }
+
+      &_value {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+      }
+    }
+  }
+
+  &_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm 0;
+    gap: $spacing-sm;
+  }
+
+  &_edit_button {
+    background: transparent;
+    border: 1px solid $primary-main;
+    color: $primary-main;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: 50%;
+    transition: $transition-fast;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+
+    &:hover {
+      background-color: $primary-main;
+      color: $foreground-white;
+    }
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  &_status {
+    &_badge {
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-xs;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      letter-spacing: 0.3px;
+      line-height: 1;
+
+      &.booking_card_status_confirmed {
+        background-color: $green;
+        color: $foreground-white;
+      }
+
+      &.booking_card_status_pending {
+        background-color: $yellow;
+        color: $foreground-main;
+      }
+
+      &.booking_card_status_cancelled {
+        background-color: $red;
+        color: $foreground-white;
+      }
+
+      &.booking_card_status_completed {
+        background-color: $primary-light;
+        color: $foreground-white;
+      }
+    }
+  }
+}

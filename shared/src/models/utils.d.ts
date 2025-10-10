@@ -35,12 +35,3 @@ export declare const getRelationModelName: (field_name: string) => GETTABLE_NAME
  * @returns label
  */
 export declare const getRelationModelLabel: (item: object) => string;
-/**
- * Получает опции для сортировки по полям модели
- * @param model - имя модели
- * @returns опции для сортировки
- */
-export declare const getSortFieldOptions: (model: GETTABLE_NAMES) => {
-    value: string;
-    label: string;
-}[];

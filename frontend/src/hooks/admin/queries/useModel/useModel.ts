@@ -1,7 +1,7 @@
 import { CrudApi, GetApi } from "@/lib/api";
 import { GETTABLE_NAMES, CRUDDABLE_NAMES, isCruddableName, GettableTypes } from "@shared/src";
 import { useQuery } from "@tanstack/react-query";
-import { GetQueryOptions, FindQueryOptions, QUERY_KEYS, createDeleteMutation, createCreateMutation, createUpdateMutation, UseModel, UseModelGettableOnly, UseModelCruddable } from "./lib";
+import { GetQueryOptions, FindQueryOptions, QUERY_KEYS, initDeleteMutation, initCreateMutation, initUpdateMutation, UseModel, UseModelGettableOnly, UseModelCruddable } from "./lib";
 
 /**
  * Хук для работы с моделями через API (полный CRUD)
@@ -48,19 +48,19 @@ export function useModel<M extends GETTABLE_NAMES>(model: M): UseModel<M> {
      * Создает запись в API
      * @returns Мутация для создания записи
      */
-    create: crudApi ? () => createCreateMutation({ api: crudApi, model: model as CRUDDABLE_NAMES }) : undefined,
+    create: crudApi ? () => initCreateMutation({ api: crudApi, model }) : undefined,
     /**
      * Обновляет запись в API
      * @param id -  Id записи
      * @returns Мутация для обновления записи
      */
-    update: crudApi ? (id: string) => createUpdateMutation({ api: crudApi, model: model as CRUDDABLE_NAMES, id }) : undefined,
+    update: crudApi ? (id: string) => initUpdateMutation({ api: crudApi, model, id }) : undefined,
     /**
      * Удаляет запись в API
      * @param id - Id записи
      * @returns Мутация для удаления записи
      */
-    delete: crudApi ? (id: string) => createDeleteMutation({ api: crudApi, model: model as CRUDDABLE_NAMES, id }) : undefined,
+    remove: crudApi ? (id: string) => initDeleteMutation({ api: crudApi, model, id }) : undefined,
   } as UseModel<M> : {
     get,
     find,

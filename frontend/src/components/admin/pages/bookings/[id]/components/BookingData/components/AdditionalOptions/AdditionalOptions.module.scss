@@ -1,0 +1,164 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.additional_options {
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background: $background-light;
+  border-bottom: $border-normal;
+
+  .header_icon {
+    width: 20px;
+    height: 20px;
+    color: $primary-main;
+  }
+
+  .title {
+    flex: 1;
+    margin: 0;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .edit_button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background: $primary-main;
+    color: $background-main;
+    border: none;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background: darken($primary-main, 10%);
+    }
+
+    .edit_icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.content {
+  padding: $spacing-md;
+}
+
+.no_options {
+  text-align: center;
+  color: $foreground-light;
+  font-style: italic;
+  padding: $spacing-lg;
+}
+
+.options_list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.option_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background: $background-light;
+  border-radius: $border-radius-md;
+  border: $border-normal;
+}
+
+.option_info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.option_main {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.option_name {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $foreground-main;
+}
+
+.option_details {
+  display: flex;
+  gap: $spacing-md;
+  font-size: $font-size-sm;
+  color: $foreground-secondary;
+}
+
+.option_amount {
+  color: $primary-main;
+  font-weight: $font-weight-normal;
+}
+
+.option_price {
+  color: $foreground-light;
+}
+
+.option_description {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $foreground-secondary;
+  line-height: 1.4;
+}
+
+.option_actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.option_total {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $primary-main;
+  min-width: 70px;
+  text-align: right;
+}
+
+.total_section {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: $border-normal;
+}
+
+.total_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: $font-size-lg;
+
+  .total_label {
+    color: $foreground-main;
+    font-weight: $font-weight-semibold;
+  }
+
+  .total_amount {
+    color: $primary-main;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-xl;
+  }
+}

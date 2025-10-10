@@ -15,7 +15,6 @@ export interface UsersFilters extends BaseFiltersOptions<UserWithoutPassword> {
     phone_verified?: boolean;
     email_verified?: boolean;
     email?: string;
-    search?: string;
     phone_number?: string;
     is_active?: boolean;
 }

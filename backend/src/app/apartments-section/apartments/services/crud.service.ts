@@ -58,11 +58,11 @@ export class CrudService {
     if (!apartment) throw new NotFoundException("Apartment not found");
     // Find the minimum price from booking variants
     const booking_variants = await this.prisma.bookingVariant.findMany({
-      where: { apartment_id: apartment.id, is_available: true },
+      where: { apartment_id: apartment.id },
     });
     const price =
       booking_variants.length > 0
-        ? Math.min(...booking_variants.map((v) => v.price))
+        ? Math.min(...booking_variants.map((v) => v.is_available ? v.price : Infinity))
         : 0;
     // Find the maximum capacity from booking variants
     const capacity_from_variants =

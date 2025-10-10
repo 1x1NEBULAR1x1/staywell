@@ -1,0 +1,181 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.admin_form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  max-height: 80vh;
+  overflow-y: visible;
+
+  &_section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    &_image {
+      align-items: flex-start;
+      padding: $spacing-lg;
+      border: $border-normal;
+      border-radius: $border-radius-md;
+      background: $background-main;
+    }
+  }
+
+  &_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-md;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &_label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: $foreground-secondary;
+  }
+
+  &_input,
+  &_textarea,
+  &_select {
+    padding: $spacing-sm $spacing-md;
+    border: $border-normal;
+    border-radius: $border-radius-md;
+    font-size: $font-size-md;
+    color: $foreground-main;
+    background: $background-main;
+    transition: border-color $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-main;
+      box-shadow: 0 0 0 2px rgba($primary-light, 0.1);
+    }
+
+    &:disabled {
+      background: $background-light;
+      color: $foreground-light;
+      cursor: not-allowed;
+    }
+
+    &::placeholder {
+      color: $foreground-secondary;
+    }
+
+    &_error {
+      border-color: $red;
+
+      &:focus {
+        box-shadow: 0 0 0 2px rgba($red, 0.1);
+      }
+    }
+  }
+
+  &_select {
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &_textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  &_hint {
+    font-size: $font-size-xs;
+    color: $foreground-light;
+    margin-top: $spacing-xs;
+  }
+
+  &_error {
+    font-size: $font-size-xs;
+    color: $red;
+    margin-top: $spacing-xs;
+  }
+
+  &_actions {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: flex-end;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: $border-normal;
+
+    @media (max-width: 768px) {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &_button {
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    cursor: pointer;
+    transition: all $transition-fast;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+
+    &_primary {
+      background: $green;
+      color: $foreground-white;
+
+      &:hover:not(:disabled) {
+        background: mix($green, $foreground-white, 10%);
+      }
+
+      &:disabled {
+        background: $background-disabled;
+        color: $foreground-light;
+      }
+    }
+
+    &_secondary {
+      background: transparent;
+      color: $foreground-secondary;
+      border: $border-normal;
+
+      &:hover:not(:disabled) {
+        background: $background-light;
+        border-color: $primary-light;
+        color: $foreground-main;
+      }
+    }
+  }
+
+  &_spinner {
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

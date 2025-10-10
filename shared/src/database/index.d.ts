@@ -246,6 +246,13 @@ export class PrismaClient<
    */
   $disconnect(): $Utils.JsPromise<void>;
 
+  /**
+   * Add a middleware
+   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
+   * @see https://pris.ly/d/extensions
+   */
+  $use(cb: Prisma.Middleware): void
+
 /**
    * Executes a prepared raw query and returns the number of affected rows.
    * @example
@@ -562,8 +569,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.16.2
-   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+   * Prisma Client JS version: 6.13.0
+   * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
    */
   export type PrismaVersion = {
     client: string
@@ -2467,10 +2474,6 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
     /**
-     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
-     */
-    adapter?: runtime.SqlDriverAdapterFactory | null
-    /**
      * Global configuration for omitting model fields by default.
      * 
      * @example
@@ -2563,6 +2566,25 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
+
+  /**
+   * These options are being passed into the middleware as "params"
+   */
+  export type MiddlewareParams = {
+    model?: ModelName
+    action: PrismaAction
+    args: any
+    dataPath: string[]
+    runInTransaction: boolean
+  }
+
+  /**
+   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
+   */
+  export type Middleware<T = any> = (
+    params: MiddlewareParams,
+    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
+  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -14730,6 +14752,7 @@ export namespace Prisma {
     user_id: string | null
     booking_variant_id: string | null
     transaction_id: string | null
+    message: string | null
     status: $Enums.BookingStatus | null
     start: Date | null
     end: Date | null
@@ -14742,6 +14765,7 @@ export namespace Prisma {
     user_id: string | null
     booking_variant_id: string | null
     transaction_id: string | null
+    message: string | null
     status: $Enums.BookingStatus | null
     start: Date | null
     end: Date | null
@@ -14754,6 +14778,7 @@ export namespace Prisma {
     user_id: number
     booking_variant_id: number
     transaction_id: number
+    message: number
     status: number
     start: number
     end: number
@@ -14768,6 +14793,7 @@ export namespace Prisma {
     user_id?: true
     booking_variant_id?: true
     transaction_id?: true
+    message?: true
     status?: true
     start?: true
     end?: true
@@ -14780,6 +14806,7 @@ export namespace Prisma {
     user_id?: true
     booking_variant_id?: true
     transaction_id?: true
+    message?: true
     status?: true
     start?: true
     end?: true
@@ -14792,6 +14819,7 @@ export namespace Prisma {
     user_id?: true
     booking_variant_id?: true
     transaction_id?: true
+    message?: true
     status?: true
     start?: true
     end?: true
@@ -14877,6 +14905,7 @@ export namespace Prisma {
     user_id: string
     booking_variant_id: string
     transaction_id: string
+    message: string | null
     status: $Enums.BookingStatus
     start: Date
     end: Date
@@ -14906,6 +14935,7 @@ export namespace Prisma {
     user_id?: boolean
     booking_variant_id?: boolean
     transaction_id?: boolean
+    message?: boolean
     status?: boolean
     start?: boolean
     end?: boolean
@@ -14925,6 +14955,7 @@ export namespace Prisma {
     user_id?: boolean
     booking_variant_id?: boolean
     transaction_id?: boolean
+    message?: boolean
     status?: boolean
     start?: boolean
     end?: boolean
@@ -14940,6 +14971,7 @@ export namespace Prisma {
     user_id?: boolean
     booking_variant_id?: boolean
     transaction_id?: boolean
+    message?: boolean
     status?: boolean
     start?: boolean
     end?: boolean
@@ -14955,6 +14987,7 @@ export namespace Prisma {
     user_id?: boolean
     booking_variant_id?: boolean
     transaction_id?: boolean
+    message?: boolean
     status?: boolean
     start?: boolean
     end?: boolean
@@ -14962,7 +14995,7 @@ export namespace Prisma {
     updated?: boolean
   }
 
-  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "booking_variant_id" | "transaction_id" | "status" | "start" | "end" | "created" | "updated", ExtArgs["result"]["booking"]>
+  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "booking_variant_id" | "transaction_id" | "message" | "status" | "start" | "end" | "created" | "updated", ExtArgs["result"]["booking"]>
   export type BookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     booking_variant?: boolean | BookingVariantDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14998,6 +15031,7 @@ export namespace Prisma {
       user_id: string
       booking_variant_id: string
       transaction_id: string
+      message: string | null
       status: $Enums.BookingStatus
       start: Date
       end: Date
@@ -15436,6 +15470,7 @@ export namespace Prisma {
     readonly user_id: FieldRef<"Booking", 'String'>
     readonly booking_variant_id: FieldRef<"Booking", 'String'>
     readonly transaction_id: FieldRef<"Booking", 'String'>
+    readonly message: FieldRef<"Booking", 'String'>
     readonly status: FieldRef<"Booking", 'BookingStatus'>
     readonly start: FieldRef<"Booking", 'DateTime'>
     readonly end: FieldRef<"Booking", 'DateTime'>
@@ -25446,6 +25481,7 @@ export namespace Prisma {
     user_id: 'user_id',
     booking_variant_id: 'booking_variant_id',
     transaction_id: 'transaction_id',
+    message: 'message',
     status: 'status',
     start: 'start',
     end: 'end',
@@ -26563,6 +26599,7 @@ export namespace Prisma {
     user_id?: StringFilter<"Booking"> | string
     booking_variant_id?: StringFilter<"Booking"> | string
     transaction_id?: StringFilter<"Booking"> | string
+    message?: StringNullableFilter<"Booking"> | string | null
     status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
     start?: DateTimeFilter<"Booking"> | Date | string
     end?: DateTimeFilter<"Booking"> | Date | string
@@ -26581,6 +26618,7 @@ export namespace Prisma {
     user_id?: SortOrder
     booking_variant_id?: SortOrder
     transaction_id?: SortOrder
+    message?: SortOrderInput | SortOrder
     status?: SortOrder
     start?: SortOrder
     end?: SortOrder
@@ -26602,6 +26640,7 @@ export namespace Prisma {
     NOT?: BookingWhereInput | BookingWhereInput[]
     user_id?: StringFilter<"Booking"> | string
     booking_variant_id?: StringFilter<"Booking"> | string
+    message?: StringNullableFilter<"Booking"> | string | null
     status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
     start?: DateTimeFilter<"Booking"> | Date | string
     end?: DateTimeFilter<"Booking"> | Date | string
@@ -26620,6 +26659,7 @@ export namespace Prisma {
     user_id?: SortOrder
     booking_variant_id?: SortOrder
     transaction_id?: SortOrder
+    message?: SortOrderInput | SortOrder
     status?: SortOrder
     start?: SortOrder
     end?: SortOrder
@@ -26638,6 +26678,7 @@ export namespace Prisma {
     user_id?: StringWithAggregatesFilter<"Booking"> | string
     booking_variant_id?: StringWithAggregatesFilter<"Booking"> | string
     transaction_id?: StringWithAggregatesFilter<"Booking"> | string
+    message?: StringNullableWithAggregatesFilter<"Booking"> | string | null
     status?: EnumBookingStatusWithAggregatesFilter<"Booking"> | $Enums.BookingStatus
     start?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
     end?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
@@ -28167,6 +28208,7 @@ export namespace Prisma {
 
   export type BookingCreateInput = {
     id?: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -28185,6 +28227,7 @@ export namespace Prisma {
     user_id: string
     booking_variant_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -28197,6 +28240,7 @@ export namespace Prisma {
 
   export type BookingUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28215,6 +28259,7 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28230,6 +28275,7 @@ export namespace Prisma {
     user_id: string
     booking_variant_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -28239,6 +28285,7 @@ export namespace Prisma {
 
   export type BookingUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28251,6 +28298,7 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29751,6 +29799,7 @@ export namespace Prisma {
     user_id?: SortOrder
     booking_variant_id?: SortOrder
     transaction_id?: SortOrder
+    message?: SortOrder
     status?: SortOrder
     start?: SortOrder
     end?: SortOrder
@@ -29763,6 +29812,7 @@ export namespace Prisma {
     user_id?: SortOrder
     booking_variant_id?: SortOrder
     transaction_id?: SortOrder
+    message?: SortOrder
     status?: SortOrder
     start?: SortOrder
     end?: SortOrder
@@ -29775,6 +29825,7 @@ export namespace Prisma {
     user_id?: SortOrder
     booking_variant_id?: SortOrder
     transaction_id?: SortOrder
+    message?: SortOrder
     status?: SortOrder
     start?: SortOrder
     end?: SortOrder
@@ -32106,6 +32157,7 @@ export namespace Prisma {
 
   export type BookingCreateWithoutUserInput = {
     id?: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -32122,6 +32174,7 @@ export namespace Prisma {
     id?: string
     booking_variant_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -32369,6 +32422,7 @@ export namespace Prisma {
     user_id?: StringFilter<"Booking"> | string
     booking_variant_id?: StringFilter<"Booking"> | string
     transaction_id?: StringFilter<"Booking"> | string
+    message?: StringNullableFilter<"Booking"> | string | null
     status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
     start?: DateTimeFilter<"Booking"> | Date | string
     end?: DateTimeFilter<"Booking"> | Date | string
@@ -32933,6 +32987,7 @@ export namespace Prisma {
 
   export type BookingCreateWithoutReviewsInput = {
     id?: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -32950,6 +33005,7 @@ export namespace Prisma {
     user_id: string
     booking_variant_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -33093,6 +33149,7 @@ export namespace Prisma {
 
   export type BookingUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33110,6 +33167,7 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33718,6 +33776,7 @@ export namespace Prisma {
 
   export type BookingCreateWithoutBooking_variantInput = {
     id?: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -33734,6 +33793,7 @@ export namespace Prisma {
     id?: string
     user_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -34497,6 +34557,7 @@ export namespace Prisma {
 
   export type BookingCreateWithoutBooking_additional_optionsInput = {
     id?: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -34514,6 +34575,7 @@ export namespace Prisma {
     user_id: string
     booking_variant_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -34568,6 +34630,7 @@ export namespace Prisma {
 
   export type BookingUpdateWithoutBooking_additional_optionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34585,6 +34648,7 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34629,6 +34693,7 @@ export namespace Prisma {
 
   export type BookingCreateWithoutBooking_eventsInput = {
     id?: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -34646,6 +34711,7 @@ export namespace Prisma {
     user_id: string
     booking_variant_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -34745,6 +34811,7 @@ export namespace Prisma {
 
   export type BookingUpdateWithoutBooking_eventsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34762,6 +34829,7 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34964,6 +35032,7 @@ export namespace Prisma {
 
   export type BookingCreateWithoutTransactionInput = {
     id?: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -34980,6 +35049,7 @@ export namespace Prisma {
     id?: string
     user_id: string
     booking_variant_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -35158,6 +35228,7 @@ export namespace Prisma {
 
   export type BookingUpdateWithoutTransactionInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35174,6 +35245,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35852,6 +35924,7 @@ export namespace Prisma {
     id?: string
     booking_variant_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -35980,6 +36053,7 @@ export namespace Prisma {
 
   export type BookingUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35996,6 +36070,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36010,6 +36085,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     booking_variant_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36465,6 +36541,7 @@ export namespace Prisma {
     id?: string
     user_id: string
     transaction_id: string
+    message?: string | null
     status?: $Enums.BookingStatus
     start: Date | string
     end: Date | string
@@ -36474,6 +36551,7 @@ export namespace Prisma {
 
   export type BookingUpdateWithoutBooking_variantInput = {
     id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36490,6 +36568,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36504,6 +36583,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     start?: DateTimeFieldUpdateOperationsInput | Date | string
     end?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { api } from "@/lib/api/axios";
 import { GETTABLE_DATA } from "@shared/src";
 import { getImageUrl } from "@/lib/api/utils/image-url";
+
 /**
  * Интерфейс для работы с моделью из API
  * @param M - имя модели из GETTABLE_NAMES
@@ -22,6 +23,34 @@ export class GetApi<M extends GETTABLE_NAMES> implements IGetApi<M> {
   constructor(
     protected model: M,
   ) { }
+
+  private processApiData = <T>(data: T): T => {
+    if (data === null || data === undefined) {
+      return data;
+    }
+
+    if (Array.isArray(data)) {
+      return data.map(this.processApiData) as T;
+    }
+
+    if (typeof data === 'object') {
+      const processed = { ...data };
+
+      if ('image' in processed && typeof processed.image === 'string') {
+        processed.image = getImageUrl(processed.image);
+      }
+
+      for (const key in processed) {
+        if (processed.hasOwnProperty(key)) {
+          (processed)[key] = this.processApiData((processed)[key]);
+        }
+      }
+
+      return processed;
+    }
+
+    return data;
+  };
   public endpoint: `${string}/${GETTABLE_PATHS}` = `${process.env.NEXT_PUBLIC_API_URL}/${GETTABLE_DATA[this.model]}`
   /**
    * Получает записи от API по фильтрам
@@ -32,10 +61,7 @@ export class GetApi<M extends GETTABLE_NAMES> implements IGetApi<M> {
     const response = await api.get<BaseListResult<GettableTypes<M>['model']>>(this.endpoint, { params: filters })
     return {
       ...response, data: {
-        ...response.data, items: response.data.items.map((item) => {
-          const formatted_item = { ...item, created: new Date(item.created), updated: new Date(item.updated) }
-          return 'image' in formatted_item ? { ...formatted_item, image: getImageUrl(formatted_item.image) } : formatted_item
-        })
+        ...response.data, items: response.data.items.map(this.processApiData)
       }
     };
   }
@@ -46,10 +72,9 @@ export class GetApi<M extends GETTABLE_NAMES> implements IGetApi<M> {
    */
   find = async (id: string) => {
     const response = await api.get<GettableTypes<M>['model']>(`${this.endpoint}/${id}`)
-    const formatted_item = { ...response.data, created: new Date(response.data.created), updated: new Date(response.data.updated) }
     return {
       ...response,
-      data: 'image' in formatted_item ? { ...formatted_item, image: getImageUrl(formatted_item.image) } : formatted_item
+      data: this.processApiData(response.data)
     };
   }
 }

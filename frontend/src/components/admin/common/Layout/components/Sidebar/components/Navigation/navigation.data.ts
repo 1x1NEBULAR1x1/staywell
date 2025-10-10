@@ -1,5 +1,5 @@
 import { GETTABLE_ICONS } from '@shared/src/models/icons';
-import { Command, Settings } from 'lucide-react';
+import { Command, LayoutList, Settings } from 'lucide-react';
 
 export type NavButtonProps = {
   icon: typeof Command;
@@ -33,6 +33,11 @@ export const main_buttons: NavButtonProps[] = [
     label: "Bookings",
     href: "/admin/bookings",
   },
+  {
+    icon: LayoutList,
+    label: 'Management',
+    href: "/admin/management",
+  }
 ]
 
 export const secondary_buttons: NavButtonProps[] = [

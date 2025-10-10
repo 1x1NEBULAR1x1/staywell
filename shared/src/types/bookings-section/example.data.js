@@ -2,9 +2,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.example_extended_reservations_list_result = exports.example_extended_reservation = exports.example_reservation = exports.example_extended_bookings_list_result = exports.example_extended_booking = exports.example_booking = exports.example_extended_booking_variants_list_result = exports.example_extended_booking_variant = exports.example_booking_variant = exports.example_total_price = exports.example_extended_booking_additional_options_list_result = exports.example_extended_booking_additional_option = exports.example_booking_additional_option = exports.example_additional_options_list_result = exports.example_additional_option = void 0;
 const database_1 = require("../../database");
-const example_data_1 = require("../apartments-section/example.data");
 const transactions_section_1 = require("../transactions-section");
 const users_section_1 = require("../users-section");
+const example_apartment = {
+    id: 'UUID',
+    name: 'Apartment 1',
+    number: 1,
+    rooms_count: 2,
+    floor: 3,
+    description: 'Apartment 1 description',
+    image: 'https://example.com/image.jpg',
+    deposit: 100,
+    is_available: true,
+    is_smoking: false,
+    is_pet_friendly: false,
+    type: database_1.ApartmentType.STANDARD,
+    rules: 'Apartment 1 rules',
+    max_capacity: 2,
+    created: new Date(),
+    updated: new Date(),
+    is_excluded: false,
+};
 exports.example_additional_option = {
     id: "3fa85f64-5717-4562-b3fc-2c963f66afa1",
     name: "Breakfast",
@@ -59,7 +77,7 @@ exports.example_booking_variant = {
 };
 exports.example_extended_booking_variant = {
     ...exports.example_booking_variant,
-    apartment: example_data_1.example_apartment,
+    apartment: example_apartment,
 };
 exports.example_extended_booking_variants_list_result = {
     items: [exports.example_extended_booking_variant],
@@ -72,6 +90,7 @@ exports.example_booking = {
     user_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     booking_variant_id: "3fa85f64-5717-4562-b3fc-2c963f66afa7",
     transaction_id: "3fa85f64-5717-4562-b3fc-2c963f66afa8",
+    message: "Example message",
     status: database_1.BookingStatus.CONFIRMED,
     start: new Date("2023-10-01T14:00:00Z"),
     end: new Date("2023-10-05T12:00:00Z"),
@@ -102,7 +121,7 @@ exports.example_reservation = {
 };
 exports.example_extended_reservation = {
     ...exports.example_reservation,
-    apartment: example_data_1.example_apartment,
+    apartment: example_apartment,
     user: users_section_1.example_safe_user
 };
 exports.example_extended_reservations_list_result = {

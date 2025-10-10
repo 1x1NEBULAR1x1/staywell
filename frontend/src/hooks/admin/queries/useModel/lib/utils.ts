@@ -2,7 +2,6 @@ import { query_client } from "@/lib/api";
 import { CRUDDABLE_NAMES } from "@shared/src";
 import { QUERY_KEYS } from "./query-keys";
 import { CachedItem, CachedList, MutationContext } from "./types";
-import { useToast } from "@/hooks/common/useToast";
 /**
  * Prepares context for optimistic updates
  */
@@ -32,26 +31,17 @@ export function optimisticRemoveFromList<M extends CRUDDABLE_NAMES, T extends { 
 }
 
 interface HandleMutationExecutionProps<T> {
-  error?: Error;
   context?: MutationContext<T>;
   model: CRUDDABLE_NAMES;
   id?: string;
-  status?: number;
-  operation: 'update' | 'delete' | 'create' | 'restore';
 }
 /**
  * Handles error in mutation with rollback
  */
-export function handleMutationError<T>({ error, context, model, id, operation, status }: HandleMutationExecutionProps<T>) {
-  const toast = useToast()
-
+export function handleMutationError<T>({ context, model, id }: HandleMutationExecutionProps<T>) {
   // Rollback on error if previous data exists
   if (id && context?.previous_data)
     query_client.setQueryData(QUERY_KEYS(model).find(id), context.previous_data);
-  toast.error(error
-    ? `Error ${status}`
-    : 'Success'
-  )
 }
 
 export const getUpdateOperation = (data: object) => ("is_excluded" in data && !data.is_excluded) ? 'update' : "restore"

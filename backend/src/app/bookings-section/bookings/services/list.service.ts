@@ -9,6 +9,7 @@ import {
 import { BookingsFiltersDto } from "../dto";
 import { BaseListResult } from "@shared/src/common";
 import { ExtendedBooking } from "@shared/src/types/bookings-section";
+import { EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE, EXTENDED_BOOKING_INCLUDE, EXTENDED_BOOKING_VARIANT_INCLUDE } from "@shared/src/types/bookings-section/extended.types";
 
 @Injectable()
 export class ListService {
@@ -58,6 +59,7 @@ export class ListService {
   }): Promise<BaseListResult<ExtendedBooking>> {
     const final_filters: BookingsFiltersDto =
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
+    delete final_filters.is_excluded;
     // Build the query using the generic method from PrismaService
     const query_options = this.prisma.buildQuery(
       final_filters,
@@ -72,9 +74,9 @@ export class ListService {
       query_options,
       {
         user: true,
-        booking_variant: true,
+        booking_variant: { include: { apartment: true } },
         transaction: true,
-        booking_additional_options: true,
+        booking_additional_options: { include: { additional_option: true } },
       },
     ) as { items: ExtendedBooking[]; total: number };
 

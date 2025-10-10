@@ -1,0 +1,168 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.apartment_info {
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background: $background-light;
+  border-bottom: $border-normal;
+
+  .header_icon {
+    width: 20px;
+    height: 20px;
+    color: $primary-main;
+  }
+
+  .title {
+    flex: 1;
+    margin: 0;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .link_button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background: $primary-main;
+    color: $background-main;
+    text-decoration: none;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background: darken($primary-main, 10%);
+    }
+
+    .link_icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+.content {
+  padding: $spacing-md;
+}
+
+.apartment_details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.apartment_header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.apartment_image {
+  flex-shrink: 0;
+}
+
+.image {
+  border-radius: $border-radius-md;
+  object-fit: cover;
+}
+
+.apartment_name {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $foreground-main;
+}
+
+.apartment_meta {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.meta_item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  color: $foreground-secondary;
+  font-size: $font-size-sm;
+
+  .meta_icon {
+    width: 16px;
+    height: 16px;
+    color: $foreground-light;
+  }
+}
+
+.apartment_features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: $spacing-xs;
+  padding: $spacing-sm 0;
+}
+
+.feature_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: $font-size-sm;
+
+  .feature_label {
+    color: $foreground-light;
+    font-weight: $font-weight-normal;
+  }
+
+  .feature_value {
+    color: $foreground-main;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.apartment_status {
+  padding-top: $spacing-sm;
+  border-top: $border-normal;
+}
+
+.status_badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.status_badge {
+  display: inline-block;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-normal;
+
+  &.available {
+    background: lighten($green, 40%);
+    color: darken($green, 20%);
+  }
+
+  &.unavailable {
+    background: lighten($red, 40%);
+    color: darken($red, 20%);
+  }
+
+  &.smoking {
+    background: lighten($yellow, 40%);
+    color: darken($yellow, 20%);
+  }
+
+  &.pet_friendly {
+    background: lighten($primary-main, 40%);
+    color: darken($primary-main, 20%);
+  }
+}

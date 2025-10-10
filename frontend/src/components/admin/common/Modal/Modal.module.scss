@@ -1,0 +1,111 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.modal {
+  &_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: $z-modal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    padding: $spacing-md;
+    animation: fadeIn $transition-normal;
+  }
+
+  &_content {
+    background: $background-main;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow;
+    border: $border-normal;
+    overflow: hidden;
+    max-height: 90lvh;
+    animation: slideIn $transition-normal;
+
+    &_sm {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    &_md {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    &_lg {
+      width: 100%;
+      max-width: 800px;
+    }
+  }
+
+  &_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg;
+    border-bottom: $border-normal;
+    background: $background-light;
+  }
+
+  &_title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+    margin: 0;
+  }
+
+  &_close_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: $border-radius-sm;
+    color: $foreground-secondary;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $background-light;
+      color: $foreground-main;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &_body {
+    padding: $spacing-lg;
+    overflow-y: auto;
+    max-height: 70lvh;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

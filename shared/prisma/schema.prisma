@@ -233,6 +233,7 @@ model Booking {
   user_id            String
   booking_variant_id String
   transaction_id     String        @unique
+  message            String?
   status             BookingStatus @default(PENDING)
 
   start DateTime

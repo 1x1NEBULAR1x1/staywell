@@ -43,6 +43,7 @@ interface CruddableTypeShape<M extends { id: string }, F extends BaseFiltersOpti
   update: U;
 };
 
+
 export type CruddableTypes<T extends CRUDDABLE_NAMES> =
   T extends 'AMENITY' ? CruddableTypeShape<ExtendedAmenity, AmenitiesFilters, CreateAmenity, UpdateAmenity> :
   T extends 'APARTMENT_AMENITY' ? CruddableTypeShape<ApartmentAmenity, ApartmentAmenitiesFilters, CreateApartmentAmenity, UpdateApartmentAmenity> :
@@ -71,7 +72,7 @@ interface GettableTypeShape<M extends { id: string }, F extends BaseFiltersOptio
 
 export type GettableTypes<T extends GETTABLE_NAMES> =
   T extends CRUDDABLE_NAMES
-  ? CruddableTypes<T> extends CruddableTypeShape<infer M, infer F, unknown, Partial<unknown>>
+  ? CruddableTypes<T> extends CruddableTypeShape<infer M, infer F, Record<string, unknown>, Partial<Record<string, unknown>>>
   ? GettableTypeShape<M, F>
   : never
   : T extends 'USER'

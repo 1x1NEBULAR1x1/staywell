@@ -1,0 +1,97 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.amenity_item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-4xl $spacing-sm $spacing-sm;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+  position: relative;
+
+  &:hover {
+    background: $background-light;
+  }
+
+  &_name {
+    font-size: $font-size-sm;
+    width: 100%;
+    font-weight: $font-weight-light;
+    color: $foreground-main;
+    white-space: nowrap;
+  }
+
+  &_icon {
+    width: $font-size-xl;
+    height: $font-size-xl;
+    object-fit: contain;
+    border-radius: $border-radius-xs;
+    flex-shrink: 0;
+  }
+
+  .restore_button {
+    background: rgba($green, 0.5);
+    border: none;
+    width: $font-size-lg;
+    height: $font-size-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    color: $foreground-white;
+    transition: all $transition-fast;
+    position: absolute;
+    top: $spacing-xs;
+    right: calc($spacing-xs * 2 + $font-size-lg);
+
+    &:hover,
+    &:active {
+      background: $green;
+    }
+  }
+
+  .edit_button {
+    background: rgba($primary-main, 0.5);
+    border: none;
+    width: $font-size-lg;
+    height: $font-size-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    color: $foreground-white;
+    transition: all $transition-fast;
+    position: absolute;
+    top: $spacing-xs;
+    right: calc($spacing-xs * 2 + $font-size-lg);
+
+    &:hover,
+    &:active {
+      background: $primary-main;
+    }
+  }
+
+  .delete_button {
+    background: rgba($red, 0.6);
+    border: none;
+    width: $font-size-lg;
+    height: $font-size-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    color: $foreground-white;
+    transition: all $transition-fast;
+    position: absolute;
+    top: $spacing-xs;
+    right: $spacing-xs;
+
+    &:hover,
+    &:active {
+      background: $red;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 export declare const CRUDDABLE_DATA: {
     readonly APARTMENT: "apartments";
     readonly REVIEW: "reviews";
-    readonly AMENITIE: "amenities";
+    readonly AMENITY: "amenities";
     readonly APARTMENT_IMAGE: "apartment-images";
     readonly APARTMENT_BED: "apartment-beds";
     readonly APARTMENT_AMENITY: "apartment-amenities";
@@ -25,7 +25,7 @@ export declare const GETTABLE_DATA: {
     readonly SESSION: "sessions";
     readonly APARTMENT: "apartments";
     readonly REVIEW: "reviews";
-    readonly AMENITIE: "amenities";
+    readonly AMENITY: "amenities";
     readonly APARTMENT_IMAGE: "apartment-images";
     readonly APARTMENT_BED: "apartment-beds";
     readonly APARTMENT_AMENITY: "apartment-amenities";

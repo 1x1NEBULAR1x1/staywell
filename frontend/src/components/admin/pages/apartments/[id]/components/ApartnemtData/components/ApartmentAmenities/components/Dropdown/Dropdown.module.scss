@@ -1,0 +1,72 @@
+@use '@/components/styles/_variables.scss' as *;
+
+
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + $spacing-sm);
+  left: 0;
+  z-index: 1000;
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-sm;
+  box-shadow: $box-shadow-md;
+
+  &_item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-sm;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background: $background-light;
+    }
+
+    &_icon {
+      width: $font-size-xl;
+      height: $font-size-xl;
+      object-fit: contain;
+      border-radius: $border-radius-xs;
+      flex-shrink: 0;
+    }
+
+    &_name {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-light;
+      color: $foreground-main;
+      white-space: nowrap;
+    }
+  }
+
+  .no_items {
+    padding: $spacing-md;
+    color: $foreground-secondary;
+    font-size: $font-size-sm;
+    text-align: center;
+    line-clamp: 2;
+  }
+
+  &_button {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-top: $border-normal;
+    gap: $spacing-sm;
+    width: 100%;
+    padding: $spacing-sm;
+    background: transparent;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: $foreground-main;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      background: $background-light;
+      color: $green;
+    }
+  }
+}

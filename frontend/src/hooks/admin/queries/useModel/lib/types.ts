@@ -69,7 +69,7 @@ export type UseModelGettableOnly<M extends GETTABLE_NAMES> = {
 export type UseModelCruddable<M extends CRUDDABLE_NAMES> = UseModelGettableOnly<M> & {
   create: () => Mutation<M, 'create'>;
   update: (id: string) => Mutation<M, 'update'>;
-  delete: (id: string) => Mutation<M, 'delete'>;
+  remove: (id: string) => Mutation<M, 'delete'>;
 };
 
 /**

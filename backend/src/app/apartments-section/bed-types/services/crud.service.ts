@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from "@nestjs/common";
 import { PrismaService } from "src/lib/prisma";
 import { BedType } from "@shared/src/database";
@@ -39,7 +40,8 @@ export class CrudService {
     const image = file
       ? this.filesService.saveImage({ file, dir_name: "BED_TYPES" })
       : data.image;
-    return await this.prisma.bedType.create({ data: { ...data, image: image! } });
+    if (!image) throw new BadRequestException("Image is required");
+    return await this.prisma.bedType.create({ data: { ...data, image: image } });
   }
   /**
    * Find a bed type by ID
@@ -71,7 +73,7 @@ export class CrudService {
   }) {
     await Promise.all([
       this.findOne(id),
-      this.checkCommonName({ id, name: DataTransfer.name }),
+      data.name && this.checkCommonName({ id, name: data.name }),
     ]);
     const image = file
       ? this.filesService.saveImage({ file, dir_name: "BED_TYPES" })
@@ -93,7 +95,7 @@ export class CrudService {
         "Cannot delete bed type that is in use by apartments",
       );
     return !bed_type.is_excluded
-      ? await this.update({ id, data: { is_excluded: true } })
+      ? await this.prisma.bedType.update({ where: { id }, data: { is_excluded: true } })
       : await this.prisma.bedType.delete({ where: { id } });
   }
 }

@@ -111,6 +111,7 @@ export const example_booking: Booking = {
   user_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   booking_variant_id: "3fa85f64-5717-4562-b3fc-2c963f66afa7",
   transaction_id: "3fa85f64-5717-4562-b3fc-2c963f66afa8",
+  message: "Example message",
   status: BookingStatus.CONFIRMED,
   start: new Date("2023-10-01T14:00:00Z"),
   end: new Date("2023-10-05T12:00:00Z"),

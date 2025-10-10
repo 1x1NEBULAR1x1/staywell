@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSortFieldOptions = exports.getRelationModelLabel = exports.getRelationModelName = exports.isCruddablePath = exports.isCruddableName = exports.isGettableName = void 0;
+exports.getRelationModelLabel = exports.getRelationModelName = exports.isCruddablePath = exports.isCruddableName = exports.isGettableName = void 0;
 exports.getGettableNameFromPath = getGettableNameFromPath;
 exports.isGettablePath = isGettablePath;
 const data_1 = require("./data");
-const types_1 = require("../types");
 /**
  * Преобразует GETTABLE_PATHS в GETTABLE_NAMES
  * @param path - путь модели (например, "locales")
@@ -51,7 +50,6 @@ exports.isCruddablePath = isCruddablePath;
  */
 const getRelationModelName = (field_name) => {
     switch (field_name) {
-        case 'PARENT': return 'CATEGORY'; // parent_id -> CATEGORY
         default: return (0, exports.isGettableName)(field_name) ? field_name : null;
     }
 };
@@ -79,40 +77,17 @@ const getRelationModelLabel = (item) => {
     }
 };
 exports.getRelationModelLabel = getRelationModelLabel;
-const getModelFields = (model) => {
-    switch (model) {
-        case 'ADDRESS':
-            return Object.keys(types_1.example_address).map((key) => ({ value: key, label: key }));
-        case 'CATEGORY':
-            return Object.keys(types_1.example_category).map((key) => ({ value: key, label: key }));
-        case 'EQUIPMENT':
-            return Object.keys(types_1.example_equipment).map((key) => ({ value: key, label: key }));
-        case 'EQUIPMENT_IMAGE':
-            return Object.keys(types_1.example_equipment_image).map((key) => ({ value: key, label: key }));
-        case 'LOCAL_CATEGORY':
-            return Object.keys(types_1.example_local_category).map((key) => ({ value: key, label: key }));
-        case 'LOCAL_EQUIPMENT':
-            return Object.keys(types_1.example_local_equipment).map((key) => ({ value: key, label: key }));
-        case 'LOCAL_EQUIPMENT_DESCRIPTION':
-            return Object.keys(types_1.example_local_equipment_description).map((key) => ({ value: key, label: key }));
-        case 'LOCALE':
-            return Object.keys(types_1.example_locale).map((key) => ({ value: key, label: key }));
-        case 'RENTAL':
-            return Object.keys(types_1.example_rental).map((key) => ({ value: key, label: key }));
-        case 'RENTAL_EQUIPMENT':
-            return Object.keys(types_1.example_rental_equipment).map((key) => ({ value: key, label: key }));
-        case 'USER':
-            return Object.keys(types_1.example_safe_user).map((key) => ({ value: key, label: key }));
-        case 'SESSION':
-            return Object.keys(types_1.example_session).map((key) => ({ value: key, label: key }));
-    }
-};
-/**
- * Получает опции для сортировки по полям модели
- * @param model - имя модели
- * @returns опции для сортировки
- */
-const getSortFieldOptions = (model) => {
-    return getModelFields(model).concat([{ value: '', label: 'any' }]);
-};
-exports.getSortFieldOptions = getSortFieldOptions;
+// const getModelFields = (model: GETTABLE_NAMES) => { TODO: add model fields
+//   switch (model) {
+//     case 'USER':
+//       return Object.keys(example_safe_user).map((key) => ({ value: key, label: key }));
+//   }
+// }
+// /** TODO: uncomment before completion
+//  * Получает опции для сортировки по полям модели
+//  * @param model - имя модели
+//  * @returns опции для сортировки
+//  */
+// export const getSortFieldOptions = (model: GETTABLE_NAMES) => {
+//   return getModelFields(model).concat([{ value: '', label: 'any' }]);
+// }

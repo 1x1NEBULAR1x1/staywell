@@ -1,0 +1,22 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.image_item {
+  cursor: pointer;
+  width: $spacing-3xl;
+  height: $spacing-3xl;
+  object-fit: cover;
+  border-radius: $border-radius-sm;
+  border: $border-normal;
+
+
+  &_selected {
+    border-color: $green;
+    border-style: solid !important;
+    cursor: default;
+  }
+
+  &_root {
+    border-color: $primary-main;
+    border-style: dashed;
+  }
+}

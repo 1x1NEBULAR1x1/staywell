@@ -1,0 +1,80 @@
+@use '@/components/styles/_variables.scss' as *;
+
+
+.actions {
+  display: flex;
+  gap: $spacing-sm;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
+
+  &_left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: $spacing-sm;
+  }
+
+  &_right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+  }
+
+  &_button {
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    cursor: pointer;
+    transition: all $transition-fast;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+
+    &_primary {
+      background: rgba($green, 0.7);
+      color: $foreground-white;
+
+      &:hover:not(:disabled) {
+        background: $green;
+      }
+
+      &:disabled {
+        background: $background-disabled;
+        color: $foreground-light;
+      }
+    }
+
+    &_secondary {
+      background: transparent;
+      color: $foreground-secondary;
+      border: $border-normal;
+
+      &:hover:not(:disabled) {
+        background: $background-light;
+        border-color: $foreground-main;
+        color: $foreground-main;
+      }
+    }
+  }
+
+
+
+  &_spinner {
+    animation: spin 1s linear infinite;
+  }
+}

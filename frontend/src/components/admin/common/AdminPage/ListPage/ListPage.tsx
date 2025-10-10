@@ -4,11 +4,14 @@ import { List, Filters } from './components';
 import { AdminPage } from '../AdminPage';
 import { formatToTitle } from '@/lib/api/utils';
 
-import { useModel, useModelFilters } from '@/hooks/admin/queries';
+import { useModel } from '@/hooks/admin/queries';
+import { useModelFilters } from '@/hooks/admin/actions/useModelFilters';
 import { ReactNode } from 'react';
 
 type ListPageProps<M extends GETTABLE_NAMES> = {
   model: M;
+  type?: 'table' | 'cards';
+  create_button?: ReactNode;
   filters_menu: ReactNode;
   render_item: (item: GettableTypes<M>['model']) => ReactNode;
   shimmer_item: (key: string) => ReactNode;
@@ -18,6 +21,8 @@ type ListPageProps<M extends GETTABLE_NAMES> = {
 
 export const ListPage = <M extends GETTABLE_NAMES>({
   model,
+  type = 'table',
+  create_button,
   filters_menu,
   render_item,
   shimmer_item,
@@ -34,8 +39,10 @@ export const ListPage = <M extends GETTABLE_NAMES>({
         updateFilters={updateFilters}
         filters_menu={filters_menu}
         sort_by_list={sort_by_list}
+        create_button={create_button}
       />
       <List<GettableTypes<M>['model']>
+        type={type}
         render={render_item}
         items={data?.items}
         shimmer={shimmer_item}

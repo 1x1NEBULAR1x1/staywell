@@ -1,5 +1,5 @@
 import { CreateBooking } from "@shared/src/types/bookings-section";
-import { ToDate, ToUUID } from "src/lib/common";
+import { ToDate, ToString, ToUUID } from "src/lib/common";
 
 export class CreateBookingDto implements CreateBooking {
   @ToUUID({ required: true, description: "User ID", example: "123e4567-e89b-12d3-a456-426614174000" })
@@ -7,6 +7,9 @@ export class CreateBookingDto implements CreateBooking {
 
   @ToUUID({ required: true, description: "Booking variant ID", example: "123e4567-e89b-12d3-a456-426614174001" })
   booking_variant_id!: string;
+
+  @ToString({ required: false, description: "Message", example: "Example message" })
+  message?: string;
 
   @ToUUID({ required: true, description: "Transaction ID", example: "123e4567-e89b-12d3-a456-426614174002" })
   transaction_id!: string;

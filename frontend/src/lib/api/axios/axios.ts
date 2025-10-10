@@ -35,8 +35,8 @@ const filterEmptyValues = (data: any): any => {
 // Добавляем interceptor для запросов (фильтрация пустых значений)
 api.interceptors.request.use(
   (config) => {
-    // Фильтруем данные в body для POST/PUT/PATCH запросов
-    if (config.data && ['post', 'put', 'patch'].includes(config.method?.toLowerCase() || '')) {
+    // Фильтруем данные в body для POST/PUT/PATCH запросов, но не для FormData
+    if (config.data && ['post', 'put', 'patch'].includes(config.method?.toLowerCase() || '') && !(config.data instanceof FormData)) {
       config.data = filterEmptyValues(config.data);
     }
 
