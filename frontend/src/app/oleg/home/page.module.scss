@@ -8,147 +8,573 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: $spacing-3xl;
+    gap: $spacing-6xl;
+    padding-bottom: $spacing-6xl;
 
-    .section {
-        width: $container-width-xl;
-        height: auto;
-        background-color: $background-main;
+    .section_hero {
+      width: $container-width-xl;
+      height: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: $spacing-6xl;
+      padding-top: $spacing-xl;
+
+      .about {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10rem;
-      
-        .about {
+        flex-direction: column;
+        gap: $spacing-2xl;
+        margin-top: $spacing-lg;
+
+        .title {
+          font-size: $font-size-3xl;
+          font-weight: $font-weight-bold;
+          line-height: 1.5;
+          color: $primary-dark;
+        }
+
+        .description {
+          font-size: $font-size-md;
+          font-weight: $font-weight-light;
+          color: $foreground-light;
+          white-space: nowrap;
+        }
+        
+        .button {
+          background-color: $primary-main;
+          font-size: $font-size-lg;
+          color: $foreground-white;
+          border-radius: $border-radius-sm;
+          padding: $spacing-sm $spacing-xl;
+          box-shadow: $box-shadow-main;
+          cursor: pointer;
+          border: none;
+          width: max-content;
+        }
+
+        .metrics {
+          margin-top: $spacing-2xl;
           display: flex;
-          flex-direction: column;
-          gap: $spacing-2xl;
-      
-      
-          .title {
-            font-size: $font-size-3xl;
-            font-weight: $font-weight-bold;
-            line-height: 1.5;
-            color: $primary-dark;
-          }
-      
-          .description {
-            font-size: $font-size-md;
-            font-weight: $font-weight-light;
-            color: $foreground-light;
-            white-space: nowrap;
-          }
-      
-          .button {
-            background-color: $primary-main;
-            font-size: $font-size-lg;
-            color: $foreground-white;
-            border-radius: $border-radius-sm;
-            padding: $spacing-sm $spacing-xl;
-            cursor: pointer;
-            border: none;
-            width: max-content;
-          }
-      
-          .metrics {
-            margin-top: $spacing-2xl;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          .item {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-      
-            .item {
-              display: flex;
-              flex-direction: column;
-              gap: $spacing-sm;
-      
-              &>img {
-                width: 2rem;
-                height: 2rem;
-              }
-      
-              .title {
-                font-size: $font-size-md;
-                font-weight: $font-weight-normal;
-                color: $primary-dark;
-      
-                &>span {
-                  color: $foreground-light;
-                }
+            flex-direction: column;
+            gap: $spacing-sm;
+
+            &>img {
+              width: 2rem;
+              height: 2rem;
+            }
+
+            .title {
+              font-size: $font-size-md;
+              font-weight: $font-weight-normal;
+              color: $primary-dark;
+
+              &>span {
+                color: $foreground-light;
               }
             }
           }
         }
+      }
+
+      .banner {
+        position: relative;
+        z-index: 1;
+
+        .image {
+          width: 100%;
+          height: max-content;
+          aspect-ratio: 5/4;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 100px $border-radius-lg $border-radius-lg $border-radius-lg;
+
+          &>img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+          }
+        }
+
+        .frame {
+          width: 100%;
+          aspect-ratio: 5/4;
+          position: absolute;
+          z-index: -1;
+          top: $spacing-xl;
+          left: $spacing-xl;
+          border-radius: $border-radius-lg;
+          overflow: hidden;
+          border: $border-bold;
+          border-radius: $border-radius-lg;
+        }
+      }
+    }
+
+    .section_filters {
+      width: $container-width-xl;
+      height: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-lg $spacing-xl ;
+      background-color: $primary-disabled;
+      border-radius: $border-radius-2xl;
+
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-6xl;
       
-        .banner {
+        .button {
+          width: auto;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding: $spacing-lg $spacing-xl;
+          gap: $spacing-md;
+          background-color: $background-main;
+          border-radius: $border-radius-md;
+          box-shadow: $box-shadow-second;
+          cursor: pointer;
+          border: none;
+          font-size: $font-size-md;
+          font-weight: $font-weight-semibold;
+          color: $foreground-main;
+
+          
+        }
+
+      }
+
+      .search_button {
+        padding: $spacing-md $spacing-xl;
+        margin-right: $spacing-2xl;
+        background: $primary-main;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $foreground-white;
+        box-shadow: $box-shadow-main;
+        border-radius: $border-radius-md;
+        cursor: pointer;
+        border: none;
+      }
+    }
+      
+    .section_recommendations {
+      width: $container-width-xl;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items:flex-start;
+      gap: $spacing-md;
+
+      .title {
+        color: $primary-dark;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-normal;
+      }
+
+      .images_container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: $spacing-xl;
+
+        @media (max-width: $breakpoint-md) {
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr 1fr 1fr;
+        }
+
+        .left_image {
+          min-width: 0;
           position: relative;
           z-index: 1;
-      
+
           .image {
             width: 100%;
-            height: max-content;
-            aspect-ratio: 5/4;
+            height: 100%;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 100px $border-radius-lg $border-radius-lg $border-radius-lg;
-      
+            position: relative;
+            border-radius: $border-radius-lg;
+            cursor: pointer;
+            border: none;
+
             &>img {
               width: 100%;
               height: 100%;
-              scale: 2;
-              translate: 50% -10%;
-              object-fit: fill;
+              object-fit: cover;
+            }
+
+            .badge {
+              position: absolute;
+              top: 0;
+              right: 0;
+              background: $primary-main;
+              color: $foreground-white;
+              font-size: $font-size-md;
+              font-weight: $font-weight-normal;
+              padding: $spacing-sm $spacing-xl;
+              border-radius: 0 $border-radius-lg 0 $border-radius-lg;
+              display: inline-flex;
+              gap: $spacing-sm;
+              z-index: 2;
+            }
+
+            .pernight { 
+            font-weight: $font-weight-thin; 
+            }
+
+            .room_title {
+              position: absolute;
+              left: $spacing-lg;
+              bottom: $spacing-md;
+              color: $foreground-white;
+              font-size: $font-size-lg;
+              font-weight: $font-weight-light;
+              z-index: 2;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              height: 40%;
+              background: $gradient;
+              border-radius: 0 0 $border-radius-lg $border-radius-lg;
+              z-index: 1;
+              pointer-events: none;
             }
           }
-      
-          .frame {
-            width: 100%;
-            aspect-ratio: 5/4;
-            position: absolute;
-            z-index: -1;
-            top: $spacing-xl;
-            left: $spacing-xl;
-            border-radius: $border-radius-lg;
-            overflow: hidden;
-            border: $border-bold;
-            border-radius: $border-radius-lg;
-          }
-      
-      
         }
+
+        .center_images {
+          min-width: 0;
+          position: relative;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          z-index: 1;
+          gap: $spacing-xl;
+
+          &_top_image {
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: $border-radius-lg;
+            cursor: pointer;
+            border: none;
+
+            &>img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .badge {
+              position: absolute;
+              top: 0;
+              right: 0;
+              background: $primary-main;
+              color: $foreground-white;
+              font-size: $font-size-md;
+              font-weight: $font-weight-normal;
+              padding: $spacing-sm $spacing-xl;
+              border-radius: 0 $border-radius-lg 0 $border-radius-lg;
+              display: inline-flex;
+              gap: $spacing-sm;
+              z-index: 2;
+            }
+
+            .pernight { 
+            font-weight: $font-weight-thin; 
+            }
+
+            .room_title {
+              position: absolute;
+              left: $spacing-lg;
+              bottom: $spacing-md;
+              color: $foreground-white;
+              font-size: $font-size-lg;
+              font-weight: $font-weight-light;
+              z-index: 2;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              height: 40%;
+              background: $gradient;
+              border-radius: 0 0 $border-radius-lg $border-radius-lg;
+              z-index: 1;
+              pointer-events: none;
+            }
+          }
+
+          &_bottom_image {
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: $border-radius-lg;
+            cursor: pointer;
+            border: none;
+
+            &>img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .badge {
+              position: absolute;
+              top: 0;
+              right: 0;
+              background: $primary-main;
+              color: $foreground-white;
+              font-size: $font-size-md;
+              font-weight: $font-weight-normal;
+              padding: $spacing-sm $spacing-xl;
+              border-radius: 0 $border-radius-lg 0 $border-radius-lg;
+              display: inline-flex;
+              gap: $spacing-sm;
+              z-index: 2;
+            }
+
+            .pernight { 
+            font-weight: $font-weight-thin; 
+            }
+
+            .room_title {
+              position: absolute;
+              left: $spacing-lg;
+              bottom: $spacing-md;
+              color: $foreground-white;
+              font-size: $font-size-lg;
+              font-weight: $font-weight-light;
+              z-index: 2;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              height: 40%;
+              background: $gradient;
+              border-radius: 0 0 $border-radius-lg $border-radius-lg;
+              z-index: 1;
+              pointer-events: none;
+            }
+          }
+        }
+
+        .right_images {
+          min-width: 0;
+          position: relative;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          z-index: 1;
+          gap: $spacing-xl;
+
+          &_top_image {
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: $border-radius-lg;
+            cursor: pointer;
+            border: none;
+
+            &>img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .badge {
+              position: absolute;
+              top: 0;
+              right: 0;
+              background: $primary-main;
+              color: $foreground-white;
+              font-size: $font-size-md;
+              font-weight: $font-weight-normal;
+              padding: $spacing-sm $spacing-xl;
+              border-radius: 0 $border-radius-lg 0 $border-radius-lg;
+              display: inline-flex;
+              gap: $spacing-sm;
+              z-index: 2;
+            }
+
+            .pernight { 
+            font-weight: $font-weight-thin; 
+            }
+
+            .room_title {
+              position: absolute;
+              left: $spacing-lg;
+              bottom: $spacing-md;
+              color: $foreground-white;
+              font-size: $font-size-lg;
+              font-weight: $font-weight-light;
+              z-index: 2;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              height: 40%;
+              background: $gradient;
+              border-radius: 0 0 $border-radius-lg $border-radius-lg;
+              z-index: 1;
+              pointer-events: none;
+            }
+          }
+
+          &_bottom_image {
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: $border-radius-lg;
+            cursor: pointer;
+            border: none;
+
+            &>img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .badge {
+              position: absolute;
+              top: 0;
+              right: 0;
+              background: $primary-main;
+              color: $foreground-white;
+              font-size: $font-size-md;
+              font-weight: $font-weight-normal;
+              padding: $spacing-sm $spacing-xl;
+              border-radius: 0 $border-radius-lg 0 $border-radius-lg;
+              display: inline-flex;
+              gap: $spacing-sm;
+              z-index: 2;
+            }
+
+            .pernight { 
+            font-weight: $font-weight-thin; 
+            }
+
+            .room_title {
+              position: absolute;
+              left: $spacing-lg;
+              bottom: $spacing-md;
+              color: $foreground-white;
+              font-size: $font-size-lg;
+              font-weight: $font-weight-light;
+              z-index: 2;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              height: 40%;
+              background: $gradient;
+              border-radius: 0 0 $border-radius-lg $border-radius-lg;
+              z-index: 1;
+              pointer-events: none;
+            }
+          }
+        }
+      }
+    }
+
+    .section_features {
+      height: auto;
+      background-color: $background-main;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-3xl;
+
+      .features_group_columns{
+      width: $container-width-xl;
+      height: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      justify-content: space-between;
+      align-items:start;
+      gap: $spacing-xl;
+
+      @media (max-width: $breakpoint-lg) {
+        grid-template-columns: 1fr 1fr 1fr;
       }
 
 
+      @media (max-width: $breakpoint-md) {
+        grid-template-columns: 1fr 1fr;
+      }
 
+      .feature_group {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
 
+        .image {
+            
+          width: 100%;
+          aspect-ratio: 16/11;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          border-radius: $border-radius-lg;
 
+          &>img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
 
+        .title {
+          color: $primary-dark;
+          font-weight: $font-weight-light;
+          font-size: $font-size-lg;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      }
+    }
+  }
 }
-
-
-

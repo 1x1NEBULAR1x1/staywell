@@ -68,7 +68,7 @@
             font-size: $font-size-lg;
             font-weight: $font-weight-normal;
             color: $foreground-white;
-            box-shadow: $box-shadow;
+            box-shadow: $box-shadow-main;
             border-radius: $border-radius-sm
         }
     }
@@ -99,11 +99,7 @@
             flex-direction: column;
 
             .add_text {
-<<<<<<< HEAD
                 color: $foreground-light;
-=======
-                color: var(--foreground-light);
->>>>>>> refs/remotes/origin/oleg
             }
         }
 
@@ -125,7 +121,7 @@
                 font-size: $font-size-md;
                 font-weight: $font-weight-normal;
                 color: $foreground-white;
-                box-shadow: $box-shadow;
+                box-shadow: $box-shadow-main;
                 border-radius: $border-radius-sm
             }
         }

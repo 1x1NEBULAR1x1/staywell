@@ -2,7 +2,7 @@ import classes from './HeadAndFoot.module.scss';
 
 
 export default async function layout({ children }: { children: React.ReactNode }) {
-    
+
     return (
         <>
 
@@ -10,9 +10,9 @@ export default async function layout({ children }: { children: React.ReactNode }
                 <div className={classes.header_left}>
 
                     <a href='/' className={classes.logo}> <p className={classes.logo_main} > Stay </p> <p className={classes.logo_dark}> Well </p> </a>
-                    
+
                 </div>
-                
+
                 <div className={classes.header_right}>
 
                     <div className={classes.links}>
@@ -22,24 +22,23 @@ export default async function layout({ children }: { children: React.ReactNode }
                         <a className={classes.link} href="/contact">Rooms</a>
                         <a className={classes.link} href="/about">About</a>
                         <a className={classes.link} href="/contact">Contact</a>
-                        
+
                     </div>
 
                     <a className={classes.login_button} href="/login">Login</a>
-                    
+
                 </div>
-                
+
             </header>
 
             {children}
-            
+
             <footer className={classes.footer}>
 
                 <div className={classes.footer_top}> 
-                    
 
                     <div className={classes.footer_top_left}>
-                        
+
                         <a href='/' className={classes.logo}> <p className={classes.logo_main} > Stay </p> <p className={classes.primary_dark}> Well </p> </a>
                         <p className={classes.add_text}> Looking forward to seeing you —<br /> your perfect getaway starts with us. </p>
 
@@ -56,9 +55,9 @@ export default async function layout({ children }: { children: React.ReactNode }
                  </div>
 
                  <div className={classes.footer_bottom}> 
-                    
+
                     Copyright 2025 • All rights reserved   
-                    
+
                 </div>
 
             </footer>

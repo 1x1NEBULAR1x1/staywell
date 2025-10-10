@@ -21,7 +21,8 @@ $foreground-light: #B0B0B0;
 $foreground-white: #FFFFFF;
 
 //Box shadow
-$box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.2);
+$box-shadow-main: 0px 0px 5px -1px rgba(0, 0, 0, 0.2);
+$box-shadow-second: 0px 2px 10px -1px rgba(0, 0, 0, 0.2);
 
 // Border colors
 $border-color-main: #E5E5E5;
@@ -82,3 +83,8 @@ $font-weight-semibold: 600;
 $font-weight-normal: 500;
 $font-weight-light: 400;
 $font-weight-thin: 300;
+
+// OLEG NADRISTAL - Gradient
+
+$gradient: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+
