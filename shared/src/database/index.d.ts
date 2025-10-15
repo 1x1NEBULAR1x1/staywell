@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Message
+ * 
+ */
+export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+/**
  * Model Apartment
  * 
  */
@@ -331,6 +336,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.message`: Exposes CRUD operations for the **Message** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Messages
+    * const messages = await prisma.message.findMany()
+    * ```
+    */
+  get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.apartment`: Exposes CRUD operations for the **Apartment** model.
@@ -952,6 +967,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Message: 'Message',
     Apartment: 'Apartment',
     Review: 'Review',
     Amenity: 'Amenity',
@@ -988,7 +1004,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "apartment" | "review" | "amenity" | "apartmentAmenity" | "apartmentImage" | "bedType" | "apartmentBed" | "bookingVariant" | "reservation" | "booking" | "additionalOption" | "bookingAdditionalOption" | "bookingEvent" | "transaction" | "transferDetail" | "cardDetail" | "event" | "eventImage"
+      modelProps: "user" | "message" | "apartment" | "review" | "amenity" | "apartmentAmenity" | "apartmentImage" | "bedType" | "apartmentBed" | "bookingVariant" | "reservation" | "booking" | "additionalOption" | "bookingAdditionalOption" | "bookingEvent" | "transaction" | "transferDetail" | "cardDetail" | "event" | "eventImage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1063,6 +1079,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Message: {
+        payload: Prisma.$MessagePayload<ExtArgs>
+        fields: Prisma.MessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+          }
+          findFirst: {
+            args: Prisma.MessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+          }
+          findMany: {
+            args: Prisma.MessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+          }
+          create: {
+            args: Prisma.MessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+          }
+          createMany: {
+            args: Prisma.MessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+          }
+          delete: {
+            args: Prisma.MessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+          }
+          update: {
+            args: Prisma.MessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.MessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.MessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+          }
+          aggregate: {
+            args: Prisma.MessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMessage>
+          }
+          groupBy: {
+            args: Prisma.MessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MessageCountArgs<ExtArgs>
+            result: $Utils.Optional<MessageCountAggregateOutputType> | number
           }
         }
       }
@@ -2491,6 +2581,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    message?: MessageOmit
     apartment?: ApartmentOmit
     review?: ReviewOmit
     amenity?: AmenityOmit
@@ -2865,12 +2956,14 @@ export namespace Prisma {
     booking_events: number
     booking_additional_options: number
     reviews: number
+    messages: number
   }
 
   export type BookingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     booking_events?: boolean | BookingCountOutputTypeCountBooking_eventsArgs
     booking_additional_options?: boolean | BookingCountOutputTypeCountBooking_additional_optionsArgs
     reviews?: boolean | BookingCountOutputTypeCountReviewsArgs
+    messages?: boolean | BookingCountOutputTypeCountMessagesArgs
   }
 
   // Custom InputTypes
@@ -2903,6 +2996,13 @@ export namespace Prisma {
    */
   export type BookingCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * BookingCountOutputType without action
+   */
+  export type BookingCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MessageWhereInput
   }
 
 
@@ -3229,8 +3329,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image: string | null
-    first_name: string | null
-    last_name: string | null
+    first_name: string
+    last_name: string
     phone_number: string | null
     is_active: boolean
     email_verified: boolean
@@ -3359,8 +3459,8 @@ export namespace Prisma {
       email: string
       password_hash: string
       image: string | null
-      first_name: string | null
-      last_name: string | null
+      first_name: string
+      last_name: string
       phone_number: string | null
       is_active: boolean
       email_verified: boolean
@@ -4382,6 +4482,1083 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Message
+   */
+
+  export type AggregateMessage = {
+    _count: MessageCountAggregateOutputType | null
+    _min: MessageMinAggregateOutputType | null
+    _max: MessageMaxAggregateOutputType | null
+  }
+
+  export type MessageMinAggregateOutputType = {
+    id: string | null
+    message: string | null
+    booking_id: string | null
+    created: Date | null
+    updated: Date | null
+  }
+
+  export type MessageMaxAggregateOutputType = {
+    id: string | null
+    message: string | null
+    booking_id: string | null
+    created: Date | null
+    updated: Date | null
+  }
+
+  export type MessageCountAggregateOutputType = {
+    id: number
+    message: number
+    booking_id: number
+    created: number
+    updated: number
+    _all: number
+  }
+
+
+  export type MessageMinAggregateInputType = {
+    id?: true
+    message?: true
+    booking_id?: true
+    created?: true
+    updated?: true
+  }
+
+  export type MessageMaxAggregateInputType = {
+    id?: true
+    message?: true
+    booking_id?: true
+    created?: true
+    updated?: true
+  }
+
+  export type MessageCountAggregateInputType = {
+    id?: true
+    message?: true
+    booking_id?: true
+    created?: true
+    updated?: true
+    _all?: true
+  }
+
+  export type MessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Message to aggregate.
+     */
+    where?: MessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Messages to fetch.
+     */
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Messages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Messages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Messages
+    **/
+    _count?: true | MessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MessageMaxAggregateInputType
+  }
+
+  export type GetMessageAggregateType<T extends MessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMessage[P]>
+      : GetScalarType<T[P], AggregateMessage[P]>
+  }
+
+
+
+
+  export type MessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MessageWhereInput
+    orderBy?: MessageOrderByWithAggregationInput | MessageOrderByWithAggregationInput[]
+    by: MessageScalarFieldEnum[] | MessageScalarFieldEnum
+    having?: MessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MessageCountAggregateInputType | true
+    _min?: MessageMinAggregateInputType
+    _max?: MessageMaxAggregateInputType
+  }
+
+  export type MessageGroupByOutputType = {
+    id: string
+    message: string
+    booking_id: string | null
+    created: Date
+    updated: Date
+    _count: MessageCountAggregateOutputType | null
+    _min: MessageMinAggregateOutputType | null
+    _max: MessageMaxAggregateOutputType | null
+  }
+
+  type GetMessageGroupByPayload<T extends MessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MessageGroupByOutputType[P]>
+            : GetScalarType<T[P], MessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    booking_id?: boolean
+    created?: boolean
+    updated?: boolean
+    booking?: boolean | Message$bookingArgs<ExtArgs>
+  }, ExtArgs["result"]["message"]>
+
+  export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    booking_id?: boolean
+    created?: boolean
+    updated?: boolean
+    booking?: boolean | Message$bookingArgs<ExtArgs>
+  }, ExtArgs["result"]["message"]>
+
+  export type MessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    booking_id?: boolean
+    created?: boolean
+    updated?: boolean
+    booking?: boolean | Message$bookingArgs<ExtArgs>
+  }, ExtArgs["result"]["message"]>
+
+  export type MessageSelectScalar = {
+    id?: boolean
+    message?: boolean
+    booking_id?: boolean
+    created?: boolean
+    updated?: boolean
+  }
+
+  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "message" | "booking_id" | "created" | "updated", ExtArgs["result"]["message"]>
+  export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    booking?: boolean | Message$bookingArgs<ExtArgs>
+  }
+  export type MessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    booking?: boolean | Message$bookingArgs<ExtArgs>
+  }
+  export type MessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    booking?: boolean | Message$bookingArgs<ExtArgs>
+  }
+
+  export type $MessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Message"
+    objects: {
+      booking: Prisma.$BookingPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      message: string
+      booking_id: string | null
+      created: Date
+      updated: Date
+    }, ExtArgs["result"]["message"]>
+    composites: {}
+  }
+
+  type MessageGetPayload<S extends boolean | null | undefined | MessageDefaultArgs> = $Result.GetResult<Prisma.$MessagePayload, S>
+
+  type MessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MessageCountAggregateInputType | true
+    }
+
+  export interface MessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Message'], meta: { name: 'Message' } }
+    /**
+     * Find zero or one Message that matches the filter.
+     * @param {MessageFindUniqueArgs} args - Arguments to find a Message
+     * @example
+     * // Get one Message
+     * const message = await prisma.message.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MessageFindUniqueArgs>(args: SelectSubset<T, MessageFindUniqueArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Message that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MessageFindUniqueOrThrowArgs} args - Arguments to find a Message
+     * @example
+     * // Get one Message
+     * const message = await prisma.message.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MessageFindUniqueOrThrowArgs>(args: SelectSubset<T, MessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Message that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageFindFirstArgs} args - Arguments to find a Message
+     * @example
+     * // Get one Message
+     * const message = await prisma.message.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MessageFindFirstArgs>(args?: SelectSubset<T, MessageFindFirstArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Message that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageFindFirstOrThrowArgs} args - Arguments to find a Message
+     * @example
+     * // Get one Message
+     * const message = await prisma.message.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MessageFindFirstOrThrowArgs>(args?: SelectSubset<T, MessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Messages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Messages
+     * const messages = await prisma.message.findMany()
+     * 
+     * // Get first 10 Messages
+     * const messages = await prisma.message.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const messageWithIdOnly = await prisma.message.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MessageFindManyArgs>(args?: SelectSubset<T, MessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Message.
+     * @param {MessageCreateArgs} args - Arguments to create a Message.
+     * @example
+     * // Create one Message
+     * const Message = await prisma.message.create({
+     *   data: {
+     *     // ... data to create a Message
+     *   }
+     * })
+     * 
+     */
+    create<T extends MessageCreateArgs>(args: SelectSubset<T, MessageCreateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Messages.
+     * @param {MessageCreateManyArgs} args - Arguments to create many Messages.
+     * @example
+     * // Create many Messages
+     * const message = await prisma.message.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MessageCreateManyArgs>(args?: SelectSubset<T, MessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Messages and returns the data saved in the database.
+     * @param {MessageCreateManyAndReturnArgs} args - Arguments to create many Messages.
+     * @example
+     * // Create many Messages
+     * const message = await prisma.message.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Messages and only return the `id`
+     * const messageWithIdOnly = await prisma.message.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MessageCreateManyAndReturnArgs>(args?: SelectSubset<T, MessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Message.
+     * @param {MessageDeleteArgs} args - Arguments to delete one Message.
+     * @example
+     * // Delete one Message
+     * const Message = await prisma.message.delete({
+     *   where: {
+     *     // ... filter to delete one Message
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MessageDeleteArgs>(args: SelectSubset<T, MessageDeleteArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Message.
+     * @param {MessageUpdateArgs} args - Arguments to update one Message.
+     * @example
+     * // Update one Message
+     * const message = await prisma.message.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MessageUpdateArgs>(args: SelectSubset<T, MessageUpdateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Messages.
+     * @param {MessageDeleteManyArgs} args - Arguments to filter Messages to delete.
+     * @example
+     * // Delete a few Messages
+     * const { count } = await prisma.message.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MessageDeleteManyArgs>(args?: SelectSubset<T, MessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Messages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Messages
+     * const message = await prisma.message.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MessageUpdateManyArgs>(args: SelectSubset<T, MessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Messages and returns the data updated in the database.
+     * @param {MessageUpdateManyAndReturnArgs} args - Arguments to update many Messages.
+     * @example
+     * // Update many Messages
+     * const message = await prisma.message.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Messages and only return the `id`
+     * const messageWithIdOnly = await prisma.message.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MessageUpdateManyAndReturnArgs>(args: SelectSubset<T, MessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Message.
+     * @param {MessageUpsertArgs} args - Arguments to update or create a Message.
+     * @example
+     * // Update or create a Message
+     * const message = await prisma.message.upsert({
+     *   create: {
+     *     // ... data to create a Message
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Message we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MessageUpsertArgs>(args: SelectSubset<T, MessageUpsertArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Messages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageCountArgs} args - Arguments to filter Messages to count.
+     * @example
+     * // Count the number of Messages
+     * const count = await prisma.message.count({
+     *   where: {
+     *     // ... the filter for the Messages we want to count
+     *   }
+     * })
+    **/
+    count<T extends MessageCountArgs>(
+      args?: Subset<T, MessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Message.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MessageAggregateArgs>(args: Subset<T, MessageAggregateArgs>): Prisma.PrismaPromise<GetMessageAggregateType<T>>
+
+    /**
+     * Group by Message.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MessageGroupByArgs['orderBy'] }
+        : { orderBy?: MessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Message model
+   */
+  readonly fields: MessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Message.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    booking<T extends Message$bookingArgs<ExtArgs> = {}>(args?: Subset<T, Message$bookingArgs<ExtArgs>>): Prisma__BookingClient<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Message model
+   */
+  interface MessageFieldRefs {
+    readonly id: FieldRef<"Message", 'String'>
+    readonly message: FieldRef<"Message", 'String'>
+    readonly booking_id: FieldRef<"Message", 'String'>
+    readonly created: FieldRef<"Message", 'DateTime'>
+    readonly updated: FieldRef<"Message", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Message findUnique
+   */
+  export type MessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * Filter, which Message to fetch.
+     */
+    where: MessageWhereUniqueInput
+  }
+
+  /**
+   * Message findUniqueOrThrow
+   */
+  export type MessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * Filter, which Message to fetch.
+     */
+    where: MessageWhereUniqueInput
+  }
+
+  /**
+   * Message findFirst
+   */
+  export type MessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * Filter, which Message to fetch.
+     */
+    where?: MessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Messages to fetch.
+     */
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Messages.
+     */
+    cursor?: MessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Messages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Messages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Messages.
+     */
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
+   * Message findFirstOrThrow
+   */
+  export type MessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * Filter, which Message to fetch.
+     */
+    where?: MessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Messages to fetch.
+     */
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Messages.
+     */
+    cursor?: MessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Messages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Messages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Messages.
+     */
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
+   * Message findMany
+   */
+  export type MessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * Filter, which Messages to fetch.
+     */
+    where?: MessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Messages to fetch.
+     */
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Messages.
+     */
+    cursor?: MessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Messages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Messages.
+     */
+    skip?: number
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
+   * Message create
+   */
+  export type MessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Message.
+     */
+    data: XOR<MessageCreateInput, MessageUncheckedCreateInput>
+  }
+
+  /**
+   * Message createMany
+   */
+  export type MessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Messages.
+     */
+    data: MessageCreateManyInput | MessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Message createManyAndReturn
+   */
+  export type MessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many Messages.
+     */
+    data: MessageCreateManyInput | MessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Message update
+   */
+  export type MessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Message.
+     */
+    data: XOR<MessageUpdateInput, MessageUncheckedUpdateInput>
+    /**
+     * Choose, which Message to update.
+     */
+    where: MessageWhereUniqueInput
+  }
+
+  /**
+   * Message updateMany
+   */
+  export type MessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Messages.
+     */
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyInput>
+    /**
+     * Filter which Messages to update
+     */
+    where?: MessageWhereInput
+    /**
+     * Limit how many Messages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Message updateManyAndReturn
+   */
+  export type MessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * The data used to update Messages.
+     */
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyInput>
+    /**
+     * Filter which Messages to update
+     */
+    where?: MessageWhereInput
+    /**
+     * Limit how many Messages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Message upsert
+   */
+  export type MessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Message to update in case it exists.
+     */
+    where: MessageWhereUniqueInput
+    /**
+     * In case the Message found by the `where` argument doesn't exist, create a new Message with this data.
+     */
+    create: XOR<MessageCreateInput, MessageUncheckedCreateInput>
+    /**
+     * In case the Message was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MessageUpdateInput, MessageUncheckedUpdateInput>
+  }
+
+  /**
+   * Message delete
+   */
+  export type MessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    /**
+     * Filter which Message to delete.
+     */
+    where: MessageWhereUniqueInput
+  }
+
+  /**
+   * Message deleteMany
+   */
+  export type MessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Messages to delete
+     */
+    where?: MessageWhereInput
+    /**
+     * Limit how many Messages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Message.booking
+   */
+  export type Message$bookingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Booking
+     */
+    select?: BookingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Booking
+     */
+    omit?: BookingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookingInclude<ExtArgs> | null
+    where?: BookingWhereInput
+  }
+
+  /**
+   * Message without action
+   */
+  export type MessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
   }
 
 
@@ -14947,6 +16124,7 @@ export namespace Prisma {
     booking_events?: boolean | Booking$booking_eventsArgs<ExtArgs>
     booking_additional_options?: boolean | Booking$booking_additional_optionsArgs<ExtArgs>
     reviews?: boolean | Booking$reviewsArgs<ExtArgs>
+    messages?: boolean | Booking$messagesArgs<ExtArgs>
     _count?: boolean | BookingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
 
@@ -15003,6 +16181,7 @@ export namespace Prisma {
     booking_events?: boolean | Booking$booking_eventsArgs<ExtArgs>
     booking_additional_options?: boolean | Booking$booking_additional_optionsArgs<ExtArgs>
     reviews?: boolean | Booking$reviewsArgs<ExtArgs>
+    messages?: boolean | Booking$messagesArgs<ExtArgs>
     _count?: boolean | BookingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BookingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15025,6 +16204,7 @@ export namespace Prisma {
       booking_events: Prisma.$BookingEventPayload<ExtArgs>[]
       booking_additional_options: Prisma.$BookingAdditionalOptionPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15437,6 +16617,7 @@ export namespace Prisma {
     booking_events<T extends Booking$booking_eventsArgs<ExtArgs> = {}>(args?: Subset<T, Booking$booking_eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     booking_additional_options<T extends Booking$booking_additional_optionsArgs<ExtArgs> = {}>(args?: Subset<T, Booking$booking_additional_optionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingAdditionalOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Booking$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Booking$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    messages<T extends Booking$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Booking$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15941,6 +17122,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * Booking.messages
+   */
+  export type Booking$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    where?: MessageWhereInput
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    cursor?: MessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
   }
 
   /**
@@ -25347,6 +26552,17 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const MessageScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    booking_id: 'booking_id',
+    created: 'created',
+    updated: 'updated'
+  };
+
+  export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
   export const ApartmentScalarFieldEnum: {
     id: 'id',
     image: 'image',
@@ -25798,8 +27014,8 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password_hash?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
-    first_name?: StringNullableFilter<"User"> | string | null
-    last_name?: StringNullableFilter<"User"> | string | null
+    first_name?: StringFilter<"User"> | string
+    last_name?: StringFilter<"User"> | string
     phone_number?: StringNullableFilter<"User"> | string | null
     is_active?: BoolFilter<"User"> | boolean
     email_verified?: BoolFilter<"User"> | boolean
@@ -25821,8 +27037,8 @@ export namespace Prisma {
     email?: SortOrder
     password_hash?: SortOrder
     image?: SortOrderInput | SortOrder
-    first_name?: SortOrderInput | SortOrder
-    last_name?: SortOrderInput | SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     phone_number?: SortOrderInput | SortOrder
     is_active?: SortOrder
     email_verified?: SortOrder
@@ -25847,8 +27063,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     password_hash?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
-    first_name?: StringNullableFilter<"User"> | string | null
-    last_name?: StringNullableFilter<"User"> | string | null
+    first_name?: StringFilter<"User"> | string
+    last_name?: StringFilter<"User"> | string
     phone_number?: StringNullableFilter<"User"> | string | null
     is_active?: BoolFilter<"User"> | boolean
     email_verified?: BoolFilter<"User"> | boolean
@@ -25870,8 +27086,8 @@ export namespace Prisma {
     email?: SortOrder
     password_hash?: SortOrder
     image?: SortOrderInput | SortOrder
-    first_name?: SortOrderInput | SortOrder
-    last_name?: SortOrderInput | SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     phone_number?: SortOrderInput | SortOrder
     is_active?: SortOrder
     email_verified?: SortOrder
@@ -25892,8 +27108,8 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password_hash?: StringWithAggregatesFilter<"User"> | string
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
-    first_name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    last_name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    first_name?: StringWithAggregatesFilter<"User"> | string
+    last_name?: StringWithAggregatesFilter<"User"> | string
     phone_number?: StringNullableWithAggregatesFilter<"User"> | string | null
     is_active?: BoolWithAggregatesFilter<"User"> | boolean
     email_verified?: BoolWithAggregatesFilter<"User"> | boolean
@@ -25901,6 +27117,61 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     created?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type MessageWhereInput = {
+    AND?: MessageWhereInput | MessageWhereInput[]
+    OR?: MessageWhereInput[]
+    NOT?: MessageWhereInput | MessageWhereInput[]
+    id?: StringFilter<"Message"> | string
+    message?: StringFilter<"Message"> | string
+    booking_id?: StringNullableFilter<"Message"> | string | null
+    created?: DateTimeFilter<"Message"> | Date | string
+    updated?: DateTimeFilter<"Message"> | Date | string
+    booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
+  }
+
+  export type MessageOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    booking_id?: SortOrderInput | SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+    booking?: BookingOrderByWithRelationInput
+  }
+
+  export type MessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MessageWhereInput | MessageWhereInput[]
+    OR?: MessageWhereInput[]
+    NOT?: MessageWhereInput | MessageWhereInput[]
+    message?: StringFilter<"Message"> | string
+    booking_id?: StringNullableFilter<"Message"> | string | null
+    created?: DateTimeFilter<"Message"> | Date | string
+    updated?: DateTimeFilter<"Message"> | Date | string
+    booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
+  }, "id">
+
+  export type MessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    booking_id?: SortOrderInput | SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+    _count?: MessageCountOrderByAggregateInput
+    _max?: MessageMaxOrderByAggregateInput
+    _min?: MessageMinOrderByAggregateInput
+  }
+
+  export type MessageScalarWhereWithAggregatesInput = {
+    AND?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
+    OR?: MessageScalarWhereWithAggregatesInput[]
+    NOT?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Message"> | string
+    message?: StringWithAggregatesFilter<"Message"> | string
+    booking_id?: StringNullableWithAggregatesFilter<"Message"> | string | null
+    created?: DateTimeWithAggregatesFilter<"Message"> | Date | string
+    updated?: DateTimeWithAggregatesFilter<"Message"> | Date | string
   }
 
   export type ApartmentWhereInput = {
@@ -26611,6 +27882,7 @@ export namespace Prisma {
     booking_events?: BookingEventListRelationFilter
     booking_additional_options?: BookingAdditionalOptionListRelationFilter
     reviews?: ReviewListRelationFilter
+    messages?: MessageListRelationFilter
   }
 
   export type BookingOrderByWithRelationInput = {
@@ -26630,6 +27902,7 @@ export namespace Prisma {
     booking_events?: BookingEventOrderByRelationAggregateInput
     booking_additional_options?: BookingAdditionalOptionOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
+    messages?: MessageOrderByRelationAggregateInput
   }
 
   export type BookingWhereUniqueInput = Prisma.AtLeast<{
@@ -26652,6 +27925,7 @@ export namespace Prisma {
     booking_events?: BookingEventListRelationFilter
     booking_additional_options?: BookingAdditionalOptionListRelationFilter
     reviews?: ReviewListRelationFilter
+    messages?: MessageListRelationFilter
   }, "id" | "transaction_id">
 
   export type BookingOrderByWithAggregationInput = {
@@ -27332,8 +28606,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -27355,8 +28629,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -27378,8 +28652,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -27401,8 +28675,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -27424,8 +28698,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -27440,8 +28714,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -27456,13 +28730,68 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageCreateInput = {
+    id?: string
+    message: string
+    created?: Date | string
+    updated?: Date | string
+    booking?: BookingCreateNestedOneWithoutMessagesInput
+  }
+
+  export type MessageUncheckedCreateInput = {
+    id?: string
+    message: string
+    booking_id?: string | null
+    created?: Date | string
+    updated?: Date | string
+  }
+
+  export type MessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    booking?: BookingUpdateOneWithoutMessagesNestedInput
+  }
+
+  export type MessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageCreateManyInput = {
+    id?: string
+    message: string
+    booking_id?: string | null
+    created?: Date | string
+    updated?: Date | string
+  }
+
+  export type MessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -28220,6 +29549,7 @@ export namespace Prisma {
     booking_events?: BookingEventCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionCreateNestedManyWithoutBookingInput
     reviews?: ReviewCreateNestedManyWithoutBookingInput
+    messages?: MessageCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateInput = {
@@ -28236,6 +29566,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionUncheckedCreateNestedManyWithoutBookingInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutBookingInput
+    messages?: MessageUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUpdateInput = {
@@ -28252,6 +29583,7 @@ export namespace Prisma {
     booking_events?: BookingEventUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUpdateManyWithoutBookingNestedInput
+    messages?: MessageUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateInput = {
@@ -28268,6 +29600,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUncheckedUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutBookingNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingCreateManyInput = {
@@ -29231,6 +30564,35 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BookingNullableScalarRelationFilter = {
+    is?: BookingWhereInput | null
+    isNot?: BookingWhereInput | null
+  }
+
+  export type MessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    booking_id?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+  }
+
+  export type MessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    booking_id?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+  }
+
+  export type MessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    booking_id?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -29453,11 +30815,6 @@ export namespace Prisma {
   export type ApartmentNullableScalarRelationFilter = {
     is?: ApartmentWhereInput | null
     isNot?: ApartmentWhereInput | null
-  }
-
-  export type BookingNullableScalarRelationFilter = {
-    is?: BookingWhereInput | null
-    isNot?: BookingWhereInput | null
   }
 
   export type ReviewCountOrderByAggregateInput = {
@@ -29786,11 +31143,21 @@ export namespace Prisma {
     none?: BookingAdditionalOptionWhereInput
   }
 
+  export type MessageListRelationFilter = {
+    every?: MessageWhereInput
+    some?: MessageWhereInput
+    none?: MessageWhereInput
+  }
+
   export type BookingEventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type BookingAdditionalOptionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MessageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -30595,6 +31962,22 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type BookingCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<BookingCreateWithoutMessagesInput, BookingUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: BookingCreateOrConnectWithoutMessagesInput
+    connect?: BookingWhereUniqueInput
+  }
+
+  export type BookingUpdateOneWithoutMessagesNestedInput = {
+    create?: XOR<BookingCreateWithoutMessagesInput, BookingUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: BookingCreateOrConnectWithoutMessagesInput
+    upsert?: BookingUpsertWithoutMessagesInput
+    disconnect?: BookingWhereInput | boolean
+    delete?: BookingWhereInput | boolean
+    connect?: BookingWhereUniqueInput
+    update?: XOR<XOR<BookingUpdateToOneWithWhereWithoutMessagesInput, BookingUpdateWithoutMessagesInput>, BookingUncheckedUpdateWithoutMessagesInput>
+  }
+
   export type ApartmentImageCreateNestedManyWithoutApartmentInput = {
     create?: XOR<ApartmentImageCreateWithoutApartmentInput, ApartmentImageUncheckedCreateWithoutApartmentInput> | ApartmentImageCreateWithoutApartmentInput[] | ApartmentImageUncheckedCreateWithoutApartmentInput[]
     connectOrCreate?: ApartmentImageCreateOrConnectWithoutApartmentInput | ApartmentImageCreateOrConnectWithoutApartmentInput[]
@@ -31198,6 +32581,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type MessageCreateNestedManyWithoutBookingInput = {
+    create?: XOR<MessageCreateWithoutBookingInput, MessageUncheckedCreateWithoutBookingInput> | MessageCreateWithoutBookingInput[] | MessageUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutBookingInput | MessageCreateOrConnectWithoutBookingInput[]
+    createMany?: MessageCreateManyBookingInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
   export type BookingEventUncheckedCreateNestedManyWithoutBookingInput = {
     create?: XOR<BookingEventCreateWithoutBookingInput, BookingEventUncheckedCreateWithoutBookingInput> | BookingEventCreateWithoutBookingInput[] | BookingEventUncheckedCreateWithoutBookingInput[]
     connectOrCreate?: BookingEventCreateOrConnectWithoutBookingInput | BookingEventCreateOrConnectWithoutBookingInput[]
@@ -31217,6 +32607,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutBookingInput | ReviewCreateOrConnectWithoutBookingInput[]
     createMany?: ReviewCreateManyBookingInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type MessageUncheckedCreateNestedManyWithoutBookingInput = {
+    create?: XOR<MessageCreateWithoutBookingInput, MessageUncheckedCreateWithoutBookingInput> | MessageCreateWithoutBookingInput[] | MessageUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutBookingInput | MessageCreateOrConnectWithoutBookingInput[]
+    createMany?: MessageCreateManyBookingInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
   export type EnumBookingStatusFieldUpdateOperationsInput = {
@@ -31289,6 +32686,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type MessageUpdateManyWithoutBookingNestedInput = {
+    create?: XOR<MessageCreateWithoutBookingInput, MessageUncheckedCreateWithoutBookingInput> | MessageCreateWithoutBookingInput[] | MessageUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutBookingInput | MessageCreateOrConnectWithoutBookingInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutBookingInput | MessageUpsertWithWhereUniqueWithoutBookingInput[]
+    createMany?: MessageCreateManyBookingInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutBookingInput | MessageUpdateWithWhereUniqueWithoutBookingInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutBookingInput | MessageUpdateManyWithWhereWithoutBookingInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
   export type BookingEventUncheckedUpdateManyWithoutBookingNestedInput = {
     create?: XOR<BookingEventCreateWithoutBookingInput, BookingEventUncheckedCreateWithoutBookingInput> | BookingEventCreateWithoutBookingInput[] | BookingEventUncheckedCreateWithoutBookingInput[]
     connectOrCreate?: BookingEventCreateOrConnectWithoutBookingInput | BookingEventCreateOrConnectWithoutBookingInput[]
@@ -31329,6 +32740,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutBookingInput | ReviewUpdateWithWhereUniqueWithoutBookingInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutBookingInput | ReviewUpdateManyWithWhereWithoutBookingInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type MessageUncheckedUpdateManyWithoutBookingNestedInput = {
+    create?: XOR<MessageCreateWithoutBookingInput, MessageUncheckedCreateWithoutBookingInput> | MessageCreateWithoutBookingInput[] | MessageUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutBookingInput | MessageCreateOrConnectWithoutBookingInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutBookingInput | MessageUpsertWithWhereUniqueWithoutBookingInput[]
+    createMany?: MessageCreateManyBookingInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutBookingInput | MessageUpdateWithWhereUniqueWithoutBookingInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutBookingInput | MessageUpdateManyWithWhereWithoutBookingInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
   export type BookingAdditionalOptionCreateNestedManyWithoutAdditional_optionInput = {
@@ -32168,6 +33593,7 @@ export namespace Prisma {
     booking_events?: BookingEventCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionCreateNestedManyWithoutBookingInput
     reviews?: ReviewCreateNestedManyWithoutBookingInput
+    messages?: MessageCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutUserInput = {
@@ -32183,6 +33609,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionUncheckedCreateNestedManyWithoutBookingInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutBookingInput
+    messages?: MessageUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingCreateOrConnectWithoutUserInput = {
@@ -32556,6 +33983,86 @@ export namespace Prisma {
     is_excluded?: BoolFilter<"Review"> | boolean
   }
 
+  export type BookingCreateWithoutMessagesInput = {
+    id?: string
+    message?: string | null
+    status?: $Enums.BookingStatus
+    start: Date | string
+    end: Date | string
+    created?: Date | string
+    updated?: Date | string
+    booking_variant: BookingVariantCreateNestedOneWithoutBookingsInput
+    user: UserCreateNestedOneWithoutBookingsInput
+    transaction: TransactionCreateNestedOneWithoutBookingInput
+    booking_events?: BookingEventCreateNestedManyWithoutBookingInput
+    booking_additional_options?: BookingAdditionalOptionCreateNestedManyWithoutBookingInput
+    reviews?: ReviewCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    user_id: string
+    booking_variant_id: string
+    transaction_id: string
+    message?: string | null
+    status?: $Enums.BookingStatus
+    start: Date | string
+    end: Date | string
+    created?: Date | string
+    updated?: Date | string
+    booking_events?: BookingEventUncheckedCreateNestedManyWithoutBookingInput
+    booking_additional_options?: BookingAdditionalOptionUncheckedCreateNestedManyWithoutBookingInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingCreateOrConnectWithoutMessagesInput = {
+    where: BookingWhereUniqueInput
+    create: XOR<BookingCreateWithoutMessagesInput, BookingUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type BookingUpsertWithoutMessagesInput = {
+    update: XOR<BookingUpdateWithoutMessagesInput, BookingUncheckedUpdateWithoutMessagesInput>
+    create: XOR<BookingCreateWithoutMessagesInput, BookingUncheckedCreateWithoutMessagesInput>
+    where?: BookingWhereInput
+  }
+
+  export type BookingUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: BookingWhereInput
+    data: XOR<BookingUpdateWithoutMessagesInput, BookingUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type BookingUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    booking_variant?: BookingVariantUpdateOneRequiredWithoutBookingsNestedInput
+    user?: UserUpdateOneRequiredWithoutBookingsNestedInput
+    transaction?: TransactionUpdateOneRequiredWithoutBookingNestedInput
+    booking_events?: BookingEventUpdateManyWithoutBookingNestedInput
+    booking_additional_options?: BookingAdditionalOptionUpdateManyWithoutBookingNestedInput
+    reviews?: ReviewUpdateManyWithoutBookingNestedInput
+  }
+
+  export type BookingUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    booking_variant_id?: StringFieldUpdateOperationsInput | string
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
+    start?: DateTimeFieldUpdateOperationsInput | Date | string
+    end?: DateTimeFieldUpdateOperationsInput | Date | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    booking_events?: BookingEventUncheckedUpdateManyWithoutBookingNestedInput
+    booking_additional_options?: BookingAdditionalOptionUncheckedUpdateManyWithoutBookingNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutBookingNestedInput
+  }
+
   export type ApartmentImageCreateWithoutApartmentInput = {
     id?: string
     image: string
@@ -32886,8 +34393,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -32908,8 +34415,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -32998,6 +34505,7 @@ export namespace Prisma {
     transaction: TransactionCreateNestedOneWithoutBookingInput
     booking_events?: BookingEventCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionCreateNestedManyWithoutBookingInput
+    messages?: MessageCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutReviewsInput = {
@@ -33013,6 +34521,7 @@ export namespace Prisma {
     updated?: Date | string
     booking_events?: BookingEventUncheckedCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionUncheckedCreateNestedManyWithoutBookingInput
+    messages?: MessageUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingCreateOrConnectWithoutReviewsInput = {
@@ -33036,8 +34545,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -33058,8 +34567,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -33160,6 +34669,7 @@ export namespace Prisma {
     transaction?: TransactionUpdateOneRequiredWithoutBookingNestedInput
     booking_events?: BookingEventUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUpdateManyWithoutBookingNestedInput
+    messages?: MessageUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutReviewsInput = {
@@ -33175,6 +34685,7 @@ export namespace Prisma {
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     booking_events?: BookingEventUncheckedUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUncheckedUpdateManyWithoutBookingNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type ApartmentAmenityCreateWithoutAmenityInput = {
@@ -33787,6 +35298,7 @@ export namespace Prisma {
     booking_events?: BookingEventCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionCreateNestedManyWithoutBookingInput
     reviews?: ReviewCreateNestedManyWithoutBookingInput
+    messages?: MessageCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutBooking_variantInput = {
@@ -33802,6 +35314,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionUncheckedCreateNestedManyWithoutBookingInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutBookingInput
+    messages?: MessageUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingCreateOrConnectWithoutBooking_variantInput = {
@@ -33951,8 +35464,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -33973,8 +35486,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -34072,8 +35585,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -34094,8 +35607,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -34143,8 +35656,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -34165,8 +35678,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -34310,6 +35823,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MessageCreateWithoutBookingInput = {
+    id?: string
+    message: string
+    created?: Date | string
+    updated?: Date | string
+  }
+
+  export type MessageUncheckedCreateWithoutBookingInput = {
+    id?: string
+    message: string
+    created?: Date | string
+    updated?: Date | string
+  }
+
+  export type MessageCreateOrConnectWithoutBookingInput = {
+    where: MessageWhereUniqueInput
+    create: XOR<MessageCreateWithoutBookingInput, MessageUncheckedCreateWithoutBookingInput>
+  }
+
+  export type MessageCreateManyBookingInputEnvelope = {
+    data: MessageCreateManyBookingInput | MessageCreateManyBookingInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BookingVariantUpsertWithoutBookingsInput = {
     update: XOR<BookingVariantUpdateWithoutBookingsInput, BookingVariantUncheckedUpdateWithoutBookingsInput>
     create: XOR<BookingVariantCreateWithoutBookingsInput, BookingVariantUncheckedCreateWithoutBookingsInput>
@@ -34359,8 +35896,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -34381,8 +35918,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -34513,6 +36050,33 @@ export namespace Prisma {
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutBookingInput>
   }
 
+  export type MessageUpsertWithWhereUniqueWithoutBookingInput = {
+    where: MessageWhereUniqueInput
+    update: XOR<MessageUpdateWithoutBookingInput, MessageUncheckedUpdateWithoutBookingInput>
+    create: XOR<MessageCreateWithoutBookingInput, MessageUncheckedCreateWithoutBookingInput>
+  }
+
+  export type MessageUpdateWithWhereUniqueWithoutBookingInput = {
+    where: MessageWhereUniqueInput
+    data: XOR<MessageUpdateWithoutBookingInput, MessageUncheckedUpdateWithoutBookingInput>
+  }
+
+  export type MessageUpdateManyWithWhereWithoutBookingInput = {
+    where: MessageScalarWhereInput
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutBookingInput>
+  }
+
+  export type MessageScalarWhereInput = {
+    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    OR?: MessageScalarWhereInput[]
+    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    id?: StringFilter<"Message"> | string
+    message?: StringFilter<"Message"> | string
+    booking_id?: StringNullableFilter<"Message"> | string | null
+    created?: DateTimeFilter<"Message"> | Date | string
+    updated?: DateTimeFilter<"Message"> | Date | string
+  }
+
   export type BookingAdditionalOptionCreateWithoutAdditional_optionInput = {
     id?: string
     amount: number
@@ -34568,6 +36132,7 @@ export namespace Prisma {
     transaction: TransactionCreateNestedOneWithoutBookingInput
     booking_events?: BookingEventCreateNestedManyWithoutBookingInput
     reviews?: ReviewCreateNestedManyWithoutBookingInput
+    messages?: MessageCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutBooking_additional_optionsInput = {
@@ -34583,6 +36148,7 @@ export namespace Prisma {
     updated?: Date | string
     booking_events?: BookingEventUncheckedCreateNestedManyWithoutBookingInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutBookingInput
+    messages?: MessageUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingCreateOrConnectWithoutBooking_additional_optionsInput = {
@@ -34641,6 +36207,7 @@ export namespace Prisma {
     transaction?: TransactionUpdateOneRequiredWithoutBookingNestedInput
     booking_events?: BookingEventUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUpdateManyWithoutBookingNestedInput
+    messages?: MessageUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutBooking_additional_optionsInput = {
@@ -34656,6 +36223,7 @@ export namespace Prisma {
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     booking_events?: BookingEventUncheckedUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutBookingNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type AdditionalOptionUpsertWithoutBooking_additional_optionsInput = {
@@ -34704,6 +36272,7 @@ export namespace Prisma {
     transaction: TransactionCreateNestedOneWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionCreateNestedManyWithoutBookingInput
     reviews?: ReviewCreateNestedManyWithoutBookingInput
+    messages?: MessageCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutBooking_eventsInput = {
@@ -34719,6 +36288,7 @@ export namespace Prisma {
     updated?: Date | string
     booking_additional_options?: BookingAdditionalOptionUncheckedCreateNestedManyWithoutBookingInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutBookingInput
+    messages?: MessageUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingCreateOrConnectWithoutBooking_eventsInput = {
@@ -34822,6 +36392,7 @@ export namespace Prisma {
     transaction?: TransactionUpdateOneRequiredWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUpdateManyWithoutBookingNestedInput
+    messages?: MessageUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutBooking_eventsInput = {
@@ -34837,6 +36408,7 @@ export namespace Prisma {
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     booking_additional_options?: BookingAdditionalOptionUncheckedUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutBookingNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type EventUpsertWithoutBooking_eventsInput = {
@@ -34928,8 +36500,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -34950,8 +36522,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -35043,6 +36615,7 @@ export namespace Prisma {
     booking_events?: BookingEventCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionCreateNestedManyWithoutBookingInput
     reviews?: ReviewCreateNestedManyWithoutBookingInput
+    messages?: MessageCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutTransactionInput = {
@@ -35058,6 +36631,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedCreateNestedManyWithoutBookingInput
     booking_additional_options?: BookingAdditionalOptionUncheckedCreateNestedManyWithoutBookingInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutBookingInput
+    messages?: MessageUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingCreateOrConnectWithoutTransactionInput = {
@@ -35106,8 +36680,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35128,8 +36702,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35239,6 +36813,7 @@ export namespace Prisma {
     booking_events?: BookingEventUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUpdateManyWithoutBookingNestedInput
+    messages?: MessageUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutTransactionInput = {
@@ -35254,6 +36829,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUncheckedUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutBookingNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingEventUpsertWithoutTransactionInput = {
@@ -35332,8 +36908,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -35354,8 +36930,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -35408,8 +36984,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35430,8 +37006,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35492,8 +37068,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -35514,8 +37090,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -35568,8 +37144,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35590,8 +37166,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35612,8 +37188,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -35634,8 +37210,8 @@ export namespace Prisma {
     email: string
     password_hash: string
     image?: string | null
-    first_name?: string | null
-    last_name?: string | null
+    first_name: string
+    last_name: string
     phone_number?: string | null
     is_active?: boolean
     email_verified?: boolean
@@ -35732,8 +37308,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35754,8 +37330,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -36064,6 +37640,7 @@ export namespace Prisma {
     booking_events?: BookingEventUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUpdateManyWithoutBookingNestedInput
+    messages?: MessageUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutUserInput = {
@@ -36079,6 +37656,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUncheckedUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutBookingNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateManyWithoutUserInput = {
@@ -36562,6 +38140,7 @@ export namespace Prisma {
     booking_events?: BookingEventUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUpdateManyWithoutBookingNestedInput
+    messages?: MessageUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutBooking_variantInput = {
@@ -36577,6 +38156,7 @@ export namespace Prisma {
     booking_events?: BookingEventUncheckedUpdateManyWithoutBookingNestedInput
     booking_additional_options?: BookingAdditionalOptionUncheckedUpdateManyWithoutBookingNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutBookingNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateManyWithoutBooking_variantInput = {
@@ -36618,6 +38198,13 @@ export namespace Prisma {
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
+  }
+
+  export type MessageCreateManyBookingInput = {
+    id?: string
+    message: string
+    created?: Date | string
+    updated?: Date | string
   }
 
   export type BookingEventUpdateWithoutBookingInput = {
@@ -36705,6 +38292,27 @@ export namespace Prisma {
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type MessageUpdateWithoutBookingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageUncheckedUpdateWithoutBookingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageUncheckedUpdateManyWithoutBookingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BookingAdditionalOptionCreateManyAdditional_optionInput = {

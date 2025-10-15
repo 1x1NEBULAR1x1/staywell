@@ -21,7 +21,8 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.63.0",
     "sass": "^1.93.1",
-    "shared": "workspace:*"
+    "shared": "workspace:*",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

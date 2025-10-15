@@ -1,0 +1,19 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.navigation {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: $spacing-2xl;
+
+  .link {
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+
+    &_active {
+      color: $primary-main;
+      font-size: $font-size-md;
+      font-weight: $font-weight-light;
+    }
+  }
+}

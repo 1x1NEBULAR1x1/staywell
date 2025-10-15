@@ -14,8 +14,8 @@ model User {
   email          String  @unique
   password_hash  String
   image          String?
-  first_name     String?
-  last_name      String?
+  first_name     String
+  last_name      String
   phone_number   String?
   is_active      Boolean @default(true)
   email_verified Boolean @default(false)
@@ -34,6 +34,20 @@ model User {
   reviews          Review[]
 
   @@map("users")
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  message    String
+  booking_id String?
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  booking Booking? @relation(fields: [booking_id], references: [id])
+
+  @@map("messages")
 }
 
 model Apartment {
@@ -248,6 +262,7 @@ model Booking {
   booking_events             BookingEvent[]
   booking_additional_options BookingAdditionalOption[]
   reviews                    Review[]
+  messages                   Message[]
 
   @@index([user_id])
   @@index([start, end])

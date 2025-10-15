@@ -1,0 +1,115 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.images_gallery {
+  width: $container-width-xl;
+  display: flex;
+  gap: $spacing-lg;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+}
+
+.main_image_container {
+  position: relative;
+  flex: 2;
+  height: 500px;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: $box-shadow;
+
+  @media (max-width: $breakpoint-md) {
+    height: 350px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    height: 250px;
+  }
+}
+
+.main_image {
+  object-fit: cover;
+}
+
+.thumbnails_container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: $spacing-sm;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $background-light;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $primary-main;
+      border-radius: 3px;
+
+      &:hover {
+        background: $primary-dark;
+      }
+    }
+  }
+}
+
+.thumbnails_slider {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: row;
+    gap: $spacing-sm;
+  }
+}
+
+.thumbnail {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  aspect-ratio: 22/9;
+  border: 2px solid transparent;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  cursor: pointer;
+  background: $background-main;
+  box-shadow: $box-shadow;
+  transition: border-color $transition-fast;
+
+
+  &:hover {
+    border-color: rgba($primary-main, 0.2);
+  }
+
+  &_active {
+    border-color: $primary-main !important;
+  }
+
+
+  @media (max-width: $breakpoint-md) {
+    flex-shrink: 0;
+    width: 120px;
+    height: 80px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    width: 100px;
+    height: 70px;
+  }
+}
+
+.thumbnail_image {
+  object-fit: cover;
+}

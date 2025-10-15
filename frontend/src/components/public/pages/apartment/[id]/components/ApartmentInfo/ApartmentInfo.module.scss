@@ -1,0 +1,133 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.apartment_info {
+  width: $container-width-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .main_section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+
+    .info_content {
+      flex: 2;
+
+
+      .section_title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-normal;
+        color: $primary-dark;
+        margin-bottom: $spacing-lg;
+      }
+
+
+      .description {
+        font-size: $font-size-md;
+        font-weight: $font-weight-light;
+        color: $foreground-light;
+      }
+    }
+
+    .booking_section {
+      flex: 1;
+      position: sticky;
+      top: $spacing-lg;
+
+      @media (max-width: $breakpoint-lg) {
+        position: static;
+      }
+
+      .booking_card {
+        background: $background-main;
+        border: $border-normal;
+        border-radius: $border-radius-lg;
+        padding: $spacing-xl $spacing-5xl;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-lg;
+
+        @media (max-width: $breakpoint-lg) {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .booking_title {
+          font-size: $font-size-lg;
+          font-weight: $font-weight-normal;
+          color: $primary-dark;
+          margin: 0;
+        }
+
+
+        .price_section {
+          display: flex;
+          align-items: baseline;
+          gap: $spacing-sm;
+
+          .price {
+            font-size: $font-size-2xl;
+            font-weight: $font-weight-normal;
+            color: $green;
+          }
+
+          .price_period {
+            font-size: $font-size-2xl;
+            color: $foreground-secondary;
+            white-space: nowrap;
+            font-weight: $font-weight-light;
+          }
+        }
+
+        .book_button {
+          width: 100%;
+          padding: $spacing-xs $spacing-lg;
+          background-color: rgba($primary-main, 0.9);
+          color: rgba($foreground-white, 0.9);
+          border: none;
+          border-radius: $border-radius-sm;
+          box-shadow: $box-shadow;
+          font-size: $font-size-lg;
+          font-weight: $font-weight-semibold;
+          cursor: pointer;
+          transition: all $transition-fast;
+
+          &:hover {
+            background-color: $primary-main;
+            color: $foreground-white;
+          }
+        }
+      }
+    }
+  }
+
+
+  .amenities_grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $spacing-3xl;
+
+    .amenity {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap: $spacing-sm;
+      padding: $spacing-sm;
+      border-radius: $border-radius-sm;
+
+      &_image {
+        width: $font-size-2xl;
+        height: $font-size-2xl;
+        object-fit: contain;
+      }
+
+      &_name {
+        font-size: $font-size-sm;
+        color: $foreground-main;
+        font-weight: $font-weight-normal;
+      }
+    }
+  }
+}

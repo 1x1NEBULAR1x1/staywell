@@ -1,0 +1,48 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.apartment_card {
+  display: flex;
+  flex-direction: column;
+  background-color: $background-main;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-normal;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-md;
+  }
+
+  .apartment_image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .apartment_info {
+    padding: $spacing-md;
+
+    .apartment_name {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin-bottom: $spacing-xs;
+    }
+
+    .apartment_description {
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+      margin-bottom: $spacing-sm;
+      line-height: 1.4;
+    }
+
+    .apartment_price {
+      font-size: $font-size-md;
+      font-weight: $font-weight-bold;
+      color: $primary-main;
+    }
+  }
+}

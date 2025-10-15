@@ -1,18 +1,18 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 /**
- * Настройка axios для работы с API
+ * Setup axios for working with API
  */
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Включаем передачу куки
+  withCredentials: true, // Enable cookie transmission
 });
 
 /**
- * Фильтрация пустых значений из объекта
+ * Filter empty values from object
  */
 const filterEmptyValues = (data: any): any => {
   if (Array.isArray(data)) {
@@ -32,15 +32,15 @@ const filterEmptyValues = (data: any): any => {
   return data;
 };
 
-// Добавляем interceptor для запросов (фильтрация пустых значений)
+// Add interceptor for requests (filtering empty values)
 api.interceptors.request.use(
   (config) => {
-    // Фильтруем данные в body для POST/PUT/PATCH запросов, но не для FormData
+    // Filter data in body for POST/PUT/PATCH requests, but not for FormData
     if (config.data && ['post', 'put', 'patch'].includes(config.method?.toLowerCase() || '') && !(config.data instanceof FormData)) {
       config.data = filterEmptyValues(config.data);
     }
 
-    // Фильтруем параметры запроса
+    // Filter request parameters
     if (config.params) {
       config.params = filterEmptyValues(config.params);
     }
@@ -62,7 +62,19 @@ export const createFormData = (data: object): [FormData, AxiosRequestConfig] => 
   return [formData, { headers: { 'Content-Type': 'multipart/form-data' } }];
 };
 
-// Переменная для отслеживания процесса обновления токена
+/**
+ * Creates config for optional auth request
+ * Such requests do not trigger automatic redirect on 401 error
+ */
+export const createOptionalAuthConfig = (config: AxiosRequestConfig = {}): AxiosRequestConfig => ({
+  ...config,
+  headers: {
+    ...config.headers,
+    'X-Optional-Auth': 'true',
+  },
+});
+
+// Variable for tracking the token update process
 let isRefreshing = false;
 let failedQueue: Array<{
   resolve: (value?: string | null) => void;
@@ -70,7 +82,7 @@ let failedQueue: Array<{
 }> = [];
 
 /**
- * Обработка очереди запросов после обновления токена
+ * Process the queue of requests after the token update
  */
 const processQueue = (error: Error | null, token: string | null = null) => {
   failedQueue.forEach(({ resolve, reject }) => {
@@ -85,29 +97,33 @@ const processQueue = (error: Error | null, token: string | null = null) => {
 };
 
 /**
- * Редирект на страницу логина с учетом локали
+ * Redirect to login page
  */
 const redirectToLogin = () => {
   if (typeof window !== 'undefined') {
     const loginPath = `/auth/login`;
 
-    // Очищаем все данные пользователя
+    // Clear all user data
     localStorage.clear();
     sessionStorage.clear();
 
-    // Очищаем куки
+    // Clear cookies
     document.cookie.split(";").forEach((c) => {
       const eqPos = c.indexOf("=");
       const name = eqPos > -1 ? c.substr(0, eqPos) : c;
       document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
     });
 
-    // Перенаправляем на страницу входа
-    window.location.href = loginPath;
+    // Redirect to login page only if we are not on a public page
+    const isPublicPage = !window.location.pathname.includes('/admin')
+
+    if (!isPublicPage) {
+      window.location.href = loginPath;
+    }
   }
 };
 
-// Добавляем interceptor для ответов (обработка ошибок авторизации)
+// Add interceptor for responses (error handling)
 api.interceptors.response.use(
   (response) => {
     return response;
@@ -115,28 +131,37 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Если получили 401 ошибку
+    // If we received a 401 error
     if (error.response?.status === 401) {
 
-      // Проверяем, содержит ли ошибка информацию о сессии
+      // Check if this is a public request or an optional request
+      const isPublicRequest = originalRequest.url?.includes('/public') ||
+        originalRequest.headers?.['X-Optional-Auth'] === 'true';
+
+      // For public or optional requests, just return the error without redirect
+      if (isPublicRequest) {
+        return Promise.reject(error);
+      }
+
+      // Check if the error contains information about the session
       const errorMessage = error.response?.data?.message || '';
       const isSessionError = errorMessage.includes('сессия') ||
         errorMessage.includes('Сессия') ||
         errorMessage.includes('session');
 
-      // Если это ошибка сессии или уже был повтор запроса - сразу очищаем данные
+      // If this is a session error or a repeated request, clear the data immediately
       if (isSessionError || originalRequest._retry) {
         redirectToLogin();
         return Promise.reject(error);
       }
 
-      // Если это не запрос на refresh/login/register, пытаемся обновить токены
+      // If this is not a refresh/login/register request, try to update the tokens
       if (!originalRequest._retry &&
         !originalRequest.url?.includes('/auth/refresh') &&
         !originalRequest.url?.includes('/auth/login') &&
         !originalRequest.url?.includes('/auth/register')) {
 
-        // Если токен уже обновляется, добавляем запрос в очередь
+        // If the token is already being updated, add the request to the queue
         if (isRefreshing) {
           return new Promise((resolve, reject) => {
             failedQueue.push({ resolve, reject });
@@ -151,7 +176,7 @@ api.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          // Пытаемся обновить токены
+          // Try to update the tokens
           const refreshResponse = await axios.post(
             `${api.defaults.baseURL}/auth/refresh`,
             {},
@@ -161,20 +186,20 @@ api.interceptors.response.use(
           );
 
           if (refreshResponse.status === 200) {
-            // Обрабатываем очередь с успехом
+            // Process the queue with success
             processQueue(null, 'success');
 
-            // Повторяем оригинальный запрос
+            // Repeat the original request
             return api(originalRequest);
           }
         } catch (refreshError: unknown) {
-          console.error('Не удалось обновить токены:', refreshError);
+          console.error('Failed to update tokens:', refreshError);
 
-          // Обрабатываем очередь с ошибкой
+          // Process the queue with error
           const error = refreshError instanceof Error ? refreshError : new Error('Token refresh failed');
           processQueue(error, null);
 
-          // Очищаем данные и перенаправляем
+          // Clear the data and redirect
           redirectToLogin();
 
           return Promise.reject(refreshError);
@@ -184,7 +209,7 @@ api.interceptors.response.use(
       }
     }
 
-    // Логируем ошибки API для отладки
+    // Log API errors for debugging
     if (error.response?.status !== 401) {
       console.error('API Error:', {
         status: error.response?.status,

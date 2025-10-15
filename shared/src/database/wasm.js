@@ -136,6 +136,14 @@ exports.Prisma.UserScalarFieldEnum = {
   updated: 'updated'
 };
 
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  booking_id: 'booking_id',
+  created: 'created',
+  updated: 'updated'
+};
+
 exports.Prisma.ApartmentScalarFieldEnum = {
   id: 'id',
   image: 'image',
@@ -403,6 +411,7 @@ exports.PaymentMethod = exports.$Enums.PaymentMethod = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Message: 'Message',
   Apartment: 'Apartment',
   Review: 'Review',
   Amenity: 'Amenity',

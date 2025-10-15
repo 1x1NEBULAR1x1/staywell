@@ -1,0 +1,60 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.section_features {
+  height: auto;
+  background-color: $background-main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-3xl;
+
+  .features_group_columns {
+    width: $container-width-xl;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: space-between;
+    align-items: start;
+    gap: $spacing-xl;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .feature_group {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .image {
+
+        width: 100%;
+        aspect-ratio: 16/11;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: $border-radius-lg;
+
+        &>img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .title {
+        color: $primary-dark;
+        font-weight: $font-weight-light;
+        font-size: $font-size-lg;
+      }
+
+    }
+  }
+}

@@ -1,0 +1,51 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  background-color: $background-main;
+  color: $foreground-main;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-md $spacing-6xl ;
+  font-family: var(--font-poppins);
+  border-bottom: $border-normal;
+
+  &_left {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-sm;
+  }
+
+  &_right {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-3xl;
+
+    .login_button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-xs $spacing-lg;
+      background: $primary-main;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-normal;
+      color: $foreground-white;
+      box-shadow: $box-shadow-main;
+      border-radius: $border-radius-sm;
+
+      .loader {
+        margin: $spacing-sm;
+        width: $font-size-lg;
+        height: $font-size-lg;
+        color: $foreground-white;
+        animation: spin infinite linear;
+      }
+    }
+  }
+
+}

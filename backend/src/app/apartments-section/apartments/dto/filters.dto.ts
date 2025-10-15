@@ -1,4 +1,4 @@
-import { BaseFiltersDto, ToBoolean, ToDate, ToDecimal, ToEnum, ToInt, ToString } from 'src/lib/common'
+import { BaseFiltersDto, ToBoolean, ToDate, ToDecimal, ToEnum, ToInt } from 'src/lib/common'
 import { ApartmentsFilters } from "@shared/src/types/apartments-section";
 import { ApartmentType, Apartment } from "@shared/src/database";
 

@@ -1,6 +1,7 @@
 import classes from './Sidebar.module.scss';
 
-import { Logo, Navigation } from './components';
+import { Logo } from '@/components/common/Logo';
+import { Navigation } from './components';
 
 type SidebarProps = {}
 

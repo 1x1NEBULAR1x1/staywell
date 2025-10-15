@@ -31,7 +31,7 @@ export class AuthService {
     const hash = await argon2.hash(password);
     // Создаем нового пользователя
     const user = await this.prisma.user.create({
-      data: { email, password_hash: hash },
+      data: { ...data, password_hash: hash },
     });
     // Создаем сессию для пользователя в Redis
     const session_result = await this.redisSessionService.create({

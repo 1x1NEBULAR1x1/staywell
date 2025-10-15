@@ -4,13 +4,8 @@ import {
   ConflictException,
 } from "@nestjs/common";
 import { PrismaService } from "src/lib/prisma";
-import {
-  Prisma,
-  Reservation,
-  Role,
-  User,
-  SAFE_USER_SELECT
-} from "@shared/src";
+import { SAFE_USER_SELECT } from "@shared/src";
+import { Prisma, User, Role, Reservation } from "@shared/src/database";
 import { CreateReservationDto, UpdateReservationDto } from "../dto";
 
 @Injectable()

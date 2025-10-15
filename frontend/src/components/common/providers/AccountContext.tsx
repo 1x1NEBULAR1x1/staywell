@@ -36,10 +36,6 @@ export const useAccount = (): AccountContextType => {
   return context;
 };
 
-interface AccountProviderProps {
-  children: ReactNode;
-}
-
 /**
  * Проверка, нужно ли отключить запросы на текущей странице
  */
@@ -50,10 +46,10 @@ const shouldDisableQueries = (pathname: string): boolean => {
 /**
  * Провайдер контекста пользователя
  */
-export const AccountProvider = ({ children }: AccountProviderProps) => {
+export const AccountProvider = ({ children, disable_auth = false }: { children: ReactNode, disable_auth?: boolean }) => {
   const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
-  const shouldDisableAuth = shouldDisableQueries(pathname);
+  const shouldDisableAuth = shouldDisableQueries(pathname) || disable_auth;
   // Query для получения данных пользователя
   const {
     data: userData,

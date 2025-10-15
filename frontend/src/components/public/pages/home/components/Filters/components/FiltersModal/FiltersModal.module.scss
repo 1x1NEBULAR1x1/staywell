@@ -1,0 +1,31 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-lg;
+
+  .button {
+    padding: $spacing-md $spacing-xl;
+    background: $primary-main;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    border: none;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $foreground-white;
+  }
+
+  .button_active {
+    background-color: $primary-main;
+    color: $foreground-white;
+  }
+
+  .button_disabled {
+    background-color: $background-disabled;
+    color: $foreground-light;
+    cursor: not-allowed;
+  }
+}

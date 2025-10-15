@@ -1,0 +1,51 @@
+.loading_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  &_spinner {
+    animation: spin var(--transition-normal) linear infinite;
+    border-radius: var(--border-radius-full);
+    height: 2rem;
+    width: 2rem;
+    border: var(--border-width-normal) solid transparent;
+    border-bottom-color: var(--info);
+  }
+}
+
+.banned_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+
+  &_content {
+    text-align: center;
+    max-width: 400px;
+
+    &_title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--error);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    &_description {
+      color: var(--text-secondary);
+      font-size: var(--font-size-md);
+      line-height: 1.5;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

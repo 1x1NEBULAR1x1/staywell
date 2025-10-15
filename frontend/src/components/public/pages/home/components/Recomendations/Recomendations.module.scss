@@ -1,0 +1,173 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.section_recommendations {
+  width: $container-width-xl;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-md;
+
+  .title {
+    color: $primary-dark;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-normal;
+  }
+
+  .images_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: $spacing-xl;
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+    }
+
+    .left_image {
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+
+      .image {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: $border-radius-lg;
+        cursor: pointer;
+        border: none;
+
+        &>img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .badge {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: $primary-main;
+          color: $foreground-white;
+          font-size: $font-size-md;
+          font-weight: $font-weight-normal;
+          padding: $spacing-sm $spacing-xl;
+          border-radius: 0 $border-radius-lg 0 $border-radius-lg;
+          display: inline-flex;
+          gap: $spacing-sm;
+          z-index: 2;
+        }
+
+        .pernight {
+          font-weight: $font-weight-thin;
+        }
+
+        .room_title {
+          position: absolute;
+          left: $spacing-lg;
+          bottom: $spacing-md;
+          color: $foreground-white;
+          font-size: $font-size-lg;
+          font-weight: $font-weight-light;
+          z-index: 2;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 40%;
+          background: $gradient;
+          border-radius: 0 0 $border-radius-lg $border-radius-lg;
+          z-index: 1;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .images {
+      min-width: 0;
+      position: relative;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      z-index: 1;
+      gap: $spacing-xl;
+
+      .image {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: $border-radius-lg;
+        cursor: pointer;
+        border: none;
+
+        &>img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .badge {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: $primary-main;
+          color: $foreground-white;
+          font-size: $font-size-md;
+          font-weight: $font-weight-normal;
+          padding: $spacing-sm $spacing-xl;
+          border-radius: 0 $border-radius-lg 0 $border-radius-lg;
+          display: inline-flex;
+          gap: $spacing-sm;
+          z-index: 2;
+        }
+
+        .pernight {
+          font-weight: $font-weight-thin;
+        }
+
+        .room_title {
+          position: absolute;
+          left: $spacing-lg;
+          bottom: $spacing-md;
+          color: $foreground-white;
+          font-size: $font-size-lg;
+          font-weight: $font-weight-light;
+          z-index: 2;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 40%;
+          background: $gradient;
+          border-radius: 0 0 $border-radius-lg $border-radius-lg;
+          z-index: 1;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  // Новые стили для шиммера
+  .image_shimmer {
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius-lg;
+    background-color: $background-light;
+  }
+}

@@ -1,7 +1,7 @@
 /**
- * Преобразует kebab-case строку в читаемый заголовок с заглавными буквами
- * @param kebabString - строка в kebab-case формате (например: "apartment-amenities")
- * @returns отформатированная строка (например: "Apartment Amenities")
+ * Converts kebab-case string to readable title with uppercase letters
+ * @param kebabString - string in kebab-case format (for example: "apartment-amenities")
+ * @returns formatted string (for example: "Apartment Amenities")
  */
 export const formatToTitle = (kebabString: string): string => {
   return kebabString

@@ -4,18 +4,20 @@ import { Sidebar, Header } from './components';
 import { ReactNode } from 'react';
 
 import { AccountProvider } from '@/components/common/providers';
-type LayoutProps = {
-  children: ReactNode;
-}
+import { RoleGuard } from '../RoleGuard';
+import { Role } from '@shared/src/database';
 
-export const Layout = ({ children }: LayoutProps) => (
+
+export const Layout = ({ children }: { children: ReactNode }) => (
   <AccountProvider>
-    <div className={classes.layout}>
-      <Sidebar />
-      <div className={classes.content}>
-        <Header />
-        {children}
+    <RoleGuard redirect_to='/auth/login' required_roles={[Role.ADMIN]}>
+      <div className={classes.layout}>
+        <Sidebar />
+        <div className={classes.content}>
+          <Header />
+          {children}
+        </div>
       </div>
-    </div>
+    </RoleGuard>
   </AccountProvider>
 );

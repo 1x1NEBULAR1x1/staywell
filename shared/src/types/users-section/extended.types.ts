@@ -27,7 +27,7 @@ export interface SafeUser {
   email: string;
   first_name: string;
   last_name: string;
-  image: string;
+  image: string | null;
   is_active: boolean,
 }
 

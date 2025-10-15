@@ -2,6 +2,7 @@ import { api, clearTokensCookies, query_client } from '@/lib/api';
 import { AuthResponse } from '@shared/src/types/users-section/extended.types';
 import { User, Login, Register } from '@shared/src';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { createOptionalAuthConfig } from '../axios/axios';
 
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/auth`;
@@ -26,7 +27,7 @@ export class AuthApi {
   } as const;
 
   async getProfile(): Promise<User> {
-    return (await api.get<User>(AUTH_PATHS.me)).data;
+    return (await api.get<User>(AUTH_PATHS.me, createOptionalAuthConfig())).data;
   }
 
   onSuccessLogin({ data, refetchUser, router }: { data: AuthResponse, refetchUser: () => void, router: AppRouterInstance }) {

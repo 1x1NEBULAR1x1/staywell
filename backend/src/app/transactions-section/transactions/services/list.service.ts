@@ -1,12 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/lib/prisma";
-import {
-  Transaction,
-  Prisma,
-  User,
-  Role,
-  SAFE_USER_SELECT
-} from "@shared/src";
+import { SAFE_USER_SELECT } from "@shared/src";
+import { Prisma, User, Role, Transaction } from "@shared/src/database";
 import { TransactionsFiltersDto } from "../dto";
 
 /**

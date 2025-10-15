@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/lib/prisma";
+import { SAFE_USER_SELECT } from "@shared/src";
 import {
-  TransferDetail,
   Prisma,
+  TransferDetail,
   User,
   Role,
-  SAFE_USER_SELECT
-} from "@shared/src";
+} from "@shared/src/database";
 import { TransferDetailsFiltersDto } from "../dto";
 
 /**

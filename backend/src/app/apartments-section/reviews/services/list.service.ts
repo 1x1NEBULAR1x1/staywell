@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { Prisma, Review, SAFE_USER_SELECT, BaseListResult } from "@shared/src";
+import { SAFE_USER_SELECT, BaseListResult } from "@shared/src";
+import { Prisma, Review } from "@shared/src/database";
 import { ReviewsFiltersDto } from "../dto";
 import { PrismaService } from "src/lib/prisma";
 

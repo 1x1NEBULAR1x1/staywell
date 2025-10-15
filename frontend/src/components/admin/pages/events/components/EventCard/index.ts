@@ -1,0 +1,1 @@
+export { EventCard, EventCardShimmer } from './EventCard';

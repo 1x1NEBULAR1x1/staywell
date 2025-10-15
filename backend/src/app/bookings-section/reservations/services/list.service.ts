@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/lib/prisma";
-import { User, Prisma, Role, SAFE_USER_SELECT, BaseListResult, ExtendedReservation } from "@shared/src";
+import { SAFE_USER_SELECT, BaseListResult, ExtendedReservation } from "@shared/src";
+import { Prisma, User, Role } from "@shared/src/database";
 import { ReservationsFiltersDto } from "../dto";
 
 @Injectable()

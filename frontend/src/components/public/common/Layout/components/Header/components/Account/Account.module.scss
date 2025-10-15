@@ -1,0 +1,211 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.account {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  transition: all $transition-fast;
+  background: transparent;
+
+  &:hover {
+    background-color: rgba($primary-main, 0.1);
+  }
+
+  .user_info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  .avatar_container {
+    position: relative;
+    width: $font-size-3xl;
+    height: $font-size-3xl;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: border-color $transition-fast;
+
+    .account:hover & {
+      border-color: $primary-main;
+    }
+  }
+
+  .avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .user_details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .user_name {
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+    color: $foreground-main;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 10rem;
+  }
+
+  .user_email {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
+    color: $foreground-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 10rem;
+  }
+
+  .dropdown_toggle {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+  }
+
+  .chevron {
+    color: $foreground-secondary;
+    transition: all $transition-fast;
+
+    &.chevron_rotated {
+      transform: rotate(180deg);
+      color: $primary-main;
+    }
+  }
+
+  .dropdown {
+    position: absolute;
+    top: calc(100% + $spacing-sm);
+    right: 0;
+    width: 100%;
+    background-color: $background-main;
+    border: $border-normal;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow;
+    z-index: 1000;
+    overflow: hidden;
+    animation: dropdownFadeIn $transition-fast;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      right: 16px;
+      width: 12px;
+      height: 12px;
+      background: $background-main;
+      border: $border-normal;
+      border-bottom: none;
+      border-right: none;
+      transform: rotate(45deg);
+    }
+  }
+
+  .dropdown_item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    padding: $spacing-sm $spacing-lg;
+    color: $foreground-main;
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+    transition: all $transition-fast;
+    text-align: left;
+
+    &:hover {
+      background-color: $background-light;
+      color: $primary-main;
+
+      svg {
+        color: $primary-main;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      background-color: $background-light;
+      color: $primary-main;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+
+      &:hover {
+        background: none;
+        color: $foreground-main;
+
+        svg {
+          color: $foreground-secondary;
+        }
+      }
+    }
+
+    svg {
+      flex-shrink: 0;
+      color: $foreground-secondary;
+      transition: color $transition-fast;
+    }
+
+    span {
+      flex: 1;
+    }
+
+    // Последний элемент (Logout) особое оформление
+    &:last-child {
+
+      svg {
+        color: $red;
+      }
+
+      &:hover {
+        background-color: rgba(231, 76, 60, 0.05);
+        color: $red;
+
+        svg {
+          color: $red;
+        }
+      }
+    }
+  }
+
+  .dropdown_divider {
+    height: 1px;
+    background-color: $border-color-main;
+  }
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

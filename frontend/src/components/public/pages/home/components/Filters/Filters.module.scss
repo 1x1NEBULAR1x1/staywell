@@ -1,0 +1,65 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.section_filters {
+  width: $container-width-xl;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-lg $spacing-xl ;
+  background-color: $primary-disabled;
+  border-radius: $border-radius-2xl;
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    .button {
+      width: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-md $spacing-lg;
+      gap: $spacing-md;
+      background-color: $background-main;
+      border-radius: $border-radius-md;
+      box-shadow: $box-shadow-second;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+    }
+
+  }
+
+  .search_button {
+    padding: calc($spacing-sm + $spacing-xs) $spacing-xl;
+    background: $primary-main;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $foreground-white;
+    box-shadow: $box-shadow-main;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    border: none;
+  }
+
+  .button_active {
+    background-color: $primary-main;
+    color: white;
+  }
+
+  .filter_badge {
+    color: $yellow;
+    font-size: 12px;
+    margin-left: $spacing-xs;
+  }
+}

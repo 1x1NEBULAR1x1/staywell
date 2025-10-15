@@ -1,0 +1,46 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.meta {
+  display: flex;
+  gap: $spacing-sm;
+  flex-direction: column;
+
+  &_row {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+    color: $primary-main;
+
+    &_container {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      color: $primary-dark;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .status {
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+
+    &.available {
+      background: $green;
+      color: $foreground-white;
+    }
+
+    &.unavailable {
+      background: $yellow;
+      color: $foreground-main;
+    }
+  }
+
+}
