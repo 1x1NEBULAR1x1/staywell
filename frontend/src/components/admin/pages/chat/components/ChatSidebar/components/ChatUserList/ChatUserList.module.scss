@@ -1,0 +1,36 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $border-color-main;
+    border-radius: $border-radius-sm;
+  }
+}
+
+.list_empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-3xl;
+  color: $foreground-secondary;
+  text-align: center;
+  gap: $spacing-sm;
+
+  svg {
+    width: 60px;
+    height: 60px;
+    opacity: 0.3;
+  }
+}

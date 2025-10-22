@@ -1,0 +1,2 @@
+export { EventsFiltersMenu } from './EventsFiltersMenu';
+

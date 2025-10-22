@@ -1,0 +1,31 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  background-color: $background-main;
+
+  &_avatar {
+    width: $font-size-3xl;
+    height: $font-size-3xl;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &_info {
+    flex: 1;
+  }
+
+  &_name {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  &_email {
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+  }
+}

@@ -12,7 +12,7 @@ export const NavButton = ({ icon, href, label }: NavButtonProps) => {
   const pathname = usePathname();
 
   const is_active = useMemo(() => {
-    return (pathname !== '/admin' && pathname.startsWith(href)) || (pathname === '/admin' && href === '/admin');
+    return (href === '/admin' && pathname === '/admin') || (href !== '/admin' && pathname.startsWith(href));
   }, [href, pathname]);
 
   return (

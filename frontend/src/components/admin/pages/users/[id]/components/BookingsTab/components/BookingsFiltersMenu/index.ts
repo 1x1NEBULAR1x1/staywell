@@ -1,0 +1,2 @@
+export { BookingsFiltersMenu } from './BookingsFiltersMenu';
+

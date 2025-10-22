@@ -1,0 +1,41 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: $spacing-md;
+  border-bottom: $border-normal;
+
+  .title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    gap: $spacing-sm;
+
+    .edit_button {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      padding: $spacing-sm $spacing-md;
+      background: rgba($primary-main, 0.95);
+      color: rgba($foreground-white, 0.95);
+      border: none;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-md;
+      font-weight: $font-weight-normal;
+      cursor: pointer;
+      transition: all $transition-fast;
+
+      &:hover {
+        background: $primary-main;
+        color: $foreground-white;
+      }
+    }
+  }
+}

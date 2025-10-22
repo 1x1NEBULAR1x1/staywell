@@ -1,4 +1,4 @@
-import { Injectable, Inject, OnModuleDestroy } from "@nestjs/common";
+import { Injectable, Inject, OnModuleDestroy, NotFoundException } from "@nestjs/common";
 import { SessionData } from "@shared/src/types/users-section";
 import { Redis } from "ioredis";
 
@@ -13,35 +13,35 @@ export class RedisService implements OnModuleDestroy {
    * Создание сессии в Redis
    */
   async createSession(
-    sessionId: string,
-    sessionData: SessionData,
-    ttlSeconds: number = 7 * 24 * 60 * 60, // 7 дней по умолчанию
+    id: string,
+    session: SessionData,
+    ttl_seconds: number = 7 * 24 * 60 * 60, // 7 дней по умолчанию
   ): Promise<void> {
-    const key = this.getSessionKey(sessionId);
-    const userSessionsKey = this.getUserSessionsKey(sessionData.user_id);
+    const key = this.getSessionKey(id);
+    const user_sessions_key = this.getUserSessionsKey(session.user_id);
     await Promise.all([
-      this.redis.setex(key, ttlSeconds, JSON.stringify(sessionData)),
-      this.redis.sadd(userSessionsKey, sessionId),
-      this.redis.expire(userSessionsKey, ttlSeconds),
+      this.redis.setex(key, ttl_seconds, JSON.stringify(session)),
+      this.redis.sadd(user_sessions_key, id),
+      this.redis.expire(user_sessions_key, ttl_seconds),
     ]);
   }
   /**
    * Получение сессии из Redis
    */
-  async getSession(sessionId: string): Promise<SessionData | null> {
-    const key = this.getSessionKey(sessionId);
+  async getSession(id: string): Promise<SessionData | null> {
+    const key = this.getSessionKey(id);
     const data = await this.redis.get(key);
-    if (!data) return null;
+    if (!data) throw new NotFoundException("Session not found");
     try {
-      const sessionData = JSON.parse(data) as SessionData;
-      if (new Date(sessionData.expires_at) < new Date()) {
-        await this.deleteSession(sessionId);
+      const session = JSON.parse(data) as SessionData;
+      if (new Date(session.expires) < new Date()) {
+        await this.deleteSession(id);
         return null;
       }
-      return sessionData;
+      return session;
     } catch (error) {
       console.error("Ошибка парсинга данных сессии:", error);
-      await this.deleteSession(sessionId);
+      await this.deleteSession(id);
       return null;
     }
   }
@@ -49,63 +49,60 @@ export class RedisService implements OnModuleDestroy {
    * Обновление TTL сессии
    */
   async refreshSession(
-    sessionId: string,
-    ttlSeconds: number = 7 * 24 * 60 * 60,
+    id: string,
+    ttl_seconds: number = 7 * 24 * 60 * 60,
   ): Promise<boolean> {
-    const key = this.getSessionKey(sessionId);
+    const key = this.getSessionKey(id);
     const exists = await this.redis.exists(key);
-    if (!exists) return false;
-    await this.redis.expire(key, ttlSeconds);
-    const sessionData = await this.getSession(sessionId);
-    if (sessionData) {
-      const newExpiresAt = new Date();
-      newExpiresAt.setSeconds(newExpiresAt.getSeconds() + ttlSeconds);
-      sessionData.expires_at = newExpiresAt.toISOString();
-      await this.redis.setex(key, ttlSeconds, JSON.stringify(sessionData));
-    }
+    if (!exists) throw new NotFoundException("Session not found");
+    await this.redis.expire(key, ttl_seconds);
+
+    const session = await this.getSession(id);
+    if (!session) throw new NotFoundException("Session not found");
+
+    session.expires = new Date(Date.now() + ttl_seconds).toISOString();
+    await this.redis.setex(key, ttl_seconds, JSON.stringify(session));
     return true;
   }
   /**
    * Удаление сессии
    */
-  async deleteSession(sessionId: string): Promise<void> {
-    const sessionData = await this.getSession(sessionId);
-    const key = this.getSessionKey(sessionId);
-    await this.redis.del(key);
-
-    // Удаляем из списка активных сессий пользователя
-    if (sessionData) {
-      const userSessionsKey = this.getUserSessionsKey(sessionData.user_id);
-      await this.redis.srem(userSessionsKey, sessionId);
-    }
+  async deleteSession(id: string): Promise<void> {
+    const session = await this.getSession(id);
+    if (!session) throw new NotFoundException("Session not found");
+    const key = this.getSessionKey(id);
+    await Promise.all([
+      this.redis.del(key),
+      this.redis.srem(this.getUserSessionsKey(session.user_id), id),
+    ]);
   }
   /**
    * Деактивация сессии (помечаем как неактивную, но не удаляем)
    */
-  async deactivateSession(sessionId: string): Promise<void> {
-    const sessionData = await this.getSession(sessionId);
-    if (!sessionData) return;
-    sessionData.is_active = false;
-    const key = this.getSessionKey(sessionId);
+  async deactivateSession(id: string): Promise<void> {
+    const session = await this.getSession(id);
+    if (!session) return;
+    session.is_active = false;
+    const key = this.getSessionKey(id);
     const ttl = await this.redis.ttl(key);
-    if (ttl > 0) await this.redis.setex(key, ttl, JSON.stringify(sessionData));
+    if (ttl > 0) await this.redis.setex(key, ttl, JSON.stringify(session));
   }
   /**
    * Получение всех активных сессий пользователя
    */
   async getUserActiveSessions(
-    userId: string,
-  ): Promise<{ sessionId: string; data: SessionData }[]> {
-    const userSessionsKey = this.getUserSessionsKey(userId);
-    const sessionIds = await this.redis.smembers(userSessionsKey);
-    const sessions: { sessionId: string; data: SessionData }[] = [];
-    for (const sessionId of sessionIds) {
-      const sessionData = await this.getSession(sessionId);
-      if (sessionData && sessionData.is_active) {
-        sessions.push({ sessionId, data: sessionData });
+    user_id: string,
+  ): Promise<SessionData[]> {
+    const user_sessions_key = this.getUserSessionsKey(user_id);
+    const session_ids = await this.redis.smembers(user_sessions_key);
+    const sessions: SessionData[] = [];
+    for (const session_id of session_ids) {
+      const session = await this.getSession(session_id);
+      if (session && session.is_active) {
+        sessions.push(session);
       } else {
         // Удаляем недействительные сессии из списка
-        await this.redis.srem(userSessionsKey, sessionId);
+        await this.redis.srem(user_sessions_key, session_id);
       }
     }
     return sessions;
@@ -114,61 +111,62 @@ export class RedisService implements OnModuleDestroy {
    * Деактивация всех сессий пользователя кроме текущей
    */
   async deactivateAllOtherSessions(
-    userId: string,
-    currentSessionId?: string,
+    user_id: string,
+    current_session_id?: string,
   ): Promise<number> {
-    const userSessionsKey = this.getUserSessionsKey(userId);
-    const sessionIds = await this.redis.smembers(userSessionsKey);
-    let deactivatedCount = 0;
-    for (const sessionId of sessionIds) {
-      if (sessionId !== currentSessionId) {
-        await this.deactivateSession(sessionId);
-        deactivatedCount++;
+    const user_sessions_key = this.getUserSessionsKey(user_id);
+    const session_ids = await this.redis.smembers(user_sessions_key);
+
+    let deactivated_count = 0;
+    for (const session_id of session_ids) {
+      if (session_id !== current_session_id) {
+        await this.deactivateSession(session_id);
+        deactivated_count++;
       }
     }
-    return deactivatedCount;
+    return deactivated_count;
   }
   /**
    * Очистка истекших сессий пользователя
    */
-  async cleanupExpiredUserSessions(userId: string): Promise<number> {
-    const userSessionsKey = this.getUserSessionsKey(userId);
-    const sessionIds = await this.redis.smembers(userSessionsKey);
-    let cleanedCount = 0;
-    for (const sessionId of sessionIds) {
-      const sessionData = await this.getSession(sessionId);
-      if (!sessionData) {
-        await this.redis.srem(userSessionsKey, sessionId);
-        cleanedCount++;
+  async cleanupExpiredUserSessions(user_id: string): Promise<number> {
+    const user_sessions_key = this.getUserSessionsKey(user_id);
+    const session_ids = await this.redis.smembers(user_sessions_key);
+    let cleaned_count = 0;
+    for (const session_id of session_ids) {
+      const session = await this.getSession(session_id);
+      if (!session) {
+        await this.redis.srem(user_sessions_key, session_id);
+        cleaned_count++;
       }
     }
-    return cleanedCount;
+    return cleaned_count;
   }
   /**
    * Проверка существования сессии
    */
-  async sessionExists(sessionId: string): Promise<boolean> {
-    const key = this.getSessionKey(sessionId);
+  async sessionExists(id: string): Promise<boolean> {
+    const key = this.getSessionKey(id);
     return (await this.redis.exists(key)) === 1;
   }
   /**
    * Получение TTL сессии
    */
-  async getSessionTTL(sessionId: string): Promise<number> {
-    const key = this.getSessionKey(sessionId);
+  async getSessionTTL(id: string): Promise<number> {
+    const key = this.getSessionKey(id);
     return await this.redis.ttl(key);
   }
   /**
    * Получение ключа для сессии
    */
-  private getSessionKey(sessionId: string): string {
-    return `session:${sessionId}`;
+  private getSessionKey(id: string): string {
+    return `session:${id}`;
   }
   /**
    * Получение ключа для списка сессий пользователя
    */
-  private getUserSessionsKey(userId: string): string {
-    return `user:${userId}:sessions`;
+  private getUserSessionsKey(user_id: string): string {
+    return `user:${user_id}:sessions`;
   }
   /**
    * Получение статистики Redis

@@ -31,15 +31,21 @@ export interface SafeUser {
   is_active: boolean,
 }
 
+export interface CreateSession {
+  user_id: string;
+  ip_address: string;
+  user_agent: string;
+}
 
-export interface SessionData extends Omit<PrismaUser, 'password_hash' | 'id'> {
+export interface SessionData {
   id: string;
   user_id: string;
   ip_address: string;
   user_agent: string;
-  created_at: string;
-  expires_at: string;
+  created: string;
+  expires: string;
   is_active: boolean;
+  user: UserWithoutPassword;
 }
 
 export interface SessionsFilters extends BaseFiltersOptions<SessionData> {

@@ -2706,6 +2706,8 @@ export namespace Prisma {
     card_details: number
     transfer_details: number
     reviews: number
+    sent_messages: number
+    received_messages: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2716,6 +2718,8 @@ export namespace Prisma {
     card_details?: boolean | UserCountOutputTypeCountCard_detailsArgs
     transfer_details?: boolean | UserCountOutputTypeCountTransfer_detailsArgs
     reviews?: boolean | UserCountOutputTypeCountReviewsArgs
+    sent_messages?: boolean | UserCountOutputTypeCountSent_messagesArgs
+    received_messages?: boolean | UserCountOutputTypeCountReceived_messagesArgs
   }
 
   // Custom InputTypes
@@ -2776,6 +2780,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSent_messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MessageWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReceived_messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MessageWhereInput
   }
 
 
@@ -3161,6 +3179,7 @@ export namespace Prisma {
     first_name: string | null
     last_name: string | null
     phone_number: string | null
+    date_of_birth: Date | null
     is_active: boolean | null
     email_verified: boolean | null
     phone_verified: boolean | null
@@ -3177,6 +3196,7 @@ export namespace Prisma {
     first_name: string | null
     last_name: string | null
     phone_number: string | null
+    date_of_birth: Date | null
     is_active: boolean | null
     email_verified: boolean | null
     phone_verified: boolean | null
@@ -3193,6 +3213,7 @@ export namespace Prisma {
     first_name: number
     last_name: number
     phone_number: number
+    date_of_birth: number
     is_active: number
     email_verified: number
     phone_verified: number
@@ -3211,6 +3232,7 @@ export namespace Prisma {
     first_name?: true
     last_name?: true
     phone_number?: true
+    date_of_birth?: true
     is_active?: true
     email_verified?: true
     phone_verified?: true
@@ -3227,6 +3249,7 @@ export namespace Prisma {
     first_name?: true
     last_name?: true
     phone_number?: true
+    date_of_birth?: true
     is_active?: true
     email_verified?: true
     phone_verified?: true
@@ -3243,6 +3266,7 @@ export namespace Prisma {
     first_name?: true
     last_name?: true
     phone_number?: true
+    date_of_birth?: true
     is_active?: true
     email_verified?: true
     phone_verified?: true
@@ -3332,6 +3356,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number: string | null
+    date_of_birth: Date | null
     is_active: boolean
     email_verified: boolean
     phone_verified: boolean
@@ -3365,6 +3390,7 @@ export namespace Prisma {
     first_name?: boolean
     last_name?: boolean
     phone_number?: boolean
+    date_of_birth?: boolean
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -3378,6 +3404,8 @@ export namespace Prisma {
     card_details?: boolean | User$card_detailsArgs<ExtArgs>
     transfer_details?: boolean | User$transfer_detailsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
+    sent_messages?: boolean | User$sent_messagesArgs<ExtArgs>
+    received_messages?: boolean | User$received_messagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3389,6 +3417,7 @@ export namespace Prisma {
     first_name?: boolean
     last_name?: boolean
     phone_number?: boolean
+    date_of_birth?: boolean
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -3405,6 +3434,7 @@ export namespace Prisma {
     first_name?: boolean
     last_name?: boolean
     phone_number?: boolean
+    date_of_birth?: boolean
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -3421,6 +3451,7 @@ export namespace Prisma {
     first_name?: boolean
     last_name?: boolean
     phone_number?: boolean
+    date_of_birth?: boolean
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -3429,7 +3460,7 @@ export namespace Prisma {
     updated?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password_hash" | "image" | "first_name" | "last_name" | "phone_number" | "is_active" | "email_verified" | "phone_verified" | "role" | "created" | "updated", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password_hash" | "image" | "first_name" | "last_name" | "phone_number" | "date_of_birth" | "is_active" | "email_verified" | "phone_verified" | "role" | "created" | "updated", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reservations?: boolean | User$reservationsArgs<ExtArgs>
     events?: boolean | User$eventsArgs<ExtArgs>
@@ -3438,6 +3469,8 @@ export namespace Prisma {
     card_details?: boolean | User$card_detailsArgs<ExtArgs>
     transfer_details?: boolean | User$transfer_detailsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
+    sent_messages?: boolean | User$sent_messagesArgs<ExtArgs>
+    received_messages?: boolean | User$received_messagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3453,6 +3486,8 @@ export namespace Prisma {
       card_details: Prisma.$CardDetailPayload<ExtArgs>[]
       transfer_details: Prisma.$TransferDetailPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      sent_messages: Prisma.$MessagePayload<ExtArgs>[]
+      received_messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3462,6 +3497,7 @@ export namespace Prisma {
       first_name: string
       last_name: string
       phone_number: string | null
+      date_of_birth: Date | null
       is_active: boolean
       email_verified: boolean
       phone_verified: boolean
@@ -3869,6 +3905,8 @@ export namespace Prisma {
     card_details<T extends User$card_detailsArgs<ExtArgs> = {}>(args?: Subset<T, User$card_detailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transfer_details<T extends User$transfer_detailsArgs<ExtArgs> = {}>(args?: Subset<T, User$transfer_detailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransferDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sent_messages<T extends User$sent_messagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sent_messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    received_messages<T extends User$received_messagesArgs<ExtArgs> = {}>(args?: Subset<T, User$received_messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3905,6 +3943,7 @@ export namespace Prisma {
     readonly first_name: FieldRef<"User", 'String'>
     readonly last_name: FieldRef<"User", 'String'>
     readonly phone_number: FieldRef<"User", 'String'>
+    readonly date_of_birth: FieldRef<"User", 'DateTime'>
     readonly is_active: FieldRef<"User", 'Boolean'>
     readonly email_verified: FieldRef<"User", 'Boolean'>
     readonly phone_verified: FieldRef<"User", 'Boolean'>
@@ -4467,6 +4506,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.sent_messages
+   */
+  export type User$sent_messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    where?: MessageWhereInput
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    cursor?: MessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
+   * User.received_messages
+   */
+  export type User$received_messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: MessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: MessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageInclude<ExtArgs> | null
+    where?: MessageWhereInput
+    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    cursor?: MessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4497,7 +4584,10 @@ export namespace Prisma {
 
   export type MessageMinAggregateOutputType = {
     id: string | null
+    sender_id: string | null
+    receiver_id: string | null
     message: string | null
+    is_read: boolean | null
     booking_id: string | null
     created: Date | null
     updated: Date | null
@@ -4505,7 +4595,10 @@ export namespace Prisma {
 
   export type MessageMaxAggregateOutputType = {
     id: string | null
+    sender_id: string | null
+    receiver_id: string | null
     message: string | null
+    is_read: boolean | null
     booking_id: string | null
     created: Date | null
     updated: Date | null
@@ -4513,7 +4606,10 @@ export namespace Prisma {
 
   export type MessageCountAggregateOutputType = {
     id: number
+    sender_id: number
+    receiver_id: number
     message: number
+    is_read: number
     booking_id: number
     created: number
     updated: number
@@ -4523,7 +4619,10 @@ export namespace Prisma {
 
   export type MessageMinAggregateInputType = {
     id?: true
+    sender_id?: true
+    receiver_id?: true
     message?: true
+    is_read?: true
     booking_id?: true
     created?: true
     updated?: true
@@ -4531,7 +4630,10 @@ export namespace Prisma {
 
   export type MessageMaxAggregateInputType = {
     id?: true
+    sender_id?: true
+    receiver_id?: true
     message?: true
+    is_read?: true
     booking_id?: true
     created?: true
     updated?: true
@@ -4539,7 +4641,10 @@ export namespace Prisma {
 
   export type MessageCountAggregateInputType = {
     id?: true
+    sender_id?: true
+    receiver_id?: true
     message?: true
+    is_read?: true
     booking_id?: true
     created?: true
     updated?: true
@@ -4620,7 +4725,10 @@ export namespace Prisma {
 
   export type MessageGroupByOutputType = {
     id: string
+    sender_id: string
+    receiver_id: string
     message: string
+    is_read: boolean
     booking_id: string | null
     created: Date
     updated: Date
@@ -4645,58 +4753,87 @@ export namespace Prisma {
 
   export type MessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    sender_id?: boolean
+    receiver_id?: boolean
     message?: boolean
+    is_read?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
     booking?: boolean | Message$bookingArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    sender_id?: boolean
+    receiver_id?: boolean
     message?: boolean
+    is_read?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
     booking?: boolean | Message$bookingArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    sender_id?: boolean
+    receiver_id?: boolean
     message?: boolean
+    is_read?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
     booking?: boolean | Message$bookingArgs<ExtArgs>
   }, ExtArgs["result"]["message"]>
 
   export type MessageSelectScalar = {
     id?: boolean
+    sender_id?: boolean
+    receiver_id?: boolean
     message?: boolean
+    is_read?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "message" | "booking_id" | "created" | "updated", ExtArgs["result"]["message"]>
+  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sender_id" | "receiver_id" | "message" | "is_read" | "booking_id" | "created" | "updated", ExtArgs["result"]["message"]>
   export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
     booking?: boolean | Message$bookingArgs<ExtArgs>
   }
   export type MessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
     booking?: boolean | Message$bookingArgs<ExtArgs>
   }
   export type MessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
     booking?: boolean | Message$bookingArgs<ExtArgs>
   }
 
   export type $MessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Message"
     objects: {
+      sender: Prisma.$UserPayload<ExtArgs>
+      receiver: Prisma.$UserPayload<ExtArgs>
       booking: Prisma.$BookingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      sender_id: string
+      receiver_id: string
       message: string
+      is_read: boolean
       booking_id: string | null
       created: Date
       updated: Date
@@ -5094,6 +5231,8 @@ export namespace Prisma {
    */
   export interface Prisma__MessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    receiver<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     booking<T extends Message$bookingArgs<ExtArgs> = {}>(args?: Subset<T, Message$bookingArgs<ExtArgs>>): Prisma__BookingClient<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5125,7 +5264,10 @@ export namespace Prisma {
    */
   interface MessageFieldRefs {
     readonly id: FieldRef<"Message", 'String'>
+    readonly sender_id: FieldRef<"Message", 'String'>
+    readonly receiver_id: FieldRef<"Message", 'String'>
     readonly message: FieldRef<"Message", 'String'>
+    readonly is_read: FieldRef<"Message", 'Boolean'>
     readonly booking_id: FieldRef<"Message", 'String'>
     readonly created: FieldRef<"Message", 'DateTime'>
     readonly updated: FieldRef<"Message", 'DateTime'>
@@ -26541,6 +26683,7 @@ export namespace Prisma {
     first_name: 'first_name',
     last_name: 'last_name',
     phone_number: 'phone_number',
+    date_of_birth: 'date_of_birth',
     is_active: 'is_active',
     email_verified: 'email_verified',
     phone_verified: 'phone_verified',
@@ -26554,7 +26697,10 @@ export namespace Prisma {
 
   export const MessageScalarFieldEnum: {
     id: 'id',
+    sender_id: 'sender_id',
+    receiver_id: 'receiver_id',
     message: 'message',
+    is_read: 'is_read',
     booking_id: 'booking_id',
     created: 'created',
     updated: 'updated'
@@ -26871,6 +27017,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -26888,20 +27048,6 @@ export namespace Prisma {
    * Reference to a field of type 'Role[]'
    */
   export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -27017,6 +27163,7 @@ export namespace Prisma {
     first_name?: StringFilter<"User"> | string
     last_name?: StringFilter<"User"> | string
     phone_number?: StringNullableFilter<"User"> | string | null
+    date_of_birth?: DateTimeNullableFilter<"User"> | Date | string | null
     is_active?: BoolFilter<"User"> | boolean
     email_verified?: BoolFilter<"User"> | boolean
     phone_verified?: BoolFilter<"User"> | boolean
@@ -27030,6 +27177,8 @@ export namespace Prisma {
     card_details?: CardDetailListRelationFilter
     transfer_details?: TransferDetailListRelationFilter
     reviews?: ReviewListRelationFilter
+    sent_messages?: MessageListRelationFilter
+    received_messages?: MessageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -27040,6 +27189,7 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrderInput | SortOrder
+    date_of_birth?: SortOrderInput | SortOrder
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
@@ -27053,6 +27203,8 @@ export namespace Prisma {
     card_details?: CardDetailOrderByRelationAggregateInput
     transfer_details?: TransferDetailOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
+    sent_messages?: MessageOrderByRelationAggregateInput
+    received_messages?: MessageOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -27066,6 +27218,7 @@ export namespace Prisma {
     first_name?: StringFilter<"User"> | string
     last_name?: StringFilter<"User"> | string
     phone_number?: StringNullableFilter<"User"> | string | null
+    date_of_birth?: DateTimeNullableFilter<"User"> | Date | string | null
     is_active?: BoolFilter<"User"> | boolean
     email_verified?: BoolFilter<"User"> | boolean
     phone_verified?: BoolFilter<"User"> | boolean
@@ -27079,6 +27232,8 @@ export namespace Prisma {
     card_details?: CardDetailListRelationFilter
     transfer_details?: TransferDetailListRelationFilter
     reviews?: ReviewListRelationFilter
+    sent_messages?: MessageListRelationFilter
+    received_messages?: MessageListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -27089,6 +27244,7 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrderInput | SortOrder
+    date_of_birth?: SortOrderInput | SortOrder
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
@@ -27111,6 +27267,7 @@ export namespace Prisma {
     first_name?: StringWithAggregatesFilter<"User"> | string
     last_name?: StringWithAggregatesFilter<"User"> | string
     phone_number?: StringNullableWithAggregatesFilter<"User"> | string | null
+    date_of_birth?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     is_active?: BoolWithAggregatesFilter<"User"> | boolean
     email_verified?: BoolWithAggregatesFilter<"User"> | boolean
     phone_verified?: BoolWithAggregatesFilter<"User"> | boolean
@@ -27124,19 +27281,29 @@ export namespace Prisma {
     OR?: MessageWhereInput[]
     NOT?: MessageWhereInput | MessageWhereInput[]
     id?: StringFilter<"Message"> | string
+    sender_id?: StringFilter<"Message"> | string
+    receiver_id?: StringFilter<"Message"> | string
     message?: StringFilter<"Message"> | string
+    is_read?: BoolFilter<"Message"> | boolean
     booking_id?: StringNullableFilter<"Message"> | string | null
     created?: DateTimeFilter<"Message"> | Date | string
     updated?: DateTimeFilter<"Message"> | Date | string
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
     booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
   }
 
   export type MessageOrderByWithRelationInput = {
     id?: SortOrder
+    sender_id?: SortOrder
+    receiver_id?: SortOrder
     message?: SortOrder
+    is_read?: SortOrder
     booking_id?: SortOrderInput | SortOrder
     created?: SortOrder
     updated?: SortOrder
+    sender?: UserOrderByWithRelationInput
+    receiver?: UserOrderByWithRelationInput
     booking?: BookingOrderByWithRelationInput
   }
 
@@ -27145,16 +27312,24 @@ export namespace Prisma {
     AND?: MessageWhereInput | MessageWhereInput[]
     OR?: MessageWhereInput[]
     NOT?: MessageWhereInput | MessageWhereInput[]
+    sender_id?: StringFilter<"Message"> | string
+    receiver_id?: StringFilter<"Message"> | string
     message?: StringFilter<"Message"> | string
+    is_read?: BoolFilter<"Message"> | boolean
     booking_id?: StringNullableFilter<"Message"> | string | null
     created?: DateTimeFilter<"Message"> | Date | string
     updated?: DateTimeFilter<"Message"> | Date | string
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
     booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
   }, "id">
 
   export type MessageOrderByWithAggregationInput = {
     id?: SortOrder
+    sender_id?: SortOrder
+    receiver_id?: SortOrder
     message?: SortOrder
+    is_read?: SortOrder
     booking_id?: SortOrderInput | SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -27168,7 +27343,10 @@ export namespace Prisma {
     OR?: MessageScalarWhereWithAggregatesInput[]
     NOT?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Message"> | string
+    sender_id?: StringWithAggregatesFilter<"Message"> | string
+    receiver_id?: StringWithAggregatesFilter<"Message"> | string
     message?: StringWithAggregatesFilter<"Message"> | string
+    is_read?: BoolWithAggregatesFilter<"Message"> | boolean
     booking_id?: StringNullableWithAggregatesFilter<"Message"> | string | null
     created?: DateTimeWithAggregatesFilter<"Message"> | Date | string
     updated?: DateTimeWithAggregatesFilter<"Message"> | Date | string
@@ -28609,6 +28787,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -28622,6 +28801,8 @@ export namespace Prisma {
     card_details?: CardDetailCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -28632,6 +28813,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -28645,6 +28827,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUpdateInput = {
@@ -28655,6 +28839,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -28668,6 +28853,8 @@ export namespace Prisma {
     card_details?: CardDetailUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -28678,6 +28865,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -28691,6 +28879,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -28701,6 +28891,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -28717,6 +28908,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -28733,6 +28925,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -28744,14 +28937,20 @@ export namespace Prisma {
   export type MessageCreateInput = {
     id?: string
     message: string
+    is_read?: boolean
     created?: Date | string
     updated?: Date | string
+    sender: UserCreateNestedOneWithoutSent_messagesInput
+    receiver: UserCreateNestedOneWithoutReceived_messagesInput
     booking?: BookingCreateNestedOneWithoutMessagesInput
   }
 
   export type MessageUncheckedCreateInput = {
     id?: string
+    sender_id: string
+    receiver_id: string
     message: string
+    is_read?: boolean
     booking_id?: string | null
     created?: Date | string
     updated?: Date | string
@@ -28760,14 +28959,20 @@ export namespace Prisma {
   export type MessageUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutSent_messagesNestedInput
+    receiver?: UserUpdateOneRequiredWithoutReceived_messagesNestedInput
     booking?: BookingUpdateOneWithoutMessagesNestedInput
   }
 
   export type MessageUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    sender_id?: StringFieldUpdateOperationsInput | string
+    receiver_id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
     booking_id?: NullableStringFieldUpdateOperationsInput | string | null
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28775,7 +28980,10 @@ export namespace Prisma {
 
   export type MessageCreateManyInput = {
     id?: string
+    sender_id: string
+    receiver_id: string
     message: string
+    is_read?: boolean
     booking_id?: string | null
     created?: Date | string
     updated?: Date | string
@@ -28784,13 +28992,17 @@ export namespace Prisma {
   export type MessageUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    sender_id?: StringFieldUpdateOperationsInput | string
+    receiver_id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
     booking_id?: NullableStringFieldUpdateOperationsInput | string | null
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30350,6 +30562,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -30415,6 +30638,12 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
+  export type MessageListRelationFilter = {
+    every?: MessageWhereInput
+    some?: MessageWhereInput
+    none?: MessageWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -30448,6 +30677,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type MessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -30456,6 +30689,7 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    date_of_birth?: SortOrder
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
@@ -30472,6 +30706,7 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    date_of_birth?: SortOrder
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
@@ -30488,6 +30723,7 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    date_of_birth?: SortOrder
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
@@ -30532,6 +30768,20 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -30564,6 +30814,11 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
   export type BookingNullableScalarRelationFilter = {
     is?: BookingWhereInput | null
     isNot?: BookingWhereInput | null
@@ -30571,7 +30826,10 @@ export namespace Prisma {
 
   export type MessageCountOrderByAggregateInput = {
     id?: SortOrder
+    sender_id?: SortOrder
+    receiver_id?: SortOrder
     message?: SortOrder
+    is_read?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -30579,7 +30837,10 @@ export namespace Prisma {
 
   export type MessageMaxOrderByAggregateInput = {
     id?: SortOrder
+    sender_id?: SortOrder
+    receiver_id?: SortOrder
     message?: SortOrder
+    is_read?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -30587,7 +30848,10 @@ export namespace Prisma {
 
   export type MessageMinOrderByAggregateInput = {
     id?: SortOrder
+    sender_id?: SortOrder
+    receiver_id?: SortOrder
     message?: SortOrder
+    is_read?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -30805,11 +31069,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumApartmentTypeFilter<$PrismaModel>
     _max?: NestedEnumApartmentTypeFilter<$PrismaModel>
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type ApartmentNullableScalarRelationFilter = {
@@ -31143,21 +31402,11 @@ export namespace Prisma {
     none?: BookingAdditionalOptionWhereInput
   }
 
-  export type MessageListRelationFilter = {
-    every?: MessageWhereInput
-    some?: MessageWhereInput
-    none?: MessageWhereInput
-  }
-
   export type BookingEventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type BookingAdditionalOptionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type MessageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -31697,6 +31946,20 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type MessageCreateNestedManyWithoutSenderInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
+  export type MessageCreateNestedManyWithoutReceiverInput = {
+    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
+    createMany?: MessageCreateManyReceiverInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
   export type ReservationUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ReservationCreateWithoutUserInput, ReservationUncheckedCreateWithoutUserInput> | ReservationCreateWithoutUserInput[] | ReservationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ReservationCreateOrConnectWithoutUserInput | ReservationCreateOrConnectWithoutUserInput[]
@@ -31746,12 +32009,30 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type MessageUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
+  export type MessageUncheckedCreateNestedManyWithoutReceiverInput = {
+    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
+    createMany?: MessageCreateManyReceiverInputEnvelope
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -31864,6 +32145,34 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type MessageUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
+  export type MessageUpdateManyWithoutReceiverNestedInput = {
+    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutReceiverInput | MessageUpsertWithWhereUniqueWithoutReceiverInput[]
+    createMany?: MessageCreateManyReceiverInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutReceiverInput | MessageUpdateWithWhereUniqueWithoutReceiverInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutReceiverInput | MessageUpdateManyWithWhereWithoutReceiverInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
   export type ReservationUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ReservationCreateWithoutUserInput, ReservationUncheckedCreateWithoutUserInput> | ReservationCreateWithoutUserInput[] | ReservationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ReservationCreateOrConnectWithoutUserInput | ReservationCreateOrConnectWithoutUserInput[]
@@ -31962,10 +32271,66 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type MessageUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: MessageCreateManySenderInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
+  export type MessageUncheckedUpdateManyWithoutReceiverNestedInput = {
+    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
+    upsert?: MessageUpsertWithWhereUniqueWithoutReceiverInput | MessageUpsertWithWhereUniqueWithoutReceiverInput[]
+    createMany?: MessageCreateManyReceiverInputEnvelope
+    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+    update?: MessageUpdateWithWhereUniqueWithoutReceiverInput | MessageUpdateWithWhereUniqueWithoutReceiverInput[]
+    updateMany?: MessageUpdateManyWithWhereWithoutReceiverInput | MessageUpdateManyWithWhereWithoutReceiverInput[]
+    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutSent_messagesInput = {
+    create?: XOR<UserCreateWithoutSent_messagesInput, UserUncheckedCreateWithoutSent_messagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSent_messagesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReceived_messagesInput = {
+    create?: XOR<UserCreateWithoutReceived_messagesInput, UserUncheckedCreateWithoutReceived_messagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceived_messagesInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type BookingCreateNestedOneWithoutMessagesInput = {
     create?: XOR<BookingCreateWithoutMessagesInput, BookingUncheckedCreateWithoutMessagesInput>
     connectOrCreate?: BookingCreateOrConnectWithoutMessagesInput
     connect?: BookingWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSent_messagesNestedInput = {
+    create?: XOR<UserCreateWithoutSent_messagesInput, UserUncheckedCreateWithoutSent_messagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSent_messagesInput
+    upsert?: UserUpsertWithoutSent_messagesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSent_messagesInput, UserUpdateWithoutSent_messagesInput>, UserUncheckedUpdateWithoutSent_messagesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutReceived_messagesNestedInput = {
+    create?: XOR<UserCreateWithoutReceived_messagesInput, UserUncheckedCreateWithoutReceived_messagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceived_messagesInput
+    upsert?: UserUpsertWithoutReceived_messagesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceived_messagesInput, UserUpdateWithoutReceived_messagesInput>, UserUncheckedUpdateWithoutReceived_messagesInput>
   }
 
   export type BookingUpdateOneWithoutMessagesNestedInput = {
@@ -33244,6 +33609,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -33321,6 +33697,20 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -33762,6 +34152,66 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MessageCreateWithoutSenderInput = {
+    id?: string
+    message: string
+    is_read?: boolean
+    created?: Date | string
+    updated?: Date | string
+    receiver: UserCreateNestedOneWithoutReceived_messagesInput
+    booking?: BookingCreateNestedOneWithoutMessagesInput
+  }
+
+  export type MessageUncheckedCreateWithoutSenderInput = {
+    id?: string
+    receiver_id: string
+    message: string
+    is_read?: boolean
+    booking_id?: string | null
+    created?: Date | string
+    updated?: Date | string
+  }
+
+  export type MessageCreateOrConnectWithoutSenderInput = {
+    where: MessageWhereUniqueInput
+    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type MessageCreateManySenderInputEnvelope = {
+    data: MessageCreateManySenderInput | MessageCreateManySenderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MessageCreateWithoutReceiverInput = {
+    id?: string
+    message: string
+    is_read?: boolean
+    created?: Date | string
+    updated?: Date | string
+    sender: UserCreateNestedOneWithoutSent_messagesInput
+    booking?: BookingCreateNestedOneWithoutMessagesInput
+  }
+
+  export type MessageUncheckedCreateWithoutReceiverInput = {
+    id?: string
+    sender_id: string
+    message: string
+    is_read?: boolean
+    booking_id?: string | null
+    created?: Date | string
+    updated?: Date | string
+  }
+
+  export type MessageCreateOrConnectWithoutReceiverInput = {
+    where: MessageWhereUniqueInput
+    create: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput>
+  }
+
+  export type MessageCreateManyReceiverInputEnvelope = {
+    data: MessageCreateManyReceiverInput | MessageCreateManyReceiverInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ReservationUpsertWithWhereUniqueWithoutUserInput = {
     where: ReservationWhereUniqueInput
     update: XOR<ReservationUpdateWithoutUserInput, ReservationUncheckedUpdateWithoutUserInput>
@@ -33983,6 +34433,162 @@ export namespace Prisma {
     is_excluded?: BoolFilter<"Review"> | boolean
   }
 
+  export type MessageUpsertWithWhereUniqueWithoutSenderInput = {
+    where: MessageWhereUniqueInput
+    update: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
+    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type MessageUpdateWithWhereUniqueWithoutSenderInput = {
+    where: MessageWhereUniqueInput
+    data: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type MessageUpdateManyWithWhereWithoutSenderInput = {
+    where: MessageScalarWhereInput
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type MessageScalarWhereInput = {
+    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    OR?: MessageScalarWhereInput[]
+    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
+    id?: StringFilter<"Message"> | string
+    sender_id?: StringFilter<"Message"> | string
+    receiver_id?: StringFilter<"Message"> | string
+    message?: StringFilter<"Message"> | string
+    is_read?: BoolFilter<"Message"> | boolean
+    booking_id?: StringNullableFilter<"Message"> | string | null
+    created?: DateTimeFilter<"Message"> | Date | string
+    updated?: DateTimeFilter<"Message"> | Date | string
+  }
+
+  export type MessageUpsertWithWhereUniqueWithoutReceiverInput = {
+    where: MessageWhereUniqueInput
+    update: XOR<MessageUpdateWithoutReceiverInput, MessageUncheckedUpdateWithoutReceiverInput>
+    create: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput>
+  }
+
+  export type MessageUpdateWithWhereUniqueWithoutReceiverInput = {
+    where: MessageWhereUniqueInput
+    data: XOR<MessageUpdateWithoutReceiverInput, MessageUncheckedUpdateWithoutReceiverInput>
+  }
+
+  export type MessageUpdateManyWithWhereWithoutReceiverInput = {
+    where: MessageScalarWhereInput
+    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutReceiverInput>
+  }
+
+  export type UserCreateWithoutSent_messagesInput = {
+    id?: string
+    email: string
+    password_hash: string
+    image?: string | null
+    first_name: string
+    last_name: string
+    phone_number?: string | null
+    date_of_birth?: Date | string | null
+    is_active?: boolean
+    email_verified?: boolean
+    phone_verified?: boolean
+    role?: $Enums.Role
+    created?: Date | string
+    updated?: Date | string
+    reservations?: ReservationCreateNestedManyWithoutUserInput
+    events?: EventCreateNestedManyWithoutGuideInput
+    bookings?: BookingCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    card_details?: CardDetailCreateNestedManyWithoutUserInput
+    transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
+  }
+
+  export type UserUncheckedCreateWithoutSent_messagesInput = {
+    id?: string
+    email: string
+    password_hash: string
+    image?: string | null
+    first_name: string
+    last_name: string
+    phone_number?: string | null
+    date_of_birth?: Date | string | null
+    is_active?: boolean
+    email_verified?: boolean
+    phone_verified?: boolean
+    role?: $Enums.Role
+    created?: Date | string
+    updated?: Date | string
+    reservations?: ReservationUncheckedCreateNestedManyWithoutUserInput
+    events?: EventUncheckedCreateNestedManyWithoutGuideInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
+    transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+  }
+
+  export type UserCreateOrConnectWithoutSent_messagesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSent_messagesInput, UserUncheckedCreateWithoutSent_messagesInput>
+  }
+
+  export type UserCreateWithoutReceived_messagesInput = {
+    id?: string
+    email: string
+    password_hash: string
+    image?: string | null
+    first_name: string
+    last_name: string
+    phone_number?: string | null
+    date_of_birth?: Date | string | null
+    is_active?: boolean
+    email_verified?: boolean
+    phone_verified?: boolean
+    role?: $Enums.Role
+    created?: Date | string
+    updated?: Date | string
+    reservations?: ReservationCreateNestedManyWithoutUserInput
+    events?: EventCreateNestedManyWithoutGuideInput
+    bookings?: BookingCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    card_details?: CardDetailCreateNestedManyWithoutUserInput
+    transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserUncheckedCreateWithoutReceived_messagesInput = {
+    id?: string
+    email: string
+    password_hash: string
+    image?: string | null
+    first_name: string
+    last_name: string
+    phone_number?: string | null
+    date_of_birth?: Date | string | null
+    is_active?: boolean
+    email_verified?: boolean
+    phone_verified?: boolean
+    role?: $Enums.Role
+    created?: Date | string
+    updated?: Date | string
+    reservations?: ReservationUncheckedCreateNestedManyWithoutUserInput
+    events?: EventUncheckedCreateNestedManyWithoutGuideInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
+    transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserCreateOrConnectWithoutReceived_messagesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReceived_messagesInput, UserUncheckedCreateWithoutReceived_messagesInput>
+  }
+
   export type BookingCreateWithoutMessagesInput = {
     id?: string
     message?: string | null
@@ -34018,6 +34624,128 @@ export namespace Prisma {
   export type BookingCreateOrConnectWithoutMessagesInput = {
     where: BookingWhereUniqueInput
     create: XOR<BookingCreateWithoutMessagesInput, BookingUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type UserUpsertWithoutSent_messagesInput = {
+    update: XOR<UserUpdateWithoutSent_messagesInput, UserUncheckedUpdateWithoutSent_messagesInput>
+    create: XOR<UserCreateWithoutSent_messagesInput, UserUncheckedCreateWithoutSent_messagesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSent_messagesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSent_messagesInput, UserUncheckedUpdateWithoutSent_messagesInput>
+  }
+
+  export type UserUpdateWithoutSent_messagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    email_verified?: BoolFieldUpdateOperationsInput | boolean
+    phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    reservations?: ReservationUpdateManyWithoutUserNestedInput
+    events?: EventUpdateManyWithoutGuideNestedInput
+    bookings?: BookingUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    card_details?: CardDetailUpdateManyWithoutUserNestedInput
+    transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSent_messagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    email_verified?: BoolFieldUpdateOperationsInput | boolean
+    phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    reservations?: ReservationUncheckedUpdateManyWithoutUserNestedInput
+    events?: EventUncheckedUpdateManyWithoutGuideNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
+    transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+  }
+
+  export type UserUpsertWithoutReceived_messagesInput = {
+    update: XOR<UserUpdateWithoutReceived_messagesInput, UserUncheckedUpdateWithoutReceived_messagesInput>
+    create: XOR<UserCreateWithoutReceived_messagesInput, UserUncheckedCreateWithoutReceived_messagesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReceived_messagesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReceived_messagesInput, UserUncheckedUpdateWithoutReceived_messagesInput>
+  }
+
+  export type UserUpdateWithoutReceived_messagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    email_verified?: BoolFieldUpdateOperationsInput | boolean
+    phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    reservations?: ReservationUpdateManyWithoutUserNestedInput
+    events?: EventUpdateManyWithoutGuideNestedInput
+    bookings?: BookingUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    card_details?: CardDetailUpdateManyWithoutUserNestedInput
+    transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReceived_messagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    email_verified?: BoolFieldUpdateOperationsInput | boolean
+    phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    reservations?: ReservationUncheckedUpdateManyWithoutUserNestedInput
+    events?: EventUncheckedUpdateManyWithoutGuideNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
+    transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type BookingUpsertWithoutMessagesInput = {
@@ -34396,6 +35124,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -34408,6 +35137,8 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutUserInput
     card_details?: CardDetailCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -34418,6 +35149,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -34430,6 +35162,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -34548,6 +35282,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -34560,6 +35295,8 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     card_details?: CardDetailUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -34570,6 +35307,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -34582,6 +35320,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type ApartmentUpsertWithoutReviewsInput = {
@@ -35467,6 +36207,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -35479,6 +36220,8 @@ export namespace Prisma {
     card_details?: CardDetailCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutReservationsInput = {
@@ -35489,6 +36232,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -35501,6 +36245,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutReservationsInput = {
@@ -35588,6 +36334,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35600,6 +36347,8 @@ export namespace Prisma {
     card_details?: CardDetailUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReservationsInput = {
@@ -35610,6 +36359,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35622,6 +36372,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type BookingVariantCreateWithoutBookingsInput = {
@@ -35659,6 +36411,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -35671,6 +36424,8 @@ export namespace Prisma {
     card_details?: CardDetailCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutBookingsInput = {
@@ -35681,6 +36436,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -35693,6 +36449,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutBookingsInput = {
@@ -35826,13 +36584,19 @@ export namespace Prisma {
   export type MessageCreateWithoutBookingInput = {
     id?: string
     message: string
+    is_read?: boolean
     created?: Date | string
     updated?: Date | string
+    sender: UserCreateNestedOneWithoutSent_messagesInput
+    receiver: UserCreateNestedOneWithoutReceived_messagesInput
   }
 
   export type MessageUncheckedCreateWithoutBookingInput = {
     id?: string
+    sender_id: string
+    receiver_id: string
     message: string
+    is_read?: boolean
     created?: Date | string
     updated?: Date | string
   }
@@ -35899,6 +36663,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35911,6 +36676,8 @@ export namespace Prisma {
     card_details?: CardDetailUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBookingsInput = {
@@ -35921,6 +36688,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -35933,6 +36701,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type TransactionUpsertWithoutBookingInput = {
@@ -36064,17 +36834,6 @@ export namespace Prisma {
   export type MessageUpdateManyWithWhereWithoutBookingInput = {
     where: MessageScalarWhereInput
     data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutBookingInput>
-  }
-
-  export type MessageScalarWhereInput = {
-    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    OR?: MessageScalarWhereInput[]
-    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    id?: StringFilter<"Message"> | string
-    message?: StringFilter<"Message"> | string
-    booking_id?: StringNullableFilter<"Message"> | string | null
-    created?: DateTimeFilter<"Message"> | Date | string
-    updated?: DateTimeFilter<"Message"> | Date | string
   }
 
   export type BookingAdditionalOptionCreateWithoutAdditional_optionInput = {
@@ -36503,6 +37262,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -36515,6 +37275,8 @@ export namespace Prisma {
     card_details?: CardDetailCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -36525,6 +37287,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -36537,6 +37300,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -36683,6 +37448,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -36695,6 +37461,8 @@ export namespace Prisma {
     card_details?: CardDetailUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -36705,6 +37473,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -36717,6 +37486,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type CardDetailUpsertWithoutTransactionsInput = {
@@ -36911,6 +37682,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -36923,6 +37695,8 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutUserInput
     card_details?: CardDetailCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutTransfer_detailsInput = {
@@ -36933,6 +37707,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -36945,6 +37720,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutTransfer_detailsInput = {
@@ -36987,6 +37764,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -36999,6 +37777,8 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     card_details?: CardDetailUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransfer_detailsInput = {
@@ -37009,6 +37789,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -37021,6 +37802,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type TransactionCreateWithoutCard_detailInput = {
@@ -37071,6 +37854,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -37083,6 +37867,8 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutCard_detailsInput = {
@@ -37093,6 +37879,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -37105,6 +37892,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutCard_detailsInput = {
@@ -37147,6 +37936,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -37159,6 +37949,8 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCard_detailsInput = {
@@ -37169,6 +37961,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -37181,6 +37974,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserCreateWithoutEventsInput = {
@@ -37191,6 +37986,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -37203,6 +37999,8 @@ export namespace Prisma {
     card_details?: CardDetailCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    sent_messages?: MessageCreateNestedManyWithoutSenderInput
+    received_messages?: MessageCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutEventsInput = {
@@ -37213,6 +38011,7 @@ export namespace Prisma {
     first_name: string
     last_name: string
     phone_number?: string | null
+    date_of_birth?: Date | string | null
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
@@ -37225,6 +38024,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedCreateNestedManyWithoutUserInput
     transfer_details?: TransferDetailUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    sent_messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    received_messages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutEventsInput = {
@@ -37311,6 +38112,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -37323,6 +38125,8 @@ export namespace Prisma {
     card_details?: CardDetailUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEventsInput = {
@@ -37333,6 +38137,7 @@ export namespace Prisma {
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -37345,6 +38150,8 @@ export namespace Prisma {
     card_details?: CardDetailUncheckedUpdateManyWithoutUserNestedInput
     transfer_details?: TransferDetailUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    sent_messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    received_messages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type EventImageUpsertWithWhereUniqueWithoutEventInput = {
@@ -37552,6 +38359,26 @@ export namespace Prisma {
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
+  }
+
+  export type MessageCreateManySenderInput = {
+    id?: string
+    receiver_id: string
+    message: string
+    is_read?: boolean
+    booking_id?: string | null
+    created?: Date | string
+    updated?: Date | string
+  }
+
+  export type MessageCreateManyReceiverInput = {
+    id?: string
+    sender_id: string
+    message: string
+    is_read?: boolean
+    booking_id?: string | null
+    created?: Date | string
+    updated?: Date | string
   }
 
   export type ReservationUpdateWithoutUserInput = {
@@ -37815,6 +38642,66 @@ export namespace Prisma {
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type MessageUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    receiver?: UserUpdateOneRequiredWithoutReceived_messagesNestedInput
+    booking?: BookingUpdateOneWithoutMessagesNestedInput
+  }
+
+  export type MessageUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiver_id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiver_id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutSent_messagesNestedInput
+    booking?: BookingUpdateOneWithoutMessagesNestedInput
+  }
+
+  export type MessageUncheckedUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sender_id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageUncheckedUpdateManyWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sender_id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApartmentImageCreateManyApartmentInput = {
@@ -38202,7 +39089,10 @@ export namespace Prisma {
 
   export type MessageCreateManyBookingInput = {
     id?: string
+    sender_id: string
+    receiver_id: string
     message: string
+    is_read?: boolean
     created?: Date | string
     updated?: Date | string
   }
@@ -38297,20 +39187,29 @@ export namespace Prisma {
   export type MessageUpdateWithoutBookingInput = {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutSent_messagesNestedInput
+    receiver?: UserUpdateOneRequiredWithoutReceived_messagesNestedInput
   }
 
   export type MessageUncheckedUpdateWithoutBookingInput = {
     id?: StringFieldUpdateOperationsInput | string
+    sender_id?: StringFieldUpdateOperationsInput | string
+    receiver_id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageUncheckedUpdateManyWithoutBookingInput = {
     id?: StringFieldUpdateOperationsInput | string
+    sender_id?: StringFieldUpdateOperationsInput | string
+    receiver_id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    is_read?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }

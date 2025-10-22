@@ -68,9 +68,7 @@ export const RoleGuard = ({
   }, [user, is_loading, is_authenticated, required_roles, redirect_to, fallback, require_auth, router, isOnAuthPage, pathname]);
 
   // На страницах аутентификации всегда рендерим детей
-  if (isOnAuthPage) {
-    return <>{children}</>;
-  }
+  if (isOnAuthPage) return <>{children}</>;
 
   // Показываем индикатор загрузки
   if (is_loading) {
@@ -82,9 +80,7 @@ export const RoleGuard = ({
   }
 
   // Проверяем авторизацию
-  if (require_auth && !is_authenticated) {
-    return fallback;
-  }
+  if (require_auth && !is_authenticated) return fallback;
 
   // Проверяем роль, если она указана
   if (required_roles && user) {

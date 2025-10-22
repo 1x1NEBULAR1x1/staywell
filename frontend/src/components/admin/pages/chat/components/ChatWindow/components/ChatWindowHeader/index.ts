@@ -1,0 +1,2 @@
+export { ChatWindowHeader } from './ChatWindowHeader';
+

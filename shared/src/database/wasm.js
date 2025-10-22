@@ -128,6 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   first_name: 'first_name',
   last_name: 'last_name',
   phone_number: 'phone_number',
+  date_of_birth: 'date_of_birth',
   is_active: 'is_active',
   email_verified: 'email_verified',
   phone_verified: 'phone_verified',
@@ -138,7 +139,10 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
+  sender_id: 'sender_id',
+  receiver_id: 'receiver_id',
   message: 'message',
+  is_read: 'is_read',
   booking_id: 'booking_id',
   created: 'created',
   updated: 'updated'

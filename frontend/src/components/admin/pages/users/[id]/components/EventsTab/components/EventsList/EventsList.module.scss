@@ -1,0 +1,65 @@
+.events_list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.event_item {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+
+  .event_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .event_name {
+      font-weight: 600;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .price {
+      font-weight: 600;
+      color: #28a745;
+    }
+  }
+
+  .event_details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px 16px;
+    margin-bottom: 12px;
+
+    .detail {
+      display: flex;
+      gap: 8px;
+
+      .label {
+        font-weight: 500;
+        color: #6c757d;
+        min-width: 60px;
+      }
+    }
+  }
+
+  .description {
+    p {
+      margin: 0;
+      color: #333;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 20px;
+}

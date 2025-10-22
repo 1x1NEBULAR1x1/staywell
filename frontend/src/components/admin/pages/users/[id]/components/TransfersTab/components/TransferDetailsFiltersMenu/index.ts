@@ -1,0 +1,2 @@
+export { TransferDetailsFiltersMenu } from './TransferDetailsFiltersMenu';
+

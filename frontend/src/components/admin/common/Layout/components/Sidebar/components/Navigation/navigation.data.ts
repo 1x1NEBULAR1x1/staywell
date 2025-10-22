@@ -1,5 +1,5 @@
 import { GETTABLE_ICONS } from '@shared/src/models/icons';
-import { Command, LayoutList, Settings } from 'lucide-react';
+import { Command, LayoutList, MessageSquare, Settings } from 'lucide-react';
 
 export type NavButtonProps = {
   icon: typeof Command;
@@ -47,9 +47,9 @@ export const secondary_buttons: NavButtonProps[] = [
     href: "/admin/users",
   },
   {
-    icon: GETTABLE_ICONS.REVIEW,
-    label: "Reviews",
-    href: "/admin/reviews",
+    icon: MessageSquare,
+    label: "Chat",
+    href: "/admin/chat",
   },
   {
     icon: GETTABLE_ICONS.TRANSACTION,

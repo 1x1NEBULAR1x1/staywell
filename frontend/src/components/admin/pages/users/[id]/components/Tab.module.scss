@@ -1,0 +1,39 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $foreground-main;
+  margin: 0;
+  padding-bottom: $spacing-md;
+  border-bottom: $border-normal;
+}
+
+.section {
+  margin-top: $spacing-xl;
+  padding: $spacing-lg;
+  background-color: $background-main;
+  border-radius: $border-radius-sm;
+  border: $border-normal;
+  box-shadow: $box-shadow-sm;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-lg;
+
+    .title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+    }
+  }
+}

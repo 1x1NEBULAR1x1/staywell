@@ -1,0 +1,26 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.chat_button {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background-color: rgba($green, 0.95);
+  color: rgba($foreground-white, 0.95);
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $green;
+    color: $foreground-white;
+  }
+
+  .icon {
+    width: $font-size-lg;
+    height: $font-size-lg;
+  }
+}

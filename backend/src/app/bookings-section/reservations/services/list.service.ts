@@ -46,6 +46,7 @@ export class ListService {
   }): Promise<BaseListResult<ExtendedReservation>> {
     const final_filters =
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
+    delete final_filters.is_excluded
     const query_options = this.prisma.buildQuery(
       final_filters,
       "created",
@@ -58,11 +59,10 @@ export class ListService {
       {
         user: { select: SAFE_USER_SELECT },
         apartment: true,
-        booking_variant: true,
       },
     );
     return {
-      items: items as unknown as ExtendedReservation[], //TODO TYPE ERROR HERE
+      items: items as ExtendedReservation[],
       total,
       skip: query_options.skip,
       take: query_options.take,

@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { PrismaService } from "src/lib/prisma";
 import { SessionData } from "@shared/src/types/users-section";
 import { CreateSessionDto } from "./dto";
+import { BaseListResult } from "@shared/src/common";
 
 @Injectable()
 export class RedisSessionService {
@@ -16,38 +17,36 @@ export class RedisSessionService {
    */
   async create(
     dto: CreateSessionDto,
-  ): Promise<{ id: string; session: SessionData }> {
+  ): Promise<SessionData> {
     const id = uuidv4();
-    const now = new Date();
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7); // 7 дней
     const user = await this.prisma.user.findUnique({
       where: { id: dto.user_id },
     });
     if (!user) throw new NotFoundException("User not found");
-    const data: SessionData = {
-      ...user,
-      user_id: dto.user_id,
+    const ttl_seconds = 7 * 24 * 60 * 60;
+
+    const session: SessionData = {
+      id,
+      user: user,
+      user_id: user.id,
       ip_address: dto.ip_address,
       user_agent: dto.user_agent,
-      created_at: now.toISOString(),
-      expires_at: expiresAt.toISOString(),
+      created: new Date().toISOString(),
+      expires: new Date(Date.now() + ttl_seconds).toISOString(), // 7 days
       is_active: true,
     };
-    // Сохраняем в Redis с TTL 7 дней
-    const ttlSeconds = 7 * 24 * 60 * 60;
-    await this.redisService.createSession(id, data, ttlSeconds);
-    return { id, session: data };
+    await this.redisService.createSession(id, session, ttl_seconds);
+    return session;
   }
   /**
    * Валидация сессии
    */
   async validateSession(id: string): Promise<SessionData | null> {
-    const sessionData = await this.redisService.getSession(id);
-    if (!sessionData || !sessionData.is_active) return null;
+    const session = await this.redisService.getSession(id);
+    if (!session || !session.is_active) return null;
     // Автоматически продлеваем сессию при каждом обращении
     await this.refreshSession(id);
-    return sessionData;
+    return session;
   }
   /**
    * Обновление TTL сессии
@@ -86,11 +85,16 @@ export class RedisSessionService {
    * Получение активных сессий пользователя
    */
   async getActiveSessions(
-    userId: string,
-  ): Promise<{ sessionId: string; data: SessionData }[]> {
-    const sessions = await this.redisService.getUserActiveSessions(userId);
-    await this.redisService.cleanupExpiredUserSessions(userId);
-    return sessions;
+    user_id: string,
+  ): Promise<BaseListResult<SessionData>> {
+    const sessions = await this.redisService.getUserActiveSessions(user_id);
+    await this.redisService.cleanupExpiredUserSessions(user_id);
+    return {
+      items: sessions,
+      total: sessions.length,
+      skip: 0,
+      take: sessions.length,
+    };
   }
   /**
    * Получение статистики сессий
@@ -115,7 +119,7 @@ export class RedisSessionService {
    * Подсчет активных сессий пользователя
    */
   async countUserActiveSessions(user_id: string): Promise<number> {
-    return (await this.getActiveSessions(user_id)).length;
+    return (await this.getActiveSessions(user_id)).total;
   }
   /**
    * Получение информации о сессии

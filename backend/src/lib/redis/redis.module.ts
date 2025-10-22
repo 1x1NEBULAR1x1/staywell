@@ -11,7 +11,7 @@ import { Redis, RedisOptions } from "ioredis";
       provide: "REDIS_CONNECTION",
       useFactory: (configService: ConfigService) => {
         const redis: Redis = new Redis({
-          host: configService.get("REDIS_HOST", "localhost"),
+          host: configService.get("REDIS_HOST", "redis-fkhj.railway.internal"),
           port: configService.get("REDIS_PORT", 6379),
           password: configService.get("REDIS_PASSWORD"),
           db: configService.get("REDIS_DB", 0),
@@ -44,4 +44,4 @@ import { Redis, RedisOptions } from "ioredis";
   ],
   exports: ["REDIS_CONNECTION", RedisService],
 })
-export class RedisModule {}
+export class RedisModule { }

@@ -12,17 +12,17 @@ const invalidate_queries = (id?: string) => {
  * Хук для работы с пользователями
  */
 export const useUsers = () => {
-  const usersApi = new UsersApi()
+  const api = new UsersApi()
   const toast = useToast()
 
   const get = (filters: UsersFilters) => useQuery({
     queryKey: ['users', filters],
-    queryFn: () => usersApi.get(filters),
+    queryFn: () => api.get(filters),
     select: (data) => data.data,
   });
 
   const update = (id: string) => useMutation({
-    mutationFn: (data: UpdateUser | AdminUpdateUser) => usersApi.update({ id }, data),
+    mutationFn: (data: UpdateUser | AdminUpdateUser) => api.update({ id }, data),
     onSuccess: () => {
       toast.success('User has been updated successfully')
       invalidate_queries(id)
@@ -31,7 +31,7 @@ export const useUsers = () => {
 
   const find = (id: string) => useQuery({
     queryKey: ['user', id],
-    queryFn: () => usersApi.find(id),
+    queryFn: () => api.find({ id }),
     select: data => data.data
   })
 

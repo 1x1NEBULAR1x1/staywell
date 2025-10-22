@@ -1,0 +1,2 @@
+export { ReviewsFiltersMenu } from './ReviewsFiltersMenu';
+

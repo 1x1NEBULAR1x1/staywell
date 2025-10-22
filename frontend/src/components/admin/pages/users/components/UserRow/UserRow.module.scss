@@ -1,6 +1,7 @@
 @use '@/components/styles/_variables.scss' as *;
 
 .user_row {
+  cursor: pointer;
 
   &>td {
     padding: $spacing-md;

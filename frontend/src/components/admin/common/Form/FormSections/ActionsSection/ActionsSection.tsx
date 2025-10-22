@@ -2,10 +2,10 @@
 
 import classes from './ActionsSection.module.scss';
 import { Save, X, Loader, Trash } from 'lucide-react';
-import { CRUDDABLE_NAMES } from '@shared/src';
+import { GETTABLE_NAMES, isCruddableName } from '@shared/src';
 import { useModel } from '@/hooks/admin/queries/useModel';
 
-interface ActionsSectionProps<M extends CRUDDABLE_NAMES> {
+interface ActionsSectionProps<M extends GETTABLE_NAMES> {
   is_loading: boolean;
   is_valid: boolean;
   handleClose: () => void;
@@ -14,7 +14,7 @@ interface ActionsSectionProps<M extends CRUDDABLE_NAMES> {
   id?: string;
 }
 
-export function ActionsSection<M extends CRUDDABLE_NAMES>({
+export function ActionsSection<M extends GETTABLE_NAMES>({
   is_loading,
   is_valid,
   handleClose,
@@ -22,7 +22,7 @@ export function ActionsSection<M extends CRUDDABLE_NAMES>({
   action = 'create',
   id
 }: ActionsSectionProps<M>) {
-  const delete_mutation = (model && id) ? useModel(model).remove(id) : null;
+  const delete_mutation = (model && isCruddableName(model) && id) ? useModel(model).remove(id) : null;
 
   return (
     <div className={classes.actions}>

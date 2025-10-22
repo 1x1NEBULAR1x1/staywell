@@ -12,9 +12,10 @@ import {
 } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { RedisSessionService } from "./service";
-import { JwtAuthGuard, AdminOnly } from "src/lib/common";
+import { JwtAuthGuard, AdminOnly, Auth } from "src/lib/common";
 import { AuthenticatedRequest, SessionData } from "@shared/src/types/users-section";
-import { Role } from "@shared/src/database";
+import { Role, User } from "@shared/src/database";
+import { BaseListResult } from "@shared/src/common";
 
 @ApiTags("Sessions")
 @Controller("sessions")
@@ -29,18 +30,18 @@ export class SessionsController {
   })
   @ApiResponse({ status: 200, description: "Список активных сессий" })
   async getActiveSessions(
-    @Req() req: AuthenticatedRequest,
-    @Query("user_id", ParseUUIDPipe) userId?: string,
-  ): Promise<{ sessionId: string; data: SessionData }[]> {
+    @Auth() user: User,
+    @Query("user_id", ParseUUIDPipe) user_id?: string,
+  ): Promise<BaseListResult<SessionData>> {
     // Если пользователь не админ, он может видеть только свои сессии
-    if (userId && req.user.role !== Role.ADMIN)
+    if (user_id && user.role !== Role.ADMIN)
       throw new ForbiddenException(
         "Недостаточно прав для просмотра сессий других пользователей",
       );
     // Если user_id не указан или пользователь не админ, возвращаем сессии текущего пользователя
-    const targetUserId =
-      userId && req.user.role === Role.ADMIN ? userId : req.user.id;
-    return this.redisSessionService.getActiveSessions(targetUserId);
+    const target_user_id =
+      user_id && user.role === Role.ADMIN ? user_id : user.id;
+    return this.redisSessionService.getActiveSessions(target_user_id);
   }
 
   @Get("stats")
@@ -49,9 +50,9 @@ export class SessionsController {
     description: "Возвращает статистику по сессиям",
   })
   @ApiResponse({ status: 200, description: "Статистика сессий" })
-  async getSessionStats(@Req() req: AuthenticatedRequest): Promise<any> {
+  async getSessionStats(@Auth() user: User): Promise<any> {
     // Только админы могут видеть общую статистику
-    if (req.user.role !== Role.ADMIN)
+    if (user.role !== Role.ADMIN)
       throw new ForbiddenException(
         "Недостаточно прав для просмотра статистики",
       );
@@ -65,9 +66,9 @@ export class SessionsController {
     description: "Проверяет состояние системы сессий",
   })
   @ApiResponse({ status: 200, description: "Статус состояния" })
-  async healthCheck(@Req() req: AuthenticatedRequest): Promise<boolean> {
+  async healthCheck(@Auth() user: User): Promise<boolean> {
     // Только админы могут проверять здоровье системы
-    if (req.user.role !== Role.ADMIN)
+    if (user.role !== Role.ADMIN)
       throw new ForbiddenException(
         "Недостаточно прав для проверки состояния системы",
       );
@@ -83,11 +84,11 @@ export class SessionsController {
   @ApiResponse({ status: 200, description: "Сессия успешно обновлена" })
   async refreshSession(
     @Param("id", ParseUUIDPipe) id: string,
-    @Req() req: AuthenticatedRequest,
+    @Auth() user: User,
   ): Promise<{ success: boolean; ttl?: number }> {
     // Проверяем что сессия принадлежит текущему пользователю
-    const sessionData = await this.redisSessionService.getSessionInfo(id);
-    if (!sessionData || sessionData.user_id !== req.user.id)
+    const session = await this.redisSessionService.getSessionInfo(id);
+    if (!session || session.user_id !== user.id)
       throw new ForbiddenException("Нет доступа к этой сессии");
     const success = await this.redisSessionService.refreshSession(id);
     if (success) {
@@ -106,11 +107,11 @@ export class SessionsController {
   @ApiResponse({ status: 200, description: "Сессия успешно удалена" })
   async deleteSession(
     @Param("id", ParseUUIDPipe) id: string,
-    @Req() req: AuthenticatedRequest,
+    @Auth() user: User,
   ): Promise<{ message: string }> {
     // Проверяем что сессия принадлежит текущему пользователю
     const session = await this.redisSessionService.getSessionInfo(id);
-    if (!session || session.user_id !== req.user.id)
+    if (!session || session.user_id !== user.id)
       throw new ForbiddenException("Нет доступа к этой сессии");
     await this.redisSessionService.delete(id);
     return { message: "Сессия успешно удалена" };

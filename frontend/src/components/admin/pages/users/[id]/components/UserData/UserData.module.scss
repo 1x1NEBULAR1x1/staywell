@@ -1,0 +1,76 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.title_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-lg;
+
+  .title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .actions {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  .edit_button {
+    padding: $spacing-sm $spacing-md;
+    background-color: rgba($primary-main, 0.95);
+    color: rgba($foreground-white, 0.95);
+    border: none;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: $primary-main;
+      color: $foreground-white;
+    }
+  }
+}
+
+.info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-md;
+
+  >div {
+    padding: $spacing-sm;
+    background-color: $background-light;
+    border-radius: $border-radius-sm;
+    border: $border-normal;
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+
+    &.email {
+      font-weight: 500;
+    }
+
+    &.phone {
+      color: #6c757d;
+    }
+
+    &.role {
+      color: #28a745;
+      font-weight: 500;
+    }
+
+    &.status {
+      color: #17a2b8;
+      font-weight: 500;
+    }
+
+    &.verification {
+      font-size: 13px;
+      color: #856404;
+      background-color: #fff3cd;
+      border-color: #ffeaa7;
+    }
+  }
+}

@@ -1,12 +1,21 @@
 import { api, createFormData, AxiosResponse, formatQueryPath } from '@/lib/api';
-import type { Prisma, UpdateUser, AdminUpdateUser, UserWithoutPassword } from '@shared/src';
-import { IGetApi, GetApi } from './get.api';
+import type { UpdateUser, AdminUpdateUser, UserWithoutPassword, UsersFilters, BaseListResult } from '@shared/src';
+import { Prisma } from '@shared/src/database';
 
 /**
  * API для работы с пользователями
  */
-export class UsersApi extends GetApi<'USER'> implements IGetApi<'USER'> {
-  constructor() { super('USER') }
+export class UsersApi {
+  endpoint = `${process.env.NEXT_PUBLIC_API_URL}/users`;
+
+  async find(where: Prisma.UserWhereUniqueInput): Promise<AxiosResponse<UserWithoutPassword | null>> {
+    return await api.get<UserWithoutPassword>(formatQueryPath(`${this.endpoint}/find`, where));
+  }
+
+  async get(filters: UsersFilters): Promise<AxiosResponse<BaseListResult<UserWithoutPassword>>> {
+    return await api.get<BaseListResult<UserWithoutPassword>>(formatQueryPath(this.endpoint, filters));
+  }
+
   /**
    * Обновление пользователя
    * @param where - Условие для обновления пользователя

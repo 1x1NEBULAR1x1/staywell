@@ -1,0 +1,47 @@
+.reservations_list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.reservation_item {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+
+  .reservation_header {
+    margin-bottom: 12px;
+
+    .apartment_name {
+      font-weight: 600;
+      font-size: 16px;
+      color: #333;
+    }
+  }
+
+  .reservation_details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px 16px;
+
+    .detail {
+      display: flex;
+      gap: 8px;
+
+      .label {
+        font-weight: 500;
+        color: #6c757d;
+        min-width: 50px;
+      }
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 20px;
+}

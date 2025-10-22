@@ -1,0 +1,2 @@
+export { UserProfileSidebar } from './UserProfileSidebar';
+

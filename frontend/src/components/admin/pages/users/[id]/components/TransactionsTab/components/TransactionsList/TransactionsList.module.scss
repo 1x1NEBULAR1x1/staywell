@@ -1,0 +1,99 @@
+.transactions_list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.transaction_item {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+
+  .transaction_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .amount {
+      font-weight: 600;
+      font-size: 18px;
+      color: #28a745;
+    }
+
+    .status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+
+      &.pending {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      &.success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      &.canceled {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      &.failed {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+    }
+  }
+
+  .transaction_details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px 16px;
+    margin-bottom: 12px;
+
+    .detail {
+      display: flex;
+      gap: 8px;
+
+      .label {
+        font-weight: 500;
+        color: #6c757d;
+        min-width: 50px;
+      }
+    }
+  }
+
+  .description {
+    padding: 8px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+
+    .label {
+      font-weight: 500;
+      color: #6c757d;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #333;
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 20px;
+}

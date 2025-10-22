@@ -1,0 +1,2 @@
+export { ChatSidebarHeader } from './ChatSidebarHeader';
+

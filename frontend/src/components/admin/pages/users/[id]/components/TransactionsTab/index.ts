@@ -1,0 +1,2 @@
+export { TransactionsTab } from './TransactionsTab';
+

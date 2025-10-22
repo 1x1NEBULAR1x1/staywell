@@ -1,0 +1,56 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.chat {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  background-color: $background-main;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  transition: all $transition-normal;
+
+  &_collapsed {
+    .chat_sidebar {
+      width: 4.8rem;
+    }
+
+    .chat_main {
+      width: 100%;
+    }
+  }
+
+  &_main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: $background-light;
+    position: relative;
+    transition: all $transition-normal;
+  }
+
+  &_sidebar {
+    width: 350px;
+    border-left: $border-normal;
+    background-color: $background-main;
+    display: flex;
+    flex-direction: column;
+    transition: all $transition-normal;
+  }
+
+  &_empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: $foreground-secondary;
+    font-size: $font-size-lg;
+    gap: $spacing-md;
+
+    svg {
+      width: 80px;
+      height: 80px;
+      opacity: 0.3;
+    }
+  }
+}

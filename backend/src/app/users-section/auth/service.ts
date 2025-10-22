@@ -51,7 +51,7 @@ export class AuthService {
     return {
       user: user_without_password,
       tokens,
-      session: session_result.session,
+      session: session_result,
     };
   }
 
@@ -81,7 +81,7 @@ export class AuthService {
     return {
       user: user_without_password,
       tokens,
-      session: session_result.session,
+      session: session_result,
     };
   }
 

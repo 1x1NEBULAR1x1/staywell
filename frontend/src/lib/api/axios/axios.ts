@@ -70,7 +70,6 @@ export const createOptionalAuthConfig = (config: AxiosRequestConfig = {}): Axios
   ...config,
   headers: {
     ...config.headers,
-    'X-Optional-Auth': 'true',
   },
 });
 

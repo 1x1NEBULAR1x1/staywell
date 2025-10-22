@@ -1,0 +1,135 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  height: 100%;
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  border: $border-normal;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.user_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xl;
+  border-bottom: $border-normal;
+  gap: $spacing-sm;
+
+  &_avatar_container {
+    position: relative;
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.avatar_container {
+  position: relative;
+  margin-bottom: $spacing-sm;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid $primary-main;
+}
+
+.status_badge {
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  border: 2px solid $background-main;
+
+  &.active {
+    background: $green;
+    color: $foreground-white;
+  }
+
+  &.inactive {
+    background: $red;
+    color: $foreground-white;
+  }
+}
+
+.user_name {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $foreground-main;
+  text-align: center;
+  margin: 0;
+}
+
+.user_email {
+  font-size: $font-size-sm;
+  color: $foreground-secondary;
+  text-align: center;
+  margin: 0;
+  word-break: break-all;
+}
+
+.user_role {
+  padding: $spacing-xs $spacing-md;
+  background: $primary-light;
+  color: $foreground-white;
+  border-radius: $border-radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-md;
+  gap: $spacing-xs;
+  overflow-y: auto;
+}
+
+.nav_button {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  background: transparent;
+  color: $foreground-secondary;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  cursor: pointer;
+  border-radius: $border-radius-md;
+  transition: all $transition-fast;
+  text-align: left;
+
+  &:hover {
+    background: $background-light;
+    color: $foreground-main;
+  }
+
+  &.active {
+    background: $primary-main;
+    color: $foreground-white;
+
+    .nav_icon {
+      color: $foreground-white;
+    }
+  }
+}
+
+.nav_icon {
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+
+.nav_label {
+  flex: 1;
+}

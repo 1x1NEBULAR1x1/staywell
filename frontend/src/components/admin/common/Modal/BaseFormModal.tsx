@@ -4,9 +4,9 @@ import { ReactNode } from 'react';
 import { UseFormReturn, FieldValues } from 'react-hook-form';
 import { Modal } from '@/components/admin/common/Modal/Modal';
 import { ActionsSection, classes } from '@/components/admin/common/Form';
-import { CRUDDABLE_NAMES } from '@shared/src';
+import { GETTABLE_NAMES } from '@shared/src';
 
-interface BaseFormModalProps<T extends FieldValues, M extends CRUDDABLE_NAMES> {
+interface BaseFormModalProps<T extends FieldValues, M extends GETTABLE_NAMES> {
   is_open: boolean;
   onClose: () => void;
   title: string;
@@ -20,7 +20,7 @@ interface BaseFormModalProps<T extends FieldValues, M extends CRUDDABLE_NAMES> {
   id?: string;
 }
 
-export const BaseFormModal = <T extends FieldValues, M extends CRUDDABLE_NAMES>({
+export const BaseFormModal = <T extends FieldValues, M extends GETTABLE_NAMES>({
   is_open,
   onClose,
   title,

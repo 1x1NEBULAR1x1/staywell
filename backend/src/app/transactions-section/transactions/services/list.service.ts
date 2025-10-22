@@ -57,6 +57,7 @@ export class ListService {
   }) {
     const final_filters =
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
+    delete final_filters.is_excluded
     const query_options = this.prisma.buildQuery<Transaction>(
       final_filters,
       "created",

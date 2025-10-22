@@ -1,0 +1,19 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.user_profile {
+  width: 100%;
+  display: flex;
+  gap: $spacing-lg;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  padding: $spacing-lg;
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  border: $border-normal;
+}

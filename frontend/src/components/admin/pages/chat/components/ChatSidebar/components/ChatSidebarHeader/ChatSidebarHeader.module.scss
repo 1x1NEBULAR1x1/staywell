@@ -1,0 +1,74 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  padding: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  justify-content: space-between;
+
+  .collapse_button {
+    width: $font-size-3xl;
+    height: $font-size-3xl;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: $background-light;
+    border: none;
+    cursor: pointer;
+    transition: $transition-fast;
+    color: $foreground-secondary;
+
+    svg {
+      width: $font-size-xl;
+      height: $font-size-xl;
+    }
+
+    &:hover {
+      background-color: $primary-disabled;
+      color: $primary-main;
+    }
+  }
+
+  .search_container {
+    width: 100%;
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+    position: relative;
+
+    &_collapsed {
+      padding-left: $spacing-md;
+    }
+
+    svg {
+      position: absolute;
+      left: $spacing-md;
+      width: $font-size-lg;
+      height: $font-size-lg;
+      color: $foreground-light;
+    }
+
+    input {
+      flex: 1;
+      padding: $spacing-sm $spacing-md $spacing-sm $spacing-3xl;
+      border: $border-normal;
+      border-radius: $border-radius-md;
+      font-size: $font-size-md;
+      outline: none;
+      color: $foreground-main;
+      transition: $transition-fast;
+      background-color: $background-main;
+
+      &:focus {
+        border-color: $primary-main;
+      }
+
+      &::placeholder {
+        color: $foreground-light;
+      }
+    }
+  }
+}

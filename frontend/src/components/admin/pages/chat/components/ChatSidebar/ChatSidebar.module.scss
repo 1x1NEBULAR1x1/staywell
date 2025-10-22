@@ -1,0 +1,8 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: $background-main;
+}

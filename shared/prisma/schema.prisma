@@ -11,27 +11,30 @@ datasource db {
 model User {
   id String @id @default(uuid())
 
-  email          String  @unique
+  email          String    @unique
   password_hash  String
   image          String?
   first_name     String
   last_name      String
   phone_number   String?
-  is_active      Boolean @default(true)
-  email_verified Boolean @default(false)
-  phone_verified Boolean @default(false)
-  role           Role    @default(USER)
+  date_of_birth  DateTime?
+  is_active      Boolean   @default(true)
+  email_verified Boolean   @default(false)
+  phone_verified Boolean   @default(false)
+  role           Role      @default(USER)
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  reservations     Reservation[]
-  events           Event[]
-  bookings         Booking[]
-  transactions     Transaction[]
-  card_details     CardDetail[]
-  transfer_details TransferDetail[]
-  reviews          Review[]
+  reservations      Reservation[]
+  events            Event[]
+  bookings          Booking[]
+  transactions      Transaction[]
+  card_details      CardDetail[]
+  transfer_details  TransferDetail[]
+  reviews           Review[]
+  sent_messages     Message[]        @relation("sent_messages")
+  received_messages Message[]        @relation("received_messages")
 
   @@map("users")
 }
@@ -39,14 +42,21 @@ model User {
 model Message {
   id String @id @default(uuid())
 
-  message    String
-  booking_id String?
+  sender_id   String
+  receiver_id String
+  message     String
+  is_read     Boolean @default(false)
+  booking_id  String?
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  booking Booking? @relation(fields: [booking_id], references: [id])
+  sender   User     @relation("sent_messages", fields: [sender_id], references: [id])
+  receiver User     @relation("received_messages", fields: [receiver_id], references: [id])
+  booking  Booking? @relation(fields: [booking_id], references: [id])
 
+  @@index([sender_id, receiver_id])
+  @@index([receiver_id, is_read])
   @@map("messages")
 }
 
