@@ -1,13 +1,13 @@
-import { PrismaService } from "src/lib/prisma";
-import { Injectable } from "@nestjs/common";
-import { UsersFiltersDto } from "../dto";
-import { User, Prisma } from "@shared/src/database";
-import { BaseListResult } from "@shared/src/common/base-types";
-import { UserWithoutPassword } from "@shared/src/types/users-section";
+import { PrismaService } from 'src/lib/prisma';
+import { Injectable } from '@nestjs/common';
+import { UsersFiltersDto } from '../dto';
+import { User, Prisma } from '@shared/src/database';
+import { BaseListResult } from '@shared/src/common/base-types';
+import { UserWithoutPassword } from '@shared/src/types/users-section';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters = (options: UsersFiltersDto) => {
     const {
@@ -26,13 +26,13 @@ export class ListService {
     if (is_active !== undefined && is_active !== null)
       filters.is_active = is_active;
     if (email && email.trim().length > 0)
-      filters.email = { contains: email.trim(), mode: "insensitive" };
+      filters.email = { contains: email.trim(), mode: 'insensitive' };
     if (search && search.trim().length > 0) {
       filters.OR = [
-        { first_name: { contains: search.trim(), mode: "insensitive" } },
-        { last_name: { contains: search.trim(), mode: "insensitive" } },
-        { email: { contains: search.trim(), mode: "insensitive" } },
-        { phone_number: { contains: search.trim(), mode: "insensitive" } },
+        { first_name: { contains: search.trim(), mode: 'insensitive' } },
+        { last_name: { contains: search.trim(), mode: 'insensitive' } },
+        { email: { contains: search.trim(), mode: 'insensitive' } },
+        { phone_number: { contains: search.trim(), mode: 'insensitive' } },
       ];
     }
     if (phone_number && phone_number.trim().length > 0)
@@ -46,8 +46,8 @@ export class ListService {
   }: UsersFiltersDto): Promise<BaseListResult<UserWithoutPassword>> {
     const query_options = this.prisma.buildQuery<UserWithoutPassword>(
       filters,
-      "created",
-      "created",
+      'created',
+      'created',
       this.customFilters,
     );
     const { items, total } = await this.prisma.findWithPagination<User>(

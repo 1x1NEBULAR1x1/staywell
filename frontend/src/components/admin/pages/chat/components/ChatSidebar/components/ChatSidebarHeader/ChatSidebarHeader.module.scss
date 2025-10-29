@@ -6,6 +6,7 @@
   align-items: center;
   gap: $spacing-md;
   justify-content: space-between;
+  flex-shrink: 0;
 
   .collapse_button {
     width: $font-size-3xl;

@@ -1,0 +1,33 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.connection_status {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-xs;
+  color: $foreground-secondary;
+  border-top: $border-normal;
+}
+
+.offline_indicator {
+  width: $font-size-xs;
+  height: $font-size-xs;
+  border-radius: 50%;
+  background-color: $red;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

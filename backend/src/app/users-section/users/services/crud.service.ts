@@ -2,16 +2,16 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
-} from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { Prisma } from "@shared/src/database";
-import { AdminUpdateUserDto, UpdateUserDto } from "../dto";
-import * as argon2 from "argon2";
-import { USER_WITHOUT_PASSWORD_SELECT, UserWithoutPassword } from "@shared/src";
+} from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Prisma } from '@shared/src/database';
+import { AdminUpdateUserDto, UpdateUserDto } from '../dto';
+import * as argon2 from 'argon2';
+import { USER_WITHOUT_PASSWORD_SELECT, UserWithoutPassword } from '@shared/src';
 
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async findOne(
     where: Prisma.UserWhereUniqueInput,
@@ -23,7 +23,7 @@ export class CrudService {
     });
 
     if (!user && !check_only)
-      throw new NotFoundException("Пользователь не найден");
+      throw new NotFoundException('Пользователь не найден');
 
     return user;
   }
@@ -34,7 +34,7 @@ export class CrudService {
   ) {
     if (!where || Object.keys(where).length === 0)
       throw new BadRequestException(
-        "Не указаны параметры поиска пользователя для обновления",
+        'Не указаны параметры поиска пользователя для обновления',
       );
 
     // Проверяем существование пользователя
@@ -51,13 +51,13 @@ export class CrudService {
 
     // Проверяем, не занят ли email, если пользователь его меняет
 
-    if ("email" in data && data.email) {
+    if ('email' in data && data.email) {
       const existingUser = await this.prisma.user.findUnique({
         where: { email: data.email },
       });
 
       if (existingUser && existingUser.id !== where.id)
-        throw new BadRequestException("Этот email уже занят");
+        throw new BadRequestException('Этот email уже занят');
     }
 
     // Обновляем пользователя

@@ -1,19 +1,18 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Booking, Prisma, User, Role } from '@shared/src/database';
+import { BookingsFiltersDto } from '../dto';
+import { BaseListResult } from '@shared/src/common';
+import { ExtendedBooking } from '@shared/src/types/bookings-section';
 import {
-  Booking,
-  Prisma,
-  User,
-  Role,
-} from "@shared/src/database";
-import { BookingsFiltersDto } from "../dto";
-import { BaseListResult } from "@shared/src/common";
-import { ExtendedBooking } from "@shared/src/types/bookings-section";
-import { EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE, EXTENDED_BOOKING_INCLUDE, EXTENDED_BOOKING_VARIANT_INCLUDE } from "@shared/src/types/bookings-section/extended.types";
+  EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE,
+  EXTENDED_BOOKING_INCLUDE,
+  EXTENDED_BOOKING_VARIANT_INCLUDE,
+} from '@shared/src/types/bookings-section/extended.types';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: BookingsFiltersDto) {
     const {
@@ -63,13 +62,13 @@ export class ListService {
     // Build the query using the generic method from PrismaService
     const query_options = this.prisma.buildQuery(
       final_filters,
-      "created",
-      "start",
+      'created',
+      'start',
       (filters: BookingsFiltersDto) => this.customFilters(filters),
     );
 
     // Get paginated results using the generic method
-    const { items, total } = await this.prisma.findWithPagination<Booking>(
+    const { items, total } = (await this.prisma.findWithPagination<Booking>(
       this.prisma.booking,
       query_options,
       {
@@ -78,7 +77,7 @@ export class ListService {
         transaction: true,
         booking_additional_options: { include: { additional_option: true } },
       },
-    ) as { items: ExtendedBooking[]; total: number };
+    )) as { items: ExtendedBooking[]; total: number };
 
     return { items, total, skip: query_options.skip, take: query_options.take };
   }

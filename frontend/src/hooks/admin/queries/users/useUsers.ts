@@ -2,6 +2,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { UsersApi, query_client } from "@/lib/api";
 import { useToast } from "@/hooks/common/useToast";
 import { UsersFilters, UpdateUser, AdminUpdateUser } from '@shared/src';
+import { FindQueryOptions } from "../useModel/lib/types";
+import { QUERY_KEYS } from "../useModel/lib/query-keys";
 
 const invalidate_queries = (id?: string) => {
   query_client.invalidateQueries({ queryKey: ['users'], exact: false });
@@ -29,10 +31,11 @@ export const useUsers = () => {
     }
   });
 
-  const find = (id: string) => useQuery({
-    queryKey: ['user', id],
+  const find = (id: string, options?: FindQueryOptions<'USER'>) => useQuery({
+    queryKey: QUERY_KEYS('USER').find(id),
     queryFn: () => api.find({ id }),
-    select: data => data.data
+    select: data => data.data,
+    enabled: options?.enabled === undefined ? true : options.enabled
   })
 
   return {

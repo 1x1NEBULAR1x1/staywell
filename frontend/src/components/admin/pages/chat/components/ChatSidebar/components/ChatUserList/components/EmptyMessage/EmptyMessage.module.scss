@@ -1,0 +1,18 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.list_empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-3xl;
+  color: $foreground-secondary;
+  text-align: center;
+  gap: $spacing-sm;
+
+  svg {
+    width: $spacing-4xl;
+    height: $spacing-4xl;
+    opacity: 0.3;
+  }
+}

@@ -1,12 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { SAFE_USER_SELECT, BaseListResult, ExtendedReservation } from "@shared/src";
-import { Prisma, User, Role } from "@shared/src/database";
-import { ReservationsFiltersDto } from "../dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import {
+  SAFE_USER_SELECT,
+  BaseListResult,
+  ExtendedReservation,
+} from '@shared/src';
+import { Prisma, User, Role } from '@shared/src/database';
+import { ReservationsFiltersDto } from '../dto';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters(options: ReservationsFiltersDto) {
     const {
@@ -46,11 +50,11 @@ export class ListService {
   }): Promise<BaseListResult<ExtendedReservation>> {
     const final_filters =
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
-    delete final_filters.is_excluded
+    delete final_filters.is_excluded;
     const query_options = this.prisma.buildQuery(
       final_filters,
-      "created",
-      "created",
+      'created',
+      'created',
       (filters: ReservationsFiltersDto) => this.customFilters(filters),
     );
     const { items, total } = await this.prisma.findWithPagination(

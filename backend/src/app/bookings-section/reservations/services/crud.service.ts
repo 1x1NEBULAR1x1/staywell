@@ -2,24 +2,24 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
-} from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { SAFE_USER_SELECT } from "@shared/src";
-import { Prisma, User, Role, Reservation } from "@shared/src/database";
-import { CreateReservationDto, UpdateReservationDto } from "../dto";
+} from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { SAFE_USER_SELECT } from '@shared/src';
+import { Prisma, User, Role, Reservation } from '@shared/src/database';
+import { CreateReservationDto, UpdateReservationDto } from '../dto';
 
 @Injectable()
 export class CrudService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   private async checkUser(id: string) {
     if (!(await this.prisma.user.findFirst({ where: { id } })))
-      throw new NotFoundException("User not found");
+      throw new NotFoundException('User not found');
   }
 
   private async checkApartment(id: string) {
     if (!(await this.prisma.apartment.findUnique({ where: { id } }))) {
-      throw new NotFoundException("Apartment not found");
+      throw new NotFoundException('Apartment not found');
     }
   }
 
@@ -46,7 +46,7 @@ export class CrudService {
 
     if (overlapping_reservations.length > 0)
       throw new ConflictException(
-        "Apartment is already reserved for these dates",
+        'Apartment is already reserved for these dates',
       );
   }
   /**
@@ -96,7 +96,7 @@ export class CrudService {
         apartment: true,
       },
     });
-    if (!reservation) throw new NotFoundException("Reservation not found");
+    if (!reservation) throw new NotFoundException('Reservation not found');
     return reservation;
   }
   /**

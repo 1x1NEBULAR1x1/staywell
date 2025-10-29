@@ -1,11 +1,11 @@
-import { Transform } from "class-transformer";
+import { Transform } from 'class-transformer';
 import {
   IsNumber,
   IsNumberString,
   IsOptional,
   IsPositive,
   ValidationOptions,
-} from "class-validator";
+} from 'class-validator';
 
 interface ToPriceOptions {
   required?: boolean;
@@ -19,9 +19,9 @@ export function ToPrice(
 ) {
   const { required } = options;
 
-  return function (target: any, propertyKey: string | symbol) {
+  return function (target: object, propertyKey: string | symbol) {
     IsNumberString()(target, propertyKey);
-    Transform(({ value }) => {
+    Transform(({ value }: { value: unknown }) => {
       const num = parseFloat(String(value));
       return isNaN(num) ? value : parseFloat(num.toFixed(2));
     })(target, propertyKey);

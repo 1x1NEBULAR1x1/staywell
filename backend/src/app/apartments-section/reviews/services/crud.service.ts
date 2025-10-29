@@ -2,17 +2,17 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
-} from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { Role, User, SAFE_USER_SELECT } from "@shared/src";
-import { CreateReviewDto, UpdateReviewDto } from "../dto";
+} from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Role, User, SAFE_USER_SELECT } from '@shared/src';
+import { CreateReviewDto, UpdateReviewDto } from '../dto';
 
 /**
  * Service for handling CRUD operations for reviews
  */
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   private async checkReview({
     apartment_id,
@@ -33,7 +33,7 @@ export class CrudService {
 
     if (existing_review)
       throw new ConflictException(
-        "User already reviewed this apartment from this booking",
+        'User already reviewed this apartment from this booking',
       );
   }
   /**

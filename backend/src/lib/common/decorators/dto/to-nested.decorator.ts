@@ -1,6 +1,6 @@
-import { ValidateNested, ValidationOptions } from "class-validator";
-import { Type } from "class-transformer";
-import { ApiProperty } from "@nestjs/swagger";
+import { ValidateNested, ValidationOptions } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface ToNestedOptions {
   type: Function;

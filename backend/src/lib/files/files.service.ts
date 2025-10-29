@@ -1,12 +1,12 @@
-import { Injectable, Global } from "@nestjs/common";
-import * as path from "path";
-import * as fs from "fs";
-import { ImagePaths } from "@shared/src/common/image-paths.enum";
+import { Injectable, Global } from '@nestjs/common';
+import * as path from 'path';
+import * as fs from 'fs';
+import { ImagePaths } from '@shared/src/common/image-paths.enum';
 
 @Global()
 @Injectable()
 export class FilesService {
-  private readonly uploadPath = "uploads";
+  private readonly uploadPath = 'uploads';
 
   constructor() {
     this.ensureUploadDir();
@@ -36,28 +36,31 @@ export class FilesService {
    * @param dir_name - название модели
    * @returns путь к сохраненному файлу
    */
-  saveImage({ file, dir_name }: {
+  saveImage({
+    file,
+    dir_name,
+  }: {
     file: Express.Multer.File;
     dir_name: ImagePaths;
   }): string {
     // Валидируем имя модели
     if (!this.isValidImage(file))
       throw new Error(
-        "Недопустимый формат файла. Разрешены только JPEG, PNG и WebP",
+        'Недопустимый формат файла. Разрешены только JPEG, PNG и WebP',
       );
 
     if (!this.isValidSize(file, 5))
-      throw new Error("Размер файла не должен превышать 5 МБ");
+      throw new Error('Размер файла не должен превышать 5 МБ');
 
     if (!ImagePaths[dir_name]) {
       throw new Error(`Недопустимая directory: ${dir_name}`);
     }
     // Очищаем имя файла от специальных символов и пробелов
     const cleanOriginalName = file.originalname
-      .replace(/[^a-zA-Z0-9.-]/g, "_") // заменяем все специальные символы на подчеркивания
-      .replace(/_+/g, "_") // заменяем множественные подчеркивания на одинарные
-      .replace(/^_|_$/g, ""); // удаляем подчеркивания в начале и конце
-    const singularModel = dir_name.endsWith("s")
+      .replace(/[^a-zA-Z0-9.-]/g, '_') // заменяем все специальные символы на подчеркивания
+      .replace(/_+/g, '_') // заменяем множественные подчеркивания на одинарные
+      .replace(/^_|_$/g, ''); // удаляем подчеркивания в начале и конце
+    const singularModel = dir_name.endsWith('s')
       ? dir_name.slice(0, -1)
       : dir_name;
     const fileName = `${singularModel}_${Date.now()}_${cleanOriginalName}`;
@@ -71,12 +74,12 @@ export class FilesService {
    * @param imagePath - путь к изображению
    */
   deleteImage(imagePath: string) {
-    if (!imagePath || !imagePath.startsWith("/static/")) {
+    if (!imagePath || !imagePath.startsWith('/static/')) {
       return;
     }
     const filePath = path.join(
       this.uploadPath,
-      imagePath.replace("/static/", ""),
+      imagePath.replace('/static/', ''),
     );
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
@@ -89,10 +92,10 @@ export class FilesService {
    */
   isValidImage(file: Express.Multer.File): boolean {
     const allowedMimeTypes = [
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/webp",
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/webp',
     ];
     return allowedMimeTypes.includes(file.mimetype);
   }

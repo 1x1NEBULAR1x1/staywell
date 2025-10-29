@@ -1,13 +1,13 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { Prisma } from "@shared/src/database";
-import { BaseListResult } from "@shared/src/common";
-import { ExtendedBookingVariant } from "@shared/src/types/bookings-section";
-import { BookingVariantsFiltersDto } from "../dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Prisma } from '@shared/src/database';
+import { BaseListResult } from '@shared/src/common';
+import { ExtendedBookingVariant } from '@shared/src/types/bookings-section';
+import { BookingVariantsFiltersDto } from '../dto';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters(options: BookingVariantsFiltersDto) {
     const {
@@ -38,22 +38,25 @@ export class ListService {
    * @param filterDto Filter parameters and pagination
    * @returns Filtered list of booking variants with pagination metadata
    */
-  async findAll(
-    { take, skip, ...filters }: BookingVariantsFiltersDto,
-  ): Promise<BaseListResult<ExtendedBookingVariant>> {
+  async findAll({
+    take,
+    skip,
+    ...filters
+  }: BookingVariantsFiltersDto): Promise<
+    BaseListResult<ExtendedBookingVariant>
+  > {
     const query_options = this.prisma.buildQuery(
       { take, skip, ...filters },
-      "created",
-      "created",
+      'created',
+      'created',
       (filters: BookingVariantsFiltersDto) => this.customFilters(filters),
     );
 
-    const { items, total } =
-      await this.prisma.findWithPagination(
-        this.prisma.bookingVariant,
-        query_options,
-        { apartment: true },
-      ) as unknown as { items: ExtendedBookingVariant[]; total: number }; //TODO TYPE ERROR HERE
+    const { items, total } = (await this.prisma.findWithPagination(
+      this.prisma.bookingVariant,
+      query_options,
+      { apartment: true },
+    )) as unknown as { items: ExtendedBookingVariant[]; total: number }; //TODO TYPE ERROR HERE
 
     return { items, total, skip, take };
   }

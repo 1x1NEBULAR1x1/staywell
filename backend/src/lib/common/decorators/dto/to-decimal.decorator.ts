@@ -1,4 +1,4 @@
-import { Transform, Type } from "class-transformer";
+import { Transform, Type } from 'class-transformer';
 import {
   IsNumber,
   IsOptional,
@@ -6,9 +6,9 @@ import {
   Min,
   Max,
   ValidationOptions,
-} from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
-import { Decimal } from "@prisma/client/runtime/library";
+} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { Decimal } from '@prisma/client/runtime/library';
 
 interface ToDecimalOptions {
   required?: boolean;
@@ -41,8 +41,8 @@ export function ToDecimal(
 
   return function (target: object, propertyKey: string | symbol) {
     ApiProperty({
-      type: "number",
-      format: "decimal",
+      type: 'number',
+      format: 'decimal',
       minimum: positive ? 0 : undefined,
       description,
       example,
@@ -50,9 +50,9 @@ export function ToDecimal(
     })(target, propertyKey);
 
     Transform(({ value }: { value: unknown }) => {
-      if (typeof value === "number")
+      if (typeof value === 'number')
         return parseFloat(value.toFixed(precision));
-      if (typeof value === "string") {
+      if (typeof value === 'string') {
         const parsed = parseFloat(value);
         return isNaN(parsed) ? value : parseFloat(parsed.toFixed(precision));
       }
@@ -67,7 +67,7 @@ export function ToDecimal(
     IsNumber({}, validationOptions)(target, propertyKey);
 
     if (positive) IsPositive()(target, propertyKey);
-    if (typeof min === "number") Min(min)(target, propertyKey);
-    if (typeof max === "number") Max(max)(target, propertyKey);
+    if (typeof min === 'number') Min(min)(target, propertyKey);
+    if (typeof max === 'number') Max(max)(target, propertyKey);
   };
 }

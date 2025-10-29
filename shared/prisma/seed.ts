@@ -10,15 +10,44 @@ async function main() {
   console.log('🌱 Seeding database...');
 
   try {
-    await prisma.user.create({
+    console.log('🌱 Clearing database...');
+    await prisma.message.deleteMany();
+    await prisma.user.deleteMany();
+
+    console.log('🌱 Seeding admin user...');
+    const admin = await prisma.user.create({
       data: {
         email: 'admin@gmail.com',
-        password_hash: await argon2.hash('G@me2022'),
+        password_hash: await argon2.hash('P@SSword!'),
         role: 'ADMIN',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Calico_tabby_cat_-_Savannah.jpg/1024px-Calico_tabby_cat_-_Savannah.jpg',
         first_name: 'Admin',
         last_name: 'Admin',
       },
     });
+
+    console.log('🌱 Seeding test user...');
+    const test = await prisma.user.create({
+      data: {
+        email: 'test@gmail.com',
+        password_hash: await argon2.hash('P@SSword!'),
+        role: 'ADMIN',
+        image: 'https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg',
+        first_name: 'Test',
+        last_name: 'Test'
+      }
+    });
+
+    console.log('🌱 Seeding test message...');
+    await prisma.message.create({
+      data: {
+        sender_id: test.id,
+        message: "miau",
+        receiver_id: admin.id,
+      }
+    });
+
+
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       console.warn('Admin user already exists');
@@ -26,6 +55,10 @@ async function main() {
       throw error;
     }
   }
+
+
+
+
 
   console.log('🌱 Seeding amenities...');
   await seedAmenities(prisma);

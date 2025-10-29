@@ -1,15 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { SAFE_USER_SELECT, BaseListResult } from "@shared/src";
-import { Prisma, Review } from "@shared/src/database";
-import { ReviewsFiltersDto } from "../dto";
-import { PrismaService } from "src/lib/prisma";
+import { Injectable } from '@nestjs/common';
+import { SAFE_USER_SELECT, BaseListResult } from '@shared/src';
+import { Prisma, Review } from '@shared/src/database';
+import { ReviewsFiltersDto } from '../dto';
+import { PrismaService } from 'src/lib/prisma';
 
 /**
  * Service for listing and filtering reviews
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: ReviewsFiltersDto) {
     const { apartment_id, user_id, booking_id, min_rating } = options;
@@ -29,11 +29,15 @@ export class ListService {
    * @param filters Filter options
    * @returns List of filtered reviews and count
    */
-  async findAll({ take, skip, ...filters }: ReviewsFiltersDto): Promise<BaseListResult<Review>> {
+  async findAll({
+    take,
+    skip,
+    ...filters
+  }: ReviewsFiltersDto): Promise<BaseListResult<Review>> {
     const query_options = this.prisma.buildQuery(
       { take, skip, ...filters },
-      "created",
-      "created",
+      'created',
+      'created',
       (filters: ReviewsFiltersDto) => this.customFilters(filters),
     );
     const { items, total } = await this.prisma.findWithPagination<Review>(

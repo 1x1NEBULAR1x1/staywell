@@ -1,16 +1,19 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { User } from "@shared/src/database";
-import { ExtendedBookingAdditionalOption } from "@shared/src/types/bookings-section";
-import { CheckService } from "./check.service";
-import { CreateBookingAdditionalOptionDto, UpdateBookingAdditionalOptionDto } from "../dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { User } from '@shared/src/database';
+import { ExtendedBookingAdditionalOption } from '@shared/src/types/bookings-section';
+import { CheckService } from './check.service';
+import {
+  CreateBookingAdditionalOptionDto,
+  UpdateBookingAdditionalOptionDto,
+} from '../dto';
 
 @Injectable()
 export class CrudService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly checkService: CheckService,
-  ) { }
+  ) {}
   /**
    * Creates a new booking-option relationship
    * @param createBookingOptionDto Booking option creation data
@@ -49,7 +52,7 @@ export class CrudService {
       },
     );
     if (!booking_option)
-      throw new NotFoundException("Booking option not found");
+      throw new NotFoundException('Booking option not found');
     await this.checkService.checkOwnerOrAdmin({
       booking_id: booking_option.booking_id,
       user,
@@ -91,8 +94,8 @@ export class CrudService {
   async remove(id: string, user: User): Promise<{ message: string }> {
     const booking_option = await this.findOne(id, user);
     if (!booking_option)
-      throw new NotFoundException("Booking option not found");
+      throw new NotFoundException('Booking option not found');
     await this.prisma.bookingAdditionalOption.delete({ where: { id } });
-    return { message: "Booking option has been removed successfully" };
+    return { message: 'Booking option has been removed successfully' };
   }
 }

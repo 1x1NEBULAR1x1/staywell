@@ -1,21 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import {
-  BookingEvent,
-  Prisma,
-  User,
-  Role,
-} from "@shared/src/database";
-import { BookingEventsFiltersDto } from "../dto";
-import { BaseListResult } from "@shared/src/common";
-import { ExtendedBookingEvent } from "@shared/src/types/events-section";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { BookingEvent, Prisma, User, Role } from '@shared/src/database';
+import { BookingEventsFiltersDto } from '../dto';
+import { BaseListResult } from '@shared/src/common';
+import { ExtendedBookingEvent } from '@shared/src/types/events-section';
 
 /**
  * Service for retrieving lists of event bookings with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: BookingEventsFiltersDto) {
     const { booking_id, event_id, transaction_id, user_id } = options;
@@ -43,16 +38,17 @@ export class ListService {
 
     const query_options = this.prisma.buildQuery(
       final_filters,
-      "created",
-      "created",
+      'created',
+      'created',
       (filters: BookingEventsFiltersDto) => this.customFilters(filters),
     );
 
-    const { items, total } = await this.prisma.findWithPagination<BookingEvent>(
-      this.prisma.bookingEvent,
-      query_options,
-      { event: true },
-    ) as { items: ExtendedBookingEvent[]; total: number };
+    const { items, total } =
+      (await this.prisma.findWithPagination<BookingEvent>(
+        this.prisma.bookingEvent,
+        query_options,
+        { event: true },
+      )) as { items: ExtendedBookingEvent[]; total: number };
     return {
       items,
       total,

@@ -1,15 +1,18 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { AvailableApartment } from '@shared/src/types/apartments-section';
+import { ApartmentsFiltersDto } from '../dto';
 import {
-  AvailableApartment,
-} from "@shared/src/types/apartments-section";
-import { ApartmentsFiltersDto } from "../dto";
-import { Apartment, BookingVariant, Prisma, Review } from "@shared/src/database";
-import { BaseListResult } from "@shared/src/common/base-types/base-list-result.interface";
+  Apartment,
+  BookingVariant,
+  Prisma,
+  Review,
+} from '@shared/src/database';
+import { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
 
 @Injectable()
 export class AvailableListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   /**
    * Finds all available apartments for a specific date range with filtering
@@ -163,12 +166,12 @@ export class AvailableListService {
         );
         // Calculate average rating
         const rating =
-          Array.isArray(apartment.apartment["reviews"]) &&
-            apartment.apartment["reviews"].length > 0
-            ? apartment.apartment["reviews"].reduce(
-              (acc: number, review: Review) => acc + review.rating,
-              0,
-            ) / apartment.apartment["reviews"].length
+          Array.isArray(apartment.apartment['reviews']) &&
+          apartment.apartment['reviews'].length > 0
+            ? apartment.apartment['reviews'].reduce(
+                (acc: number, review: Review) => acc + review.rating,
+                0,
+              ) / apartment.apartment['reviews'].length
             : 0;
         return {
           ...apartment.apartment,

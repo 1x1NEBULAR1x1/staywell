@@ -1,20 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { SAFE_USER_SELECT } from "@shared/src";
-import {
-  Prisma,
-  TransferDetail,
-  User,
-  Role,
-} from "@shared/src/database";
-import { TransferDetailsFiltersDto } from "../dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { SAFE_USER_SELECT } from '@shared/src';
+import { Prisma, TransferDetail, User, Role } from '@shared/src/database';
+import { TransferDetailsFiltersDto } from '../dto';
 
 /**
  * Service for retrieving lists of bank transfer details with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(
     options: TransferDetailsFiltersDto,
@@ -23,15 +18,15 @@ export class ListService {
     const filters: Prisma.TransferDetailWhereInput = {};
     if (user_id) filters.user_id = user_id;
     if (bank_name)
-      filters.bank_name = { contains: bank_name, mode: "insensitive" };
+      filters.bank_name = { contains: bank_name, mode: 'insensitive' };
     if (account_number)
       filters.account_number = {
         contains: account_number,
-        mode: "insensitive",
+        mode: 'insensitive',
       } as Prisma.StringFilter;
-    if (swift) filters.swift = { contains: swift, mode: "insensitive" };
+    if (swift) filters.swift = { contains: swift, mode: 'insensitive' };
     if (payer_name)
-      filters.payer_name = { contains: payer_name, mode: "insensitive" };
+      filters.payer_name = { contains: payer_name, mode: 'insensitive' };
     return filters;
   }
   /**
@@ -48,11 +43,11 @@ export class ListService {
   }) {
     const final_filters =
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
-    delete final_filters.is_excluded
+    delete final_filters.is_excluded;
     const query_options = this.prisma.buildQuery<TransferDetail>(
       final_filters,
-      "created",
-      "created",
+      'created',
+      'created',
       this.customFilters,
     );
     const { items, total } =

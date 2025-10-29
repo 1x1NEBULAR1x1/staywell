@@ -1,12 +1,12 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { AdditionalOption, Prisma } from "@shared/src/database";
-import { BaseListResult } from "@shared/src/common";
-import { AdditionalOptionsFiltersDto } from "../dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { AdditionalOption, Prisma } from '@shared/src/database';
+import { BaseListResult } from '@shared/src/common';
+import { AdditionalOptionsFiltersDto } from '../dto';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: AdditionalOptionsFiltersDto) {
     const { name, min_price, max_price } = options;
@@ -14,7 +14,7 @@ export class ListService {
     if (name) {
       filters.name = {
         contains: name,
-        mode: "insensitive",
+        mode: 'insensitive',
       };
     }
     if (min_price !== undefined || max_price !== undefined) {
@@ -34,8 +34,8 @@ export class ListService {
   ): Promise<BaseListResult<AdditionalOption>> {
     const query_options = this.prisma.buildQuery<AdditionalOption>(
       filters,
-      "created",
-      "created",
+      'created',
+      'created',
       this.customFilters,
     );
 

@@ -1,5 +1,5 @@
-import { Module, Global } from "@nestjs/common";
-import { FilesService } from "./files.service";
+import { Module, Global } from '@nestjs/common';
+import { FilesService } from './files.service';
 
 @Global()
 @Module({

@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
 import { query_client } from '@/lib/api';
-import { authApi } from '@/lib/api/services';
+import { AuthApi } from '@/lib/api/services';
 import type { User } from '@shared/src';
 import { isAxiosError } from 'axios';
 
@@ -48,11 +48,12 @@ const shouldDisableQueries = (pathname: string): boolean => {
  */
 export const AccountProvider = ({ children, disable_auth = false }: { children: ReactNode, disable_auth?: boolean }) => {
   const [user, setUser] = useState<User | null>(null);
+  const api = new AuthApi()
   const pathname = usePathname();
-  const shouldDisableAuth = shouldDisableQueries(pathname) || disable_auth;
+  const should_disable_auth = shouldDisableQueries(pathname) || disable_auth;
   // Query для получения данных пользователя
   const {
-    data: userData,
+    data,
     isLoading: is_loading,
     isFetching: is_fetching,
     isRefetching: is_refetching,
@@ -62,41 +63,41 @@ export const AccountProvider = ({ children, disable_auth = false }: { children: 
     error,
     refetch,
   } = useQuery({
-    queryKey: authApi.query_keys.account(),
+    queryKey: api.query_keys.account(),
     queryFn: async () => {
       try {
-        return await authApi.getProfile();
+        return await api.getProfile();
       } catch (error: unknown) {
         if (isAxiosError(error) && error.response?.status === 401) return null;
         throw error;
       }
     },
-    enabled: !shouldDisableAuth,
+    enabled: !should_disable_auth,
     staleTime: 5 * 60 * 1000,
     retry: (failureCount, error: unknown) => {
       if (isAxiosError(error) && error.response?.status === 401) return false;
       return failureCount < 3;
     },
-    refetchOnMount: !shouldDisableAuth,
-    refetchOnWindowFocus: !shouldDisableAuth,
-    refetchOnReconnect: !shouldDisableAuth,
+    refetchOnMount: !should_disable_auth,
+    refetchOnWindowFocus: !should_disable_auth,
+    refetchOnReconnect: !should_disable_auth,
   });
 
   useEffect(() => {
-    if (shouldDisableAuth) return setUser(null);
-    setUser(userData || null);
-  }, [userData, shouldDisableAuth]);
+    if (should_disable_auth) return setUser(null);
+    setUser(data || null);
+  }, [data, should_disable_auth]);
 
-  const is_authenticated = !shouldDisableAuth && !!userData;
+  const is_authenticated = !should_disable_auth && !!data;
 
   /**
    * Обновление данных пользователя
    */
-  const updateUser = (userData: Partial<User>) => {
+  const updateUser = (data: Partial<User>) => {
     if (user) {
-      const updatedUser = { ...user, ...userData };
-      setUser(updatedUser);
-      query_client.setQueryData(authApi.query_keys.account(), updatedUser);
+      const updated_user = { ...user, ...data };
+      setUser(updated_user);
+      query_client.setQueryData(api.query_keys.account(), data);
     }
   };
 
@@ -105,14 +106,13 @@ export const AccountProvider = ({ children, disable_auth = false }: { children: 
    */
   const clearUser = () => {
     setUser(null);
-    query_client.setQueryData(authApi.query_keys.account(), null);
-    query_client.removeQueries({ queryKey: authApi.query_keys.account() });
+    query_client.removeQueries({ queryKey: api.query_keys.account() });
   };
 
   const value: AccountContextType = {
     user,
-    is_loading: shouldDisableAuth ? false : (is_loading || is_fetching || is_refetching || is_pending || is_paused),
-    is_error: shouldDisableAuth ? false : is_error,
+    is_loading: should_disable_auth ? false : (is_loading || is_fetching || is_refetching || is_pending || is_paused),
+    is_error: should_disable_auth ? false : is_error,
     is_authenticated,
     error,
     refetch,

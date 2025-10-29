@@ -1,13 +1,13 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { Role, TransactionStatus, User, SAFE_USER_SELECT } from "@shared/src";
-import { CreateTransactionDto, UpdateTransactionDto } from "../dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Role, TransactionStatus, User, SAFE_USER_SELECT } from '@shared/src';
+import { CreateTransactionDto, UpdateTransactionDto } from '../dto';
 /**
  * Service for performing CRUD operations on transactions
  */
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   /**
    * Create a new transaction
    * @param createTransactionDto - DTO with transaction properties

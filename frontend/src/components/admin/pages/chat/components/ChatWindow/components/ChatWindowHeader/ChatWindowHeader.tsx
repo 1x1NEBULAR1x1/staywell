@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import classes from './ChatWindowHeader.module.scss';
-import { UserWithoutPassword } from '@shared/src';
+import type { UserWithoutPassword } from "@shared/src";
+import Image from "next/image";
+import classes from "./ChatWindowHeader.module.scss";
 
 interface ChatWindowHeaderProps {
   selected_user: UserWithoutPassword;
@@ -8,7 +8,7 @@ interface ChatWindowHeaderProps {
 
 export const ChatWindowHeader = ({ selected_user }: ChatWindowHeaderProps) => {
   const full_name = `${selected_user.first_name} ${selected_user.last_name}`;
-  const avatar_url = selected_user.image || '/common/default-avatar.png';
+  const avatar_url = selected_user.image || "/common/default-avatar.png";
 
   return (
     <div className={classes.header}>
@@ -26,4 +26,3 @@ export const ChatWindowHeader = ({ selected_user }: ChatWindowHeaderProps) => {
     </div>
   );
 };
-

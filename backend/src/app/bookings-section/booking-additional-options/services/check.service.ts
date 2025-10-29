@@ -1,24 +1,24 @@
-import { PrismaService } from "src/lib/prisma";
-import { Role, User } from "@shared/src/database";
+import { PrismaService } from 'src/lib/prisma';
+import { Role, User } from '@shared/src/database';
 import {
   Injectable,
   NotFoundException,
   ConflictException,
   ForbiddenException,
-} from "@nestjs/common";
+} from '@nestjs/common';
 
 @Injectable()
 export class CheckService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   public async checkBooking({ id, user_id }: { id?: string; user_id: string }) {
     if (!(await this.prisma.booking.findFirst({ where: { id, user_id } })))
-      throw new NotFoundException("Booking not found");
+      throw new NotFoundException('Booking not found');
   }
 
   public async checkAdditionalOption(id?: string) {
     if (!(await this.prisma.additionalOption.findUnique({ where: { id } })))
-      throw new NotFoundException("Additional option not found");
+      throw new NotFoundException('Additional option not found');
   }
 
   public async checkBookingAdditionalOption({
@@ -28,13 +28,15 @@ export class CheckService {
     booking_id?: string;
     option_id?: string;
   }) {
-    if (booking_id && option_id &&
+    if (
+      booking_id &&
+      option_id &&
       !(await this.prisma.bookingAdditionalOption.findUnique({
         where: { booking_id_option_id: { booking_id, option_id } },
       }))
     )
       throw new ConflictException(
-        "This option is already added to the booking",
+        'This option is already added to the booking',
       );
   }
 
@@ -50,6 +52,6 @@ export class CheckService {
       where: { id: booking_id },
     });
     if (!booking || booking.user_id !== user.id)
-      throw new ForbiddenException("Access denied");
+      throw new ForbiddenException('Access denied');
   }
 }

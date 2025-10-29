@@ -6,6 +6,7 @@ exports.SAFE_USER_SELECT = {
     email: true,
     first_name: true,
     last_name: true,
+    role: true,
     image: true,
     is_active: true,
 };

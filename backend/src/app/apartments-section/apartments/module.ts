@@ -1,12 +1,12 @@
-import { Module } from "@nestjs/common";
-import { ApartmentsController } from "./controller";
+import { Module } from '@nestjs/common';
+import { ApartmentsController } from './controller';
 import {
   CrudService,
   ListService,
   AvailabilityService,
   AvailableListService,
-} from "./services";
-import { CheckService } from "./services/check.service";
+} from './services';
+import { CheckService } from './services/check.service';
 
 @Module({
   controllers: [ApartmentsController],
@@ -24,4 +24,4 @@ import { CheckService } from "./services/check.service";
     AvailableListService,
   ],
 })
-export class ApartmentsModule { }
+export class ApartmentsModule {}

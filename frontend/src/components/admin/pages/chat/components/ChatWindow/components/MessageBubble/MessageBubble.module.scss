@@ -56,8 +56,8 @@
   }
 
   &_avatar {
-    width: 40px;
-    height: 40px;
+    width: $font-size-3xl;
+    height: $font-size-3xl;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
@@ -95,7 +95,7 @@
     }
 
     .message_animate & {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: $box-shadow-sm;
     }
   }
 
@@ -120,4 +120,169 @@
       animation: slideInFromBottom 0.3s ease-out 0.1s both;
     }
   }
+
+  &_menu_trigger {
+    position: absolute;
+    top: $spacing-sm;
+    right: $spacing-sm;
+    width: $font-size-xl;
+    height: $font-size-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity $transition-fast, background-color $transition-fast;
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+
+    .message_bubble:hover & {
+      opacity: 1;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &_menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: $background-main;
+    border: $border-normal;
+    border-radius: $border-radius-sm;
+    box-shadow: $box-shadow-md;
+    z-index: 100;
+    min-width: 140px;
+    margin-top: $spacing-xs;
+  }
+}
+
+.menu_item {
+  display: block;
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: $font-size-sm;
+  color: $foreground-main;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $background-light;
+  }
+
+  &:first-child {
+    border-radius: $border-radius-sm $border-radius-sm 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 $border-radius-sm $border-radius-sm;
+  }
+
+  &:not(:last-child) {
+    border-bottom: $border-normal;
+  }
+}
+
+.edit_container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.edit_input {
+  width: 100%;
+  padding: $spacing-sm;
+  border: $border-normal;
+  border-radius: $border-radius-sm;
+  background-color: $background-main;
+  color: $foreground-main;
+  font-family: inherit;
+  font-size: $font-size-md;
+  line-height: 1.4;
+  resize: vertical;
+  outline: none;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    border-color: $primary-main;
+  }
+
+  .message_outgoing & {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: $foreground-white;
+    border-color: rgba(255, 255, 255, 0.3);
+
+    &:focus {
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}
+
+.edit_actions {
+  display: flex;
+  gap: $spacing-sm;
+  justify-content: flex-end;
+}
+
+.save_button,
+.cancel_button {
+  padding: $spacing-xs $spacing-sm;
+  border: none;
+  border-radius: $border-radius-xs;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  .message_outgoing & {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: $foreground-white;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .message_incoming & {
+    background-color: $background-light;
+    color: $foreground-main;
+
+    &:hover:not(:disabled) {
+      background-color: $background-disabled;
+    }
+  }
+}
+
+.save_button {
+  background-color: $green;
+  color: $foreground-white;
+
+  &:disabled {
+    background-color: $foreground-secondary;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.cancel_button {
+  background-color: transparent;
+  color: $foreground-secondary;
+
+  &:hover {
+    background-color: $red;
+    color: $foreground-white;
+  }
+}
+
+.edited_mark {
+  font-size: $font-size-xs;
+  opacity: 0.7;
+  margin-left: $spacing-xs;
+  font-style: italic;
 }

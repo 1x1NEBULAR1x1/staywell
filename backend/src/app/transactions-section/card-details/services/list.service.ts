@@ -1,26 +1,21 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import {
-  CardDetail,
-  Prisma,
-  User,
-  Role,
-} from "@shared/src/database";
-import { BaseListResult } from "@shared/src/common";
-import { CardDetailsFiltersDto } from "../dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { CardDetail, Prisma, User, Role } from '@shared/src/database';
+import { BaseListResult } from '@shared/src/common';
+import { CardDetailsFiltersDto } from '../dto';
 
 /**
  * Service for retrieving lists of card payment details with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: CardDetailsFiltersDto) {
     const { user_id, holder, start, end } = options;
     const filters: Prisma.CardDetailWhereInput = {};
     if (user_id) filters.user_id = user_id;
-    if (holder) filters.holder = { contains: holder, mode: "insensitive" };
+    if (holder) filters.holder = { contains: holder, mode: 'insensitive' };
     if (start) {
       filters.expiry_year = { gte: start.getFullYear() };
       filters.expiry_month = { gte: start.getMonth() };
@@ -47,8 +42,8 @@ export class ListService {
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
     const query_options = this.prisma.buildQuery<CardDetail>(
       final_filters,
-      "created",
-      "created",
+      'created',
+      'created',
       this.customFilters,
     );
     const { items, total } = await this.prisma.findWithPagination<CardDetail>(

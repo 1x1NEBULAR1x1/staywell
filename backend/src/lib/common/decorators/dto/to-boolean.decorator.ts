@@ -1,6 +1,6 @@
-import { IsBoolean, IsOptional, ValidationOptions } from "class-validator";
-import { Transform } from "class-transformer";
-import { ApiProperty } from "@nestjs/swagger";
+import { IsBoolean, IsOptional, ValidationOptions } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface ToBooleanOptions {
   required?: boolean;
@@ -25,14 +25,14 @@ export function ToBoolean(
 
   return function (target: object, propertyKey: string | symbol) {
     ApiProperty({
-      type: "boolean",
+      type: 'boolean',
       default: default_value,
       description,
       example,
       required,
     })(target, propertyKey);
 
-    Transform(({ value }: { value: unknown }) => String(value) == "true")(
+    Transform(({ value }: { value: unknown }) => String(value) == 'true')(
       target,
       propertyKey,
     );

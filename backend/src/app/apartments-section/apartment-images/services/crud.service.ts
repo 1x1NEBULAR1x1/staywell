@@ -1,18 +1,18 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { CreateApartmentImageDto, UpdateApartmentImageDto } from "../dto";
-import { FilesService } from "src/lib/files";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { CreateApartmentImageDto, UpdateApartmentImageDto } from '../dto';
+import { FilesService } from 'src/lib/files';
 
 @Injectable()
 export class CrudService {
   constructor(
     private prisma: PrismaService,
     private filesService: FilesService,
-  ) { }
+  ) {}
 
   private async checkApartment(id: string) {
     if (!(await this.prisma.apartment.findUnique({ where: { id } })))
-      throw new NotFoundException("Apartment not found");
+      throw new NotFoundException('Apartment not found');
   }
   /**
    * Create a new apartment image
@@ -27,7 +27,9 @@ export class CrudService {
     file?: Express.Multer.File;
   }) {
     await this.checkApartment(data.apartment_id);
-    const image = file ? this.filesService.saveImage({ file, dir_name: "APARTMENT_IMAGES" }) : data.image;
+    const image = file
+      ? this.filesService.saveImage({ file, dir_name: 'APARTMENT_IMAGES' })
+      : data.image;
     return await this.prisma.apartmentImage.create({
       data: { ...data, image: image! },
     });
@@ -41,7 +43,7 @@ export class CrudService {
     const image = await this.prisma.apartmentImage.findUnique({
       where: { id },
     });
-    if (!image) throw new NotFoundException("Apartment image not found");
+    if (!image) throw new NotFoundException('Apartment image not found');
     return image;
   }
   /**
@@ -60,7 +62,9 @@ export class CrudService {
     file?: Express.Multer.File;
   }) {
     await this.findOne(id);
-    const image = file ? this.filesService.saveImage({ file, dir_name: "APARTMENT_IMAGES" }) : data.image;
+    const image = file
+      ? this.filesService.saveImage({ file, dir_name: 'APARTMENT_IMAGES' })
+      : data.image;
     return await this.prisma.apartmentImage.update({
       where: { id },
       data: { ...data, image },

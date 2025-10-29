@@ -1,6 +1,6 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from "@nestjs/common";
-import { BaseFiltersOptions, SortDirection } from "@shared/src/common";
-import { PrismaClient } from "@shared/src/database";
+import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { BaseFiltersOptions, SortDirection } from '@shared/src/common';
+import { PrismaClient } from '@shared/src/database';
 
 /**
  * Service for interacting with the database through Prisma ORM
@@ -32,8 +32,8 @@ export class PrismaService
    */
   buildQuery<T extends { id: string }>(
     options: BaseFiltersOptions<T>,
-    default_sort_field: keyof T = "created" as keyof T,
-    date_field: keyof T = "created" as keyof T,
+    default_sort_field: keyof T = 'created' as keyof T,
+    date_field: keyof T = 'created' as keyof T,
     customFilters?: (options: BaseFiltersOptions<T>) => Record<string, unknown>,
   ): {
     skip: number;
@@ -54,16 +54,16 @@ export class PrismaService
     const skip = Number(skip_value);
     const take = Number(take_value);
 
-    if ("skip" in filters) delete filters.skip;
-    if ("take" in filters) delete filters.take;
+    if ('skip' in filters) delete filters.skip;
+    if ('take' in filters) delete filters.take;
 
     // Фильтруем пустые строки и undefined значения
     const cleanFilters = Object.fromEntries(
       Object.entries(filters).filter(([, value]: [string, unknown]) => {
         // Исключаем пустые строки, undefined, null
-        if (value === undefined || value === null || value === "") return false;
+        if (value === undefined || value === null || value === '') return false;
         // Для строк также проверяем после trim()
-        if (typeof value === "string" && value.trim() === "") return false;
+        if (typeof value === 'string' && value.trim() === '') return false;
         return true;
       }),
     );
@@ -89,7 +89,9 @@ export class PrismaService
       skip,
       take,
       where,
-      order_by: sort_field ? { [sort_field]: sort_direction } : { [default_sort_field]: sort_direction }
+      order_by: sort_field
+        ? { [sort_field]: sort_direction }
+        : { [default_sort_field]: sort_direction },
     };
   }
 
@@ -115,10 +117,10 @@ export class PrismaService
   ): Promise<{ items: T[]; total: number }> {
     const { skip, take, where, order_by } = query_options;
 
-    if (where && typeof where === "object") {
-      if ("skip" in where) delete where.skip;
-      if ("take" in where) delete where.take;
-      if ("search" in where) delete where.search;
+    if (where && typeof where === 'object') {
+      if ('skip' in where) delete where.skip;
+      if ('take' in where) delete where.take;
+      if ('search' in where) delete where.search;
     }
 
     const [items, count] = await Promise.all([

@@ -1,14 +1,14 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { ApartmentAvailabilityResult } from "@shared/src/types/apartments-section";
-import { CheckService } from "./check.service";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { ApartmentAvailabilityResult } from '@shared/src/types/apartments-section';
+import { CheckService } from './check.service';
 
 @Injectable()
 export class AvailabilityService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly checkService: CheckService,
-  ) { }
+  ) {}
 
   /**
    * Checks if a specific apartment is available for booking during the given date range
@@ -32,14 +32,14 @@ export class AvailabilityService {
       return {
         is_available: false,
         apartment,
-        reason: "Apartment is not active",
+        reason: 'Apartment is not active',
       };
     }
     if (!apartment.is_excluded) {
       return {
         is_available: false,
         apartment,
-        reason: "Apartment is excluded",
+        reason: 'Apartment is excluded',
       };
     }
     const overlapping_reservations = await this.prisma.reservation.findMany({
@@ -57,7 +57,7 @@ export class AvailabilityService {
       return {
         is_available: false,
         apartment,
-        reason: "Apartment has overlapping reservations",
+        reason: 'Apartment has overlapping reservations',
         reservations: overlapping_reservations,
       };
     }
@@ -78,7 +78,7 @@ export class AvailabilityService {
       return {
         is_available: false,
         apartment,
-        reason: "Apartment has overlapping bookings",
+        reason: 'Apartment has overlapping bookings',
         bookings: overlapping_bookings,
       };
     }

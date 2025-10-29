@@ -16,6 +16,7 @@ const AUTH_PATHS = {
   logout: `${ENDPOINT}/logout`,
   me: `${ENDPOINT}/me`,
   refresh: `${ENDPOINT}/refresh`,
+  wsToken: `${ENDPOINT}/ws-token`,
 } as const;
 
 /**
@@ -28,6 +29,10 @@ export class AuthApi {
 
   async getProfile(): Promise<User> {
     return (await api.get<User>(AUTH_PATHS.me, createOptionalAuthConfig())).data;
+  }
+
+  async getWsToken(): Promise<string> {
+    return (await api.get<string>(AUTH_PATHS.wsToken, createOptionalAuthConfig())).data;
   }
 
   onSuccessLogin({ data, refetchUser, router }: { data: AuthResponse, refetchUser: () => void, router: AppRouterInstance }) {
@@ -56,5 +61,3 @@ export class AuthApi {
     await api.post(AUTH_PATHS.logout)
   }
 }
-
-export const authApi = new AuthApi()

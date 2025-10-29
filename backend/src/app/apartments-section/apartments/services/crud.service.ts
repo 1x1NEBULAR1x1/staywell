@@ -1,14 +1,11 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import {
-  Apartment,
-  Prisma,
-} from "@shared/src/database";
-import { CreateApartmentDto, UpdateApartmentDto } from "../dto";
-import { FilesService } from "src/lib/files";
-import { CheckService } from "./check.service";
-import { AvailabilityService } from "./availability.service";
-import { ExtendedApartment } from "@shared/src/types/apartments-section";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Apartment, Prisma } from '@shared/src/database';
+import { CreateApartmentDto, UpdateApartmentDto } from '../dto';
+import { FilesService } from 'src/lib/files';
+import { CheckService } from './check.service';
+import { AvailabilityService } from './availability.service';
+import { ExtendedApartment } from '@shared/src/types/apartments-section';
 
 @Injectable()
 export class CrudService {
@@ -17,7 +14,7 @@ export class CrudService {
     private readonly filesService: FilesService,
     private readonly checkService: CheckService,
     private readonly availabilityService: AvailabilityService,
-  ) { }
+  ) {}
   /**
    * Creates a new apartment
    * @param createApartmentDto Apartment creation data
@@ -32,7 +29,7 @@ export class CrudService {
   }): Promise<Apartment> {
     await this.checkService.checkConflict(data.number);
     const image = file
-      ? this.filesService.saveImage({ file, dir_name: "APARTMENTS" })
+      ? this.filesService.saveImage({ file, dir_name: 'APARTMENTS' })
       : data.image;
     const apartment = await this.prisma.apartment.create({
       data: { ...data, image },
@@ -55,14 +52,18 @@ export class CrudService {
         apartment_amenities: { include: { amenity: true } },
       },
     });
-    if (!apartment) throw new NotFoundException("Apartment not found");
+    if (!apartment) throw new NotFoundException('Apartment not found');
     // Find the minimum price from booking variants
     const booking_variants = await this.prisma.bookingVariant.findMany({
       where: { apartment_id: apartment.id },
     });
     const price =
       booking_variants.length > 0
-        ? Math.min(...booking_variants.map((v) => v.is_available ? v.price : Infinity))
+        ? Math.min(
+            ...booking_variants.map((v) =>
+              v.is_available ? v.price : Infinity,
+            ),
+          )
         : 0;
     // Find the maximum capacity from booking variants
     const capacity_from_variants =
@@ -81,7 +82,7 @@ export class CrudService {
     const rating =
       reviews.length > 0
         ? reviews.reduce((acc, review) => acc + review.rating, 0) /
-        reviews.length
+          reviews.length
         : 0;
     const availability =
       await this.availabilityService.checkApartmentAvailability({
@@ -103,9 +104,9 @@ export class CrudService {
       cheapest_variant:
         booking_variants.length > 0
           ? booking_variants.reduce(
-            (min, variant) => (variant.price < min.price ? variant : min),
-            booking_variants[0],
-          )
+              (min, variant) => (variant.price < min.price ? variant : min),
+              booking_variants[0],
+            )
           : null,
     };
   }
@@ -129,7 +130,7 @@ export class CrudService {
       this.checkService.checkConflict(data.number),
     ]);
     const image = file
-      ? this.filesService.saveImage({ file, dir_name: "APARTMENTS" })
+      ? this.filesService.saveImage({ file, dir_name: 'APARTMENTS' })
       : data.image;
     await this.prisma.apartment.update({ where, data: { ...data, image } });
     return await this.findOne({ id: apartment.id });
@@ -142,9 +143,9 @@ export class CrudService {
   async remove(where: Prisma.ApartmentWhereUniqueInput) {
     return !(await this.checkService.checkNotFound(where)).is_excluded
       ? await this.update({
-        where,
-        data: { is_available: false, is_excluded: false },
-      })
+          where,
+          data: { is_available: false, is_excluded: false },
+        })
       : await this.prisma.apartment.delete({ where });
   }
 }

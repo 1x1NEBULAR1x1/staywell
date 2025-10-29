@@ -1,6 +1,6 @@
-import { Transform } from "class-transformer";
-import { IsOptional, ValidationOptions, IsEnum } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from 'class-transformer';
+import { IsOptional, ValidationOptions, IsEnum } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface ToEnumOptions<
   T extends Record<string, string> = Record<string, string>,
@@ -10,6 +10,7 @@ interface ToEnumOptions<
   example?: keyof T;
   default?: keyof T;
   enum: T;
+  enumName?: string;
 }
 
 /**
@@ -24,12 +25,17 @@ export function ToEnum<
     example,
     default: default_value,
     enum: enum_value,
+    enumName,
   } = options;
 
   return function (target: object, propertyKey: string | symbol) {
+    // Преобразуем enum в массив строковых значений для Swagger
+    const enumValues = Object.values(enum_value);
+
     ApiProperty({
-      type: "string",
-      enum: enum_value,
+      type: 'string',
+      enum: enumValues,
+      enumName: enumName || undefined,
       description,
       example,
       default: default_value,
@@ -37,7 +43,7 @@ export function ToEnum<
     })(target, propertyKey);
 
     Transform(({ value }: { value: unknown }) => {
-      if (typeof value === "string" && value in enum_value) return value;
+      if (typeof value === 'string' && value in enum_value) return value;
       throw new Error(
         `Invalid value when transforming to enum: ${JSON.stringify(value)}`,
       );

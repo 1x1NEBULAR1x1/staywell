@@ -1,19 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import {
-  Event,
-  Prisma,
-} from "@shared/src/database";
-import { EventsFiltersDto } from "../dto";
-import { BaseListResult } from "@shared/src/common";
-import { ExtendedEvent } from "@shared/src/types/events-section";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Event, Prisma } from '@shared/src/database';
+import { EventsFiltersDto } from '../dto';
+import { BaseListResult } from '@shared/src/common';
+import { ExtendedEvent } from '@shared/src/types/events-section';
 
 /**
  * Service for retrieving lists of events with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: EventsFiltersDto) {
     const {
@@ -38,8 +35,8 @@ export class ListService {
     }
     if (search) {
       filters.OR = [
-        { name: { contains: search, mode: "insensitive" } },
-        { description: { contains: search, mode: "insensitive" } },
+        { name: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
       ];
     }
     return filters;
@@ -49,20 +46,22 @@ export class ListService {
    * @param filters - Query parameters for filtering and pagination
    * @returns Paginated list of events with total count
    */
-  async findAll(
-    { take, skip, ...filters }: EventsFiltersDto,
-  ): Promise<BaseListResult<ExtendedEvent>> {
+  async findAll({
+    take,
+    skip,
+    ...filters
+  }: EventsFiltersDto): Promise<BaseListResult<ExtendedEvent>> {
     const query_options = this.prisma.buildQuery(
       { take, skip, ...filters },
-      "created",
-      "created",
+      'created',
+      'created',
       (filters: EventsFiltersDto) => this.customFilters(filters),
     );
-    const { items, total } = await this.prisma.findWithPagination(
+    const { items, total } = (await this.prisma.findWithPagination(
       this.prisma.event,
       query_options,
       { images: true, guide: true },
-    ) as unknown as { items: ExtendedEvent[]; total: number };
+    )) as unknown as { items: ExtendedEvent[]; total: number };
     return { items, total, skip, take };
   }
 }

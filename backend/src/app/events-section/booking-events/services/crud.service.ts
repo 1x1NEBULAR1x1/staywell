@@ -3,22 +3,22 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
-} from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { Prisma, User } from "@shared/src/database";
-import { CreateBookingEventDto, UpdateBookingEventDto } from "../dto";
+} from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Prisma, User } from '@shared/src/database';
+import { CreateBookingEventDto, UpdateBookingEventDto } from '../dto';
 
 /**
  * Service for performing CRUD operations on event bookings
  */
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   private async checkBooking({ id, user }: { id?: string; user: User }) {
     if (id) {
       const booking = await this.prisma.booking.findUnique({ where: { id } });
-      if (!booking) throw new NotFoundException("Booking not found");
+      if (!booking) throw new NotFoundException('Booking not found');
       if (booking.user_id !== user.id)
         throw new ForbiddenException(
           "You don't have an access to use this action",
@@ -28,7 +28,7 @@ export class CrudService {
 
   private async checkEvent(id?: string) {
     if (id && !(await this.prisma.event.findUnique({ where: { id } })))
-      throw new NotFoundException("Event not found");
+      throw new NotFoundException('Event not found');
   }
 
   private async checkBookingEvent({
@@ -45,7 +45,7 @@ export class CrudService {
         where: { booking_id, event_id },
       }))
     )
-      throw new ConflictException("Event extsts in booking");
+      throw new ConflictException('Event extsts in booking');
   }
   /**
    * Create a new event booking
@@ -87,7 +87,7 @@ export class CrudService {
         transaction: true,
       },
     });
-    if (!booking_event) throw new NotFoundException("Booking event not found");
+    if (!booking_event) throw new NotFoundException('Booking event not found');
     await this.checkBooking({ id: booking_event.booking_id, user });
     return booking_event;
   }

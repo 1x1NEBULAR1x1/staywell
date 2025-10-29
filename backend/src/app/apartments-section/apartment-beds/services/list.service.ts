@@ -1,16 +1,13 @@
-import { Injectable } from "@nestjs/common";
-import {
-  Prisma,
-  ApartmentBed,
-} from "@shared/src/database";
-import { BaseListResult } from "@shared/src/common/base-types/base-list-result.interface";
-import { ApartmentBedsFilters } from "@shared/src/types/apartments-section";
-import { ApartmentBedsFiltersDto } from "../dto";
-import { PrismaService } from "src/lib/prisma";
+import { Injectable } from '@nestjs/common';
+import { Prisma, ApartmentBed } from '@shared/src/database';
+import { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
+import { ApartmentBedsFilters } from '@shared/src/types/apartments-section';
+import { ApartmentBedsFiltersDto } from '../dto';
+import { PrismaService } from 'src/lib/prisma';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters(options: ApartmentBedsFiltersDto) {
     const { bed_type_id, min_count, max_count, apartment_id } = options;
@@ -30,13 +27,15 @@ export class ListService {
    * @param filterDto Filter params and pagination
    * @returns Filtered list of apartment beds
    */
-  async findAll(
-    { take, skip, ...filters }: ApartmentBedsFiltersDto,
-  ): Promise<BaseListResult<ApartmentBed>> {
+  async findAll({
+    take,
+    skip,
+    ...filters
+  }: ApartmentBedsFiltersDto): Promise<BaseListResult<ApartmentBed>> {
     const query_options = this.prisma.buildQuery(
       { take, skip, ...filters },
-      "created",
-      "created",
+      'created',
+      'created',
       (filters: ApartmentBedsFiltersDto) => this.customFilters(filters),
     );
     const { items, total } = await this.prisma.findWithPagination<ApartmentBed>(

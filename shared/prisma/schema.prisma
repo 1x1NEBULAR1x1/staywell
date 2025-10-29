@@ -26,15 +26,14 @@ model User {
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  reservations      Reservation[]
-  events            Event[]
-  bookings          Booking[]
-  transactions      Transaction[]
-  card_details      CardDetail[]
-  transfer_details  TransferDetail[]
-  reviews           Review[]
-  sent_messages     Message[]        @relation("sent_messages")
-  received_messages Message[]        @relation("received_messages")
+  reservations     Reservation[]
+  events           Event[]
+  bookings         Booking[]
+  transactions     Transaction[]
+  card_details     CardDetail[]
+  transfer_details TransferDetail[]
+  reviews          Review[]
+  sent_messages    Message[]        @relation("sent_messages")
 
   @@map("users")
 }
@@ -48,15 +47,26 @@ model Message {
   is_read     Boolean @default(false)
   booking_id  String?
 
+  // Для редактирования сообщений
+  edited     DateTime?
+  replace_to String? // ID заменяющего сообщения
+
+  // Для мягкого удаления
+  is_excluded Boolean @default(false)
+
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  sender   User     @relation("sent_messages", fields: [sender_id], references: [id])
-  receiver User     @relation("received_messages", fields: [receiver_id], references: [id])
-  booking  Booking? @relation(fields: [booking_id], references: [id])
+  sender  User     @relation("sent_messages", fields: [sender_id], references: [id])
+  booking Booking? @relation(fields: [booking_id], references: [id])
+
+  // Самореференция для цепочки замен
+  replaces    Message?  @relation("message_replacements", fields: [replace_to], references: [id])
+  replaced_by Message[] @relation("message_replacements")
 
   @@index([sender_id, receiver_id])
   @@index([receiver_id, is_read])
+  @@index([replace_to])
   @@map("messages")
 }
 

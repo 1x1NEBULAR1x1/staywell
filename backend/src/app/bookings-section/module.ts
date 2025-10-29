@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { BookingsModule } from "./bookings/module";
-import { AdditionalOptionsModule } from "./additional-options/module";
-import { BookingAdditionalOptionsModule } from "./booking-additional-options/module";
-import { BookingVariantsModule } from "./booking-variants/module";
-import { ReservationsModule } from "./reservations/module";
+import { Module } from '@nestjs/common';
+import { BookingsModule } from './bookings/module';
+import { AdditionalOptionsModule } from './additional-options/module';
+import { BookingAdditionalOptionsModule } from './booking-additional-options/module';
+import { BookingVariantsModule } from './booking-variants/module';
+import { ReservationsModule } from './reservations/module';
 
 @Module({
   imports: [
@@ -21,4 +21,4 @@ import { ReservationsModule } from "./reservations/module";
     ReservationsModule,
   ],
 })
-export class BookingsSectionModule { }
+export class BookingsSectionModule {}

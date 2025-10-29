@@ -1,12 +1,12 @@
-import { Transform, Type } from "class-transformer";
+import { Transform, Type } from 'class-transformer';
 import {
   IsDate,
   IsOptional,
   MinDate,
   MaxDate,
   ValidationOptions,
-} from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface ToDateOptions {
   required?: boolean;
@@ -27,15 +27,15 @@ export function ToDate(
 
   return function (target: object, propertyKey: string | symbol) {
     ApiProperty({
-      type: "string",
-      format: "date-time",
+      type: 'string',
+      format: 'date-time',
       description,
       example,
       required,
     })(target, propertyKey);
 
     Transform(({ value }: { value: unknown }) => {
-      if (value === null || value === undefined || value === "")
+      if (value === null || value === undefined || value === '')
         return undefined;
       if (value instanceof Date) return value;
       const date = new Date(JSON.stringify(value).trim());

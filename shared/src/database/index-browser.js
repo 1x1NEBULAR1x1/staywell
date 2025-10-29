@@ -144,6 +144,9 @@ exports.Prisma.MessageScalarFieldEnum = {
   message: 'message',
   is_read: 'is_read',
   booking_id: 'booking_id',
+  edited: 'edited',
+  replace_to: 'replace_to',
+  is_excluded: 'is_excluded',
   created: 'created',
   updated: 'updated'
 };

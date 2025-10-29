@@ -2,21 +2,18 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
-} from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import {
-  AdditionalOption,
-  Prisma,
-} from "@shared/src/database";
-import { CreateAdditionalOptionDto, UpdateAdditionalOptionDto } from "../dto";
-import { FilesService } from "src/lib/files";
+} from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { AdditionalOption, Prisma } from '@shared/src/database';
+import { CreateAdditionalOptionDto, UpdateAdditionalOptionDto } from '../dto';
+import { FilesService } from 'src/lib/files';
 
 @Injectable()
 export class CrudService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly filesService: FilesService,
-  ) { }
+  ) {}
 
   /**
    * Creates a new additional option
@@ -32,10 +29,10 @@ export class CrudService {
   }): Promise<AdditionalOption> {
     if (await this.findOne({ name: data.name }))
       throw new ConflictException(
-        "Additional option with this name already exists",
+        'Additional option with this name already exists',
       );
     const image = file
-      ? this.filesService.saveImage({ file, dir_name: "ADDITIONAL_OPTIONS" })
+      ? this.filesService.saveImage({ file, dir_name: 'ADDITIONAL_OPTIONS' })
       : data.image;
     return await this.prisma.additionalOption.create({
       data: { ...data, image: image! },
@@ -50,7 +47,7 @@ export class CrudService {
     where: Prisma.AdditionalOptionWhereUniqueInput,
   ): Promise<AdditionalOption> {
     const option = await this.prisma.additionalOption.findUnique({ where });
-    if (!option) throw new NotFoundException("Additional option not found");
+    if (!option) throw new NotFoundException('Additional option not found');
     return option;
   }
   /**
@@ -71,10 +68,10 @@ export class CrudService {
     await this.findOne({ id });
     if (await this.findOne({ name: data.name }))
       throw new ConflictException(
-        "Additional option with this name already exists",
+        'Additional option with this name already exists',
       );
     const image = file
-      ? this.filesService.saveImage({ file, dir_name: "ADDITIONAL_OPTIONS" })
+      ? this.filesService.saveImage({ file, dir_name: 'ADDITIONAL_OPTIONS' })
       : data.image;
     return await this.prisma.additionalOption.update({
       where: { id },
@@ -95,7 +92,7 @@ export class CrudService {
       })
     )
       throw new ConflictException(
-        "Cannot delete option that is used in bookings",
+        'Cannot delete option that is used in bookings',
       );
 
     return option.is_excluded

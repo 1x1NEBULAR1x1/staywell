@@ -14,6 +14,7 @@ exports.example_user = {
     ...exports.example_safe_user,
     created: new Date(),
     updated: new Date(),
+    date_of_birth: new Date(),
     email_verified: true,
     phone_verified: true,
     phone_number: "+12345678901",

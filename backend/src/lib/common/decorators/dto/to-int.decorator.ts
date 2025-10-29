@@ -1,4 +1,4 @@
-import { Transform } from "class-transformer";
+import { Transform } from 'class-transformer';
 import {
   IsInt,
   IsOptional,
@@ -6,8 +6,8 @@ import {
   Max,
   ValidationOptions,
   IsPositive,
-} from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface ToIntOptions {
   required?: boolean;
@@ -38,7 +38,7 @@ export function ToInt(
 
   return function (target: object, propertyKey: string | symbol) {
     ApiProperty({
-      type: "integer",
+      type: 'integer',
       minimum: min,
       maximum: max,
       description,
@@ -48,8 +48,8 @@ export function ToInt(
     })(target, propertyKey);
 
     Transform(({ value }: { value: unknown }) => {
-      if (typeof value === "number") return Math.floor(value);
-      if (typeof value === "string") {
+      if (typeof value === 'number') return Math.floor(value);
+      if (typeof value === 'string') {
         const parsed = parseInt(value, 10);
         return isNaN(parsed) ? value : parsed;
       }
@@ -62,7 +62,7 @@ export function ToInt(
 
     IsInt(validationOptions)(target, propertyKey);
     if (positive) IsPositive()(target, propertyKey);
-    if (typeof min === "number") Min(min)(target, propertyKey);
-    if (typeof max === "number") Max(max)(target, propertyKey);
+    if (typeof min === 'number') Min(min)(target, propertyKey);
+    if (typeof max === 'number') Max(max)(target, propertyKey);
   };
 }

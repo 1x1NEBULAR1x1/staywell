@@ -1,17 +1,17 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Prisma, Apartment } from '@shared/src/database';
+import { ApartmentsFiltersDto } from '../dto';
 import {
-  Prisma,
-  Apartment,
-} from "@shared/src/database";
-import { ApartmentsFiltersDto } from "../dto";
-import { ApartmentsData, ApartmentWithPrice } from "@shared/src/types/apartments-section";
-import { BaseFiltersOptions } from "@shared/src/common/base-types/base-filters-options.type";
-import { BaseListResult } from "@shared/src/common/base-types/base-list-result.interface";
+  ApartmentsData,
+  ApartmentWithPrice,
+} from '@shared/src/types/apartments-section';
+import { BaseFiltersOptions } from '@shared/src/common/base-types/base-filters-options.type';
+import { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters = (options: ApartmentsFiltersDto) => {
     const {
@@ -30,8 +30,10 @@ export class ListService {
       search,
     } = options;
     const filters: Prisma.ApartmentWhereInput = {};
-    if (min_price) filters.booking_variants = { some: { price: { gte: min_price } } };
-    if (max_price) filters.booking_variants = { some: { price: { lte: max_price } } };
+    if (min_price)
+      filters.booking_variants = { some: { price: { gte: min_price } } };
+    if (max_price)
+      filters.booking_variants = { some: { price: { lte: max_price } } };
     if (is_available !== undefined) filters.is_available = is_available;
     if (is_smoking !== undefined) filters.is_smoking = is_smoking;
     if (is_pet_friendly !== undefined)
@@ -45,14 +47,27 @@ export class ListService {
     if (check_availability && start_date && end_date) {
       filters.AND = [
         { booking_variants: { some: { is_available: true } } },
-        { booking_variants: { none: { bookings: { some: { start: { gte: start_date }, end: { lte: end_date } } } } } },
-        { reservations: { none: { start: { gte: start_date }, end: { lte: end_date } } } },
+        {
+          booking_variants: {
+            none: {
+              bookings: {
+                some: { start: { gte: start_date }, end: { lte: end_date } },
+              },
+            },
+          },
+        },
+        {
+          reservations: {
+            none: { start: { gte: start_date }, end: { lte: end_date } },
+          },
+        },
       ];
     }
-    if (search) filters.OR = [
-      { name: { contains: search, mode: "insensitive" } },
-      { description: { contains: search, mode: "insensitive" } },
-    ];
+    if (search)
+      filters.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+      ];
     return filters;
   };
   /**
@@ -60,13 +75,15 @@ export class ListService {
    * @param filters Filter and pagination parameters
    * @returns Filtered list of apartments with pagination metadata
    */
-  async findAll(
-    { take, skip, ...filters }: ApartmentsFiltersDto,
-  ): Promise<BaseListResult<ApartmentWithPrice>> {
+  async findAll({
+    take,
+    skip,
+    ...filters
+  }: ApartmentsFiltersDto): Promise<BaseListResult<ApartmentWithPrice>> {
     const query_options = this.prisma.buildQuery<Apartment>(
       { ...filters, take, skip },
-      "created",
-      "created",
+      'created',
+      'created',
       this.customFilters,
     );
 

@@ -2,21 +2,16 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
-} from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import {
-  CardDetail,
-  Prisma,
-  User,
-  Role,
-} from "@shared/src/database";
-import { CreateCardDetailDto, UpdateCardDetailDto } from "../dto";
+} from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { CardDetail, Prisma, User, Role } from '@shared/src/database';
+import { CreateCardDetailDto, UpdateCardDetailDto } from '../dto';
 /**
  * Service for performing CRUD operations on card payment details
  */
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   /**
    * Create new card payment details
    * @param createCardDetailDto - DTO with card details properties
@@ -52,9 +47,9 @@ export class CrudService {
       where,
       include: { user: true, transactions: true },
     });
-    if (!card_detail) throw new NotFoundException("CardDetail not found");
+    if (!card_detail) throw new NotFoundException('CardDetail not found');
     if (user.role !== Role.ADMIN && user.id !== card_detail.user_id)
-      throw new ForbiddenException("Access denied");
+      throw new ForbiddenException('Access denied');
     return card_detail;
   }
   /**

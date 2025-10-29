@@ -1,13 +1,13 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { Role, User, SAFE_USER_SELECT } from "@shared/src";
-import { CreateTransferDetailDto, UpdateTransferDetailDto } from "../dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { Role, User, SAFE_USER_SELECT } from '@shared/src';
+import { CreateTransferDetailDto, UpdateTransferDetailDto } from '../dto';
 /**
  * Service for performing CRUD operations on bank transfer details
  */
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   /**
    * Create new bank transfer details
    * @param data - DTO with transfer details properties
@@ -32,7 +32,7 @@ export class CrudService {
       include: { user: { select: SAFE_USER_SELECT }, transactions: true },
     });
     if (!transfer_detail)
-      throw new NotFoundException("TransferDetails not found");
+      throw new NotFoundException('TransferDetails not found');
     return transfer_detail;
   }
   /**

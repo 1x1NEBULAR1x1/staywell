@@ -1,5 +1,5 @@
-import { SendHorizonal } from 'lucide-react';
-import classes from './ChatInput.module.scss';
+import { SendHorizonal } from "lucide-react";
+import classes from "./ChatInput.module.scss";
 
 interface ChatInputProps {
   message_value: string;
@@ -8,9 +8,14 @@ interface ChatInputProps {
   onSend: () => void;
 }
 
-export const ChatInput = ({ message_value, is_sending, onMessageChange, onSend }: ChatInputProps) => {
+export const ChatInput = ({
+  message_value,
+  is_sending,
+  onMessageChange,
+  onSend,
+}: ChatInputProps) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       onSend();
     }
@@ -39,4 +44,3 @@ export const ChatInput = ({ message_value, is_sending, onMessageChange, onSend }
     </div>
   );
 };
-

@@ -1,5 +1,5 @@
-import { BadRequestException, Type, NestInterceptor } from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { BadRequestException, Type, NestInterceptor } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 /**
  * Конфигурация для интерсептора загрузки изображений
@@ -13,12 +13,12 @@ export interface ImageUploadConfig {
  * Создает интерсептор для загрузки изображений с валидацией
  */
 export function createImageUploadInterceptor(
-  fieldName: string = "file",
+  fieldName: string = 'file',
   config: ImageUploadConfig = {},
 ): Type<NestInterceptor> {
   const {
     max_file_size = 5 * 1024 * 1024, // 5MB по умолчанию
-    allowed_mime_types = ["image/jpeg", "image/jpg", "image/png", "image/webp"],
+    allowed_mime_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
   } = config;
 
   return FileInterceptor(fieldName, {
@@ -30,8 +30,8 @@ export function createImageUploadInterceptor(
         callback(null, true);
       } else {
         const allowed_formats = allowed_mime_types
-          .map((type) => type.replace("image/", "").toUpperCase())
-          .join(", ");
+          .map((type) => type.replace('image/', '').toUpperCase())
+          .join(', ');
         callback(
           new BadRequestException(
             `Недопустимый формат файла. Разрешены только: ${allowed_formats}`,

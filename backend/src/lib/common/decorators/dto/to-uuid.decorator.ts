@@ -1,10 +1,10 @@
-import { Transform } from "class-transformer";
-import { IsUUID, IsOptional, ValidationOptions } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from 'class-transformer';
+import { IsUUID, IsOptional, ValidationOptions } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface ToUUIDOptions {
   required?: boolean;
-  version?: 3 | 4 | 5 | "all";
+  version?: 3 | 4 | 5 | 'all';
   description?: string;
   example?: string;
 }
@@ -16,13 +16,13 @@ export function ToUUID(
   options: ToUUIDOptions = {},
   validationOptions?: ValidationOptions,
 ) {
-  const { required = true, version = "all", description, example } = options;
+  const { required = true, version = 'all', description, example } = options;
 
   return function (target: object, propertyKey: string | symbol) {
     // API Documentation
     ApiProperty({
-      type: "string",
-      format: "uuid",
+      type: 'string',
+      format: 'uuid',
       description,
       example,
       required,

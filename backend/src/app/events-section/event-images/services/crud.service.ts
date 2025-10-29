@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { FilesService } from "src/lib/files";
-import { CreateEventImageDto, UpdateEventImageDto } from "../dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { FilesService } from 'src/lib/files';
+import { CreateEventImageDto, UpdateEventImageDto } from '../dto';
 
 /**
  * Service for performing CRUD operations on event images
@@ -11,7 +11,7 @@ export class CrudService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly filesService: FilesService,
-  ) { }
+  ) {}
 
   /**
    * Create a new event image
@@ -26,7 +26,7 @@ export class CrudService {
     file?: Express.Multer.File;
   }) {
     const image = file
-      ? this.filesService.saveImage({ file, dir_name: "EVENT_IMAGES" })
+      ? this.filesService.saveImage({ file, dir_name: 'EVENT_IMAGES' })
       : data.image;
     return this.prisma.eventImage.create({ data: { ...data, image } });
   }
@@ -36,8 +36,10 @@ export class CrudService {
    * @returns Event image with related event
    */
   async findOne(id: string) {
-    const eventImage = await this.prisma.eventImage.findUnique({ where: { id } });
-    if (!eventImage) throw new NotFoundException("Event image not found");
+    const eventImage = await this.prisma.eventImage.findUnique({
+      where: { id },
+    });
+    if (!eventImage) throw new NotFoundException('Event image not found');
     return eventImage;
   }
   /**
@@ -57,7 +59,7 @@ export class CrudService {
   }) {
     await this.findOne(id);
     const image = file
-      ? this.filesService.saveImage({ file, dir_name: "EVENT_IMAGES" })
+      ? this.filesService.saveImage({ file, dir_name: 'EVENT_IMAGES' })
       : data.image;
     return this.prisma.eventImage.update({
       where: { id },

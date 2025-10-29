@@ -1,15 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/lib/prisma";
-import { SAFE_USER_SELECT } from "@shared/src";
-import { Prisma, User, Role, Transaction } from "@shared/src/database";
-import { TransactionsFiltersDto } from "../dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/lib/prisma';
+import { SAFE_USER_SELECT } from '@shared/src';
+import { Prisma, User, Role, Transaction } from '@shared/src/database';
+import { TransactionsFiltersDto } from '../dto';
 
 /**
  * Service for retrieving lists of transactions with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters = (options: TransactionsFiltersDto) => {
     const {
@@ -37,10 +37,10 @@ export class ListService {
     if (transaction_type) filters.transaction_type = transaction_type;
     if (card_details_id) filters.card_details_id = card_details_id;
     if (transfer_details_id) filters.transfer_details_id = transfer_details_id;
-    if (search) filters.OR = [
-      { description: { contains: search, mode: "insensitive" } },
-    ];
-    if (description) filters.description = { contains: description, mode: "insensitive" };
+    if (search)
+      filters.OR = [{ description: { contains: search, mode: 'insensitive' } }];
+    if (description)
+      filters.description = { contains: description, mode: 'insensitive' };
     return filters;
   };
   /**
@@ -57,11 +57,11 @@ export class ListService {
   }) {
     const final_filters =
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
-    delete final_filters.is_excluded
+    delete final_filters.is_excluded;
     const query_options = this.prisma.buildQuery<Transaction>(
       final_filters,
-      "created",
-      "created",
+      'created',
+      'created',
       this.customFilters,
     );
     const { items, total } = await this.prisma.findWithPagination<Transaction>(

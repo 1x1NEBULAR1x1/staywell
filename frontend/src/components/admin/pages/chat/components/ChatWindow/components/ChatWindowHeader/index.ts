@@ -1,2 +1,1 @@
-export { ChatWindowHeader } from './ChatWindowHeader';
-
+export { ChatWindowHeader } from "./ChatWindowHeader";

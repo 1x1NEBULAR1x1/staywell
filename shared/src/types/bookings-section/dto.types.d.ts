@@ -45,7 +45,9 @@ export type BookingsFilters = BaseFiltersOptions<Booking> & {
 export type CreateBooking = Omit<CreativeOmit<Booking>, "status" | "message"> & {
     message?: string;
 };
-export type UpdateBooking = Partial<CreateBooking>;
+export type UpdateBooking = Partial<CreateBooking> & {
+    status?: BookingStatus;
+};
 export type ReservationsFilters = BaseFiltersOptions<Reservation> & {
     user_id?: string;
     apartment_id?: string;

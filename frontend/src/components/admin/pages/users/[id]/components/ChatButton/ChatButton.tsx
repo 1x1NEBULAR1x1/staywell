@@ -1,6 +1,6 @@
 import classes from './ChatButton.module.scss';
 import { MessageCircle } from 'lucide-react';
-import { useChatStore } from '@/stores/admin/useChatStore';
+import { useChatStore } from '@/hooks/admin/chat/lib/useChatStore';
 
 export const ChatButton = ({ user_id }: { user_id: string }) => {
   const selectChat = useChatStore((state) => state.selectChat);

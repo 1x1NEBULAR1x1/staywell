@@ -3,10 +3,11 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
-} from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { Role } from "@shared/src/database";
-import { ROLES_KEY } from "../decorators/controller/roles.decorator";
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { Role } from '@shared/src/database';
+import { ROLES_KEY } from '../decorators/controller/roles.decorator';
+import { AuthenticatedRequest } from '@shared/src/types/users-section';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -22,15 +23,15 @@ export class RolesGuard implements CanActivate {
 
     const { user } = context
       .switchToHttp()
-      .getRequest<{ user: { role: Role } }>();
+      .getRequest<{ user: AuthenticatedRequest }>();
 
-    if (!user) throw new ForbiddenException("Доступ запрещен");
+    if (!user) throw new ForbiddenException('Доступ запрещен');
 
-    const hasRole = required_roles.some((role) => user.role === role);
+    const hasRole = required_roles.some((role) => user.user.role === role);
 
     if (!hasRole)
       throw new ForbiddenException(
-        "У вас нет прав для выполнения этого действия",
+        'У вас нет прав для выполнения этого действия',
       );
 
     return true;

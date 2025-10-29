@@ -2,6 +2,7 @@
 
 .input {
   padding: 0 $spacing-lg $spacing-lg $spacing-lg;
+  flex-shrink: 0;
 
   &_container {
     display: flex;

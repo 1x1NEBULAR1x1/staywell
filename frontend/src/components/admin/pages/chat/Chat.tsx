@@ -1,23 +1,25 @@
-'use client';
+"use client";
 
+import clsx from "clsx";
 import { AdminPage } from "@/components/admin/common/AdminPage";
-import { ChatSidebar, ChatWindow } from './components';
-import { useChatStore } from '@/stores/admin/useChatStore';
-import classes from './Chat.module.scss';
-import clsx from 'clsx';
+import classes from "./Chat.module.scss";
+import {
+  AdminChatProvider,
+  ChatSidebar,
+  ChatWindow,
+} from "./components";
+import { useChat } from "@/hooks/admin/chat/useChat";
 
-export const Chat = () => {
-  const { selected_chat_id, is_collapsed } = useChatStore();
+const ChatContent = () => {
+  const { selected_chat_id, is_collapsed } = useChat();
 
   return (
     <AdminPage title="Chat">
-      <div className={clsx(classes.chat, {
-        [classes.chat_collapsed]: is_collapsed,
-      })}>
+      <div className={clsx(classes.chat, { [classes.chat_collapsed]: is_collapsed })}  >
         <div className={classes.chat_main}>
-          {selected_chat_id ? (
-            <ChatWindow />
-          ) : (
+          {selected_chat_id
+            ? <ChatWindow />
+            :
             <div className={classes.chat_empty}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -34,12 +36,20 @@ export const Chat = () => {
               </svg>
               <div>Select a conversation to start messaging</div>
             </div>
-          )}
+          }
         </div>
         <div className={classes.chat_sidebar}>
           <ChatSidebar />
         </div>
       </div>
     </AdminPage>
+  );
+};
+
+export const Chat = () => {
+  return (
+    <AdminChatProvider>
+      <ChatContent />
+    </AdminChatProvider>
   );
 };

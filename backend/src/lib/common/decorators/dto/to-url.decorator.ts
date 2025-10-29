@@ -1,6 +1,6 @@
-import { Transform } from "class-transformer";
-import { IsUrl, IsOptional, ValidationOptions } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from 'class-transformer';
+import { IsUrl, IsOptional, ValidationOptions } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 interface ToUrlOptions {
   required?: boolean;
@@ -11,19 +11,13 @@ interface ToUrlOptions {
 /**
  * @ToUrl ensures a valid URL string with optional protocol validation.
  */
-export function ToUrl(
-  options: ToUrlOptions = {},
-) {
-  const {
-    required = true,
-    description,
-    example,
-  } = options;
+export function ToUrl(options: ToUrlOptions = {}) {
+  const { required = true, description, example } = options;
 
   return function (target: object, property_key: string | symbol) {
     ApiProperty({
-      type: "string",
-      format: "url",
+      type: 'string',
+      format: 'url',
       description,
       example,
       required,
@@ -37,7 +31,7 @@ export function ToUrl(
     if (!required) IsOptional()(target, property_key);
 
     Transform(({ value }: { value: unknown }) => {
-      if (typeof value === "string" && value.trim().length > 1) {
+      if (typeof value === 'string' && value.trim().length > 1) {
         IsUrl()(target, property_key);
       }
       return value;

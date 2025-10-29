@@ -1,3 +1,3 @@
-export * from "./crud.service";
-export * from "./list.service";
-export * from "./status.service";
+export * from './crud.service';
+export * from './list.service';
+export * from './status.service';

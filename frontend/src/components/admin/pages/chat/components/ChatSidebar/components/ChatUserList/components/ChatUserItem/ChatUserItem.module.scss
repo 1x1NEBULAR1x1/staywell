@@ -1,0 +1,125 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.user_item {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  cursor: pointer;
+  transition: $transition-fast;
+  position: relative;
+
+  &:hover {
+    background-color: $background-light;
+  }
+
+  &_active {
+    background-color: $primary-main;
+
+    .user_item_name,
+    .user_item_message,
+    .user_item_time {
+      color: $foreground-white;
+    }
+
+    &:hover {
+      background-color: $primary-main;
+    }
+  }
+
+  &_avatar_container {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &_avatar {
+    position: relative;
+    width: $font-size-3xl;
+    height: $font-size-3xl;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  &_online_indicator {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    background-color: $green;
+    border: 2px solid $background-main;
+    border-radius: 50%;
+    z-index: 10;
+  }
+
+  &_content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &_name {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_time {
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  &_message {
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+
+    &_typing {
+      font-style: italic;
+      color: $primary-main;
+    }
+  }
+
+  &_unread_badge {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $spacing-md;
+    height: auto;
+    aspect-ratio: 1/1;
+    bottom: $spacing-md;
+    right: $spacing-lg;
+    background-color: $primary-main;
+    color: $foreground-white;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+    padding: $spacing-xs;
+    border-radius: 50%;
+
+    .user_item_active & {
+      background-color: $foreground-white;
+      color: $primary-main;
+    }
+  }
+}
