@@ -34,8 +34,38 @@ model User {
   transfer_details TransferDetail[]
   reviews          Review[]
   sent_messages    Message[]        @relation("sent_messages")
+  notifications    Notification[]
 
   @@map("users")
+}
+
+enum NotificationType {
+  BOOKING
+  RESERVATION
+  MESSAGE
+  ERROR
+  WARNING
+}
+
+enum NotificationAction {
+  UPDATE
+  NEW
+}
+
+model Notification {
+  id String @id @default(uuid())
+
+  type    NotificationType
+  action  NotificationAction @default(NEW)
+  message String?
+  user_id String?
+  is_read Boolean            @default(false)
+  user    User?              @relation(fields: [user_id], references: [id])
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  @@map("notifications")
 }
 
 model Message {

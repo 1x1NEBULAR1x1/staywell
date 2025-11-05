@@ -137,6 +137,17 @@ exports.Prisma.UserScalarFieldEnum = {
   updated: 'updated'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  action: 'action',
+  message: 'message',
+  user_id: 'user_id',
+  is_read: 'is_read',
+  created: 'created',
+  updated: 'updated'
+};
+
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
   sender_id: 'sender_id',
@@ -381,6 +392,19 @@ exports.Role = exports.$Enums.Role = {
   GUIDE: 'GUIDE'
 };
 
+exports.NotificationType = exports.$Enums.NotificationType = {
+  BOOKING: 'BOOKING',
+  RESERVATION: 'RESERVATION',
+  MESSAGE: 'MESSAGE',
+  ERROR: 'ERROR',
+  WARNING: 'WARNING'
+};
+
+exports.NotificationAction = exports.$Enums.NotificationAction = {
+  UPDATE: 'UPDATE',
+  NEW: 'NEW'
+};
+
 exports.ApartmentType = exports.$Enums.ApartmentType = {
   BUDGET: 'BUDGET',
   STANDARD: 'STANDARD',
@@ -418,6 +442,7 @@ exports.PaymentMethod = exports.$Enums.PaymentMethod = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Notification: 'Notification',
   Message: 'Message',
   Apartment: 'Apartment',
   Review: 'Review',
