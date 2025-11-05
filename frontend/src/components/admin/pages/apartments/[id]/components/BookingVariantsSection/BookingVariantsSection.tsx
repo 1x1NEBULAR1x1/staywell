@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { ExtendedApartment } from '@shared/src';
 import classes from './BookingVariantsSection.module.scss';
-import { BookingVariantFornModal } from './components/BookingVariantFornModal/BookingVariantFornModal';
-import { BookingVariantsList } from './components/BookingVariantsList/BookingVariantsList';
+import { BookingVariantFornModal } from '../BookingVariantsTab/components/BookingVariantFornModal/BookingVariantFornModal';
+import { BookingVariantsList } from '../BookingVariantsTab/components/BookingVariantsList/BookingVariantsList';
+import { useParams } from 'next/navigation';
+import { useModel } from '@/hooks/admin/queries/useModel';
 
-export const BookingVariantsSection = ({ apartment, refetch }: { apartment: ExtendedApartment, refetch: () => void }) => {
+export const BookingVariantsSection = () => {
+  const { id } = useParams<{ id: string }>()
+  const { data: apartment } = useModel('APARTMENT').find(id)
   const [isAddingVariant, setIsAddingVariant] = useState(false);
 
   return (
@@ -22,12 +25,10 @@ export const BookingVariantsSection = ({ apartment, refetch }: { apartment: Exte
       </div>
 
       {/* Add Variant Form */}
-      {isAddingVariant && (
-        <BookingVariantFornModal onClose={() => setIsAddingVariant(false)} apartment_id={apartment.id} refetch={refetch} />
-      )}
+      {isAddingVariant && <BookingVariantFornModal onClose={() => setIsAddingVariant(false)} />}
 
       {/* Variants List */}
-      <BookingVariantsList booking_variants={apartment.booking_variants} refetch={refetch} />
+      <BookingVariantsList booking_variants={apartment?.booking_variants || []} />
     </div>
   );
 };

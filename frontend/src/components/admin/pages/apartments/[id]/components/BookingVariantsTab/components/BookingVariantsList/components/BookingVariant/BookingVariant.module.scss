@@ -1,0 +1,133 @@
+@use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
+
+.variant_item {
+  background: $background-light;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-lg;
+
+  .variant_info {
+    flex: 1;
+
+    .variant_details {
+      display: flex;
+      gap: $spacing-lg;
+      margin-bottom: $spacing-md;
+
+      .price {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $primary-main;
+      }
+
+      .capacity {
+        color: $foreground-secondary;
+        font-size: $font-size-md;
+      }
+    }
+
+    .variant_controls {
+      display: flex;
+      gap: $spacing-lg;
+
+      .control_group {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+
+        .control_label {
+          font-size: $font-size-sm;
+          font-weight: $font-weight-semibold;
+          color: $foreground-main;
+        }
+
+        .control_input {
+          width: 100px;
+          padding: $spacing-xs $spacing-sm;
+          border: $border-input;
+          border-radius: $border-radius-sm;
+          background: $background-main;
+          color: $foreground-main;
+          font-size: $font-size-sm;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-main;
+          }
+
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+
+  .variant_actions {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    align-items: flex-end;
+
+    .availability_button {
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+
+      &.available {
+        background: $green;
+        color: $foreground-white;
+        border-color: $green;
+
+        &:hover:not(:disabled) {
+          background: color.adjust($green, $lightness: 5%);
+        }
+      }
+
+      &.unavailable {
+        background: $yellow;
+        color: $foreground-main;
+        border-color: $yellow;
+
+        &:hover:not(:disabled) {
+          background: color.adjust($yellow, $lightness: 5%);
+        }
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .remove_button {
+      background: $red;
+      color: $foreground-white;
+      border: none;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover:not(:disabled) {
+        background: color.adjust($red, $lightness: 10%);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

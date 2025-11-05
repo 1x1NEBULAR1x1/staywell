@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import classes from './Toast.module.css';
+import classes from './Toast.module.scss';
 import { ToastIcon } from './ToastIcon';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';

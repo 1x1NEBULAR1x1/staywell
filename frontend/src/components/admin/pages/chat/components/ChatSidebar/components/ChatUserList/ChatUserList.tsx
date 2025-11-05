@@ -3,10 +3,11 @@
 import { ChatUserItem, EmptyMessage } from "./components";
 import classes from "./ChatUserList.module.scss";
 import { useChat } from "@/hooks/admin/chat/useChat";
-
+import { useQPId } from "@/hooks/common/useId";
 
 export const ChatUserList = () => {
-  const { chats, selectChat, joinChat, selected_chat_id, isTyping } = useChat();
+  const selected_chat_id = useQPId();
+  const { chats, isTyping, getUserLastSeen } = useChat();
 
   return chats.length > 0
     ?
@@ -20,7 +21,6 @@ export const ChatUserList = () => {
           unread_count={chat.unread_count}
           is_online={chat.is_online}
           is_typing={isTyping(chat.user.id)}
-          onClick={() => joinChat(chat.user.id)}
         />
       ))}
     </div>

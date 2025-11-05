@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import { CreateApartmentImageDto, UpdateApartmentImageDto } from '../dto';
 import { FilesService } from 'src/lib/files';
@@ -8,7 +8,7 @@ export class CrudService {
   constructor(
     private prisma: PrismaService,
     private filesService: FilesService,
-  ) {}
+  ) { }
 
   private async checkApartment(id: string) {
     if (!(await this.prisma.apartment.findUnique({ where: { id } })))
@@ -30,8 +30,10 @@ export class CrudService {
     const image = file
       ? this.filesService.saveImage({ file, dir_name: 'APARTMENT_IMAGES' })
       : data.image;
+
+    if (!image) throw new BadRequestException('Image is required');
     return await this.prisma.apartmentImage.create({
-      data: { ...data, image: image! },
+      data: { ...data, image: image },
     });
   }
   /**

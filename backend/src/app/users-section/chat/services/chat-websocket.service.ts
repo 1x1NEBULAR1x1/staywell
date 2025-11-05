@@ -32,7 +32,8 @@ export class ChatWebsocketService {
   async addConnectedUser(user_id: string, socket_id: string): Promise<void> {
     await this.connectionService.addConnectedUser(user_id, socket_id);
     // Notify all admins about user online status change
-    await this.notificationService.notifyUserOnlineStatus(user_id, true);
+    const lastSeen = await this.connectionService.getLastSeen(user_id);
+    await this.notificationService.notifyUserOnlineStatus(user_id, lastSeen);
   }
 
   /**
@@ -44,8 +45,9 @@ export class ChatWebsocketService {
     // Check if user still has other connections
     const remainingSockets = await this.connectionService.getConnectedUserSockets(user_id);
     if (remainingSockets.length === 0) {
-      // User is now offline
-      await this.notificationService.notifyUserOnlineStatus(user_id, false);
+      // User is now offline - send current last seen time
+      const lastSeen = await this.connectionService.getLastSeen(user_id);
+      await this.notificationService.notifyUserOnlineStatus(user_id, lastSeen);
     }
   }
 
@@ -61,6 +63,13 @@ export class ChatWebsocketService {
    */
   async isUserOnline(user_id: string): Promise<boolean> {
     return await this.connectionService.isUserOnline(user_id);
+  }
+
+  /**
+   * Update last seen time for user
+   */
+  async updateLastSeen(user_id: string): Promise<void> {
+    await this.connectionService.updateLastSeen(user_id);
   }
 
   /**

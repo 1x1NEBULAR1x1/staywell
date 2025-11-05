@@ -66,13 +66,13 @@ export class ChatNotificationService {
   /**
    * Notify about user online status change
    */
-  async notifyUserOnlineStatus(user_id: string, is_online: boolean): Promise<void> {
+  async notifyUserOnlineStatus(user_id: string, last_seen: Date | null): Promise<void> {
     if (!this.server) return;
 
     // Notify all connected admins
     this.server.to('admins').emit('user_online_status', {
       user_id,
-      is_online,
+      last_seen,
     });
   }
 

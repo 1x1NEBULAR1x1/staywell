@@ -14,7 +14,7 @@ export class CrudService {
     private readonly filesService: FilesService,
     private readonly checkService: CheckService,
     private readonly availabilityService: AvailabilityService,
-  ) {}
+  ) { }
   /**
    * Creates a new apartment
    * @param createApartmentDto Apartment creation data
@@ -50,6 +50,21 @@ export class CrudService {
         images: true,
         apartment_beds: { include: { bed_type: true } },
         apartment_amenities: { include: { amenity: true } },
+        reservations: {
+          include: { user: true },
+          orderBy: { start: 'asc' },
+        },
+        booking_variants: {
+          include: {
+            bookings: {
+              where: {
+                status: { in: ['PENDING', 'CONFIRMED'] },
+              },
+              include: { user: true },
+              orderBy: { start: 'asc' },
+            },
+          },
+        },
       },
     });
     if (!apartment) throw new NotFoundException('Apartment not found');
@@ -60,10 +75,10 @@ export class CrudService {
     const price =
       booking_variants.length > 0
         ? Math.min(
-            ...booking_variants.map((v) =>
-              v.is_available ? v.price : Infinity,
-            ),
-          )
+          ...booking_variants.map((v) =>
+            v.is_available ? v.price : Infinity,
+          ),
+        )
         : 0;
     // Find the maximum capacity from booking variants
     const capacity_from_variants =
@@ -82,7 +97,7 @@ export class CrudService {
     const rating =
       reviews.length > 0
         ? reviews.reduce((acc, review) => acc + review.rating, 0) /
-          reviews.length
+        reviews.length
         : 0;
     const availability =
       await this.availabilityService.checkApartmentAvailability({
@@ -100,13 +115,14 @@ export class CrudService {
       capacity,
       rating,
       booking_variants,
+      bookings: apartment.booking_variants.flatMap((variant) => variant.bookings),
       reviews,
       cheapest_variant:
         booking_variants.length > 0
           ? booking_variants.reduce(
-              (min, variant) => (variant.price < min.price ? variant : min),
-              booking_variants[0],
-            )
+            (min, variant) => (variant.price < min.price ? variant : min),
+            booking_variants[0],
+          )
           : null,
     };
   }
@@ -143,9 +159,9 @@ export class CrudService {
   async remove(where: Prisma.ApartmentWhereUniqueInput) {
     return !(await this.checkService.checkNotFound(where)).is_excluded
       ? await this.update({
-          where,
-          data: { is_available: false, is_excluded: false },
-        })
+        where,
+        data: { is_available: false, is_excluded: false },
+      })
       : await this.prisma.apartment.delete({ where });
   }
 }

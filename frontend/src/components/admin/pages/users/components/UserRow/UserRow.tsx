@@ -34,14 +34,14 @@ export const UserRowShimmer = () => (
   <tr className={classes.user_row}>
     <td>
       <div className={classes.user_row_name_container}>
-        <Shimmer className={classes.user_row_avatar} />
+        <Shimmer style={{ width: '45px', height: '45px', borderRadius: '50%' }} />
         <div className={classes.user_row_name_container_info}>
-          <Shimmer className={classes.user_row_name_container_info_name} />
-          <Shimmer className={classes.user_row_name_container_info_email} />
+          <Shimmer style={{ width: '120px', height: '18px', borderRadius: '4px' }} />
+          <Shimmer style={{ width: '180px', height: '14px', borderRadius: '4px' }} />
         </div>
       </div>
     </td>
-    <td ><Shimmer className={classes.user_row_role} /></td>
-    <td ><Shimmer className={classes.user_row_created} /></td>
+    <td><Shimmer style={{ width: '80px', height: '24px', borderRadius: '4px' }} /></td>
+    <td><Shimmer style={{ width: '120px', height: '14px', borderRadius: '4px' }} /></td>
   </tr >
 );

@@ -9,3 +9,34 @@
   font-family: var(--font-open-sans);
   font-size: $font-size-md;
 }
+
+.column_name {
+  &.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($primary-light, 0.1);
+      color: $foreground-main;
+    }
+  }
+
+  &_label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-xs;
+
+    &>svg {
+      transition: transform 0.2s ease;
+    }
+
+    &.active {
+      &>svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}

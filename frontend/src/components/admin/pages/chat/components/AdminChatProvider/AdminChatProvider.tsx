@@ -25,10 +25,8 @@ interface AdminChatContextType {
   disconnect: () => void;
 
   // Chat management
-  selectChat: (chat_id: string | null) => void;
   joinChat: (chat_partner_id: string) => void;
   leaveChat: (chat_partner_id: string) => void;
-  selected_chat_id: string | null;
 
   // Messages
   sendMessage: (
@@ -51,9 +49,10 @@ interface AdminChatContextType {
   // Data
   chats: ChatWithLastMessage[];
   getChats: (skip?: number, take?: number) => void;
+  getUserLastSeen: (userId: string) => Date | null;
 
   messages: Message[];
-  online_users: string[];
+  online_users: Record<string, number>;
 }
 
 const AdminChatContext = createContext<AdminChatContextType | null>(null);

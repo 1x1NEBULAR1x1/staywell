@@ -14,7 +14,7 @@ interface BaseFormModalProps<T extends FieldValues, M extends GETTABLE_NAMES> {
   form: UseFormReturn<T>;
   onSubmit: (data: T) => void;
   is_loading?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   reset_on_close?: boolean;
   model: M;
   id?: string;

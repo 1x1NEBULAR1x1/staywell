@@ -15,3 +15,5 @@ node_modules
 
 .cursor
 .vscode
+
+.DS_Store

@@ -1,17 +1,118 @@
 @use '@/components/styles/_variables.scss' as *;
 
-.sort_direction_select {
+.dropdown_container {
+  position: relative;
+  min-width: 140px;
+}
+
+.dropdown_button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
   border: none;
-  outline: none;
-  background-color: transparent;
+  background-color: $background-light;
   color: $foreground-secondary;
   font-size: $font-size-md;
   font-family: var(--font-open-sans);
   font-weight: $font-weight-semibold;
-  line-height: 150%;
   cursor: pointer;
+  transition: all 0.2s ease;
 
   &:hover {
     color: $foreground-main;
+  }
+
+  &.open {
+    color: $foreground-main;
+  }
+}
+
+.dropdown_label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown_icon {
+  color: $foreground-secondary;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+
+  &.rotated {
+    transform: rotate(180deg);
+  }
+}
+
+.direction_icon {
+  flex-shrink: 0;
+}
+
+.dropdown_menu {
+  position: absolute;
+  top: calc(100% + $spacing-xs);
+  left: 0;
+  right: 0;
+  background-color: $background-main;
+  border-radius: $border-radius-sm;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  animation: dropdown-slide-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdown_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-sm $spacing-md;
+  color: $foreground-secondary;
+  font-size: $font-size-sm;
+  font-family: var(--font-open-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background-color: $background-light;
+    color: $foreground-main;
+  }
+
+  &.selected {
+    background-color: $primary-disabled;
+    color: $primary-main;
+    font-weight: $font-weight-semibold;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.item_content {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.check_icon {
+  color: $primary-main;
+  flex-shrink: 0;
+}
+
+@keyframes dropdown-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

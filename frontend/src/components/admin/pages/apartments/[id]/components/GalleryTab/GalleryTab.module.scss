@@ -1,0 +1,127 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.gallery_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  width: 100%;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-xl;
+    padding: $spacing-xl;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+    }
+
+    .header_content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+      flex: 1;
+
+      .title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        margin: 0;
+      }
+
+      .subtitle {
+        font-size: $font-size-md;
+        color: $foreground-secondary;
+        margin: 0;
+      }
+    }
+
+    .stats {
+      display: flex;
+      gap: $spacing-lg;
+
+      @media (max-width: 768px) {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .stat_item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-xs;
+        padding: $spacing-md;
+        background: $background-main;
+        border-radius: $border-radius-md;
+        border: $border-normal;
+        min-width: 100px;
+
+        &.stat_warning {
+          border-color: $red;
+          background: rgba($red, 0.1);
+        }
+
+        .stat_value {
+          font-size: $font-size-2xl;
+          font-weight: $font-weight-bold;
+          color: $primary-main;
+        }
+
+        .stat_label {
+          font-size: $font-size-xs;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .gallery_section {
+    display: flex;
+    justify-content: center;
+    padding: $spacing-xl;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    @media (max-width: 1024px) {
+      padding: $spacing-lg;
+    }
+  }
+
+  .info_section {
+    padding: $spacing-xl;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    .info_title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0 0 $spacing-md 0;
+    }
+
+    .tips_list {
+      margin: 0;
+      padding-left: $spacing-xl;
+
+      li {
+        font-size: $font-size-md;
+        color: $foreground-secondary;
+        line-height: 1.8;
+        margin-bottom: $spacing-xs;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

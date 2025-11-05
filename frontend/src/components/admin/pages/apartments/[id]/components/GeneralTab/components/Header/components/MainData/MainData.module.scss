@@ -1,0 +1,35 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.title_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $primary-dark;
+  }
+
+  .edit_btn {
+    background: $primary-main;
+    color: $foreground-white;
+    border: none;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: $primary-dark;
+    }
+  }
+}
+
+.price {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $primary-main;
+}

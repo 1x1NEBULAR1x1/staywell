@@ -47,15 +47,15 @@ export const ReviewCardShimmer = () => (
   <tr className={classes.review_row}>
     <td>
       <div className={classes.review_row_name_container}>
-        <Shimmer className={classes.review_row_avatar} />
+        <Shimmer style={{ width: '6rem', height: '6rem', borderRadius: '4px' }} />
         <div className={classes.review_row_name_container_info}>
-          <Shimmer className={classes.review_row_name_container_info_name} />
-          <Shimmer className={classes.review_row_name_container_info_description} />
+          <Shimmer style={{ width: '150px', height: '18px', borderRadius: '4px' }} />
+          <Shimmer style={{ width: '200px', height: '14px', borderRadius: '4px' }} />
         </div>
       </div>
     </td>
-    <td ><Shimmer className={classes.review_row_role} /></td>
-    <td ><Shimmer className={classes.review_row_status} /></td>
-    <td ><Shimmer className={classes.review_row_created} /></td>
+    <td><Shimmer style={{ width: '80px', height: '24px', borderRadius: '4px' }} /></td>
+    <td><Shimmer style={{ width: '90px', height: '24px', borderRadius: '4px' }} /></td>
+    <td><Shimmer style={{ width: '120px', height: '14px', borderRadius: '4px' }} /></td>
   </tr >
 );

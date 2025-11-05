@@ -17,6 +17,7 @@ interface SelectFieldProps<T extends FieldValues> {
   required?: boolean;
   rules?: RegisterOptions<T, Path<T>>;
   hint?: string;
+  disabled?: boolean;
 }
 
 export const SelectField = <T extends FieldValues>({
@@ -29,7 +30,8 @@ export const SelectField = <T extends FieldValues>({
   placeholder,
   required = false,
   rules,
-  hint
+  hint,
+  disabled = false
 }: SelectFieldProps<T>) => {
   return (
     <div className={classes.admin_form_section}>
@@ -39,13 +41,13 @@ export const SelectField = <T extends FieldValues>({
         </label>
         <select
           className={`${classes.admin_form_select} ${errors[name] ? classes.admin_form_select_error : ''}`}
-          disabled={is_loading}
+          disabled={is_loading || disabled}
           {...register(name, {
             required: required,
             ...rules
           })}
         >
-          <option value="">{placeholder}</option>
+          {is_loading ? <option value="">Loading...</option> : <option value="">{placeholder}</option>}
           {options.map((option: SelectOption) => (
             <option key={option.value} value={option.value}>
               {option.label}

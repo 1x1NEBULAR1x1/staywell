@@ -1,0 +1,209 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.beds_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  width: 100%;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    padding: $spacing-xl;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    .section_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: $spacing-lg;
+      padding-bottom: $spacing-md;
+      border-bottom: $border-normal;
+
+      @media (max-width: 1024px) {
+        flex-direction: column;
+      }
+
+      .header_content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        flex: 1;
+
+        .section_title {
+          font-size: $font-size-xl;
+          font-weight: $font-weight-semibold;
+          color: $foreground-main;
+          margin: 0;
+        }
+
+        .section_subtitle {
+          font-size: $font-size-md;
+          color: $foreground-secondary;
+          margin: 0;
+        }
+      }
+
+      .header_actions {
+        display: flex;
+        gap: $spacing-sm;
+        flex-wrap: wrap;
+
+        @media (max-width: 1024px) {
+          width: 100%;
+        }
+
+        .toggle_button,
+        .filter_button,
+        .add_button {
+          display: flex;
+          align-items: center;
+          gap: $spacing-xs;
+          padding: $spacing-sm $spacing-md;
+          border-radius: $border-radius-md;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-normal;
+          cursor: pointer;
+          transition: all $transition-fast;
+          white-space: nowrap;
+        }
+
+        .toggle_button {
+          background: $background-main;
+          color: $foreground-main;
+          border: $border-normal;
+
+          &:hover {
+            background: $primary-light;
+            color: $foreground-white;
+            border-color: $primary-light;
+          }
+        }
+
+        .filter_button {
+          background: $background-main;
+          color: $foreground-secondary;
+          border: $border-normal;
+
+          &:hover {
+            background: $background-light;
+            color: $foreground-main;
+          }
+        }
+
+        .add_button {
+          background: $primary-main;
+          color: $foreground-white;
+          border: none;
+
+          &:hover {
+            background: $primary-dark;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+
+    .beds_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: $spacing-md;
+    }
+
+    .empty_state {
+      padding: $spacing-xl;
+      text-align: center;
+      color: $foreground-secondary;
+      background: $background-main;
+      border-radius: $border-radius-md;
+      border: 2px dashed $border-color-main;
+
+      p {
+        margin: 0;
+        font-size: $font-size-md;
+      }
+    }
+
+    .available_beds {
+      width: 100%;
+
+      .available_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: $spacing-md;
+
+        .available_bed_card {
+          display: flex;
+          flex-direction: column;
+          padding: $spacing-md;
+          background: $background-main;
+          border-radius: $border-radius-lg;
+          border: $border-normal;
+          cursor: pointer;
+          transition: all $transition-fast;
+
+          &:hover {
+            border-color: $primary-main;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+            .add_icon {
+              background: $primary-main;
+              color: $foreground-white;
+            }
+          }
+
+          .bed_image_container {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: $spacing-sm;
+            background: $background-light;
+            border-radius: $border-radius-md;
+            overflow: hidden;
+
+            .bed_image {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            }
+          }
+
+          .bed_info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: $spacing-sm;
+
+            .bed_name {
+              font-size: $font-size-sm;
+              font-weight: $font-weight-normal;
+              color: $foreground-main;
+              flex: 1;
+            }
+
+            .add_icon {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 28px;
+              height: 28px;
+              padding: 0;
+              background: $background-light;
+              color: $foreground-secondary;
+              border: none;
+              border-radius: 50%;
+              cursor: pointer;
+              transition: all $transition-fast;
+            }
+          }
+        }
+      }
+    }
+  }
+}

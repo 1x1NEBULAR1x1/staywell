@@ -108,6 +108,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       await this.chatWebsocketService.joinChat(user, data.chat_partner_id);
 
+      // Update last seen time when joining chat
+      await this.chatWebsocketService.updateLastSeen(user.id);
+
       // Join room for specific chat
       const roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
       await client.join(roomName);

@@ -59,7 +59,7 @@ export type Mutation<M extends CRUDDABLE_NAMES, T extends 'create' | 'update' | 
  * UseModel hook interface for gettable-only models
  */
 export type UseModelGettableOnly<M extends GETTABLE_NAMES> = {
-  get: (filters: GettableTypes<M>['filters'], options?: GetQueryOptions<M>) => UseQueryResult<BaseListResult<GettableTypes<M>['model']>, Error>;
+  get: (filters?: GettableTypes<M>['filters'], options?: GetQueryOptions<M>) => UseQueryResult<BaseListResult<GettableTypes<M>['model']>, Error>;
   find: (id: string, options?: FindQueryOptions<M>) => UseQueryResult<GettableTypes<M>['model'], Error>;
 };
 

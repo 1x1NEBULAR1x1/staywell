@@ -9,16 +9,16 @@ import { useForm } from 'react-hook-form';
 
 interface EventsFiltersMenuProps {
   filters: EventsFilters;
-  updateFilters: (filters: Partial<EventsFilters>) => void;
+  setFilters: (filters: Partial<EventsFilters>) => void;
   user_id: string;
 }
 
-export const EventsFiltersMenu = ({ filters, updateFilters, user_id }: EventsFiltersMenuProps) => {
+export const EventsFiltersMenu = ({ filters, setFilters, user_id }: EventsFiltersMenuProps) => {
   const [is_open, setIsOpen] = useState(false);
   const form = useForm<EventsFilters>({ defaultValues: filters });
 
   const handleSubmit = (data: EventsFilters) => {
-    updateFilters(data);
+    setFilters(data);
     setIsOpen(false);
   };
 
@@ -97,7 +97,7 @@ export const EventsFiltersMenu = ({ filters, updateFilters, user_id }: EventsFil
                 className={classes.reset_btn}
                 onClick={() => {
                   form.reset({ guide_id: user_id });
-                  updateFilters({ guide_id: user_id });
+                  setFilters({ guide_id: user_id });
                 }}
               >
                 Reset

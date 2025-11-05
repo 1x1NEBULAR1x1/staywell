@@ -10,6 +10,7 @@ import { useMessageActions } from "./useMessageActions";
 import { useTypingActions } from "./useTypingActions";
 import { useWebSocketConnection } from "./useWebSocketConnection";
 import { useWebSocketEventHandlers } from "./useWebSocketEventHandlers";
+import { useQPId } from "@/hooks/common/useId";
 
 export const useAdminChat = (
   options: UseWebSocketChatOptions = {},
@@ -18,6 +19,7 @@ export const useAdminChat = (
     options;
   const chatStore = useChatStore();
   const { user } = useAccount();
+  const selected_chat_id = useQPId();
   const chatsLoadedRef = useRef(false);
   const [typing_users, setTypingUsers] = useState<Set<string>>(new Set());
 
@@ -78,7 +80,7 @@ export const useAdminChat = (
   // Event handlers
   useWebSocketEventHandlers({
     ...connection,
-    selected_chat_id: chatStore.selected_chat_id,
+    selected_chat_id,
     getHistory: historyActions.getHistory,
     onNewMessage,
     onMessageEdited,
@@ -113,17 +115,6 @@ export const useAdminChat = (
     }
   }, [connection.is_connected, user]);
 
-  // Auto-join selected chat after chats are loaded
-  useEffect(() => {
-    if (connection.is_connected && chatStore.selected_chat_id && chatStore.chats.length > 0) {
-      // Check if selected chat exists in loaded chats
-      const selectedChatExists = chatStore.chats.some(chat => chat.user.id === chatStore.selected_chat_id);
-      if (selectedChatExists) {
-        console.log("Auto-joining selected chat:", chatStore.selected_chat_id);
-        chatActions.joinChat(chatStore.selected_chat_id);
-      }
-    }
-  }, [connection.is_connected, chatStore.selected_chat_id, chatStore.chats]);
 
   // Reset chats loaded flag when disconnected
   useEffect(() => {
@@ -131,6 +122,28 @@ export const useAdminChat = (
       chatsLoadedRef.current = false;
     }
   }, [connection.is_connected]);
+
+  // Helper function to get user last seen time
+  const getUserLastSeen = useCallback((userId: string) => {
+    const lastSeenTimestamp = chatStore.online_users[userId];
+    if (!lastSeenTimestamp) return null;
+    return new Date(lastSeenTimestamp);
+  }, [chatStore.online_users]);
+
+  // Periodically update online status of users in chats based on last seen time
+  useEffect(() => {
+    const interval = setInterval(() => {
+      chatStore.setChats(
+        chatStore.chats.map(chat => {
+          const lastSeen = chat.last_seen;
+          const isOnline = lastSeen ? (Date.now() - new Date(lastSeen).getTime()) < 5 * 60 * 1000 : false;
+          return { ...chat, is_online: isOnline };
+        })
+      );
+    }, 30 * 1000); // Update every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []); // No dependencies needed as setChats is stable
 
   // Sort users by last message time
   const chats = useMemo(() => {
@@ -172,6 +185,9 @@ export const useAdminChat = (
       ...historyActions,
       chats,
 
+      // Online status
+      getUserLastSeen,
+
       // Typing
       ...typingActions,
       isTyping,
@@ -181,8 +197,6 @@ export const useAdminChat = (
       chatStore.toggleCollapse,
       connection.is_connected,
       connection.disconnect,
-      chatActions.selectChat,
-      chatStore.selected_chat_id,
       chatActions.joinChat,
       chatActions.leaveChat,
       messageActions.sendMessage,
@@ -196,6 +210,7 @@ export const useAdminChat = (
       chatStore.chats,
       chatStore.messages,
       chatStore.online_users,
+      getUserLastSeen,
       isTyping,
     ],
   );

@@ -1,0 +1,156 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 100%;
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  border: $border-normal;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  .apartment_info {
+    display: flex;
+    flex-direction: column;
+    border-bottom: $border-normal;
+
+    .image_container {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+
+      .main_image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .status_badge {
+        position: absolute;
+        top: $spacing-sm;
+        right: $spacing-sm;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius-md;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        backdrop-filter: blur(8px);
+
+        &.available {
+          background: rgba($green, 0.9);
+          color: $foreground-white;
+        }
+
+        &.unavailable {
+          background: rgba($red, 0.9);
+          color: $foreground-white;
+        }
+      }
+    }
+
+    .info_content {
+      padding: $spacing-lg;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .apartment_name {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      .apartment_location {
+        font-size: $font-size-md;
+        color: $foreground-secondary;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+      }
+
+      .stats_grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-md;
+        margin-top: $spacing-sm;
+
+        .stat_item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: $spacing-sm;
+          background: $background-light;
+          border-radius: $border-radius-md;
+          gap: $spacing-xs;
+
+          .stat_value {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-semibold;
+            color: $primary-main;
+          }
+
+          .stat_label {
+            font-size: $font-size-sm;
+            color: $foreground-secondary;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+        }
+      }
+    }
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: $spacing-xs;
+    overflow-y: auto;
+
+    .nav_button {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      padding: $spacing-sm $spacing-md;
+      border: none;
+      background: transparent;
+      color: $foreground-secondary;
+      font-size: $font-size-md;
+      font-weight: $font-weight-normal;
+      cursor: pointer;
+      border-radius: $border-radius-md;
+      transition: all $transition-fast;
+      text-align: left;
+
+      &:hover {
+        background: $background-light;
+        color: $foreground-main;
+      }
+
+      &.active {
+        background: $primary-main;
+        color: $foreground-white;
+
+        .nav_icon {
+          color: $foreground-white;
+        }
+      }
+
+      .nav_icon {
+        width: 18px;
+        height: 18px;
+        color: inherit;
+      }
+
+      .nav_label {
+        flex: 1;
+      }
+    }
+  }
+}
+

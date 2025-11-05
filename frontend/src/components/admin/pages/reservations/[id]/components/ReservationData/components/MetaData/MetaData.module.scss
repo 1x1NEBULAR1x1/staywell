@@ -1,0 +1,58 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background: $background-light;
+  border-radius: $border-radius-md;
+  border: $border-normal;
+}
+
+.meta_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-md;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+}
+
+.date_info,
+.capacity_info,
+.time_info,
+.price_info {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  color: $foreground-secondary;
+  font-size: $font-size-sm;
+
+  .icon {
+    width: 16px;
+    height: 16px;
+    color: $primary-main;
+    flex-shrink: 0;
+  }
+}
+
+.date_details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.date_range {
+  font-weight: $font-weight-semibold;
+  color: $foreground-main;
+  font-size: $font-size-md;
+}
+
+.nights {
+  font-size: $font-size-xs;
+  color: $foreground-light;
+}

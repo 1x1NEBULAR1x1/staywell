@@ -1,0 +1,2 @@
+export { GalleryTab } from './GalleryTab';
+

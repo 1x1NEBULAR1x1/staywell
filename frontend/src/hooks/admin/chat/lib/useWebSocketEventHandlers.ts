@@ -18,7 +18,7 @@ interface UseWebSocketEventHandlersOptions {
     chat_partner_id: string;
     is_typing: boolean;
   }) => void;
-  onUserOnlineStatus?: (data: { user_id: string; is_online: boolean }) => void;
+  onUserOnlineStatus?: (data: { user_id: string; last_seen: Date | null }) => void;
 }
 
 export const useWebSocketEventHandlers = (
@@ -121,14 +121,24 @@ export const useWebSocketEventHandlers = (
     socket.on(
       "chats_loaded",
       (data: { items: ChatWithLastMessage[]; total: number }) => {
-        console.log("chats_loaded received", { count: data.items.length, total: data.total });
+
+        // Initialize online_users with data from loaded chats
+        const newOnlineUsers = { ...chatStoreRef.current.online_users };
+        data.items.forEach(chat => {
+          if (chat.last_seen) {
+            // Set last seen time from server data
+            newOnlineUsers[chat.user.id] = new Date(chat.last_seen).getTime();
+          }
+        });
+
+        chatStoreRef.current.setOnlineUsers(newOnlineUsers);
+
         chatStoreRef.current.setChats(data.items);
       },
     );
 
-    // Chats updated (when new messages arrive)
+    // Chats updated (when new messages arrive or read status changes)
     socket.on("chats_updated", () => {
-      console.log("chats_updated received, refreshing chats list");
       // Refresh the chats list when it gets updated
       if (chatStoreRef.current.chats.length > 0) {
         socket.emit("get_chats", { skip: 0, take: 50 });
@@ -150,23 +160,8 @@ export const useWebSocketEventHandlers = (
     // Online status events
     socket.on(
       "user_online_status",
-      (data: { user_id: string; is_online: boolean }) => {
-        chatStoreRef.current.setOnlineUsers(
-          chatStoreRef.current.online_users.map((id) =>
-            id !== data.user_id ? id : data.user_id,
-          ),
-        );
-        if (data.is_online) {
-          chatStoreRef.current.setOnlineUsers([
-            ...new Set([...chatStoreRef.current.online_users, data.user_id]),
-          ]);
-        } else {
-          chatStoreRef.current.setOnlineUsers(
-            chatStoreRef.current.online_users.filter(
-              (id) => id !== data.user_id,
-            ),
-          );
-        }
+      (data: { user_id: string; last_seen: Date | null }) => {
+        chatStoreRef.current.updateUserLastSeen(data.user_id, data.last_seen);
         onUserOnlineStatus?.(data);
       },
     );

@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { RedisService } from 'src/lib/redis';
+import { UserActivityService } from 'src/lib/common';
 import { Server } from 'socket.io';
 
 @Injectable()
 export class ChatConnectionService {
   constructor(
     private readonly redis: RedisService,
+    private readonly userActivityService: UserActivityService,
   ) { }
 
   /**
@@ -16,6 +18,9 @@ export class ChatConnectionService {
     await this.redis.sadd(key, socket_id);
     // Set TTL on 24 hours for automatic cleanup
     await this.redis.expire(key, 24 * 60 * 60);
+
+    // Update last seen time
+    await this.userActivityService.updateLastSeen(user_id);
   }
 
   /**
@@ -58,6 +63,20 @@ export class ChatConnectionService {
     }
 
     return online_users;
+  }
+
+  /**
+   * Update last seen time for user
+   */
+  async updateLastSeen(user_id: string): Promise<void> {
+    await this.userActivityService.updateLastSeen(user_id);
+  }
+
+  /**
+   * Get last seen time for user
+   */
+  async getLastSeen(user_id: string): Promise<Date | null> {
+    return await this.userActivityService.getLastSeen(user_id);
   }
 
   /**

@@ -17,7 +17,7 @@ export interface ChatWithLastMessage {
   };
   last_message: Message | null;
   unread_count: number;
-  is_online: boolean;
+  last_seen: Date | null;
 }
 
 @Injectable()
@@ -208,14 +208,14 @@ export class ChatHistoryService {
           },
         });
 
-        // Check online status
-        const is_online = await this.connectionService.isUserOnline(userData.id);
+        // Get last seen time
+        const last_seen = await this.connectionService.getLastSeen(userData.id);
 
         return {
           user: userData,
           last_message: lastMessage,
           unread_count: unreadCount,
-          is_online,
+          last_seen,
         };
       })
     );

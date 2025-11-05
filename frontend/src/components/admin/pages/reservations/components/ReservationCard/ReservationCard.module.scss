@@ -1,0 +1,233 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.reservation_card_link {
+  text-decoration: none;
+  display: block;
+
+  .reservation_card {
+    display: flex;
+    flex-direction: column;
+    background: $background-main;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+    overflow: hidden;
+    transition: all $transition-fast;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-color: $primary-main;
+    }
+
+    .image_section {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+
+      .apartment_image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image_overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        padding: $spacing-lg;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: $spacing-md;
+
+        .apartment_info {
+          flex: 1;
+          min-width: 0;
+
+          .apartment_name {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-semibold;
+            color: $foreground-white;
+            margin: 0 0 $spacing-xs 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .apartment_location {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            font-size: $font-size-sm;
+            color: rgba(255, 255, 255, 0.9);
+          }
+        }
+
+        .status_badge_active,
+        .status_badge_past,
+        .status_badge_future {
+          padding: $spacing-xs $spacing-md;
+          border-radius: $border-radius-md;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-bold;
+          text-transform: uppercase;
+          white-space: nowrap;
+          backdrop-filter: blur(4px);
+        }
+
+        .status_badge_active {
+          background: rgba($green, 0.9);
+          color: $foreground-white;
+          animation: pulse 2s infinite;
+        }
+
+        .status_badge_past {
+          background: rgba(128, 128, 128, 0.9);
+          color: $foreground-white;
+        }
+
+        .status_badge_future {
+          background: rgba($primary-main, 0.9);
+          color: $foreground-white;
+        }
+      }
+    }
+
+    .content_section {
+      padding: $spacing-lg;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+
+      .dates_section {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        padding: $spacing-md;
+        background: $background-light;
+        border-radius: $border-radius-md;
+        border: $border-normal;
+
+        .date_item {
+          display: flex;
+          align-items: center;
+          gap: $spacing-sm;
+          flex: 1;
+
+          .date_details {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xs;
+
+            .date_label {
+              font-size: $font-size-xs;
+              color: $foreground-secondary;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              font-weight: $font-weight-semibold;
+            }
+
+            .date_value {
+              font-size: $font-size-md;
+              color: $foreground-main;
+              font-weight: $font-weight-semibold;
+            }
+          }
+        }
+
+        .date_separator {
+          font-size: $font-size-lg;
+          color: $foreground-secondary;
+          font-weight: $font-weight-bold;
+        }
+      }
+
+      .duration_section {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        padding: $spacing-sm 0;
+        font-size: $font-size-md;
+        color: $foreground-main;
+        font-weight: $font-weight-semibold;
+        border-bottom: $border-normal;
+      }
+
+      .user_section {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        padding: $spacing-sm 0;
+        border-bottom: $border-normal;
+
+        .user_avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid $primary-light;
+        }
+
+        .user_details {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-xs;
+          flex: 1;
+          min-width: 0;
+
+          .user_name {
+            font-size: $font-size-md;
+            font-weight: $font-weight-semibold;
+            color: $foreground-main;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .user_email {
+            font-size: $font-size-sm;
+            color: $foreground-secondary;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+
+      .footer_section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: $spacing-xs;
+        gap: $spacing-sm;
+        flex-wrap: wrap;
+
+        .reservation_id,
+        .created_date {
+          font-size: $font-size-xs;
+          color: $foreground-secondary;
+        }
+
+        .reservation_id {
+          font-weight: $font-weight-semibold;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}

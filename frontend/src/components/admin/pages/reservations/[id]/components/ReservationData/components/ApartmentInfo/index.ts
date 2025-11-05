@@ -1,0 +1,2 @@
+export { ApartmentInfo } from './ApartmentInfo';
+

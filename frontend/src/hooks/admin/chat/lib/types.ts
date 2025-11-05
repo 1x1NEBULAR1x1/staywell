@@ -5,7 +5,8 @@ export interface ChatWithLastMessage {
   user: UserWithoutPassword;
   last_message: Message | null;
   unread_count: number;
-  is_online: boolean;
+  last_seen: Date | null;
+  is_online?: boolean; // Computed field for UI display
 }
 
 export interface UseWebSocketChatOptions {
@@ -21,7 +22,7 @@ export interface UseWebSocketChatOptions {
     chat_partner_id: string;
     is_typing: boolean;
   }) => void;
-  onUserOnlineStatus?: (data: { user_id: string; is_online: boolean }) => void;
+  onUserOnlineStatus?: (data: { user_id: string; last_seen: Date | null }) => void;
 }
 
 export interface UseWebSocketChatReturn {
@@ -37,8 +38,6 @@ export interface UseWebSocketChatReturn {
   disconnect: () => void;
 
   // Chat management
-  selectChat: (chat_id: string | null) => void;
-  selected_chat_id: string | null;
   joinChat: (chat_partner_id: string) => void;
   leaveChat: (chat_partner_id: string) => void;
 
@@ -65,5 +64,5 @@ export interface UseWebSocketChatReturn {
 
   // Data
   messages: Message[];
-  online_users: string[];
+  online_users: Record<string, number>;
 }

@@ -7,7 +7,7 @@ import classes from '../Tab.module.scss';
 
 
 export const TransfersTab = ({ user_id }: { user_id: string }) => {
-  const { filters, updateFilters } = useModelFilters({
+  const { filters, setFilters } = useModelFilters({
     model: 'TRANSFER_DETAIL',
     permanent_fields: { user_id }
   });
@@ -22,7 +22,7 @@ export const TransfersTab = ({ user_id }: { user_id: string }) => {
           <h3 className={classes.title}>Transfer Details</h3>
           <TransferDetailsFiltersMenu
             filters={filters}
-            updateFilters={updateFilters}
+            setFilters={setFilters}
           />
         </div>
         <TransferDetailsList transferDetails={transferDetails?.items || []} />

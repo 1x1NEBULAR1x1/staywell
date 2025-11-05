@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCallback, useRef } from "react";
 import type { Socket } from "socket.io-client";
 import { useChatStore, useHistoryActions } from ".";
+import { useQPId } from "@/hooks/common/useId";
 
 interface UseChatActionsOptions {
   socket: Socket | null;
@@ -10,7 +12,6 @@ interface UseChatActionsOptions {
 }
 
 interface UseChatActionsReturn {
-  selectChat: (chat_id: string | null) => void;
   joinChat: (chat_partner_id: string) => void;
   leaveChat: (chat_partner_id: string) => void;
 }
@@ -22,23 +23,23 @@ export const useChatActions = (
   const chatStore = useChatStore();
   const { getHistory } = useHistoryActions(options);
   const chatStoreRef = useRef(chatStore);
+  const router = useRouter();
+  const current_chat_id = useQPId();
   chatStoreRef.current = chatStore;
-
-  const selectChat = useCallback((chat_id: string | null) => {
-    chatStoreRef.current.selectChat(chat_id);
-  }, []);
 
   const joinChat = useCallback(
     (chat_partner_id: string) => {
       if (!socket || !is_connected) return;
-      socket.emit("join_chat", { chat_partner_id });
-      // Only select chat if it's not already selected to prevent infinite loops
-      if (chatStoreRef.current.selected_chat_id !== chat_partner_id) {
-        chatStoreRef.current.selectChat(chat_partner_id);
+
+      // Don't redirect if chat is already selected
+      if (current_chat_id !== chat_partner_id) {
+        router.push(`/admin/chat?id=${chat_partner_id}`);
       }
+
+      socket.emit("join_chat", { chat_partner_id });
       getHistory(chat_partner_id);
     },
-    [socket, is_connected, getHistory],
+    [socket, is_connected, getHistory, router, current_chat_id],
   );
 
   const leaveChat = useCallback(
@@ -46,16 +47,14 @@ export const useChatActions = (
       if (!socket || !is_connected) return;
 
       socket.emit("leave_chat", { chat_partner_id });
-      if (chatStoreRef.current.selected_chat_id === chat_partner_id) {
-        chatStoreRef.current.selectChat(null);
-        chatStoreRef.current.setMessages([]);
-      }
+      // Navigate back to chat list without parameters
+      router.push("/admin/chat");
+      chatStoreRef.current.setMessages([]);
     },
-    [socket, is_connected],
+    [socket, is_connected, router],
   );
 
   return {
-    selectChat,
     joinChat,
     leaveChat,
   };

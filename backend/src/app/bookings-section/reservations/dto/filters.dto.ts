@@ -4,8 +4,7 @@ import { Reservation } from '@shared/src/database';
 
 export class ReservationsFiltersDto
   extends BaseFiltersDto<Reservation>
-  implements ReservationsFilters
-{
+  implements ReservationsFilters {
   @ToUUID({
     required: false,
     description: 'User ID',
@@ -19,13 +18,6 @@ export class ReservationsFiltersDto
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   apartment_id?: string;
-
-  @ToUUID({
-    required: false,
-    description: 'Booking variant ID',
-    example: '123e4567-e89b-12d3-a456-426614174001',
-  })
-  booking_variant_id?: string;
 
   @ToDate({
     required: false,

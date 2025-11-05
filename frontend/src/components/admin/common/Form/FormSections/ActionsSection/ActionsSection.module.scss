@@ -5,6 +5,7 @@
   display: flex;
   gap: $spacing-sm;
   justify-content: space-between;
+  padding-bottom: $spacing-lg;
 
   @media (max-width: 768px) {
     flex-direction: column-reverse;

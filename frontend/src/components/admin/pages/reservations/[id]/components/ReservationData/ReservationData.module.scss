@@ -1,0 +1,41 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  width: 100%;
+
+  .main_info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    padding: $spacing-xl;
+    background: $background-main;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xl;
+      width: 100%;
+
+      .connections {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-lg;
+
+        @media (max-width: 1024px) {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .additional_data {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+      }
+    }
+  }
+}

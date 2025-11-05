@@ -4,13 +4,13 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { SAFE_USER_SELECT } from '@shared/src';
+import { USER_WITHOUT_PASSWORD_SELECT } from '@shared/src';
 import { Prisma, User, Role, Reservation } from '@shared/src/database';
 import { CreateReservationDto, UpdateReservationDto } from '../dto';
 
 @Injectable()
 export class CrudService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   private async checkUser(id: string) {
     if (!(await this.prisma.user.findFirst({ where: { id } })))
@@ -70,7 +70,7 @@ export class CrudService {
     return await this.prisma.reservation.create({
       data: { ...data, user_id },
       include: {
-        user: { select: SAFE_USER_SELECT },
+        user: { select: USER_WITHOUT_PASSWORD_SELECT },
         apartment: true,
       },
     });
@@ -92,7 +92,7 @@ export class CrudService {
     const reservation = await this.prisma.reservation.findFirst({
       where,
       include: {
-        user: { select: SAFE_USER_SELECT },
+        user: { select: USER_WITHOUT_PASSWORD_SELECT },
         apartment: true,
       },
     });
@@ -130,7 +130,7 @@ export class CrudService {
       where: { id },
       data: { ...data, user_id },
       include: {
-        user: { select: SAFE_USER_SELECT },
+        user: { select: USER_WITHOUT_PASSWORD_SELECT },
         apartment: true,
       },
     });

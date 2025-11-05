@@ -23,7 +23,7 @@ export interface UseFiltersReturn<B extends BaseFiltersOptions<{ id: string, [ke
   /** Current page number (1-based) */
   current_page: number;
   /** Update filters with new values */
-  updateFilters: (new_filters: Partial<B>) => void;
+  setFilters: (new_filters: Partial<B>) => void;
   /** Reset filters to default values */
   resetFilters: () => void;
   /** Set current page */
@@ -109,7 +109,7 @@ export function useFilters<B extends BaseFiltersOptions<{ id: string, [key: stri
    * Update filters with partial new values
    * @param new_filters New filter values to apply
    */
-  const updateFilters = (new_filters: Partial<B>): void => {
+  const setFiltersCallback = (new_filters: Partial<B>): void => {
     setFilters(prev => {
       // If page size changes, recalculate skip for proper pagination
       let updated_filters = { ...new_filters };
@@ -145,7 +145,7 @@ export function useFilters<B extends BaseFiltersOptions<{ id: string, [key: stri
     filters,
     debounced_filters,
     current_page: Math.floor((filters.skip || 0) / (filters.take || 10)) + 1,
-    updateFilters,
+    setFilters: setFiltersCallback,
     resetFilters,
     setPage,
   };

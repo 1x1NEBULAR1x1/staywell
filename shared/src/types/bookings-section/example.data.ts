@@ -1,7 +1,7 @@
 import { BaseListResult } from "../../common";
 import { AdditionalOption, ApartmentType, Booking, BookingAdditionalOption, BookingStatus, BookingVariant, Reservation } from "../../database";
 import { example_transaction } from "../transactions-section";
-import { example_safe_user, example_user } from "../users-section";
+import { example_user } from "../users-section";
 import { ExtendedBookingAdditionalOption, ExtendedBookingVariant } from "./extended.types";
 import { ExtendedBooking } from "./extended.types";
 import { ExtendedReservation } from "./extended.types";
@@ -150,7 +150,7 @@ export const example_reservation: Reservation = {
 export const example_extended_reservation: ExtendedReservation = {
   ...example_reservation,
   apartment: example_apartment,
-  user: example_safe_user
+  user: example_user
 }
 
 export const example_extended_reservations_list_result: BaseListResult<ExtendedReservation> = {

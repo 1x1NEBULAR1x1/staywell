@@ -1,0 +1,205 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.reviews_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  width: 100%;
+
+  .summary_section {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: $spacing-xl;
+    padding: $spacing-xl;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .overall_rating {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing-sm;
+      padding: $spacing-lg;
+      min-width: 200px;
+
+      .rating_number {
+        font-size: 64px;
+        font-weight: $font-weight-bold;
+        color: $primary-main;
+        line-height: 1;
+      }
+
+      .stars {
+        display: flex;
+        gap: $spacing-xs;
+
+        .star {
+          width: 24px;
+          height: 24px;
+          color: $foreground-light;
+          transition: color $transition-fast;
+
+          &.filled {
+            color: $yellow;
+          }
+        }
+      }
+
+      .reviews_count {
+        font-size: $font-size-sm;
+        color: $foreground-secondary;
+        text-align: center;
+      }
+    }
+
+    .rating_bars {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+      justify-content: center;
+
+      .rating_bar {
+        display: grid;
+        grid-template-columns: 60px 1fr 40px;
+        align-items: center;
+        gap: $spacing-md;
+
+        .rating_label {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+        }
+
+        .bar_container {
+          height: 8px;
+          background: $background-main;
+          border-radius: $border-radius-sm;
+          overflow: hidden;
+
+          .bar_fill {
+            height: 100%;
+            background: $yellow;
+            border-radius: $border-radius-sm;
+            transition: width $transition-normal;
+          }
+        }
+
+        .rating_count {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .reviews_list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    .section_title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+      padding: $spacing-lg;
+      background: $background-light;
+      border-radius: $border-radius-lg;
+      border: $border-normal;
+    }
+
+    .empty_state {
+      padding: $spacing-xl;
+      text-align: center;
+      color: $foreground-secondary;
+      background: $background-light;
+      border-radius: $border-radius-lg;
+      border: $border-normal;
+
+      p {
+        margin: 0;
+        font-size: $font-size-lg;
+      }
+    }
+
+    .reviews_grid {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+
+      .review_card {
+        padding: $spacing-lg;
+        background: $background-light;
+        border-radius: $border-radius-lg;
+        border: $border-normal;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+        transition: all $transition-fast;
+
+        &:hover {
+          border-color: $primary-light;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .review_header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: $spacing-md;
+
+          @media (max-width: 480px) {
+            flex-direction: column;
+          }
+
+          .user_info {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xs;
+
+            .user_name {
+              font-size: $font-size-md;
+              font-weight: $font-weight-semibold;
+              color: $foreground-main;
+            }
+
+            .review_date {
+              font-size: $font-size-sm;
+              color: $foreground-secondary;
+            }
+          }
+
+          .review_rating {
+            display: flex;
+            gap: $spacing-xs;
+
+            .star_small {
+              width: 16px;
+              height: 16px;
+              color: $foreground-light;
+
+              &.filled {
+                color: $yellow;
+              }
+            }
+          }
+        }
+
+        .review_comment {
+          font-size: $font-size-md;
+          color: $foreground-secondary;
+          line-height: 1.6;
+          margin: 0;
+          white-space: pre-wrap;
+        }
+      }
+    }
+  }
+}

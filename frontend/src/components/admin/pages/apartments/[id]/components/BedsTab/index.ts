@@ -1,0 +1,2 @@
+export { BedsTab } from './BedsTab';
+

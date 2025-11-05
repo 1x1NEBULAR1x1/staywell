@@ -3,6 +3,7 @@ import { MessageBubble } from "../MessageBubble";
 import classes from "./ChatMessages.module.scss";
 import { useAccount } from "@/hooks/common/useAccount";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import { useQPId } from "@/hooks/common/useId";
 import default_avatar from "@/../public/common/default-avatar.png";
 
 interface ChatMessagesProps {
@@ -24,8 +25,9 @@ export const ChatMessages = ({
   onLoadMore,
   onScrollComplete,
 }: ChatMessagesProps) => {
+  const selected_chat_id = useQPId();
   const { user: current_user } = useAccount();
-  const { messages, isTyping, selected_chat_id } = useChat();
+  const { messages, isTyping, markMessagesAsRead } = useChat();
   const messages_container_ref = useRef<HTMLDivElement>(null);
   const previous_scroll_height_ref = useRef<number>(0);
   const previous_messages_count_ref = useRef<number>(0);
@@ -144,17 +146,30 @@ export const ChatMessages = ({
     }
   }, [selected_chat_id ? isTyping(selected_chat_id) : false, is_loading]);
 
+  // Mark messages as read when chat is opened and messages are loaded
+  useEffect(() => {
+    if (selected_chat_id && messages.length > 0) {
+      markMessagesAsRead(selected_chat_id);
+    }
+  }, [selected_chat_id, messages.length, markMessagesAsRead]);
+
   const handleScroll = () => {
     if (!messages_container_ref.current) return;
 
     const { scrollTop } = messages_container_ref.current;
+    const container = messages_container_ref.current;
 
     // If scrolled to top - load more messages
     if (scrollTop === 0 && has_next_page && !is_fetching_next_page) {
       // Save current height before loading
-      previous_scroll_height_ref.current =
-        messages_container_ref.current.scrollHeight;
+      previous_scroll_height_ref.current = container.scrollHeight;
       onLoadMore();
+    }
+
+    // Mark messages as read when scrolled to bottom
+    const is_at_bottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+    if (is_at_bottom && selected_chat_id && messages.length > 0) {
+      markMessagesAsRead(selected_chat_id);
     }
   };
 

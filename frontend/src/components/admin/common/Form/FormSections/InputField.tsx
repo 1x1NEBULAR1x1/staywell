@@ -1,6 +1,5 @@
 import { UseFormRegister, FieldErrors, RegisterOptions, Path, FieldValues } from 'react-hook-form';
 import styles from '../FormStyles.module.scss';
-import { HTMLInputTypeAttribute } from 'react';
 
 interface InputFieldProps<T extends FieldValues> extends React.InputHTMLAttributes<HTMLInputElement> {
   register: UseFormRegister<T>;

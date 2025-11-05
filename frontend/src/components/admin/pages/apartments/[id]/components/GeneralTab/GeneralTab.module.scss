@@ -1,0 +1,35 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.general_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  width: 100%;
+
+  .description_section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-xl;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    .section_title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+      padding-bottom: $spacing-md;
+      border-bottom: $border-normal;
+    }
+
+    .description {
+      font-size: $font-size-md;
+      color: $foreground-secondary;
+      line-height: 1.6;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+  }
+}

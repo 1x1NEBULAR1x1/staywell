@@ -36,12 +36,12 @@ export const BedTypeCardShimmer = () => (
   <tr className={classes.bed_type_row}>
     <td>
       <div className={classes.bed_type_row_name_container}>
-        <Shimmer className={classes.bed_type_row_avatar} />
+        <Shimmer style={{ width: '6rem', height: '6rem', borderRadius: '4px' }} />
         <div className={classes.bed_type_row_name_container_info}>
-          <Shimmer className={classes.bed_type_row_name_container_info_name} />
+          <Shimmer style={{ width: '150px', height: '18px', borderRadius: '4px' }} />
         </div>
       </div>
     </td>
-    <td ><Shimmer className={classes.bed_type_row_created} style={{ width: '100px' }} /></td>
+    <td><Shimmer style={{ width: '120px', height: '14px', borderRadius: '4px' }} /></td>
   </tr >
 )

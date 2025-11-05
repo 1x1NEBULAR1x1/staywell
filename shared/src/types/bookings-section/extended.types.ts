@@ -1,5 +1,5 @@
 import { AdditionalOption, Apartment, Booking, BookingAdditionalOption, BookingVariant, Reservation, Transaction } from "../../database";
-import { SafeUser, UserWithoutPassword } from "../users-section";
+import { UserWithoutPassword } from "../users-section";
 
 export type ExtendedBookingAdditionalOption = BookingAdditionalOption & {
   additional_option: AdditionalOption;
@@ -35,5 +35,10 @@ export const EXTENDED_BOOKING_INCLUDE = {
 
 export interface ExtendedReservation extends Reservation {
   apartment: Apartment,
-  user: SafeUser
+  user: UserWithoutPassword
 }
+
+export const EXTENDED_RESERVATION_INCLUDE = {
+  apartment: true,
+  user: { select: { id: true, email: true, image: true, first_name: true, last_name: true, phone_number: true, date_of_birth: true, is_active: true, email_verified: true, phone_verified: true, role: true, created: true, updated: true } }
+};

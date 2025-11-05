@@ -1,0 +1,157 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.container {
+  position: relative;
+}
+
+.filter_button {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  color: $foreground-secondary;
+  font-size: $font-size-md;
+  font-family: var(--font-open-sans);
+  font-weight: $font-weight-normal;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $foreground-main;
+
+    .icon {
+      color: $foreground-main;
+    }
+  }
+
+  &.active {
+    color: $primary-main;
+
+    .icon {
+      color: $primary-main;
+    }
+  }
+
+  .icon {
+    width: $font-size-xl;
+    height: $font-size-xl;
+    color: $foreground-secondary;
+    transition: color $transition-fast;
+  }
+
+  .filter_text {
+    font-size: $font-size-sm;
+  }
+}
+
+.dropdown {
+  min-width: 320px;
+  max-width: 400px;
+  width: max-content;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  background-color: $background-main;
+  border-radius: $border-radius-lg;
+  border: 1px solid $border-color-main;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: calc(100% + $spacing-sm);
+  right: 0;
+  z-index: 1000;
+  animation: dropdown-slide-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top right;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $border-color-main;
+    background: $background-light;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+
+    .title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+    }
+
+    .close_icon {
+      width: $font-size-lg;
+      height: $font-size-lg;
+      color: $foreground-secondary;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $foreground-main;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    overflow-y: auto;
+    max-height: 500px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $foreground-light;
+      border-radius: $border-radius-sm;
+
+      &:hover {
+        background: $foreground-secondary;
+      }
+    }
+
+    // Staggered animation for filter fields
+    >* {
+      animation: filter-item-fade-in 0.3s ease-out backwards;
+
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{0.05s + ($i - 1) * 0.03s};
+        }
+      }
+    }
+  }
+}
+
+@keyframes dropdown-slide-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes filter-item-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

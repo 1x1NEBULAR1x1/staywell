@@ -27,7 +27,7 @@ export function useModel<M extends GETTABLE_NAMES>(model: M): UseModel<M> {
   const crudApi = isCruddableName(model) ? new CrudApi(model) : undefined;
   const getApi = new GetApi(model);
 
-  const get = (filters: GettableTypes<M>['filters'], options?: GetQueryOptions<M>) => useQuery({
+  const get = (filters: GettableTypes<M>['filters'] = { take: 1000, skip: 0 }, options?: GetQueryOptions<M>) => useQuery({
     queryKey: QUERY_KEYS(model).get(filters),
     queryFn: () => getApi.get(filters),
     select: (data) => data.data,

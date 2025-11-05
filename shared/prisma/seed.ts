@@ -3,6 +3,7 @@ import { seedAmenities } from './seeds/amenities';
 import * as argon2 from 'argon2';
 import { seedBeds } from './seeds/beds';
 import { seedApartments } from './seeds/apartments';
+import { seedEvents } from './seeds/events';
 
 const prisma = new PrismaClient();
 
@@ -66,6 +67,8 @@ async function main() {
   await seedBeds(prisma);
   console.log('🌱 Seeding apartments...');
   await seedApartments(prisma);
+  console.log('🌱 Seeding events...');
+  await seedEvents(prisma);
 }
 
 main()

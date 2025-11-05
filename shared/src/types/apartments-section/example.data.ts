@@ -177,6 +177,8 @@ export const example_extended_apartment: ExtendedApartment = {
   reviews: [example_review],
   cheapest_variant: example_booking_variant,
   availability: example_apartment_availability_result,
+  reservations: [],
+  bookings: [],
 };
 
 export const example_apartments_list_result: BaseListResult<AvailableApartment> =

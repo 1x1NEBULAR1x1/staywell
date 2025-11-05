@@ -1,0 +1,28 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.apartment_page {
+  width: 100%;
+  display: flex;
+  gap: $spacing-lg;
+  height: 100%;
+  overflow: hidden;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+    padding: $spacing-lg;
+    background: $background-main;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    @media (max-width: 1024px) {
+      overflow-y: visible;
+    }
+  }
+}

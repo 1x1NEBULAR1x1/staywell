@@ -1,1 +1,0 @@
-export { BedType } from './BedType';

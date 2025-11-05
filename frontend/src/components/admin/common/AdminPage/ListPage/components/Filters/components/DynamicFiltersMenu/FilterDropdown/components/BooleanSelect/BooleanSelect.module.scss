@@ -1,0 +1,32 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  .label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+    text-transform: capitalize;
+  }
+
+  .select {
+    padding: $spacing-sm $spacing-md;
+    border: $border-normal;
+    border-radius: $border-radius-md;
+    background: $background-light;
+    color: $foreground-main;
+    font-size: $font-size-sm;
+    transition: all $transition-fast;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-main;
+      background: $background-main;
+    }
+  }
+}
+

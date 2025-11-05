@@ -25,8 +25,13 @@
     color: $foreground-main;
   }
 
-  &_email {
+  &_status {
     font-size: $font-size-sm;
     color: $foreground-secondary;
+  }
+
+  // Специальный цвет для онлайн статуса
+  &_status_online {
+    color: $green;
   }
 }

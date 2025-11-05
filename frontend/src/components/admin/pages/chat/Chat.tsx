@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import { useEffect } from "react";
 import { AdminPage } from "@/components/admin/common/AdminPage";
 import classes from "./Chat.module.scss";
 import {
@@ -9,9 +10,18 @@ import {
   ChatWindow,
 } from "./components";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import { useQPId } from "@/hooks/common/useId";
 
 const ChatContent = () => {
-  const { selected_chat_id, is_collapsed } = useChat();
+  const selected_chat_id = useQPId();
+  const { is_collapsed, joinChat } = useChat();
+
+  // Auto-join when chat id is present in URL
+  useEffect(() => {
+    if (selected_chat_id) {
+      joinChat(selected_chat_id);
+    }
+  }, [selected_chat_id, joinChat]);
 
   return (
     <AdminPage title="Chat">

@@ -1,0 +1,70 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.booking_variants_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  width: 100%;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: $spacing-lg;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+    gap: $spacing-lg;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .header_content {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+
+      .title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        margin: 0;
+      }
+
+      .subtitle {
+        font-size: $font-size-md;
+        color: $foreground-secondary;
+        margin: 0;
+      }
+    }
+
+    .add_button {
+      padding: $spacing-sm $spacing-lg;
+      background: $primary-main;
+      color: $foreground-white;
+      border: none;
+      border-radius: $border-radius-md;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      cursor: pointer;
+      transition: all $transition-fast;
+      white-space: nowrap;
+
+      &:hover {
+        background: $primary-dark;
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .variants_section {
+    width: 100%;
+  }
+}
+

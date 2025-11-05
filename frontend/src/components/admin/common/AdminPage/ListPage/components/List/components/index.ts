@@ -1,1 +1,1 @@
-export { ColumnNames } from './ColumnNames';
+export { ColumnNames, type ColumnConfig } from './ColumnNames';

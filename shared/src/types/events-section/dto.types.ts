@@ -14,7 +14,7 @@ export type EventsFilters = BaseFiltersOptions<Event> & {
   min_price?: number;
   max_price?: number;
 }
-export type CreateEvent = Omit<CreativeOmit<Event>, 'guide_id'> & { image?: string; file?: File }
+export type CreateEvent = Omit<CreativeOmit<Event>, 'guide_id'> & { image?: string; file?: File, guide_id?: string }
 export type UpdateEvent = Partial<CreateEvent> & { is_excluded?: boolean }
 
 export type EventImagesFilters = BaseFiltersOptions<EventImage> & {

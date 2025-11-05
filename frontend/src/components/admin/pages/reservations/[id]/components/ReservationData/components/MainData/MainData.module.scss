@@ -1,0 +1,135 @@
+@use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
+
+.title_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-lg;
+  padding-bottom: $spacing-md;
+  border-bottom: $border-normal;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .title_info {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    flex: 1;
+
+    .calendar_icon {
+      color: $primary-main;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .title_text {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .title {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        color: $foreground-main;
+        line-height: 1.2;
+        margin: 0;
+      }
+
+      .status_active,
+      .status_past,
+      .status_future {
+        display: inline-block;
+        padding: $spacing-xs $spacing-md;
+        border-radius: $border-radius-md;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        width: fit-content;
+      }
+
+      .status_active {
+        background: $green;
+        color: $foreground-white;
+        animation: pulse 2s infinite;
+      }
+
+      .status_past {
+        background: rgba(128, 128, 128, 0.2);
+        color: $foreground-secondary;
+      }
+
+      .status_future {
+        background: rgba($primary-main, 0.2);
+        color: $primary-main;
+      }
+    }
+  }
+
+  .edit_btn {
+    background: $primary-main;
+    color: $foreground-white;
+    border: none;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-md;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: all $transition-fast;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover {
+      background: $primary-dark;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.apartment_section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  padding: $spacing-md 0;
+
+  .apartment_label {
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .apartment_link {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $primary-main;
+    margin: 0;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: color.adjust($primary-main, $lightness: -10%);
+      text-decoration: underline;
+    }
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}

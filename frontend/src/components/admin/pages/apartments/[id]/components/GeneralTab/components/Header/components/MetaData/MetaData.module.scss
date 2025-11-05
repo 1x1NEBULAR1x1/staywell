@@ -1,0 +1,114 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .badges_row {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .icon {
+      padding: $spacing-xs;
+      border-radius: $border-radius-sm;
+      background-color: $primary-disabled;
+      width: calc($font-size-2xl - 6px);
+      height: calc($font-size-2xl - 6px);
+      color: $foreground-white;
+      cursor: pointer;
+
+      &_allowed {
+        background-color: $green;
+      }
+
+      &_not_allowed {
+        background-color: $red;
+      }
+    }
+
+    .status {
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius-md;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+
+      &.available {
+        background: $green;
+        color: $foreground-white;
+      }
+
+      &.unavailable {
+        background: $yellow;
+        color: $foreground-main;
+      }
+    }
+
+    .type {
+      background: $primary-main;
+      color: $foreground-white;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius-md;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: capitalize;
+    }
+  }
+
+  .info_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .info_item {
+      display: flex;
+      align-items: flex-start;
+      gap: $spacing-sm;
+      padding: $spacing-md;
+      background: $background-main;
+      border-radius: $border-radius-md;
+      border: $border-normal;
+      transition: all $transition-fast;
+
+      &:hover {
+        border-color: $primary-light;
+        transform: translateY(-2px);
+      }
+
+      .info_icon {
+        color: $primary-main;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .info_content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        min-width: 0;
+
+        .info_label {
+          font-size: $font-size-xs;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-weight: $font-weight-semibold;
+        }
+
+        .info_value {
+          font-size: $font-size-md;
+          color: $foreground-main;
+          font-weight: $font-weight-normal;
+          line-height: 1.3;
+        }
+      }
+    }
+  }
+}

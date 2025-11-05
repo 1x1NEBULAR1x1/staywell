@@ -32,6 +32,8 @@ export type ExtendedApartment = AvailableApartment & {
   reviews: Review[];
   cheapest_variant: BookingVariant | null;
   availability: ApartmentAvailabilityResult;
+  reservations: (Reservation & { user: SafeUser })[];
+  bookings: (Booking & { user: SafeUser })[];
 };
 
 export type ApartmentAvailabilityResult = {

@@ -9,15 +9,15 @@ import { useForm } from 'react-hook-form';
 
 interface ReservationsFiltersMenuProps {
   filters: ReservationsFilters;
-  updateFilters: (filters: Partial<ReservationsFilters>) => void;
+  setFilters: (filters: Partial<ReservationsFilters>) => void;
 }
 
-export const ReservationsFiltersMenu = ({ filters, updateFilters }: ReservationsFiltersMenuProps) => {
+export const ReservationsFiltersMenu = ({ filters, setFilters }: ReservationsFiltersMenuProps) => {
   const [is_open, setIsOpen] = useState(false);
   const form = useForm<ReservationsFilters>({ defaultValues: filters });
 
   const handleSubmit = (data: ReservationsFilters) => {
-    updateFilters(data);
+    setFilters(data);
     setIsOpen(false);
   };
 
@@ -66,7 +66,7 @@ export const ReservationsFiltersMenu = ({ filters, updateFilters }: Reservations
                 className={classes.reset_btn}
                 onClick={() => {
                   form.reset({ user_id: filters.user_id });
-                  updateFilters({ user_id: filters.user_id });
+                  setFilters({ user_id: filters.user_id });
                 }}
               >
                 Reset

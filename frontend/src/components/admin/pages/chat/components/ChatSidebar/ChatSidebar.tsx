@@ -2,10 +2,7 @@
 
 import { useChat } from "@/hooks/admin/chat/useChat";
 import classes from "./ChatSidebar.module.scss";
-import {
-  ChatSidebarHeader,
-  ChatUserList,
-} from "./components";
+import { ChatSidebarHeader, ChatUserList } from "./components";
 
 export const ChatSidebar = () => {
   const { is_connected } = useChat();

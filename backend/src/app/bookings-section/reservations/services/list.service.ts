@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import {
-  SAFE_USER_SELECT,
+  USER_WITHOUT_PASSWORD_SELECT,
   BaseListResult,
   ExtendedReservation,
 } from '@shared/src';
@@ -10,7 +10,7 @@ import { ReservationsFiltersDto } from '../dto';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   customFilters(options: ReservationsFiltersDto) {
     const {
@@ -61,7 +61,7 @@ export class ListService {
       this.prisma.reservation,
       query_options,
       {
-        user: { select: SAFE_USER_SELECT },
+        user: { select: USER_WITHOUT_PASSWORD_SELECT },
         apartment: true,
       },
     );

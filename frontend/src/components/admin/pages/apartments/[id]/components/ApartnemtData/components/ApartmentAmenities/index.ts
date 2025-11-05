@@ -1,1 +1,0 @@
-export { ApartmentAmenities } from './ApartmentAmenities';

@@ -40,6 +40,11 @@
       width: 100%;
       max-width: 800px;
     }
+
+    &_xl {
+      width: 100%;
+      max-width: 1100px;
+    }
   }
 
   &_header {
@@ -84,6 +89,7 @@
   &_body {
     padding: $spacing-lg;
     overflow-y: auto;
+    scrollbar-width: thin;
     max-height: 70lvh;
   }
 }

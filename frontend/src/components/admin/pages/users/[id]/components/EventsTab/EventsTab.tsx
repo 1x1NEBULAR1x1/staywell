@@ -6,7 +6,7 @@ import { EventsFiltersMenu, EventsList } from './components';
 import classes from '../Tab.module.scss';
 
 export const EventsTab = ({ user_id }: { user_id: string }) => {
-  const { filters, updateFilters } = useModelFilters({
+  const { filters, setFilters } = useModelFilters({
     model: 'EVENT',
     permanent_fields: { guide_id: user_id }
   });
@@ -22,7 +22,7 @@ export const EventsTab = ({ user_id }: { user_id: string }) => {
           <h3 className={classes.title}>Events History</h3>
           <EventsFiltersMenu
             filters={filters}
-            updateFilters={updateFilters}
+            setFilters={setFilters}
             user_id={user_id}
           />
         </div>

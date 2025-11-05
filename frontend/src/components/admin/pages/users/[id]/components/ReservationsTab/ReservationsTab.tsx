@@ -7,7 +7,7 @@ import classes from '../Tab.module.scss';
 
 
 export const ReservationsTab = ({ user_id }: { user_id: string }) => {
-  const { filters, updateFilters } = useModelFilters({
+  const { filters, setFilters } = useModelFilters({
     model: 'RESERVATION',
     permanent_fields: { user_id }
   });
@@ -23,7 +23,7 @@ export const ReservationsTab = ({ user_id }: { user_id: string }) => {
           <h3 className={classes.title}>Reservations History</h3>
           <ReservationsFiltersMenu
             filters={filters}
-            updateFilters={updateFilters}
+            setFilters={setFilters}
           />
         </div>
 

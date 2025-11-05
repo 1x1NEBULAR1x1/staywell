@@ -1,0 +1,87 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.toastContainer {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: $z-toast;
+  display: flex;
+  align-items: center;
+  min-width: 320px;
+  max-width: 480px;
+  padding: $spacing-sm $spacing-md;
+  margin: 0;
+  color: $foreground-white;
+  border-radius: 0 0 $border-radius-md $border-radius-md;
+  box-shadow: $box-shadow-md;
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+  backdrop-filter: blur(5px);
+}
+
+.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.messageContainer {
+  flex: 1;
+}
+
+.message {
+  margin: 0;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+}
+
+.success {
+  background-color: rgba($green, 0.95);
+  border-top: 3px solid $green;
+}
+
+.error {
+  background-color: rgba($red, 0.95);
+  border-top: 3px solid $red;
+}
+
+.warning {
+  background-color: rgba($yellow, 0.95);
+  border-top: 3px solid $yellow;
+}
+
+.info {
+  background-color: rgba($primary-main, 0.95);
+  border-top: 3px solid $primary-main;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: $spacing-xs;
+  margin-left: $spacing-sm;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.closeButton:hover {
+  background-color: rgba($background-main, 0.1);
+  color: $foreground-white;
+}
+
+@media (max-width: 520px) {
+  .toastContainer {
+    min-width: 95%;
+    max-width: 95%;
+  }
+}

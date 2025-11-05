@@ -1,18 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useChatStore } from "@/hooks/admin/chat/lib/useChatStore";
 import { useUsers } from "@/hooks/admin/queries";
-import { useAccount } from "@/hooks/common/useAccount";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import { useQPId } from "@/hooks/common/useId";
 import classes from "./ChatWindow.module.scss";
 import { ChatInput, ChatMessages, ChatWindowHeader } from "./components";
 
 export const ChatWindow = () => {
+  const selected_chat_id = useQPId();
   const [should_scroll, setShouldScroll] = useState(true);
   const [message_input, setMessageInput] = useState("");
 
-  const { selected_chat_id, sendMessage, startTyping, stopTyping } = useChat();
+  const { sendMessage, startTyping, stopTyping } = useChat();
   const { data: selected_user } = useUsers().find(selected_chat_id || "", { enabled: selected_chat_id !== null });
 
 

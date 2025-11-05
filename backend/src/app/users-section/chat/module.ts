@@ -11,6 +11,7 @@ import {
 } from './services';
 import { RedisModule } from 'src/lib/redis';
 import { WebsocketModule } from 'src/lib/websocket';
+import { UserActivityService } from 'src/lib/common';
 
 @Module({
   imports: [ConfigModule, RedisModule, WebsocketModule],
@@ -21,7 +22,8 @@ import { WebsocketModule } from 'src/lib/websocket';
     ChatMessagingService,
     ChatNotificationService,
     ChatRoomService,
-    ChatHistoryService
+    ChatHistoryService,
+    UserActivityService
   ],
   exports: [ChatWebsocketService],
 })
