@@ -16,13 +16,13 @@ import {
   ListService,
   AvailabilityService,
   AvailableListService,
+  DatesConfigService,
+  EventsConfigService,
 } from './services';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import {
-  example_apartment,
   example_extended_apartment,
   example_apartment_availability_result,
-  example_apartments_list_result,
   example_available_apartments_list_result,
 } from '@shared/src/types/apartments-section';
 import {
@@ -30,44 +30,26 @@ import {
   UpdateApartmentDto,
   ApartmentsFiltersDto,
   DateRangeDto,
+  DatesConfigDto,
+  EventsConfigDto,
 } from './dto';
-import { AdminOnly, ImageUploadInterceptor } from 'src/lib/common';
+import { AdminOnly, Auth, ImageUploadInterceptor } from 'src/lib/common';
+import { User } from '@shared/src/database';
 
-@ApiTags('Apartments')
 @Controller('apartments')
 export class ApartmentsController {
   constructor(
     private readonly availabilityService: AvailabilityService,
     private readonly availableListService: AvailableListService,
+    private readonly datesConfigService: DatesConfigService,
+    private readonly eventsConfigService: EventsConfigService,
     private readonly crudService: CrudService,
     private readonly listService: ListService,
-  ) {}
+  ) { }
 
   @Post()
   @AdminOnly()
   @UseInterceptors(ImageUploadInterceptor)
-  @ApiOperation({
-    summary: 'Create a new apartment',
-    description:
-      'Creates a new hotel apartment with the provided details. Requires admin privileges.',
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'Apartment created successfully',
-    example: example_apartment,
-  })
-  @ApiResponse({
-    status: 409,
-    description: 'Apartment already exists with the same number.',
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized - valid authentication credentials required.',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'Forbidden - user does not have admin role.',
-  })
   create(
     @Body() data: CreateApartmentDto,
     @UploadedFile() file?: Express.Multer.File,
@@ -76,39 +58,13 @@ export class ApartmentsController {
   }
 
   @Get()
-  @ApiOperation({
-    summary: 'Get all apartments',
-    description:
-      'Retrieves all hotel apartments with optional filtering and sorting. Supports pagination and detailed filtering options.',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'List of apartments retrieved successfully',
-    example: example_apartments_list_result,
-  })
-  findAll(@Query() filters: ApartmentsFiltersDto) {
-    return this.listService.findAll(filters);
+  findAll(@Query() filters: ApartmentsFiltersDto, @Auth() user?: User) {
+    return this.listService.list({ filters, user });
   }
 
   @Get(':id')
-  @ApiOperation({
-    summary: 'Get apartment by ID',
-    description:
-      'Retrieves detailed information about a specific apartment including amenities, images, beds and pricing information.',
-  })
-  @ApiParam({ name: 'id', description: 'Apartment ID (UUID)' })
-  @ApiResponse({
-    status: 200,
-    description: 'Apartment found',
-    example: example_extended_apartment,
-  })
-  @ApiResponse({
-    status: 404,
-    description:
-      'Apartment not found - no apartment with the specified ID exists.',
-  })
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.crudService.findOne({ id });
+  findOne(@Param('id', ParseUUIDPipe) id: string, @Auth() user: User) {
+    return this.crudService.findOne({ where: { id }, user });
   }
 
   @Put(':id')
@@ -212,5 +168,85 @@ export class ApartmentsController {
   })
   findAvailable(@Query() filters: ApartmentsFiltersDto) {
     return this.availableListService.findAvailableApartments(filters);
+  }
+
+  @Get('dates-config/:id')
+  @ApiOperation({
+    summary: 'Get dates configuration for apartment booking',
+    description:
+      'Returns occupied dates for a specific apartment in the given month to help with date selection for booking.',
+  })
+  @ApiParam({ name: 'id', description: 'Apartment ID (UUID)' })
+  @ApiResponse({
+    status: 200,
+    description: 'Dates configuration with occupied dates',
+    schema: {
+      type: 'object',
+      properties: {
+        occupied_dates: {
+          type: 'array',
+          items: { type: 'string', format: 'date' },
+          description: 'Array of occupied date strings in YYYY-MM-DD format',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description:
+      'Apartment not found - no apartment with the specified ID exists.',
+  })
+  getDatesConfig(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query() datesConfig: DatesConfigDto,
+  ) {
+    return this.datesConfigService.getDatesConfig({
+      id,
+      ...datesConfig,
+    });
+  }
+
+  @Get('available-events')
+  @ApiOperation({
+    summary: 'Get available events for booking dates',
+    description:
+      'Returns events that are available during the specified booking date range, considering capacity and existing bookings.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Available events configuration',
+    schema: {
+      type: 'object',
+      properties: {
+        available_events: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              name: { type: 'string' },
+              image: { type: 'string' },
+              description: { type: 'string' },
+              price: { type: 'number' },
+              capacity: { type: 'number' },
+              available_spots: { type: 'number' },
+              start: { type: 'string', format: 'date-time' },
+              end: { type: 'string', format: 'date-time' },
+              guide: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string' },
+                  first_name: { type: 'string' },
+                  last_name: { type: 'string' },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  getAvailableEvents(@Query() eventsConfig: EventsConfigDto) {
+    return this.eventsConfigService.getAvailableEvents(eventsConfig);
   }
 }

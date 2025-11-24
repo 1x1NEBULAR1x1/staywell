@@ -7,7 +7,7 @@ import { BaseListResult } from '@shared/src/common/base-types/base-list-result.i
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   customFilters(options: AmenitiesFiltersDto) {
     const { name } = options;
@@ -20,24 +20,16 @@ export class ListService {
    * @param filters Filter parameters and pagination
    * @returns Filtered list of amenities with pagination metadata
    */
-  async findAll({
-    take,
-    skip,
-    ...filters
-  }: AmenitiesFiltersDto): Promise<BaseListResult<ExtendedAmenity>> {
-    const query_options = this.prisma.buildQuery(
-      { ...filters, take, skip },
-      'created',
-      'created',
-      (filters: AmenitiesFiltersDto) => this.customFilters(filters),
-    );
-
-    const { items, total } = (await this.prisma.findWithPagination<Amenity>(
-      this.prisma.amenity,
+  async findAll(filters: AmenitiesFiltersDto): Promise<BaseListResult<Amenity>> {
+    const query_options = this.prisma.buildQuery<Amenity>({
+      filters,
+      customFilters: this.customFilters,
+    });
+    const { items, total } = await this.prisma.findWithPagination<Amenity>({
+      model: this.prisma.amenity,
       query_options,
-      { apartment_amenities: true },
-    )) as { items: ExtendedAmenity[]; total: number };
-
+    });
+    const { take, skip } = query_options;
     return { items, total, skip, take };
   }
 }

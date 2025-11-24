@@ -1,16 +1,16 @@
-import { AdditionalOption, Apartment, Booking, BookingAdditionalOption, BookingVariant, Reservation, Transaction } from "../../database";
-import { SafeUser, UserWithoutPassword } from "../users-section";
+import { AdditionalOption, Apartment, Booking, BookingAdditionalOption, BookingVariant, Prisma, Reservation, Transaction } from "../../database";
+import { UserWithoutPassword } from "../users-section";
 export type ExtendedBookingAdditionalOption = BookingAdditionalOption & {
     additional_option: AdditionalOption;
 };
 export declare const EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE: {
-    additional_option: boolean;
+    readonly additional_option: true;
 };
 export interface ExtendedBookingVariant extends BookingVariant {
     apartment: Apartment;
 }
 export declare const EXTENDED_BOOKING_VARIANT_INCLUDE: {
-    apartment: boolean;
+    readonly apartment: true;
 };
 export type ExtendedBooking = Booking & {
     user: UserWithoutPassword;
@@ -19,20 +19,28 @@ export type ExtendedBooking = Booking & {
     booking_additional_options: ExtendedBookingAdditionalOption[];
 };
 export declare const EXTENDED_BOOKING_INCLUDE: {
-    user: boolean;
-    booking_variant: {
-        include: {
-            apartment: boolean;
+    readonly user: {
+        readonly select: Prisma.UserSelect<import("src/database/runtime/library").DefaultArgs>;
+    };
+    readonly transaction: true;
+    readonly booking_additional_options: {
+        readonly include: {
+            readonly additional_option: true;
         };
     };
-    transaction: boolean;
-    booking_additional_options: {
-        include: {
-            additional_option: boolean;
+    readonly booking_variant: {
+        readonly include: {
+            readonly apartment: true;
         };
     };
 };
 export interface ExtendedReservation extends Reservation {
     apartment: Apartment;
-    user: SafeUser;
+    user: UserWithoutPassword;
 }
+export declare const EXTENDED_RESERVATION_INCLUDE: {
+    readonly apartment: true;
+    readonly user: {
+        readonly select: Prisma.UserSelect<import("src/database/runtime/library").DefaultArgs>;
+    };
+};

@@ -19,9 +19,10 @@ model User {
   phone_number   String?
   date_of_birth  DateTime?
   is_active      Boolean   @default(true)
-  email_verified Boolean   @default(false)
-  phone_verified Boolean   @default(false)
-  role           Role      @default(USER)
+  email_verified     Boolean @default(false)
+  phone_verified     Boolean @default(false)
+  email_notifications Boolean @default(true)
+  role               Role    @default(USER)
 
   created DateTime @default(now())
   updated DateTime @updatedAt
@@ -48,19 +49,24 @@ enum NotificationType {
 }
 
 enum NotificationAction {
+  CONFIRM
   UPDATE
+  CANCEL
+  COMPLETE
   NEW
 }
 
 model Notification {
   id String @id @default(uuid())
 
-  type    NotificationType
-  action  NotificationAction @default(NEW)
-  message String?
-  user_id String?
-  is_read Boolean            @default(false)
-  user    User?              @relation(fields: [user_id], references: [id])
+  type        NotificationType
+  action      NotificationAction @default(NEW)
+  message     String?
+  user_id     String?
+  object_id   String? // Reference to related object (booking, reservation, etc.)
+  is_read     Boolean            @default(false)
+  user        User?              @relation(fields: [user_id], references: [id])
+  is_excluded Boolean            @default(false)
 
   created DateTime @default(now())
   updated DateTime @updatedAt

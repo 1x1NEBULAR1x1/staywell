@@ -1,0 +1,18 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.cards {
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  h2 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  p {
+    color: $foreground-secondary;
+  }
+}

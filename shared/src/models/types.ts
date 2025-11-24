@@ -33,8 +33,12 @@ import {
 
 import {
   UserWithoutPassword, UsersFilters,
-  SessionData, SessionsFilters
+  SessionData, SessionsFilters,
+  CreateNotification,
+  UpdateNotification,
+  NotificationsFilters
 } from '../types/users-section';
+import { Notification } from "../database";
 
 interface CruddableTypeShape<M extends { id: string }, F extends BaseFiltersOptions<M>, C, U extends Partial<C>> {
   model: M;
@@ -63,6 +67,7 @@ export type CruddableTypes<T extends CRUDDABLE_NAMES> =
   T extends 'TRANSACTION' ? CruddableTypeShape<Transaction, TransactionsFilters, CreateTransaction, UpdateTransaction> :
   T extends 'TRANSFER_DETAIL' ? CruddableTypeShape<TransferDetail, TransferDetailsFilters, CreateTransferDetail, UpdateTransferDetail> :
   T extends 'CARD_DETAIL' ? CruddableTypeShape<CardDetail, CardDetailsFilters, CreateCardDetail, UpdateCardDetail> :
+  T extends 'NOTIFICATION' ? CruddableTypeShape<Notification, NotificationsFilters, CreateNotification, UpdateNotification> :
   never;
 
 interface GettableTypeShape<M extends { id: string }, F extends BaseFiltersOptions<M>> {

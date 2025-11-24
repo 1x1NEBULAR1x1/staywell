@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import { Message, Role, UserWithoutPassword } from '@shared/src';
 import { SendMessageDto, EditMessageDto, DeleteMessageDto } from '../dto';
@@ -13,12 +18,15 @@ export class ChatMessagingService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly notificationService: ChatNotificationService,
-  ) { }
+  ) {}
 
   /**
    * Send message
    */
-  async sendMessage(user: UserWithoutPassword, data: SendMessageDto): Promise<Message> {
+  async sendMessage(
+    user: UserWithoutPassword,
+    data: SendMessageDto,
+  ): Promise<Message> {
     let receiver_id: string;
 
     if (user.role === Role.USER) {
@@ -30,11 +38,15 @@ export class ChatMessagingService {
     } else if (user.role === Role.ADMIN) {
       // Admins can send to specific users
       if (data.receiver_id === SUPPORT_ID) {
-        throw new ForbiddenException('Admins cannot send messages to support directly');
+        throw new ForbiddenException(
+          'Admins cannot send messages to support directly',
+        );
       }
 
       // Validate that the receiver exists and is a user
-      const receiver = await this.prisma.user.findUnique({ where: { id: data.receiver_id } });
+      const receiver = await this.prisma.user.findUnique({
+        where: { id: data.receiver_id },
+      });
       if (!receiver) throw new NotFoundException('User not found');
 
       receiver_id = data.receiver_id;
@@ -63,7 +75,10 @@ export class ChatMessagingService {
   /**
    * Edit message
    */
-  async editMessage(user: UserWithoutPassword, data: EditMessageDto): Promise<Message> {
+  async editMessage(
+    user: UserWithoutPassword,
+    data: EditMessageDto,
+  ): Promise<Message> {
     const existingMessage = await this.prisma.message.findUnique({
       where: { id: data.message_id },
       include: {
@@ -114,7 +129,10 @@ export class ChatMessagingService {
   /**
    * Delete message (soft delete)
    */
-  async deleteMessage(user: UserWithoutPassword, data: DeleteMessageDto): Promise<void> {
+  async deleteMessage(
+    user: UserWithoutPassword,
+    data: DeleteMessageDto,
+  ): Promise<void> {
     const message = await this.prisma.message.findUnique({
       where: { id: data.message_id },
       include: {
@@ -144,11 +162,16 @@ export class ChatMessagingService {
   /**
    * Mark messages as read
    */
-  async markMessagesAsRead(user: UserWithoutPassword, chat_partner_id: string): Promise<void> {
+  async markMessagesAsRead(
+    user: UserWithoutPassword,
+    chat_partner_id: string,
+  ): Promise<void> {
     if (user.role === Role.USER) {
       // Users mark messages from support as read
       if (chat_partner_id !== SUPPORT_ID) {
-        throw new ForbiddenException('Users can only mark support messages as read');
+        throw new ForbiddenException(
+          'Users can only mark support messages as read',
+        );
       }
 
       await this.prisma.message.updateMany({
@@ -170,7 +193,9 @@ export class ChatMessagingService {
         data: { is_read: true },
       });
     } else {
-      throw new ForbiddenException('Only users and admins can mark messages as read');
+      throw new ForbiddenException(
+        'Only users and admins can mark messages as read',
+      );
     }
 
     // Notify chat partner that messages were read

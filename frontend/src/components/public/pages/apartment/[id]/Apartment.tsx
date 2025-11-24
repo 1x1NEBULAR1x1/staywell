@@ -1,11 +1,8 @@
-'use client';
 import classes from './Apartment.module.scss';
 import { ExtendedApartment } from "@shared/src";
-import { Header, Images, ApartmentInfo, ImageModal } from './components';
-import { useState } from 'react';
+import { Header, Images, ApartmentInfo } from './components';
 
-export const Apartment = ({ id, initial_data }: { id: string, initial_data: ExtendedApartment }) => {
-  const [is_modal_open, setIsModalOpen] = useState(false);
+export const Apartment = ({ initial_data }: { initial_data: ExtendedApartment }) => {
   return (
     <div className={classes.page}>
       <Header title={initial_data.name || 'Superior Room'} />

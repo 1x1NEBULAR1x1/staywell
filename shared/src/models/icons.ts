@@ -14,7 +14,8 @@ import {
   CheckCircle,
   Layers,
   MessageSquare,
-  CalendarPlus
+  CalendarPlus,
+  Bell
 } from "lucide-react";
 import { GETTABLE_NAMES } from "./data";
 
@@ -42,5 +43,6 @@ export const GETTABLE_ICONS: Record<GETTABLE_NAMES, typeof User> = {
   BOOKING_EVENT: CalendarPlus,
 
   USER: User,
-  SESSION: Lock
+  SESSION: Lock,
+  NOTIFICATION: Bell
 } as const;

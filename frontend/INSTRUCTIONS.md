@@ -249,7 +249,7 @@ export const MainData = ({ entity, setIsEditModalOpen }: {
 @use '@/components/styles/_variables.scss' as *;
 
 // Colors
-$primary-main          // instead of $primary-color
+$primary-main          // instead of $primary-main
 $foreground-main       // instead of $foreground-primary  
 $foreground-secondary  // gray text
 $foreground-light      // instead of $foreground-tertiary

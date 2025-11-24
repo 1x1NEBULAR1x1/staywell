@@ -11,7 +11,7 @@ export class WebsocketAuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   /**
    * Validate JWT token for WebSocket connection
@@ -26,7 +26,9 @@ export class WebsocketAuthService {
         secret: this.config.get<string>('ACCESS_TOKEN_SECRET'),
       });
 
-      const user = await this.prisma.user.findUnique({ where: { id: payload.user_id } });
+      const user = await this.prisma.user.findUnique({
+        where: { id: payload.user_id },
+      });
       if (!user || !user.is_active) return null;
       const { password_hash, ...user_without_password } = user;
       return user_without_password;
@@ -52,11 +54,14 @@ export class WebsocketAuthService {
     // Check token in cookies (for WebSocket connections)
     const cookie_header = handshake.headers?.cookie;
     if (cookie_header && typeof cookie_header === 'string') {
-      const cookies = cookie_header.split(';').reduce((acc, cookie) => {
-        const [key, value] = cookie.trim().split('=');
-        acc[key] = value;
-        return acc;
-      }, {} as Record<string, string>);
+      const cookies = cookie_header.split(';').reduce(
+        (acc, cookie) => {
+          const [key, value] = cookie.trim().split('=');
+          acc[key] = value;
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
 
       if (cookies.access_token) {
         return cookies.access_token;

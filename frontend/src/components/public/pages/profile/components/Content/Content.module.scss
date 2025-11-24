@@ -1,0 +1,11 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.content {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  background-color: $background-main;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow;
+  padding: $spacing-lg;
+}

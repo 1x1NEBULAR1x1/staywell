@@ -1,0 +1,50 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+
+  .image {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: $border-radius-md;
+    border: $border-normal;
+    box-shadow: $box-shadow-md;
+    overflow: hidden;
+  }
+
+  .info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: $spacing-sm;
+
+    .basic {
+      font-size: $font-size-md;
+      font-weight: $font-weight-bold;
+      color: $foreground-main;
+
+      &>span {
+        margin-left: $spacing-md;
+        text-transform: capitalize;
+        font-size: $font-size-md;
+        color: $foreground-secondary;
+      }
+    }
+
+    .meta {
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+
+      &>span {
+        font-weight: $font-weight-semibold;
+        color: $foreground-secondary;
+      }
+    }
+  }
+}

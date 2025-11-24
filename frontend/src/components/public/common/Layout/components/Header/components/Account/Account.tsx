@@ -6,6 +6,7 @@ import default_avatar from '@/../public/common/default-avatar.png';
 import { ChevronDown, User, MessageSquare, Calendar, Settings, LogOut } from 'lucide-react';
 import { SafeUser } from '@shared/src';
 import Image from 'next/image';
+import { getImageUrl } from '@/lib/api';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/common';
@@ -49,7 +50,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
       <div className={classes.user_info}>
         <div className={classes.avatar_container}>
           <Image
-            src={user.image || default_avatar.src}
+            src={getImageUrl(user.image) ?? default_avatar.src}
             alt="User Avatar"
             width={400}
             height={400}

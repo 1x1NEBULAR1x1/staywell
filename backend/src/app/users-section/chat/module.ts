@@ -7,7 +7,7 @@ import {
   ChatMessagingService,
   ChatNotificationService,
   ChatRoomService,
-  ChatHistoryService
+  ChatHistoryService,
 } from './services';
 import { RedisModule } from 'src/lib/redis';
 import { WebsocketModule } from 'src/lib/websocket';
@@ -23,8 +23,8 @@ import { UserActivityService } from 'src/lib/common';
     ChatNotificationService,
     ChatRoomService,
     ChatHistoryService,
-    UserActivityService
+    UserActivityService,
   ],
   exports: [ChatWebsocketService],
 })
-export class ChatModule { }
+export class ChatModule {}

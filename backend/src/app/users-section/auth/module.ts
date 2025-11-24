@@ -32,4 +32,4 @@ import { RedisModule } from 'src/lib/redis';
   providers: [AuthService, JwtStrategy, CrudService, SessionsService],
   exports: [AuthService, JwtModule, SessionsService],
 })
-export class AuthModule { }
+export class AuthModule {}

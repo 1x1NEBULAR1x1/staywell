@@ -27,7 +27,7 @@ export function ActionsSection<M extends GETTABLE_NAMES>({
   return (
     <div className={classes.actions}>
       <div className={classes.actions_left}>
-        {(id && model) && <button
+        {(id && delete_mutation) && <button
           type="button"
           className={`${classes.actions_button} ${classes.actions_button_secondary}`}
           onClick={() => delete_mutation?.mutate()}

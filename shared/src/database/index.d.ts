@@ -135,7 +135,10 @@ export type NotificationType = (typeof NotificationType)[keyof typeof Notificati
 
 
 export const NotificationAction: {
+  CONFIRM: 'CONFIRM',
   UPDATE: 'UPDATE',
+  CANCEL: 'CANCEL',
+  COMPLETE: 'COMPLETE',
   NEW: 'NEW'
 };
 
@@ -3332,6 +3335,7 @@ export namespace Prisma {
     is_active: boolean | null
     email_verified: boolean | null
     phone_verified: boolean | null
+    email_notifications: boolean | null
     role: $Enums.Role | null
     created: Date | null
     updated: Date | null
@@ -3349,6 +3353,7 @@ export namespace Prisma {
     is_active: boolean | null
     email_verified: boolean | null
     phone_verified: boolean | null
+    email_notifications: boolean | null
     role: $Enums.Role | null
     created: Date | null
     updated: Date | null
@@ -3366,6 +3371,7 @@ export namespace Prisma {
     is_active: number
     email_verified: number
     phone_verified: number
+    email_notifications: number
     role: number
     created: number
     updated: number
@@ -3385,6 +3391,7 @@ export namespace Prisma {
     is_active?: true
     email_verified?: true
     phone_verified?: true
+    email_notifications?: true
     role?: true
     created?: true
     updated?: true
@@ -3402,6 +3409,7 @@ export namespace Prisma {
     is_active?: true
     email_verified?: true
     phone_verified?: true
+    email_notifications?: true
     role?: true
     created?: true
     updated?: true
@@ -3419,6 +3427,7 @@ export namespace Prisma {
     is_active?: true
     email_verified?: true
     phone_verified?: true
+    email_notifications?: true
     role?: true
     created?: true
     updated?: true
@@ -3509,6 +3518,7 @@ export namespace Prisma {
     is_active: boolean
     email_verified: boolean
     phone_verified: boolean
+    email_notifications: boolean
     role: $Enums.Role
     created: Date
     updated: Date
@@ -3543,6 +3553,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: boolean
     created?: boolean
     updated?: boolean
@@ -3570,6 +3581,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: boolean
     created?: boolean
     updated?: boolean
@@ -3587,6 +3599,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: boolean
     created?: boolean
     updated?: boolean
@@ -3604,12 +3617,13 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: boolean
     created?: boolean
     updated?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password_hash" | "image" | "first_name" | "last_name" | "phone_number" | "date_of_birth" | "is_active" | "email_verified" | "phone_verified" | "role" | "created" | "updated", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password_hash" | "image" | "first_name" | "last_name" | "phone_number" | "date_of_birth" | "is_active" | "email_verified" | "phone_verified" | "email_notifications" | "role" | "created" | "updated", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reservations?: boolean | User$reservationsArgs<ExtArgs>
     events?: boolean | User$eventsArgs<ExtArgs>
@@ -3650,6 +3664,7 @@ export namespace Prisma {
       is_active: boolean
       email_verified: boolean
       phone_verified: boolean
+      email_notifications: boolean
       role: $Enums.Role
       created: Date
       updated: Date
@@ -4096,6 +4111,7 @@ export namespace Prisma {
     readonly is_active: FieldRef<"User", 'Boolean'>
     readonly email_verified: FieldRef<"User", 'Boolean'>
     readonly phone_verified: FieldRef<"User", 'Boolean'>
+    readonly email_notifications: FieldRef<"User", 'Boolean'>
     readonly role: FieldRef<"User", 'Role'>
     readonly created: FieldRef<"User", 'DateTime'>
     readonly updated: FieldRef<"User", 'DateTime'>
@@ -4737,7 +4753,9 @@ export namespace Prisma {
     action: $Enums.NotificationAction | null
     message: string | null
     user_id: string | null
+    object_id: string | null
     is_read: boolean | null
+    is_excluded: boolean | null
     created: Date | null
     updated: Date | null
   }
@@ -4748,7 +4766,9 @@ export namespace Prisma {
     action: $Enums.NotificationAction | null
     message: string | null
     user_id: string | null
+    object_id: string | null
     is_read: boolean | null
+    is_excluded: boolean | null
     created: Date | null
     updated: Date | null
   }
@@ -4759,7 +4779,9 @@ export namespace Prisma {
     action: number
     message: number
     user_id: number
+    object_id: number
     is_read: number
+    is_excluded: number
     created: number
     updated: number
     _all: number
@@ -4772,7 +4794,9 @@ export namespace Prisma {
     action?: true
     message?: true
     user_id?: true
+    object_id?: true
     is_read?: true
+    is_excluded?: true
     created?: true
     updated?: true
   }
@@ -4783,7 +4807,9 @@ export namespace Prisma {
     action?: true
     message?: true
     user_id?: true
+    object_id?: true
     is_read?: true
+    is_excluded?: true
     created?: true
     updated?: true
   }
@@ -4794,7 +4820,9 @@ export namespace Prisma {
     action?: true
     message?: true
     user_id?: true
+    object_id?: true
     is_read?: true
+    is_excluded?: true
     created?: true
     updated?: true
     _all?: true
@@ -4878,7 +4906,9 @@ export namespace Prisma {
     action: $Enums.NotificationAction
     message: string | null
     user_id: string | null
+    object_id: string | null
     is_read: boolean
+    is_excluded: boolean
     created: Date
     updated: Date
     _count: NotificationCountAggregateOutputType | null
@@ -4906,7 +4936,9 @@ export namespace Prisma {
     action?: boolean
     message?: boolean
     user_id?: boolean
+    object_id?: boolean
     is_read?: boolean
+    is_excluded?: boolean
     created?: boolean
     updated?: boolean
     user?: boolean | Notification$userArgs<ExtArgs>
@@ -4918,7 +4950,9 @@ export namespace Prisma {
     action?: boolean
     message?: boolean
     user_id?: boolean
+    object_id?: boolean
     is_read?: boolean
+    is_excluded?: boolean
     created?: boolean
     updated?: boolean
     user?: boolean | Notification$userArgs<ExtArgs>
@@ -4930,7 +4964,9 @@ export namespace Prisma {
     action?: boolean
     message?: boolean
     user_id?: boolean
+    object_id?: boolean
     is_read?: boolean
+    is_excluded?: boolean
     created?: boolean
     updated?: boolean
     user?: boolean | Notification$userArgs<ExtArgs>
@@ -4942,12 +4978,14 @@ export namespace Prisma {
     action?: boolean
     message?: boolean
     user_id?: boolean
+    object_id?: boolean
     is_read?: boolean
+    is_excluded?: boolean
     created?: boolean
     updated?: boolean
   }
 
-  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "action" | "message" | "user_id" | "is_read" | "created" | "updated", ExtArgs["result"]["notification"]>
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "action" | "message" | "user_id" | "object_id" | "is_read" | "is_excluded" | "created" | "updated", ExtArgs["result"]["notification"]>
   export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Notification$userArgs<ExtArgs>
   }
@@ -4969,7 +5007,9 @@ export namespace Prisma {
       action: $Enums.NotificationAction
       message: string | null
       user_id: string | null
+      object_id: string | null
       is_read: boolean
+      is_excluded: boolean
       created: Date
       updated: Date
     }, ExtArgs["result"]["notification"]>
@@ -5401,7 +5441,9 @@ export namespace Prisma {
     readonly action: FieldRef<"Notification", 'NotificationAction'>
     readonly message: FieldRef<"Notification", 'String'>
     readonly user_id: FieldRef<"Notification", 'String'>
+    readonly object_id: FieldRef<"Notification", 'String'>
     readonly is_read: FieldRef<"Notification", 'Boolean'>
+    readonly is_excluded: FieldRef<"Notification", 'Boolean'>
     readonly created: FieldRef<"Notification", 'DateTime'>
     readonly updated: FieldRef<"Notification", 'DateTime'>
   }
@@ -28040,6 +28082,7 @@ export namespace Prisma {
     is_active: 'is_active',
     email_verified: 'email_verified',
     phone_verified: 'phone_verified',
+    email_notifications: 'email_notifications',
     role: 'role',
     created: 'created',
     updated: 'updated'
@@ -28054,7 +28097,9 @@ export namespace Prisma {
     action: 'action',
     message: 'message',
     user_id: 'user_id',
+    object_id: 'object_id',
     is_read: 'is_read',
+    is_excluded: 'is_excluded',
     created: 'created',
     updated: 'updated'
   };
@@ -28565,6 +28610,7 @@ export namespace Prisma {
     is_active?: BoolFilter<"User"> | boolean
     email_verified?: BoolFilter<"User"> | boolean
     phone_verified?: BoolFilter<"User"> | boolean
+    email_notifications?: BoolFilter<"User"> | boolean
     role?: EnumRoleFilter<"User"> | $Enums.Role
     created?: DateTimeFilter<"User"> | Date | string
     updated?: DateTimeFilter<"User"> | Date | string
@@ -28591,6 +28637,7 @@ export namespace Prisma {
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
+    email_notifications?: SortOrder
     role?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -28620,6 +28667,7 @@ export namespace Prisma {
     is_active?: BoolFilter<"User"> | boolean
     email_verified?: BoolFilter<"User"> | boolean
     phone_verified?: BoolFilter<"User"> | boolean
+    email_notifications?: BoolFilter<"User"> | boolean
     role?: EnumRoleFilter<"User"> | $Enums.Role
     created?: DateTimeFilter<"User"> | Date | string
     updated?: DateTimeFilter<"User"> | Date | string
@@ -28646,6 +28694,7 @@ export namespace Prisma {
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
+    email_notifications?: SortOrder
     role?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -28669,6 +28718,7 @@ export namespace Prisma {
     is_active?: BoolWithAggregatesFilter<"User"> | boolean
     email_verified?: BoolWithAggregatesFilter<"User"> | boolean
     phone_verified?: BoolWithAggregatesFilter<"User"> | boolean
+    email_notifications?: BoolWithAggregatesFilter<"User"> | boolean
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     created?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -28683,7 +28733,9 @@ export namespace Prisma {
     action?: EnumNotificationActionFilter<"Notification"> | $Enums.NotificationAction
     message?: StringNullableFilter<"Notification"> | string | null
     user_id?: StringNullableFilter<"Notification"> | string | null
+    object_id?: StringNullableFilter<"Notification"> | string | null
     is_read?: BoolFilter<"Notification"> | boolean
+    is_excluded?: BoolFilter<"Notification"> | boolean
     created?: DateTimeFilter<"Notification"> | Date | string
     updated?: DateTimeFilter<"Notification"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -28695,7 +28747,9 @@ export namespace Prisma {
     action?: SortOrder
     message?: SortOrderInput | SortOrder
     user_id?: SortOrderInput | SortOrder
+    object_id?: SortOrderInput | SortOrder
     is_read?: SortOrder
+    is_excluded?: SortOrder
     created?: SortOrder
     updated?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -28710,7 +28764,9 @@ export namespace Prisma {
     action?: EnumNotificationActionFilter<"Notification"> | $Enums.NotificationAction
     message?: StringNullableFilter<"Notification"> | string | null
     user_id?: StringNullableFilter<"Notification"> | string | null
+    object_id?: StringNullableFilter<"Notification"> | string | null
     is_read?: BoolFilter<"Notification"> | boolean
+    is_excluded?: BoolFilter<"Notification"> | boolean
     created?: DateTimeFilter<"Notification"> | Date | string
     updated?: DateTimeFilter<"Notification"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -28722,7 +28778,9 @@ export namespace Prisma {
     action?: SortOrder
     message?: SortOrderInput | SortOrder
     user_id?: SortOrderInput | SortOrder
+    object_id?: SortOrderInput | SortOrder
     is_read?: SortOrder
+    is_excluded?: SortOrder
     created?: SortOrder
     updated?: SortOrder
     _count?: NotificationCountOrderByAggregateInput
@@ -28739,7 +28797,9 @@ export namespace Prisma {
     action?: EnumNotificationActionWithAggregatesFilter<"Notification"> | $Enums.NotificationAction
     message?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     user_id?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    object_id?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     is_read?: BoolWithAggregatesFilter<"Notification"> | boolean
+    is_excluded?: BoolWithAggregatesFilter<"Notification"> | boolean
     created?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
     updated?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
   }
@@ -30277,6 +30337,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -30303,6 +30364,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -30329,6 +30391,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30355,6 +30418,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30381,6 +30445,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -30398,6 +30463,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30415,6 +30481,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30425,7 +30492,9 @@ export namespace Prisma {
     type: $Enums.NotificationType
     action?: $Enums.NotificationAction
     message?: string | null
+    object_id?: string | null
     is_read?: boolean
+    is_excluded?: boolean
     created?: Date | string
     updated?: Date | string
     user?: UserCreateNestedOneWithoutNotificationsInput
@@ -30437,7 +30506,9 @@ export namespace Prisma {
     action?: $Enums.NotificationAction
     message?: string | null
     user_id?: string | null
+    object_id?: string | null
     is_read?: boolean
+    is_excluded?: boolean
     created?: Date | string
     updated?: Date | string
   }
@@ -30447,7 +30518,9 @@ export namespace Prisma {
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     action?: EnumNotificationActionFieldUpdateOperationsInput | $Enums.NotificationAction
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    object_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
+    is_excluded?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutNotificationsNestedInput
@@ -30459,7 +30532,9 @@ export namespace Prisma {
     action?: EnumNotificationActionFieldUpdateOperationsInput | $Enums.NotificationAction
     message?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    object_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
+    is_excluded?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30470,7 +30545,9 @@ export namespace Prisma {
     action?: $Enums.NotificationAction
     message?: string | null
     user_id?: string | null
+    object_id?: string | null
     is_read?: boolean
+    is_excluded?: boolean
     created?: Date | string
     updated?: Date | string
   }
@@ -30480,7 +30557,9 @@ export namespace Prisma {
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     action?: EnumNotificationActionFieldUpdateOperationsInput | $Enums.NotificationAction
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    object_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
+    is_excluded?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30491,7 +30570,9 @@ export namespace Prisma {
     action?: EnumNotificationActionFieldUpdateOperationsInput | $Enums.NotificationAction
     message?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    object_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
+    is_excluded?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32290,6 +32371,7 @@ export namespace Prisma {
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
+    email_notifications?: SortOrder
     role?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -32307,6 +32389,7 @@ export namespace Prisma {
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
+    email_notifications?: SortOrder
     role?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -32324,6 +32407,7 @@ export namespace Prisma {
     is_active?: SortOrder
     email_verified?: SortOrder
     phone_verified?: SortOrder
+    email_notifications?: SortOrder
     role?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -32436,7 +32520,9 @@ export namespace Prisma {
     action?: SortOrder
     message?: SortOrder
     user_id?: SortOrder
+    object_id?: SortOrder
     is_read?: SortOrder
+    is_excluded?: SortOrder
     created?: SortOrder
     updated?: SortOrder
   }
@@ -32447,7 +32533,9 @@ export namespace Prisma {
     action?: SortOrder
     message?: SortOrder
     user_id?: SortOrder
+    object_id?: SortOrder
     is_read?: SortOrder
+    is_excluded?: SortOrder
     created?: SortOrder
     updated?: SortOrder
   }
@@ -32458,7 +32546,9 @@ export namespace Prisma {
     action?: SortOrder
     message?: SortOrder
     user_id?: SortOrder
+    object_id?: SortOrder
     is_read?: SortOrder
+    is_excluded?: SortOrder
     created?: SortOrder
     updated?: SortOrder
   }
@@ -35975,7 +36065,9 @@ export namespace Prisma {
     type: $Enums.NotificationType
     action?: $Enums.NotificationAction
     message?: string | null
+    object_id?: string | null
     is_read?: boolean
+    is_excluded?: boolean
     created?: Date | string
     updated?: Date | string
   }
@@ -35985,7 +36077,9 @@ export namespace Prisma {
     type: $Enums.NotificationType
     action?: $Enums.NotificationAction
     message?: string | null
+    object_id?: string | null
     is_read?: boolean
+    is_excluded?: boolean
     created?: Date | string
     updated?: Date | string
   }
@@ -36279,7 +36373,9 @@ export namespace Prisma {
     action?: EnumNotificationActionFilter<"Notification"> | $Enums.NotificationAction
     message?: StringNullableFilter<"Notification"> | string | null
     user_id?: StringNullableFilter<"Notification"> | string | null
+    object_id?: StringNullableFilter<"Notification"> | string | null
     is_read?: BoolFilter<"Notification"> | boolean
+    is_excluded?: BoolFilter<"Notification"> | boolean
     created?: DateTimeFilter<"Notification"> | Date | string
     updated?: DateTimeFilter<"Notification"> | Date | string
   }
@@ -36296,6 +36392,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -36321,6 +36418,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -36362,6 +36460,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36387,6 +36486,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36412,6 +36512,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -36437,6 +36538,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -36586,6 +36688,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36611,6 +36714,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37059,6 +37163,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -37084,6 +37189,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -37217,6 +37323,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37242,6 +37349,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38142,6 +38250,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -38167,6 +38276,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -38269,6 +38379,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38294,6 +38405,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38346,6 +38458,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -38371,6 +38484,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -38606,6 +38720,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38631,6 +38746,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39205,6 +39321,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -39230,6 +39347,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -39391,6 +39509,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39416,6 +39535,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39625,6 +39745,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -39650,6 +39771,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -39707,6 +39829,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39732,6 +39855,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39797,6 +39921,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -39822,6 +39947,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -39879,6 +40005,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39904,6 +40031,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39929,6 +40057,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -39954,6 +40083,7 @@ export namespace Prisma {
     is_active?: boolean
     email_verified?: boolean
     phone_verified?: boolean
+    email_notifications?: boolean
     role?: $Enums.Role
     created?: Date | string
     updated?: Date | string
@@ -40055,6 +40185,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40080,6 +40211,7 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     email_verified?: BoolFieldUpdateOperationsInput | boolean
     phone_verified?: BoolFieldUpdateOperationsInput | boolean
+    email_notifications?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40318,7 +40450,9 @@ export namespace Prisma {
     type: $Enums.NotificationType
     action?: $Enums.NotificationAction
     message?: string | null
+    object_id?: string | null
     is_read?: boolean
+    is_excluded?: boolean
     created?: Date | string
     updated?: Date | string
   }
@@ -40632,7 +40766,9 @@ export namespace Prisma {
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     action?: EnumNotificationActionFieldUpdateOperationsInput | $Enums.NotificationAction
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    object_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
+    is_excluded?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40642,7 +40778,9 @@ export namespace Prisma {
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     action?: EnumNotificationActionFieldUpdateOperationsInput | $Enums.NotificationAction
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    object_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
+    is_excluded?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40652,7 +40790,9 @@ export namespace Prisma {
     type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     action?: EnumNotificationActionFieldUpdateOperationsInput | $Enums.NotificationAction
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    object_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_read?: BoolFieldUpdateOperationsInput | boolean
+    is_excluded?: BoolFieldUpdateOperationsInput | boolean
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }

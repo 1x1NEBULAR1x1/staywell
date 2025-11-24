@@ -1,0 +1,13 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.page {
+  display: flex;
+  flex-direction: row;
+  padding: $spacing-2xl;
+  gap: $spacing-2xl;
+  background-color: $background-light;
+  width: 100%;
+  min-height: 100lvh;
+  height: auto;
+  overflow: hidden;
+}

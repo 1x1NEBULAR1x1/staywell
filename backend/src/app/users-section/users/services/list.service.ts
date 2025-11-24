@@ -7,7 +7,7 @@ import { UserWithoutPassword } from '@shared/src/types/users-section';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   customFilters = (options: UsersFiltersDto) => {
     const {
@@ -39,30 +39,21 @@ export class ListService {
       filters.phone_number = phone_number;
     return filters;
   };
-  async findAll({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    is_excluded,
-    ...filters
-  }: UsersFiltersDto): Promise<BaseListResult<UserWithoutPassword>> {
-    const query_options = this.prisma.buildQuery<UserWithoutPassword>(
+  async findAll({ is_excluded, ...filters }: UsersFiltersDto): Promise<BaseListResult<UserWithoutPassword>> {
+    const query_options = this.prisma.buildQuery<UserWithoutPassword>({
       filters,
-      'created',
-      'created',
-      this.customFilters,
-    );
-    const { items, total } = await this.prisma.findWithPagination<User>(
-      this.prisma.user,
+      customFilters: this.customFilters,
+    });
+    const { items, total } = await this.prisma.findWithPagination<User>({
+      model: this.prisma.user,
       query_options,
-    );
+    });
+    const { take, skip } = query_options;
     return {
-      items: items.map((item: User) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password_hash, ...user } = item;
-        return user;
-      }) as UserWithoutPassword[],
+      items: items.map((item) => { const { password_hash, ...user } = item; return user; }),
       total,
-      skip: filters.skip,
-      take: filters.take,
+      skip,
+      take,
     };
   }
 }

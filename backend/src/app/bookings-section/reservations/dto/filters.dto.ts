@@ -4,7 +4,8 @@ import { Reservation } from '@shared/src/database';
 
 export class ReservationsFiltersDto
   extends BaseFiltersDto<Reservation>
-  implements ReservationsFilters {
+  implements ReservationsFilters
+{
   @ToUUID({
     required: false,
     description: 'User ID',

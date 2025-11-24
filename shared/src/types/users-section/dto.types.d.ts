@@ -1,6 +1,6 @@
 import { UserWithoutPassword } from "./extended.types";
 import { BaseFiltersOptions, CreativeOmit } from "../../common";
-import { Role, User, Message } from "../../database";
+import { Role, User, Message, Notification, NotificationAction } from "../../database";
 export type Login = {
     email: string;
     password: string;
@@ -39,3 +39,17 @@ export type CreateMessage = Omit<CreativeOmit<Message>, 'booking_id' | 'sender_i
     booking_id?: string;
 };
 export type UpdateMessage = Partial<CreateMessage>;
+export type CreateNotification = Omit<CreativeOmit<Notification>, 'message' | 'user_id' | 'object_id' | 'is_read'> & {
+    message?: string;
+    user_id?: string;
+    object_id?: string;
+    is_read?: boolean;
+};
+export type UpdateNotification = Partial<CreateNotification>;
+export type NotificationsFilters = BaseFiltersOptions<Notification> & {
+    user_id?: string;
+    is_read?: boolean;
+    type?: string;
+    object_id?: string;
+    action?: NotificationAction;
+};

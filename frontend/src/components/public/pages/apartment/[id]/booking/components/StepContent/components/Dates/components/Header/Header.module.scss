@@ -1,0 +1,29 @@
+@use "@/components/styles/_variables.scss" as *;
+
+
+.header {
+  text-align: center;
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $primary-dark;
+
+    &>svg {
+      color: $primary-main;
+    }
+  }
+
+  .subtitle {
+    margin: 0;
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+    line-height: 1.5;
+  }
+}

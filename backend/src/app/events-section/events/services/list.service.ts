@@ -3,14 +3,14 @@ import { PrismaService } from 'src/lib/prisma';
 import { Event, Prisma } from '@shared/src/database';
 import { EventsFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common';
-import { ExtendedEvent } from '@shared/src/types/events-section';
+import { EXTENDED_EVENT_INCLUDE, ExtendedEvent } from '@shared/src/types/events-section';
 
 /**
  * Service for retrieving lists of events with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   customFilters(options: EventsFiltersDto) {
     const {
@@ -46,22 +46,17 @@ export class ListService {
    * @param filters - Query parameters for filtering and pagination
    * @returns Paginated list of events with total count
    */
-  async findAll({
-    take,
-    skip,
-    ...filters
-  }: EventsFiltersDto): Promise<BaseListResult<ExtendedEvent>> {
-    const query_options = this.prisma.buildQuery(
-      { take, skip, ...filters },
-      'created',
-      'created',
-      (filters: EventsFiltersDto) => this.customFilters(filters),
-    );
-    const { items, total } = (await this.prisma.findWithPagination(
-      this.prisma.event,
+  async findAll(filters: EventsFiltersDto): Promise<BaseListResult<ExtendedEvent>> {
+    const query_options = this.prisma.buildQuery<Event>({
+      filters,
+      customFilters: this.customFilters,
+    });
+    const { items, total } = await this.prisma.findWithPagination<ExtendedEvent>({
+      model: this.prisma.event,
       query_options,
-      { images: true, guide: true },
-    )) as unknown as { items: ExtendedEvent[]; total: number };
+      include: EXTENDED_EVENT_INCLUDE,
+    });
+    const { take, skip } = query_options;
     return { items, total, skip, take };
   }
 }

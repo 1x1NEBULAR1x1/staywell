@@ -59,7 +59,8 @@ export function ToString(
     if (min !== undefined) MinLength(min)(target, propertyKey);
     if (max !== undefined) MaxLength(max)(target, propertyKey);
     if (matches) Matches(matches)(target, propertyKey);
-    if (false && is_strong_password) // TODO fix for P@SSword! matches
+    if (false && is_strong_password)
+      // TODO fix for P@SSword! matches
       IsStrongPassword({
         minLength: 8,
         minUppercase: 1,

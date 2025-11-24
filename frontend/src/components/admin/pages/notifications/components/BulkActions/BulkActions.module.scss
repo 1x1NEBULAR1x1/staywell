@@ -1,0 +1,125 @@
+@use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
+
+.bulk_actions {
+  margin: $spacing-lg 0;
+  padding: $spacing-md;
+  background-color: $background-main;
+  border-radius: $border-radius-md;
+  border: $border-normal;
+  transition: all 0.2s ease;
+  animation: fadeIn 0.5s ease;
+}
+
+.bulk_actions_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-md;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.selection_info {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.select_all_button {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-sm;
+  background-color: transparent;
+  border: $border-normal;
+  border-radius: $border-radius-sm;
+  color: $foreground-main;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $primary-light;
+    border-color: $primary-main;
+    color: $foreground-white;
+  }
+}
+
+.select_icon {
+  width: 16px;
+  height: 16px;
+}
+
+.bulk_buttons {
+  display: flex;
+  gap: $spacing-sm;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.bulk_button {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  border: $border-normal;
+  border-radius: $border-radius-sm;
+  background-color: $background-main;
+  color: $foreground-main;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  &.mark_read_button {
+    &:hover {
+      background-color: $primary-light;
+      border-color: $primary-main;
+      color: $foreground-white;
+    }
+  }
+
+  &.delete_button {
+    &:hover {
+      background-color: color.adjust($red, $lightness: -10%);
+      border-color: $red;
+      color: $foreground-white;
+    }
+  }
+}
+
+.bulk_icon {
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,113 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.gallery_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    .header_content {
+      flex: 1;
+      min-width: 250px;
+
+      .title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        margin: 0 0 $spacing-xs 0;
+      }
+
+      .subtitle {
+        font-size: $font-size-md;
+        color: $foreground-secondary;
+        margin: 0;
+        line-height: 1.5;
+      }
+    }
+
+    .stats {
+      display: flex;
+      gap: $spacing-md;
+      flex-wrap: wrap;
+
+      .stat_item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: $spacing-sm $spacing-md;
+        background: $background-main;
+        border-radius: $border-radius-md;
+        border: $border-normal;
+        min-width: 100px;
+
+        .stat_value {
+          font-size: $font-size-xl;
+          font-weight: $font-weight-semibold;
+          color: $primary-main;
+        }
+
+        .stat_label {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-top: $spacing-xs;
+        }
+
+        &.stat_warning {
+          .stat_value {
+            color: $yellow;
+          }
+        }
+      }
+    }
+  }
+
+  .gallery_section {
+    padding: $spacing-lg;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+  }
+
+  .info_section {
+    padding: $spacing-lg;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    .info_title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0 0 $spacing-md 0;
+    }
+
+    .tips_list {
+      margin: 0;
+      padding-left: $spacing-lg;
+      color: $foreground-secondary;
+      font-size: $font-size-md;
+      line-height: 1.8;
+
+      li {
+        margin-bottom: $spacing-xs;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+

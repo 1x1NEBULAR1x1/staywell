@@ -22,5 +22,6 @@ exports.GETTABLE_ICONS = {
     EVENT_IMAGE: lucide_react_1.Image,
     BOOKING_EVENT: lucide_react_1.CalendarPlus,
     USER: lucide_react_1.User,
-    SESSION: lucide_react_1.Lock
+    SESSION: lucide_react_1.Lock,
+    NOTIFICATION: lucide_react_1.Bell
 };

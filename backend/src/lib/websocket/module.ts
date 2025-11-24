@@ -8,4 +8,4 @@ import { PrismaModule } from '../prisma';
   providers: [WebsocketAuthService, WebsocketAuthGuard],
   exports: [WebsocketAuthService, WebsocketAuthGuard],
 })
-export class WebsocketModule { }
+export class WebsocketModule {}

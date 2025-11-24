@@ -1,12 +1,12 @@
 import classes from './Header.module.scss';
 
-import { Account, Message, Notification } from './components';
+import { Account, Message, NotificationDropdown } from './components';
 
 export const Header = () => (
   <header className={classes.header}>
     <div className={classes.left}>
       <Message />
-      <Notification />
+      <NotificationDropdown />
 
     </div>
     <div className={classes.right}>

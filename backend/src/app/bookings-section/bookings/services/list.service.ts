@@ -3,16 +3,11 @@ import { PrismaService } from 'src/lib/prisma';
 import { Booking, Prisma, User, Role } from '@shared/src/database';
 import { BookingsFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common';
-import { ExtendedBooking } from '@shared/src/types/bookings-section';
-import {
-  EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE,
-  EXTENDED_BOOKING_INCLUDE,
-  EXTENDED_BOOKING_VARIANT_INCLUDE,
-} from '@shared/src/types/bookings-section/extended.types';
+import { BookingsFilters, ExtendedBooking, EXTENDED_BOOKING_INCLUDE } from '@shared/src/types/bookings-section';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   customFilters(options: BookingsFiltersDto) {
     const {
@@ -30,11 +25,7 @@ export class ListService {
     if (transaction_id) filters.transaction_id = transaction_id;
     if (start_date || end_date) {
       if (start_date && end_date) {
-        filters.OR = [
-          {
-            AND: [{ start: { lte: end_date } }, { end: { gte: start_date } }],
-          },
-        ];
+        filters.OR = [{ AND: [{ start: { lte: end_date } }, { end: { gte: start_date } }] }];
       } else if (start_date) {
         filters.start = { gte: start_date };
       } else if (end_date) {
@@ -50,35 +41,25 @@ export class ListService {
    * @returns List of bookings with pagination metadata
    */
   async findAll({
-    filters,
+    filters: filtersDto,
     user,
   }: {
     filters: BookingsFiltersDto;
     user: User;
   }): Promise<BaseListResult<ExtendedBooking>> {
-    const final_filters: BookingsFiltersDto =
-      user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
-    delete final_filters.is_excluded;
-    // Build the query using the generic method from PrismaService
-    const query_options = this.prisma.buildQuery(
-      final_filters,
-      'created',
-      'start',
-      (filters: BookingsFiltersDto) => this.customFilters(filters),
-    );
-
-    // Get paginated results using the generic method
-    const { items, total } = (await this.prisma.findWithPagination<Booking>(
-      this.prisma.booking,
+    const user_id = user.role === Role.ADMIN ? filtersDto.user_id : user.id;
+    const { is_excluded, ...filters } = { ...filtersDto, user_id };
+    const query_options = this.prisma.buildQuery({
+      filters,
+      date_field: 'start',
+      customFilters: this.customFilters,
+    });
+    const { items, total } = await this.prisma.findWithPagination<ExtendedBooking>({
+      model: this.prisma.booking,
       query_options,
-      {
-        user: true,
-        booking_variant: { include: { apartment: true } },
-        transaction: true,
-        booking_additional_options: { include: { additional_option: true } },
-      },
-    )) as { items: ExtendedBooking[]; total: number };
-
-    return { items, total, skip: query_options.skip, take: query_options.take };
+      include: EXTENDED_BOOKING_INCLUDE,
+    });
+    const { take, skip } = query_options;
+    return { items, total, skip, take };
   }
 }

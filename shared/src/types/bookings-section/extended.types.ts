@@ -1,5 +1,5 @@
-import { AdditionalOption, Apartment, Booking, BookingAdditionalOption, BookingVariant, Reservation, Transaction } from "../../database";
-import { UserWithoutPassword } from "../users-section";
+import { AdditionalOption, Apartment, Booking, BookingAdditionalOption, BookingVariant, Prisma, Reservation, Transaction } from "../../database";
+import { USER_WITHOUT_PASSWORD_SELECT, UserWithoutPassword } from "../users-section";
 
 export type ExtendedBookingAdditionalOption = BookingAdditionalOption & {
   additional_option: AdditionalOption;
@@ -7,7 +7,7 @@ export type ExtendedBookingAdditionalOption = BookingAdditionalOption & {
 
 export const EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE = {
   additional_option: true,
-};
+} as const satisfies Prisma.BookingAdditionalOptionInclude;
 
 export interface ExtendedBookingVariant extends BookingVariant {
   apartment: Apartment;
@@ -15,7 +15,7 @@ export interface ExtendedBookingVariant extends BookingVariant {
 
 export const EXTENDED_BOOKING_VARIANT_INCLUDE = {
   apartment: true,
-};
+} as const satisfies Prisma.BookingVariantInclude;
 
 
 
@@ -27,11 +27,11 @@ export type ExtendedBooking = Booking & {
 };
 
 export const EXTENDED_BOOKING_INCLUDE = {
-  user: true,
-  booking_variant: { include: EXTENDED_BOOKING_VARIANT_INCLUDE },
+  user: { select: USER_WITHOUT_PASSWORD_SELECT },
   transaction: true,
   booking_additional_options: { include: EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE },
-};
+  booking_variant: { include: { apartment: true } },
+} as const satisfies Prisma.BookingInclude;
 
 export interface ExtendedReservation extends Reservation {
   apartment: Apartment,
@@ -40,5 +40,5 @@ export interface ExtendedReservation extends Reservation {
 
 export const EXTENDED_RESERVATION_INCLUDE = {
   apartment: true,
-  user: { select: { id: true, email: true, image: true, first_name: true, last_name: true, phone_number: true, date_of_birth: true, is_active: true, email_verified: true, phone_verified: true, role: true, created: true, updated: true } }
-};
+  user: { select: USER_WITHOUT_PASSWORD_SELECT }
+} as const satisfies Prisma.ReservationInclude;

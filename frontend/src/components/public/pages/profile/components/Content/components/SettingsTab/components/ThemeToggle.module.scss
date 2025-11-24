@@ -1,0 +1,64 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.theme_toggle {
+  padding: $spacing-lg;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  background-color: $background-main;
+
+  .section_header {
+    margin-bottom: $spacing-lg;
+
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+      margin-bottom: $spacing-xs;
+    }
+
+    p {
+      color: $foreground-secondary;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .toggle_container {
+    display: flex;
+    gap: $spacing-md;
+
+    .theme_button {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing-sm;
+      padding: $spacing-md;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-sm;
+      background-color: $background-main;
+      color: $foreground-main;
+      cursor: pointer;
+      transition: all $transition-fast;
+
+      &:hover {
+        background-color: $background-disabled;
+        border-color: $primary-main;
+      }
+
+      &.active {
+        background-color: $primary-main;
+        color: white;
+        border-color: $primary-main;
+      }
+
+      svg {
+        flex-shrink: 0;
+      }
+
+      span {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-normal;
+      }
+    }
+  }
+}

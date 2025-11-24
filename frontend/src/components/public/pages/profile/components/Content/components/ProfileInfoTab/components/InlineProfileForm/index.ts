@@ -1,0 +1,1 @@
+export { InlineProfileForm } from './InlineProfileForm';

@@ -1,0 +1,28 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.settings {
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+
+  .header {
+    h2 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin-bottom: $spacing-xs;
+    }
+
+    p {
+      color: $foreground-secondary;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .settings_sections {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+}

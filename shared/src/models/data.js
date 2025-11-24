@@ -19,7 +19,8 @@ exports.CRUDDABLE_DATA = {
     TRANSFER_DETAIL: "transfer-details",
     CARD_DETAIL: "card-details",
     BOOKING_EVENT: "booking-events",
-    BOOKING_ADDITIONAL_OPTION: "booking-additional-options"
+    BOOKING_ADDITIONAL_OPTION: "booking-additional-options",
+    NOTIFICATION: "notifications"
 };
 exports.GETTABLE_DATA = {
     ...exports.CRUDDABLE_DATA,

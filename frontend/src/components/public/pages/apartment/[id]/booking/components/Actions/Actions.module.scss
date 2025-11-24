@@ -1,0 +1,81 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-md;
+
+  .next_button {
+    background: rgba($primary-main, 0.95);
+    color: rgba($foreground-white, 0.95);
+    padding: $spacing-sm $spacing-5xl;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    border: none;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    box-shadow: $box-shadow-sm;
+
+    &:hover:not(:disabled) {
+      background: $primary-main;
+      color: $foreground-white;
+      box-shadow: $box-shadow;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: $background-disabled;
+      color: $foreground-light;
+      box-shadow: $box-shadow-sm;
+    }
+  }
+
+  .back_button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    background: $background-disabled;
+    color: $foreground-secondary;
+    padding: $spacing-sm $spacing-5xl;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    border: none;
+    font-size: $font-size-md;
+    font-weight: $font-weight-light;
+
+    &>svg {
+      width: $font-size-lg;
+      height: $font-size-lg;
+    }
+
+    &:hover:not(:disabled) {
+      background: $background-light;
+      color: $foreground-main;
+      box-shadow: $box-shadow-sm;
+    }
+  }
+
+  .cancel_button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $foreground-light;
+    cursor: pointer;
+    border: none;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
+
+    &>svg {
+      width: $font-size-md;
+      height: $font-size-md;
+    }
+
+    &:hover:not(:disabled) {
+      color: $foreground-secondary;
+      box-shadow: $box-shadow-sm;
+    }
+  }
+}

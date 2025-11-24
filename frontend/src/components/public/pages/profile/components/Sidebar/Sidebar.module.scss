@@ -1,0 +1,98 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.sidebar {
+  width: 280px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $background-main;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow;
+
+
+  .header {
+    padding: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    border-bottom: $border-normal;
+
+    .user_data {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: $spacing-md;
+
+      .avatar {
+        width: $font-size-5xl;
+        height: $font-size-5xl;
+        border-radius: 9999px;
+        object-fit: cover;
+        overflow: hidden;
+        border: $border-bold;
+        border-color: $primary-main;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+
+        .name {
+          font-size: $font-size-md;
+          font-weight: $font-weight-semibold;
+          color: $foreground-main;
+        }
+
+        .email {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+        }
+      }
+    }
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: $spacing-sm;
+
+    &_item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      padding: $spacing-md;
+      border: none;
+      background: none;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+      transition: all $transition-fast;
+      color: $foreground-secondary;
+      text-align: left;
+      width: 100%;
+
+      &:hover:not(.nav_item_active) {
+        background-color: $background-light;
+        color: $foreground-main;
+        box-shadow: $box-shadow-md;
+      }
+
+      &_active {
+        background-color: $primary-light;
+        color: $foreground-white;
+        box-shadow: $box-shadow-sm;
+      }
+
+      &_icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      &_label {
+        font-size: $font-size-md;
+        font-weight: $font-weight-normal;
+      }
+    }
+  }
+}

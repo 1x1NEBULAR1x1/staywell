@@ -5,7 +5,10 @@ import { AuthService } from '../services/auth.service';
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { SessionsService } from '../services/sessions.service';
-import { SessionData, UserWithoutPassword } from '@shared/src/types/users-section';
+import {
+  SessionData,
+  UserWithoutPassword,
+} from '@shared/src/types/users-section';
 
 export interface RequestWithCookies extends Request {
   cookies: {

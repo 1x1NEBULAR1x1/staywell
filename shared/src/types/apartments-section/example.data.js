@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.example_reviews_list_result = exports.example_apartments_list_result = exports.example_extended_apartment = exports.example_review = exports.example_apartment_availability_result = exports.example_available_apartments_list_result = exports.example_available_apartment = exports.example_apartment = exports.example_apartment_images_list_result = exports.example_apartment_image = exports.example_extended_apartment_beds_list_result = exports.example_extended_apartment_bed = exports.example_apartment_bed = exports.example_bed_types_list_result = exports.example_bed_type = exports.example_extended_apartment_amenities_list_result = exports.example_extended_apartment_amenity = exports.example_amenities_list_result = exports.example_amenity_with_relations = exports.example_amenity = exports.example_apartment_amenity = void 0;
 const database_1 = require("../../database");
 const bookings_section_1 = require("../bookings-section");
+const users_section_1 = require("../users-section");
 exports.example_apartment_amenity = {
     id: "1",
     apartment_id: "UUID",
@@ -143,9 +144,14 @@ exports.example_extended_apartment = {
     apartment_amenities: [exports.example_extended_apartment_amenity],
     images: [exports.example_apartment_image],
     booking_variants: [bookings_section_1.example_booking_variant],
-    reviews: [exports.example_review],
+    reviews: [{
+            ...exports.example_review,
+            user: users_section_1.example_safe_user,
+        }],
     cheapest_variant: bookings_section_1.example_booking_variant,
     availability: exports.example_apartment_availability_result,
+    reservations: [],
+    bookings: [],
 };
 exports.example_apartments_list_result = {
     items: [exports.example_available_apartment],

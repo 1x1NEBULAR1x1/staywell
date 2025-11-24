@@ -10,12 +10,14 @@ export interface UseAuthReturn {
   login: (data: Login) => void;
   register: (data: Register) => void;
   logout: () => void;
+  changePassword: ReturnType<typeof useMutation>;
   clearAuthError: () => void;
   is_loading: boolean;
   is_account_loading: boolean;
   is_login_loading: boolean;
   is_register_loading: boolean;
   is_logout_loading: boolean;
+  is_change_password_loading: boolean;
   auth_error: string | null;
 }
 /**
@@ -106,6 +108,18 @@ export const useAuth = (): UseAuthReturn => {
   };
 
   /**
+   * Мутация для смены пароля
+   */
+  const change_password_mutation = useMutation({
+    mutationFn: authApi.changePassword,
+    onError: (error: unknown) => {
+      console.warn(error);
+      const errorMessage = isAxiosError(error) ? error.response?.data?.message : 'Ошибка смены пароля';
+      setAuthError(errorMessage);
+    }
+  });
+
+  /**
    * Очистка ошибки авторизации
    */
   const clearAuthError = () => {
@@ -116,13 +130,15 @@ export const useAuth = (): UseAuthReturn => {
     login,
     register,
     logout,
+    changePassword: change_password_mutation,
     clearAuthError,
-    is_loading: is_loading || login_mutation.isPending || register_mutation.isPending || logout_mutation.isPending,
+    is_loading: is_loading || login_mutation.isPending || register_mutation.isPending || logout_mutation.isPending || change_password_mutation.isPending,
     auth_error,
     is_account_loading: is_loading,
     is_login_loading: login_mutation.isPending,
     is_register_loading: register_mutation.isPending,
     is_logout_loading: logout_mutation.isPending,
+    is_change_password_loading: change_password_mutation.isPending,
   };
 };
 

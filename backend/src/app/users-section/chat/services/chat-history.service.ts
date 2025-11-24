@@ -25,7 +25,7 @@ export class ChatHistoryService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly connectionService: ChatConnectionService,
-  ) { }
+  ) {}
 
   /**
    * Get message history
@@ -52,12 +52,18 @@ export class ChatHistoryService {
           { sender_id: data.chat_partner_id, receiver_id: user.id },
           // Also include support messages from this user
           { sender_id: data.chat_partner_id, receiver_id: SUPPORT_ID },
-          { sender_id: user.id, receiver_id: SUPPORT_ID, sender: { role: Role.ADMIN } },
+          {
+            sender_id: user.id,
+            receiver_id: SUPPORT_ID,
+            sender: { role: Role.ADMIN },
+          },
         ],
         is_excluded: false,
       };
     } else {
-      throw new ForbiddenException('Only users and admins can access chat history');
+      throw new ForbiddenException(
+        'Only users and admins can access chat history',
+      );
     }
 
     const messages = await this.prisma.message.findMany({
@@ -90,7 +96,10 @@ export class ChatHistoryService {
   /**
    * Get chats list (for admins)
    */
-  async getChats(user: UserWithoutPassword, data: GetChatsDto): Promise<{ items: ChatWithLastMessage[]; total: number }> {
+  async getChats(
+    user: UserWithoutPassword,
+    data: GetChatsDto,
+  ): Promise<{ items: ChatWithLastMessage[]; total: number }> {
     // Only admins can access chats list
     if (user.role !== Role.ADMIN) {
       throw new ForbiddenException('Only admins can access chats list');
@@ -114,8 +123,10 @@ export class ChatHistoryService {
     const userIdsSet = new Set<string>();
     for (const msg of recentMessages) {
       // Check if this message involves an admin or support
-      const isWithAdmin = (msg.sender_id === user.id || msg.receiver_id === user.id);
-      const isWithSupport = (msg.sender_id === SUPPORT_ID || msg.receiver_id === SUPPORT_ID);
+      const isWithAdmin =
+        msg.sender_id === user.id || msg.receiver_id === user.id;
+      const isWithSupport =
+        msg.sender_id === SUPPORT_ID || msg.receiver_id === SUPPORT_ID;
 
       if (isWithAdmin || isWithSupport) {
         // Add the user ID (not admin/support)
@@ -147,11 +158,18 @@ export class ChatHistoryService {
     // Create a map of user latest message dates from the recent messages we already have
     const userLatestMessageMap = new Map<string, Date>();
     for (const msg of recentMessages) {
-      const userId = msg.sender_id !== SUPPORT_ID && msg.sender_id !== user.id ? msg.sender_id :
-        msg.receiver_id !== SUPPORT_ID && msg.receiver_id !== user.id ? msg.receiver_id : null;
+      const userId =
+        msg.sender_id !== SUPPORT_ID && msg.sender_id !== user.id
+          ? msg.sender_id
+          : msg.receiver_id !== SUPPORT_ID && msg.receiver_id !== user.id
+            ? msg.receiver_id
+            : null;
 
       if (userId && userIds.includes(userId)) {
-        if (!userLatestMessageMap.has(userId) || userLatestMessageMap.get(userId)! < msg.created) {
+        if (
+          !userLatestMessageMap.has(userId) ||
+          userLatestMessageMap.get(userId)! < msg.created
+        ) {
           userLatestMessageMap.set(userId, msg.created);
         }
       }
@@ -159,7 +177,7 @@ export class ChatHistoryService {
 
     // Sort users by latest message date
     const sortedUsers = chatUsers
-      .filter(u => userLatestMessageMap.has(u.id))
+      .filter((u) => userLatestMessageMap.has(u.id))
       .sort((a, b) => {
         const dateA = userLatestMessageMap.get(a.id)!;
         const dateB = userLatestMessageMap.get(b.id)!;
@@ -173,7 +191,10 @@ export class ChatHistoryService {
     }
 
     // Apply pagination to sorted users
-    const paginatedUsers = sortedUsers.slice(data.skip ?? 0, (data.skip ?? 0) + (data.take ?? 50));
+    const paginatedUsers = sortedUsers.slice(
+      data.skip ?? 0,
+      (data.skip ?? 0) + (data.take ?? 50),
+    );
 
     // Get last messages and unread counts for each chat
     const chatsData = await Promise.all(
@@ -182,8 +203,14 @@ export class ChatHistoryService {
         const lastMessage = await this.prisma.message.findFirst({
           where: {
             OR: [
-              { sender_id: userData.id, receiver_id: { in: [SUPPORT_ID, user.id] } },
-              { sender_id: { in: [SUPPORT_ID, user.id] }, receiver_id: userData.id },
+              {
+                sender_id: userData.id,
+                receiver_id: { in: [SUPPORT_ID, user.id] },
+              },
+              {
+                sender_id: { in: [SUPPORT_ID, user.id] },
+                receiver_id: userData.id,
+              },
             ],
             is_excluded: false,
           },
@@ -217,7 +244,7 @@ export class ChatHistoryService {
           unread_count: unreadCount,
           last_seen,
         };
-      })
+      }),
     );
 
     return { items: chatsData, total };

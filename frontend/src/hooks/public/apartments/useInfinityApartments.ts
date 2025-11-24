@@ -1,15 +1,16 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { GetApi } from '@/lib/api';
-import { ApartmentsFilters, ExtendedApartment, BaseListResult } from '@shared/src';
+import type { ApartmentsFilters, ExtendedApartment } from '@shared/src';
+import type { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
 import { useCallback, useMemo } from 'react';
 
-const apartmentsApi = new GetApi('APARTMENT');
+const api = new GetApi('APARTMENT');
 
 /**
- * Хук для бесконечной загрузки квартир
- * @param filters - фильтры для поиска квартир
- * @param options - опции запроса
- * @returns Данные с бесконечной загрузкой
+ * Hook for infinite loading apartments
+ * @param filters - filters for the search
+ * @param options - options for the query
+ * @returns Data with infinite loading
  */
 export const useInfinityApartments = (
   filters: Omit<ApartmentsFilters, 'skip'> & { take?: number },
@@ -22,45 +23,40 @@ export const useInfinityApartments = (
   const query = useInfiniteQuery({
     queryKey: ['apartments', 'infinite', filters],
     queryFn: async ({ pageParam = 0 }) => {
-      const result = await apartmentsApi.get({
+      const result = await api.get({
         ...filters,
         skip: pageParam * take,
         take,
       });
       return result.data;
     },
-    getNextPageParam: (lastPage: BaseListResult<ExtendedApartment>, pages) => {
-      const hasMore = lastPage.items.length === take;
-      return hasMore ? pages.length : undefined;
+    getNextPageParam: (last_page: BaseListResult<ExtendedApartment>, pages) => {
+      const has_more = last_page.items.length === take;
+      return has_more ? pages.length : undefined;
     },
     initialPageParam: 0,
     enabled: options?.enabled !== false,
   });
 
-  // Плоский массив всех квартир
+  // Flat array of all apartments
   const apartments = useMemo(() => {
     return query.data?.pages.flatMap(page => page.items) || [];
   }, [query.data]);
 
-  // Функция для загрузки следующей страницы
+  // Function to load the next page
   const loadMore = useCallback(() => {
     if (query.hasNextPage && !query.isFetchingNextPage) {
       query.fetchNextPage();
     }
   }, [query.hasNextPage, query.isFetchingNextPage, query.fetchNextPage]);
 
-  // Общее количество элементов (из первой страницы)
-  const totalCount = query.data?.pages[0]?.total || 0;
+  // Total number of elements (from the first page)
+  const total_count = query.data?.pages[0]?.total || 0;
 
   return {
     apartments,
-    totalCount,
-    isLoading: query.isLoading,
-    isFetchingNextPage: query.isFetchingNextPage,
-    hasNextPage: query.hasNextPage,
+    total_count,
     loadMore,
-    refetch: query.refetch,
-    error: query.error,
-    isError: query.isError,
+    ...query,
   };
 };

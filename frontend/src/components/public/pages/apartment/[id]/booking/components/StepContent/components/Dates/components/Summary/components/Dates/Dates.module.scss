@@ -1,0 +1,23 @@
+@use "@/components/styles/_variables.scss" as *;
+
+
+.dates {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  flex-wrap: wrap;
+
+  &>svg {
+    color: $foreground-secondary;
+    font-size: $font-size-sm;
+  }
+
+  .date {
+    background: $background-light;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: $foreground-main;
+  }
+}

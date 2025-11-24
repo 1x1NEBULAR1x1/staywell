@@ -1,0 +1,13 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $primary-dark;
+  }
+}

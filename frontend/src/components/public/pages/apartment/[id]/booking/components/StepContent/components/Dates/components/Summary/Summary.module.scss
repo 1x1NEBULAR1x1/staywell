@@ -1,0 +1,39 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.summary {
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $box-shadow;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $primary-dark;
+  }
+
+  .nights {
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+    margin-left: $spacing-xs;
+  }
+
+  .placeholder {
+    color: $foreground-light;
+    font-style: italic;
+  }
+
+  .guests_count {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-normal;
+    color: $foreground-main;
+  }
+
+  .error {
+    color: $red;
+    font-size: $font-size-sm;
+  }
+}

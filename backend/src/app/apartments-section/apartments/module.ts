@@ -5,6 +5,8 @@ import {
   ListService,
   AvailabilityService,
   AvailableListService,
+  DatesConfigService,
+  EventsConfigService,
 } from './services';
 import { CheckService } from './services/check.service';
 
@@ -16,12 +18,16 @@ import { CheckService } from './services/check.service';
     CheckService,
     AvailabilityService,
     AvailableListService,
+    DatesConfigService,
+    EventsConfigService,
   ],
   exports: [
     CrudService,
     ListService,
     AvailabilityService,
     AvailableListService,
+    DatesConfigService,
+    EventsConfigService,
   ],
 })
 export class ApartmentsModule {}

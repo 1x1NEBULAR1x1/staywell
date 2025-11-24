@@ -5,17 +5,17 @@ import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
 import { query_client } from '@/lib/api';
 import { AuthApi } from '@/lib/api/services';
-import type { User } from '@shared/src';
+import type { User, UserWithoutPassword } from '@shared/src';
 import { isAxiosError } from 'axios';
 
 export interface AccountContextType {
-  user: User | null;
+  user: UserWithoutPassword | null;
   is_loading: boolean;
   is_error: boolean;
   is_authenticated: boolean;
   error: unknown;
   refetch: () => void;
-  updateUser: (userData: Partial<User>) => void;
+  updateUser: (userData: Partial<UserWithoutPassword>) => void;
   clearUser: () => void;
 }
 
@@ -47,7 +47,7 @@ const shouldDisableQueries = (pathname: string): boolean => {
  * Провайдер контекста пользователя
  */
 export const AccountProvider = ({ children, disable_auth = false }: { children: ReactNode, disable_auth?: boolean }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserWithoutPassword | null>(null);
   const api = new AuthApi()
   const pathname = usePathname();
   const should_disable_auth = shouldDisableQueries(pathname) || disable_auth;
@@ -97,7 +97,7 @@ export const AccountProvider = ({ children, disable_auth = false }: { children: 
     if (user) {
       const updated_user = { ...user, ...data };
       setUser(updated_user);
-      query_client.setQueryData(api.query_keys.account(), data);
+      query_client.setQueryData(api.query_keys.account(), updated_user);
     }
   };
 

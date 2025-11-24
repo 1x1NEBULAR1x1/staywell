@@ -6,7 +6,8 @@ import { SortDirection, BaseFiltersOptions } from '@shared/src/common';
  * Contains common pagination and sorting parameters
  */
 export class BaseFiltersDto<T extends { id: string }>
-  implements BaseFiltersOptions<T> {
+  implements BaseFiltersOptions<T>
+{
   @ToInt({
     required: false,
     min: 0,

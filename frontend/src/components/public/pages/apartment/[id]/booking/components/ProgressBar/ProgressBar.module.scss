@@ -1,0 +1,62 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.progress_bar {
+  position: relative;
+
+  .line {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 70%;
+    height: 2px;
+    background-color: $border-color-input;
+  }
+
+  .options {
+    display: flex;
+    z-index: 1;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: $spacing-xl;
+  }
+
+  .option {
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .icon_container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $font-size-4xl;
+      height: $font-size-4xl;
+      background-color: $background-main;
+      border-radius: 9999px;
+      border: $border-normal;
+      box-shadow: $box-shadow-sm;
+
+      .icon {
+        width: 60%;
+        height: 60%;
+      }
+
+
+    }
+
+    .label {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+    }
+
+    &.completed {
+      .icon_container {
+        background-color: $green;
+        color: $foreground-white;
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@use "@/components/styles/_variables.scss" as *;
+
+
+
+.pricing {
+  border-top: $border-normal;
+  padding-top: $spacing-md;
+  margin-top: $spacing-md;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-xs 0;
+    font-size: $font-size-lg;
+    color: $foreground-main;
+
+    &:last-of-type {
+      border-top: $border-normal;
+      margin-top: $spacing-xs;
+      padding-top: $spacing-sm;
+    }
+  }
+
+  .row_total {
+    @extend .row;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-xl;
+    color: $primary-main;
+  }
+}

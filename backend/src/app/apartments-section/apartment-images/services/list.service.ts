@@ -5,7 +5,7 @@ import { ApartmentImagesFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   customFilters(options: ApartmentImagesFiltersDto) {
     const { apartment_id, description, search, name } = options;
@@ -28,23 +28,16 @@ export class ListService {
    * @param filters Filter params and pagination
    * @returns Filtered list of apartment images
    */
-  async findAll({
-    take,
-    skip,
-    ...filters
-  }: ApartmentImagesFiltersDto): Promise<BaseListResult<ApartmentImage>> {
-    const query_options = this.prisma.buildQuery(
-      { ...filters, take, skip },
-      'created',
-      'created',
-      (filters: ApartmentImagesFiltersDto) => this.customFilters(filters),
-    );
-    const { items, total } =
-      await this.prisma.findWithPagination<ApartmentImage>(
-        this.prisma.apartmentImage,
-        query_options,
-        { apartment: true },
-      );
+  async findAll(filters: ApartmentImagesFiltersDto): Promise<BaseListResult<ApartmentImage>> {
+    const query_options = this.prisma.buildQuery<ApartmentImage>({
+      filters,
+      customFilters: this.customFilters,
+    });
+    const { items, total } = await this.prisma.findWithPagination<ApartmentImage>({
+      model: this.prisma.apartmentImage,
+      query_options,
+    });
+    const { take, skip } = query_options;
     return { items, total, skip, take };
   }
 }

@@ -21,7 +21,7 @@ export const Recomendations = () => {
   } = useInfinityApartments({
     ...filters,
     take: 12,
-    is_available: true, // Показываем только доступные квартиры
+    is_available: true,
   });
 
   useEffect(() => {

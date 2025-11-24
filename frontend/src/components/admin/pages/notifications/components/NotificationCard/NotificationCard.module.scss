@@ -1,0 +1,141 @@
+@use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
+
+.notification_row {
+  &>td {
+    padding: $spacing-md;
+  }
+
+  &.unread {
+    background-color: rgba($primary-light, 0.05);
+  }
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($foreground-secondary, 0.05);
+    }
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    color: $foreground-secondary;
+  }
+
+  .action_icon {
+    width: 16px;
+    height: 16px;
+    color: $foreground-secondary;
+    margin-right: $spacing-sm;
+  }
+
+  .notification_type_container {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .notification_type {
+      color: $foreground-main;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      font-family: var(--font-open-sans);
+    }
+  }
+
+  .notification_action {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    span {
+      color: $foreground-main;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  .notification_message {
+    color: $foreground-main;
+    font-size: $font-size-sm;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .notification_read_status {
+    color: $foreground-white !important;
+    padding: $spacing-xs $spacing-lg;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm !important;
+    font-weight: $font-weight-semibold;
+    max-width: 8rem;
+
+    &.read {
+      background-color: $green;
+    }
+
+    &.unread {
+      background-color: $yellow;
+    }
+  }
+
+  .notification_created {
+    color: $foreground-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-light;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: space-between;
+  }
+
+  .checkbox {
+    width: $font-size-md;
+    height: $font-size-md;
+    background-color: $background-main;
+    accent-color: $primary-main;
+    cursor: pointer;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: space-between;
+  }
+
+  .action_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $font-size-2xl;
+    height: $font-size-2xl;
+    border: $border-normal;
+    border-radius: $border-radius-sm;
+    background-color: $background-main;
+    color: $foreground-secondary;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $primary-light;
+      color: $foreground-white;
+      border-color: $primary-main;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &.delete_button {
+      &:hover {
+        background-color: color.adjust($red, $lightness: -10%);
+        border-color: $red;
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ import { Redis, RedisOptions } from 'ioredis';
       provide: 'REDIS_CONNECTION',
       useFactory: (configService: ConfigService) => {
         const redis: Redis = new Redis({
+          username: configService.get('REDIS_USER'),
           host: configService.get('REDIS_HOST'),
           port: configService.get('REDIS_PORT', 6379),
           password: configService.get('REDIS_PASSWORD'),
@@ -44,4 +45,4 @@ import { Redis, RedisOptions } from 'ioredis';
   ],
   exports: ['REDIS_CONNECTION', RedisService],
 })
-export class RedisModule {}
+export class RedisModule { }

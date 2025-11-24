@@ -1,0 +1,59 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-lg $spacing-xl;
+  border-bottom: $border-normal;
+  background-color: $background-main;
+
+  &_left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &_avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+
+  &_info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_name {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  &_actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &_action_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
+    color: $foreground-secondary;
+    cursor: pointer;
+    border-radius: $border-radius-md;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: $background-light;
+      color: $foreground-main;
+    }
+  }
+}

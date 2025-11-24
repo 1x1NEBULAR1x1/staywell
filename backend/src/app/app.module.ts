@@ -29,4 +29,4 @@ import { UserActivityInterceptor, UserActivityService } from 'src/lib/common';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

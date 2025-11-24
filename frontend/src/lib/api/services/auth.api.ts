@@ -17,6 +17,7 @@ const AUTH_PATHS = {
   me: `${ENDPOINT}/me`,
   refresh: `${ENDPOINT}/refresh`,
   wsToken: `${ENDPOINT}/ws-token`,
+  changePassword: `${ENDPOINT}/change-password`,
 } as const;
 
 /**
@@ -59,5 +60,9 @@ export class AuthApi {
 
   async logout() {
     await api.post(AUTH_PATHS.logout)
+  }
+
+  async changePassword(data: { current_password: string; new_password: string }): Promise<{ message: string }> {
+    return (await api.post<{ message: string }>(AUTH_PATHS.changePassword, data)).data;
   }
 }

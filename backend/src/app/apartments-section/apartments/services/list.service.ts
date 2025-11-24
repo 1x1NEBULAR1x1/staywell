@@ -1,17 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { Prisma, Apartment } from '@shared/src/database';
+import { Prisma, Apartment, User, Role } from '@shared/src/database';
 import { ApartmentsFiltersDto } from '../dto';
-import {
-  ApartmentsData,
-  ApartmentWithPrice,
-} from '@shared/src/types/apartments-section';
-import { BaseFiltersOptions } from '@shared/src/common/base-types/base-filters-options.type';
+import { ApartmentWithPrice, ExtendedApartment } from '@shared/src/types/apartments-section';
 import { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
+import { SAFE_USER_SELECT, USER_WITHOUT_PASSWORD_SELECT } from '@shared/src';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   customFilters = (options: ApartmentsFiltersDto) => {
     const {
@@ -75,42 +72,66 @@ export class ListService {
    * @param filters Filter and pagination parameters
    * @returns Filtered list of apartments with pagination metadata
    */
-  async findAll({
-    take,
-    skip,
-    ...filters
-  }: ApartmentsFiltersDto): Promise<BaseListResult<ApartmentWithPrice>> {
-    const query_options = this.prisma.buildQuery<Apartment>(
-      { ...filters, take, skip },
-      'created',
-      'created',
-      this.customFilters,
-    );
+  async list({
+    filters,
+    user,
+  }: {
+    filters: ApartmentsFiltersDto;
+    user?: User;
+  }): Promise<BaseListResult<ApartmentWithPrice>> {
+    const query_options = this.prisma.buildQuery<Apartment>({
+      filters,
+      customFilters: this.customFilters,
+    });
 
-    const apartments_data: ApartmentsData =
-      (await this.prisma.findWithPagination<Apartment>(
-        this.prisma.apartment,
-        query_options,
-        {
-          images: true,
-          apartment_beds: { include: { bed_type: true } },
-          apartment_amenities: { include: { amenity: true } },
-          booking_variants: {
-            where: {
-              is_available: true,
-              ...(filters.min_price !== undefined && {
-                price: { gte: filters.min_price },
-              }),
-              ...(filters.max_price !== undefined && {
-                price: { lte: filters.max_price },
-              }),
-            },
-          },
+    const { items, total } = await this.prisma.findWithPagination<ExtendedApartment>({
+      model: this.prisma.apartment,
+      query_options,
+      include: {
+        images: true,
+        reviews: { include: { user: { select: SAFE_USER_SELECT } } },
+        apartment_beds: { include: { bed_type: true } },
+        apartment_amenities: { include: { amenity: true } },
+        // Admins can see reservations
+        ...(user?.role === Role.ADMIN
+          ? {
+            reservations: {
+              include: { user: { select: USER_WITHOUT_PASSWORD_SELECT } }
+            }
+          } : {}
+        ),
+        // See only available booking variants for the current filters
+        booking_variants: {
+          // Admins can see bookings
+          ...(user?.role === Role.ADMIN
+            ? {
+              bookings: {
+                include: {
+                  user: { select: USER_WITHOUT_PASSWORD_SELECT },
+                  transaction: true,
+                  booking_additional_options: { include: { additional_option: true } },
+                  booking_variant: true,
+                }
+              }
+            } : {
+              where: {
+                is_available: true,
+                ...(filters.min_price !== undefined && {
+                  price: { gte: filters.min_price },
+                }),
+                ...(filters.max_price !== undefined && {
+                  price: { lte: filters.max_price },
+                }),
+              },
+            }
+          ),
+
         },
-      )) as ApartmentsData;
+      },
+    });
 
     const apartments_with_price: ApartmentWithPrice[] =
-      apartments_data.items.map((apartment) => {
+      items.map((apartment) => {
         if (
           !apartment.booking_variants ||
           apartment.booking_variants.length === 0
@@ -143,12 +164,12 @@ export class ListService {
         (apartment) => apartment.cheapest_variant !== null,
       );
     }
-
+    const { take, skip } = query_options;
     return {
       items: filtered_apartments,
-      total: apartments_data.total,
-      skip: query_options.skip,
-      take: query_options.take,
+      total,
+      skip,
+      take,
     };
   }
 }

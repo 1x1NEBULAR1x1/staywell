@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { SAFE_USER_SELECT } from '@shared/src';
+import { BaseListResult, SAFE_USER_SELECT } from '@shared/src';
 import { Prisma, TransferDetail, User, Role } from '@shared/src/database';
 import { TransferDetailsFiltersDto } from '../dto';
 
@@ -9,7 +9,7 @@ import { TransferDetailsFiltersDto } from '../dto';
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   customFilters(
     options: TransferDetailsFiltersDto,
@@ -23,7 +23,7 @@ export class ListService {
       filters.account_number = {
         contains: account_number,
         mode: 'insensitive',
-      } as Prisma.StringFilter;
+      };
     if (swift) filters.swift = { contains: swift, mode: 'insensitive' };
     if (payer_name)
       filters.payer_name = { contains: payer_name, mode: 'insensitive' };
@@ -35,32 +35,24 @@ export class ListService {
    * @returns Paginated list of transfer details with total count
    */
   async findAll({
+    filters: filtersDto,
     user,
-    filters,
   }: {
     filters: TransferDetailsFiltersDto;
     user: User;
-  }) {
-    const final_filters =
-      user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
-    delete final_filters.is_excluded;
-    const query_options = this.prisma.buildQuery<TransferDetail>(
-      final_filters,
-      'created',
-      'created',
-      this.customFilters,
-    );
-    const { items, total } =
-      await this.prisma.findWithPagination<TransferDetail>(
-        this.prisma.transferDetail,
-        query_options,
-        { user: { select: SAFE_USER_SELECT } },
-      );
-    return {
-      items,
-      total,
-      skip: query_options.skip,
-      take: query_options.take,
-    };
+  }): Promise<BaseListResult<TransferDetail>> {
+    const user_id = user.role === Role.ADMIN ? filtersDto.user_id : user.id;
+    const { is_excluded, ...filters } = { ...filtersDto, user_id };
+    const query_options = this.prisma.buildQuery<TransferDetail>({
+      filters,
+      customFilters: this.customFilters
+    });
+    const { items, total } = await this.prisma.findWithPagination<TransferDetail>({
+      model: this.prisma.transferDetail,
+      query_options,
+      include: { user: { select: SAFE_USER_SELECT } },
+    });
+    const { take, skip } = query_options;
+    return { items, total, skip, take };
   }
 }

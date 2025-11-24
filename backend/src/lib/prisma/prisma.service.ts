@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { BaseFiltersOptions, SortDirection } from '@shared/src/common';
-import { PrismaClient } from '@shared/src/database';
+import { Prisma, PrismaClient } from '@shared/src/database';
 
 /**
  * Service for interacting with the database through Prisma ORM
@@ -30,16 +30,16 @@ export class PrismaService
    * @param custom_filters Additional custom filter transformations
    * @returns Object with skip, take, where and orderBy parameters for Prisma queries
    */
-  buildQuery<T extends { id: string }>(
-    options: BaseFiltersOptions<T>,
-    default_sort_field: keyof T = 'created' as keyof T,
-    date_field: keyof T = 'created' as keyof T,
-    customFilters?: (options: BaseFiltersOptions<T>) => Record<string, unknown>,
-  ): {
+  buildQuery<T extends { id: string, created: Date }>({ filters, default_sort_field = 'created', date_field = 'created', customFilters }: {
+    filters: BaseFiltersOptions<T>,
+    default_sort_field?: keyof T,
+    date_field?: keyof T,
+    customFilters?: (query: BaseFiltersOptions<T>) => Record<string, unknown>,
+  }): {
     skip: number;
     take: number;
     where: Partial<T>;
-    order_by: Record<string, string>;
+    order_by: { [key: string]: SortDirection; }
   } {
     const {
       skip: skip_value = 0,
@@ -48,21 +48,18 @@ export class PrismaService
       sort_direction = SortDirection.desc,
       start_date,
       end_date,
-      ...filters
-    } = options;
+      ...query
+    } = filters;
 
     const skip = Number(skip_value);
     const take = Number(take_value);
 
-    if ('skip' in filters) delete filters.skip;
-    if ('take' in filters) delete filters.take;
-
-    // Фильтруем пустые строки и undefined значения
+    // Clean empty strings and undefined values
     const cleanFilters = Object.fromEntries(
-      Object.entries(filters).filter(([, value]: [string, unknown]) => {
-        // Исключаем пустые строки, undefined, null
+      Object.entries(query).filter(([, value]: [string, unknown]) => {
+        // Exclude empty strings, undefined, null
         if (value === undefined || value === null || value === '') return false;
-        // Для строк также проверяем после trim()
+        // Also check for empty strings after trim()
         if (typeof value === 'string' && value.trim() === '') return false;
         return true;
       }),
@@ -70,28 +67,31 @@ export class PrismaService
 
     let where: Partial<T> = cleanFilters as Partial<T>;
 
-    if (customFilters) where = { ...where, ...customFilters(options) };
+    if (customFilters) where = { ...where, ...customFilters({ skip, take, ...query }) };
+
 
     if (start_date || end_date) {
       const dateFilters: Record<string, unknown> = {};
 
       if (start_date && end_date) {
-        dateFilters[date_field as string] = { gte: start_date, lte: end_date };
+        dateFilters[String(date_field)] = { gte: start_date, lte: end_date };
       } else if (start_date) {
-        dateFilters[date_field as string] = { gte: start_date };
+        dateFilters[String(date_field)] = { gte: start_date };
       } else if (end_date) {
-        dateFilters[date_field as string] = { lte: end_date };
+        dateFilters[String(date_field)] = { lte: end_date };
       }
       where = { ...where, ...dateFilters };
     }
+
+    if ('skip' in where) delete where.skip;
+    if ('take' in where) delete where.take;
+    if ('search' in where) delete where.search;
 
     return {
       skip,
       take,
       where,
-      order_by: sort_field
-        ? { [sort_field]: sort_direction }
-        : { [default_sort_field]: sort_direction },
+      order_by: { [sort_field ?? default_sort_field]: sort_direction }
     };
   }
 
@@ -102,19 +102,19 @@ export class PrismaService
    * @param include Relationships to include in the results
    * @returns Object with items and total count
    */
-  async findWithPagination<T = any>(
+  async findWithPagination<T>({ model, query_options, include = {} }: {
     model: {
-      findMany: (options: any) => Promise<T[]>;
-      count: (options: any) => Promise<number>;
+      findMany: Function;
+      count: Function;
     },
     query_options: {
       skip: number;
       take: number;
       where: unknown;
-      order_by: unknown;
+      order_by: { [key: string]: SortDirection; };
     },
-    include: Record<string, unknown> = {},
-  ): Promise<{ items: T[]; total: number }> {
+    include?: Record<string, unknown>
+  }): Promise<{ items: T[]; total: number }> {
     const { skip, take, where, order_by } = query_options;
 
     if (where && typeof where === 'object') {
@@ -135,7 +135,7 @@ export class PrismaService
     ]);
 
     return {
-      items: items,
+      items: items as T[],
       total: count,
     };
   }

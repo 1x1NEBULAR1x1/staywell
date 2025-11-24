@@ -1,0 +1,178 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.general_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .header_section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+  }
+
+  .info_section {
+    padding: $spacing-lg;
+    background: $background-light;
+    border-radius: $border-radius-lg;
+    border: $border-normal;
+
+    .section_title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0 0 $spacing-md 0;
+      padding-bottom: $spacing-sm;
+      border-bottom: $border-normal;
+    }
+
+    .description {
+      font-size: $font-size-md;
+      color: $foreground-secondary;
+      line-height: 1.6;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
+    .schedule_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: $spacing-md;
+
+      .schedule_item {
+        display: flex;
+        gap: $spacing-md;
+        padding: $spacing-md;
+        background: $background-main;
+        border-radius: $border-radius-md;
+        border: $border-normal;
+
+        .schedule_icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: $border-radius-md;
+          background: $primary-light;
+          color: $primary-main;
+          flex-shrink: 0;
+        }
+
+        .schedule_content {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-xs;
+
+          .schedule_label {
+            font-size: $font-size-sm;
+            color: $foreground-secondary;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: $font-weight-semibold;
+          }
+
+          .schedule_value {
+            font-size: $font-size-md;
+            color: $foreground-main;
+            font-weight: $font-weight-semibold;
+          }
+
+          .schedule_time {
+            font-size: $font-size-sm;
+            color: $primary-main;
+            font-weight: $font-weight-semibold;
+          }
+        }
+      }
+    }
+
+    .guide_card {
+      display: flex;
+      gap: $spacing-md;
+      padding: $spacing-md;
+      background: $background-main;
+      border-radius: $border-radius-md;
+      border: $border-normal;
+
+      .guide_avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: $primary-light;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        .guide_initials {
+          font-size: $font-size-xl;
+          font-weight: $font-weight-semibold;
+          color: $primary-main;
+        }
+      }
+
+      .guide_info {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+
+        .guide_name {
+          font-size: $font-size-lg;
+          font-weight: $font-weight-semibold;
+          color: $foreground-main;
+          margin: 0;
+        }
+
+        .guide_email,
+        .guide_phone {
+          font-size: $font-size-md;
+          color: $foreground-secondary;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .stats_section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-md;
+
+    .stat_card {
+      padding: $spacing-lg;
+      background: $background-light;
+      border-radius: $border-radius-lg;
+      border: $border-normal;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .stat_header {
+        .stat_label {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-weight: $font-weight-semibold;
+        }
+      }
+
+      .stat_value {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        color: $primary-main;
+      }
+
+      .stat_hint {
+        font-size: $font-size-sm;
+        color: $foreground-secondary;
+      }
+    }
+  }
+}
+

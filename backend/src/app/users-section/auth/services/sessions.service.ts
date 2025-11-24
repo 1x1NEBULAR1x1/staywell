@@ -11,7 +11,7 @@ export class SessionsService {
   constructor(
     private readonly redis: RedisService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   /**
    * Create new session in Redis
@@ -90,7 +90,11 @@ export class SessionsService {
     try {
       const session = JSON.parse(data) as SessionData;
       session.expires = new Date(Date.now() + ttl_milliseconds).toISOString();
-      await this.redis.setex(session_key, ttl_milliseconds, JSON.stringify(session));
+      await this.redis.setex(
+        session_key,
+        ttl_milliseconds,
+        JSON.stringify(session),
+      );
       return true;
     } catch (error) {
       console.error('Session refresh error:', error);

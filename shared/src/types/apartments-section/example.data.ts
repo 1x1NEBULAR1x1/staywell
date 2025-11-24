@@ -2,6 +2,7 @@ import { BaseListResult } from "../../common";
 import { ApartmentImage, BedType, Amenity, ApartmentAmenity, ApartmentBed, Review, Apartment, ApartmentType } from "../../database";
 import { ExtendedAmenity, ExtendedApartmentAmenity, ExtendedApartmentBed, ExtendedApartment, AvailableApartment, ApartmentAvailabilityResult } from "./extended.types";
 import { example_booking_variant } from "../bookings-section";
+import { example_safe_user } from "../users-section";
 
 
 export const example_apartment_amenity: ApartmentAmenity = {
@@ -174,7 +175,10 @@ export const example_extended_apartment: ExtendedApartment = {
   apartment_amenities: [example_extended_apartment_amenity],
   images: [example_apartment_image],
   booking_variants: [example_booking_variant],
-  reviews: [example_review],
+  reviews: [{
+    ...example_review,
+    user: example_safe_user,
+  }],
   cheapest_variant: example_booking_variant,
   availability: example_apartment_availability_result,
   reservations: [],

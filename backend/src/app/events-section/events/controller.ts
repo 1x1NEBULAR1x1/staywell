@@ -26,7 +26,7 @@ export class EventsController {
   constructor(
     private readonly crudService: CrudService,
     private readonly listService: ListService,
-  ) {}
+  ) { }
 
   @Post()
   @AdminOnly()

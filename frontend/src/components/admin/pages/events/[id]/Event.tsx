@@ -1,18 +1,44 @@
 'use client';
 
+import { useState } from 'react';
+import { ExtendedEvent } from '@shared/src/types';
 import { useModel } from '@/hooks/admin/queries/useModel';
-import { ExtendedEvent } from '@shared/src';
-
-import { EventData } from './components';
 import { AdminPage } from '@/components/admin/common/AdminPage';
+import { EventSidebar, GeneralTab, GalleryTab, BookingsTab } from './components';
+import classes from './Event.module.scss';
+import { usePId } from '@/hooks/common/useId';
 
-export const Event = ({ id, initial_data }: { id: string, initial_data: ExtendedEvent }) => {
-  const { data: event, refetch } = useModel('EVENT').find(id, { initial_data: { data: initial_data } });
-  if (!event) return null;
+export type EventTab = 'general' | 'gallery' | 'bookings';
 
-  return (
-    <AdminPage title='Event'>
-      <EventData event_id={id} />
+export const Event = () => {
+  const { data: event } = useModel('EVENT').find(usePId());
+  const [activeTab, setActiveTab] = useState<EventTab>('general');
+
+  const renderTabContent = (event: ExtendedEvent) => {
+    switch (activeTab) {
+      case 'general':
+        return <GeneralTab event={event} />;
+      case 'gallery':
+        return <GalleryTab event={event} />;
+      case 'bookings':
+        return <BookingsTab event={event} />;
+      default:
+        return null;
+    }
+  };
+
+  return !!event && (
+    <AdminPage title={`${event.name} - Event`}>
+      <div className={classes.event_page}>
+        <EventSidebar
+          event={event}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+        <div className={classes.content}>
+          {renderTabContent(event)}
+        </div>
+      </div>
     </AdminPage>
   );
 }

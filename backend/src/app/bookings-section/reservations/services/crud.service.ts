@@ -5,12 +5,14 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import { USER_WITHOUT_PASSWORD_SELECT } from '@shared/src';
-import { Prisma, User, Role, Reservation } from '@shared/src/database';
+import { Prisma, User, Role, Reservation, NotificationAction, Notification, NotificationType } from '@shared/src/database';
 import { CreateReservationDto, UpdateReservationDto } from '../dto';
 
 @Injectable()
 export class CrudService {
   constructor(private prisma: PrismaService) { }
+
+  notification_type = NotificationType.RESERVATION;
 
   private async checkUser(id: string) {
     if (!(await this.prisma.user.findFirst({ where: { id } })))
@@ -67,6 +69,17 @@ export class CrudService {
       this.checkUser(user_id),
       this.checkOverlappingReservations(data),
     ]);
+
+    let action: NotificationAction = 'NEW'
+
+    const notification = {
+      type: this.notification_type,
+      action,
+      message: `New reservation created`,
+    }
+
+    await this.prisma.notification.createMany({ data: [{ ...notification, user_id }, { ...notification }] });
+
     return await this.prisma.reservation.create({
       data: { ...data, user_id },
       include: {
@@ -126,6 +139,15 @@ export class CrudService {
         apartment_id: reservation.apartment_id,
       });
     }
+
+    const notification = {
+      type: this.notification_type,
+      action: NotificationAction.UPDATE,
+      message: `Reservation updated`,
+    };
+
+    await this.prisma.notification.createMany({ data: [{ ...notification, user_id }, { ...notification }] });
+
     return await this.prisma.reservation.update({
       where: { id },
       data: { ...data, user_id },
@@ -142,6 +164,15 @@ export class CrudService {
    */
   async remove({ id, user }: { id: string; user: User }) {
     await this.findOne({ id, user });
+
+    const notification = {
+      type: this.notification_type,
+      action: NotificationAction.CANCEL,
+      message: `Reservation cancelled`,
+    };
+
+    await this.prisma.notification.createMany({ data: [{ ...notification, user_id: user.id }, { ...notification }] });
+
     return await this.prisma.reservation.delete({ where: { id } });
   }
 }

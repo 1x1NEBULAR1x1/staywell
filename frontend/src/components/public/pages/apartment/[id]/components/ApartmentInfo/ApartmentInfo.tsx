@@ -25,7 +25,7 @@ export const ApartmentInfo = ({ apartment }: { apartment: ExtendedApartment }) =
               <span className={classes.price_period}>per Day</span>
             </div>
 
-            <Link href={`/apartments/${apartment.id}/book`} className={classes.book_button}>
+            <Link href={`/apartments/${apartment.id}/booking/dates`} className={classes.book_button}>
               Book Now
             </Link>
           </div>

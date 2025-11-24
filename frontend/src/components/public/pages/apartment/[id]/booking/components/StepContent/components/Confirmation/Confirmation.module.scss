@@ -1,0 +1,532 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.header {
+  text-align: center;
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #212529;
+    }
+
+    svg {
+      color: $primary-main;
+    }
+  }
+
+  .subtitle {
+    margin: 0;
+    font-size: 16px;
+    color: #6c757d;
+    line-height: 1.5;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bookingDetails {
+  h3 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #212529;
+  }
+
+  .detailCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  .detailCard {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+
+    .cardIcon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $primary-main;
+    }
+
+    .cardContent {
+      flex: 1;
+      min-width: 0;
+
+      h4 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #212529;
+      }
+
+      p {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        color: #6c757d;
+        line-height: 1.4;
+      }
+
+      .nights,
+      .price {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: $primary-main;
+      }
+    }
+  }
+}
+
+.totalSummary {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px solid #e9ecef;
+
+  .totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .totalLabel {
+      font-size: 18px;
+      font-weight: 600;
+      color: #212529;
+    }
+
+    .totalAmount {
+      font-size: 20px;
+      font-weight: 700;
+      color: $primary-main;
+    }
+  }
+}
+
+.terms {
+  h4 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #212529;
+  }
+
+  .termItems {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .termItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #6c757d;
+
+    svg {
+      color: #28a745;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.confirmation {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  text-align: center;
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #212529;
+  }
+
+  >p {
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    color: #6c757d;
+  }
+
+  .slider {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background: #f8f9fa;
+    border-radius: 30px;
+    border: 2px solid #e9ecef;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    margin-bottom: 16px;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: $primary-main;
+    }
+
+    &.dragging {
+      cursor: grabbing;
+      border-color: $primary-main;
+      box-shadow: 0 0 20px rgba($primary-main, 0.3);
+    }
+
+    .sliderTrack {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: linear-gradient(90deg, $primary-main 0%, lighten($primary-main, 10%) 100%);
+      border-radius: 28px;
+      transition: width 0.1s ease;
+      z-index: 1;
+    }
+
+    .sliderThumb {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 2;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+
+      svg {
+        color: $primary-main;
+        transition: color 0.2s ease;
+      }
+
+      .slider.dragging & {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        transform: scale(1.05);
+      }
+    }
+
+    .sliderText {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+
+      span {
+        font-weight: 600;
+        color: #6c757d;
+        transition: color 0.2s ease;
+
+        .slider.dragging & {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .confirmButton {
+    width: 100%;
+    padding: 12px 24px;
+    background: $primary-main;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: darken($primary-main, 10%);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.success {
+  text-align: center;
+  padding: 40px 20px;
+
+  .successIcon {
+    margin-bottom: 24px;
+    color: #28a745;
+
+    svg {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  h2 {
+    margin: 0 0 16px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #212529;
+  }
+
+  >p {
+    margin: 0 0 32px 0;
+    font-size: 16px;
+    color: #6c757d;
+    line-height: 1.5;
+  }
+
+  .bookingSummary {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+
+    .summaryItem {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #6c757d;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      svg {
+        color: $primary-main;
+        flex-shrink: 0;
+      }
+
+      span {
+        font-weight: 500;
+        color: #212529;
+      }
+    }
+  }
+
+  .nextSteps {
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto;
+
+    h3 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #212529;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #6c757d;
+        line-height: 1.4;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #6c757d;
+
+  svg {
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 400px;
+  }
+}
+
+// Анимации
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success {
+  animation: slideIn 0.5s ease-out;
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+    gap: 24px;
+  }
+
+  .header {
+    .title {
+      flex-direction: column;
+      gap: 8px;
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+
+    .subtitle {
+      font-size: 14px;
+    }
+  }
+
+  .bookingDetails {
+    .detailCards {
+      grid-template-columns: 1fr;
+    }
+
+    .detailCard {
+      padding: 16px;
+    }
+  }
+
+  .confirmation {
+    padding: 20px;
+
+    h3 {
+      font-size: 18px;
+    }
+
+    .slider {
+      height: 50px;
+
+      .sliderThumb {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  .success {
+    padding: 32px 16px;
+
+    h2 {
+      font-size: 24px;
+    }
+
+    .bookingSummary {
+      padding: 20px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .bookingDetails {
+    .detailCard {
+      flex-direction: column;
+      text-align: center;
+      gap: 12px;
+
+      .cardIcon {
+        align-self: center;
+      }
+    }
+  }
+
+  .totalSummary {
+    padding: 16px;
+
+    .totalRow {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+
+  .terms {
+    .termItems {
+      gap: 12px;
+    }
+  }
+
+  .confirmation {
+    padding: 16px;
+
+    .slider {
+      height: 48px;
+
+      .sliderThumb {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  }
+}

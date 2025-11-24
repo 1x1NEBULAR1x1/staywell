@@ -26,7 +26,7 @@ export class ReviewsController {
   constructor(
     private readonly crudService: CrudService,
     private readonly listService: ListService,
-  ) {}
+  ) { }
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -47,7 +47,7 @@ export class ReviewsController {
   @ApiOperation({ summary: 'Get reviews by filters' })
   @ApiResponse({ status: 200, example: example_reviews_list_result })
   findAll(@Query() filters: ReviewsFiltersDto) {
-    return this.listService.findAll(filters);
+    return this.listService.findAll({ filters });
   }
 
   @Get(':id')

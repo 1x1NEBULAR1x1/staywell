@@ -5,6 +5,7 @@ import type { UserWithoutPassword } from '@shared/src';
 
 import Image from 'next/image';
 import { Shimmer } from '@/components/styles';
+import { getImageUrl } from '@/lib/api';
 
 type UserDataProps = {
   user: UserWithoutPassword | null
@@ -13,7 +14,7 @@ type UserDataProps = {
 export const UserData = ({ user }: UserDataProps) => (
   <>
     <Shimmer show_animation={!user} className={classes.image_container}>
-      <Image src={user && user.image ? user.image : default_avatar.src} alt="Default Avatar" quality={100} height={45} width={45} className={classes.image} />
+      <Image src={getImageUrl(user?.image) ?? default_avatar.src} alt="Default Avatar" quality={100} height={45} width={45} className={classes.image} />
     </Shimmer>
     <div className={classes.info_container}>
       <Shimmer show_animation={!user} className={classes.account_name}>{user?.email}</Shimmer>

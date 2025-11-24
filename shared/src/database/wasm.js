@@ -132,6 +132,7 @@ exports.Prisma.UserScalarFieldEnum = {
   is_active: 'is_active',
   email_verified: 'email_verified',
   phone_verified: 'phone_verified',
+  email_notifications: 'email_notifications',
   role: 'role',
   created: 'created',
   updated: 'updated'
@@ -143,7 +144,9 @@ exports.Prisma.NotificationScalarFieldEnum = {
   action: 'action',
   message: 'message',
   user_id: 'user_id',
+  object_id: 'object_id',
   is_read: 'is_read',
+  is_excluded: 'is_excluded',
   created: 'created',
   updated: 'updated'
 };
@@ -401,7 +404,10 @@ exports.NotificationType = exports.$Enums.NotificationType = {
 };
 
 exports.NotificationAction = exports.$Enums.NotificationAction = {
+  CONFIRM: 'CONFIRM',
   UPDATE: 'UPDATE',
+  CANCEL: 'CANCEL',
+  COMPLETE: 'COMPLETE',
   NEW: 'NEW'
 };
 

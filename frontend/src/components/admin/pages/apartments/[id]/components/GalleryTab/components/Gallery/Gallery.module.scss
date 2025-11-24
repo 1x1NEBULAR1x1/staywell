@@ -286,7 +286,8 @@
   justify-content: center;
   background: $background-light;
   color: $foreground-secondary;
-  border: 2px dashed $border-color-main;
+  border: $border-normal;
+  border-style: dashed;
   border-radius: $border-radius-md;
   cursor: pointer;
   transition: all $transition-fast;

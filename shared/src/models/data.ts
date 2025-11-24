@@ -17,7 +17,8 @@ export const CRUDDABLE_DATA = {
   TRANSFER_DETAIL: "transfer-details",
   CARD_DETAIL: "card-details",
   BOOKING_EVENT: "booking-events",
-  BOOKING_ADDITIONAL_OPTION: "booking-additional-options"
+  BOOKING_ADDITIONAL_OPTION: "booking-additional-options",
+  NOTIFICATION: "notifications"
 } as const;
 
 export type CRUDDABLE_NAMES = keyof typeof CRUDDABLE_DATA;

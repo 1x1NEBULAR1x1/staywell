@@ -1,5 +1,5 @@
 import { Role } from '@shared/src/database';
-import { ToBoolean, ToEnum, ToString, ToUrl } from 'src/lib/common';
+import { ToBoolean, ToDate, ToEnum, ToString, ToUrl } from 'src/lib/common';
 import { UpdateUser, AdminUpdateUser } from '@shared/src/types/users-section';
 
 export class UpdateUserDto implements UpdateUser {
@@ -48,6 +48,20 @@ export class UpdateUserDto implements UpdateUser {
     example: 'https://example.com/avatar.jpg',
   })
   image?: string;
+
+  @ToDate({
+    required: false,
+    description: 'Date of birth',
+    example: '1990-01-01',
+  })
+  date_of_birth?: Date;
+
+  @ToBoolean({
+    required: false,
+    description: 'Email notifications enabled',
+    example: true
+  })
+  email_notifications?: boolean;
 }
 
 export class AdminUpdateUserDto

@@ -4,13 +4,25 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { Prisma, User } from '@shared/src/database';
+import {
+  BookingStatus,
+  NotificationAction,
+  NotificationType,
+  Prisma,
+  Role,
+  User,
+} from '@shared/src/database';
 import { CreateBookingDto, UpdateBookingDto } from '../dto';
-import { ExtendedBooking } from '@shared/src/types/bookings-section';
+import {
+  EXTENDED_BOOKING_INCLUDE,
+  ExtendedBooking,
+} from '@shared/src/types/bookings-section';
 
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
+
+  notification_type = NotificationType.BOOKING;
 
   private async checkBookingVariant(id?: string) {
     if (id && !(await this.prisma.bookingVariant.findUnique({ where: { id } })))
@@ -45,22 +57,26 @@ export class CrudService {
     user: User;
     data: CreateBookingDto;
   }): Promise<ExtendedBooking> {
+    const user_id = user.role === Role.ADMIN ? data.user_id : user.id;
     await Promise.all([
       this.checkBookingVariant(data.booking_variant_id),
       this.checkTransaction(data.transaction_id),
-      this.checkUser(user.id),
+      this.checkUser(user_id),
     ]);
     // Create booking
     const booking = await this.prisma.booking.create({
-      data: { ...data, user_id: user.id },
-      include: {
-        user: true,
-        transaction: true,
-        booking_additional_options: true,
-        booking_variant: { include: { apartment: true } },
-      },
+      data: { ...data, user_id },
+      include: EXTENDED_BOOKING_INCLUDE,
     });
-    return booking as unknown as ExtendedBooking; //TODO TYPE ERROR HERE
+    // Create notifications: one for user, one global
+    const notification = {
+      type: this.notification_type,
+      action: NotificationAction.NEW,
+      message: `New booking created for ${booking.user.email}`,
+    };
+
+    await this.prisma.notification.createMany({ data: [{ ...notification, user_id }, { ...notification }] });
+    return booking;
   }
   /**
    * Finds a booking by ID
@@ -72,13 +88,7 @@ export class CrudService {
   ): Promise<ExtendedBooking> {
     const booking = await this.prisma.booking.findUnique({
       where,
-      include: {
-        user: true,
-        booking_variant: { include: { apartment: true } },
-        transaction: true,
-        booking_additional_options: { include: { additional_option: true } },
-        reviews: true,
-      },
+      include: EXTENDED_BOOKING_INCLUDE,
     });
     if (!booking) throw new NotFoundException('Booking not found');
     return booking;
@@ -95,16 +105,27 @@ export class CrudService {
       this.checkBookingVariant(data.booking_variant_id),
       this.checkTransaction(data.transaction_id, true),
     ]);
-    return (await this.prisma.booking.update({
+
+    const booking = await this.prisma.booking.update({
       where: { id },
       data,
-      include: {
-        user: true,
-        booking_variant: { include: { apartment: true } },
-        transaction: true,
-        booking_additional_options: true,
-      },
-    })) as unknown as ExtendedBooking; //TODO TYPE ERROR HERE
+      include: EXTENDED_BOOKING_INCLUDE,
+    });
+    // Determine notification action
+    let action: NotificationAction = NotificationAction.UPDATE;
+    if (data.status === BookingStatus.CONFIRMED)
+      action = NotificationAction.CONFIRM;
+    if (data.status === BookingStatus.COMPLETED)
+      action = NotificationAction.COMPLETE;
+
+    const notification = {
+      type: this.notification_type,
+      action,
+      message: `Booking updated for ${booking.id}`,
+    };
+    // Create notifications: one for user, one global
+    await this.prisma.notification.createMany({ data: [{ ...notification, user_id: booking.user_id }, { ...notification }] });
+    return booking;
   }
   /**
    * Deletes a booking
@@ -112,8 +133,14 @@ export class CrudService {
    * @returns Success message
    */
   async remove(id: string): Promise<{ message: string }> {
-    await this.findOne({ id });
+    const booking = await this.findOne({ id });
     await this.prisma.booking.delete({ where: { id } });
+    const notification = {
+      type: this.notification_type,
+      action: NotificationAction.CANCEL,
+      message: `Booking cancelled`,
+    };
+    await this.prisma.notification.createMany({ data: [{ ...notification, user_id: booking.user_id }, { ...notification }] });
     return { message: 'Booking has been removed successfully' };
   }
 }

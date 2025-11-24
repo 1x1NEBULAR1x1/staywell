@@ -8,7 +8,8 @@ import {
 
 export class UsersFiltersDto
   extends BaseFiltersDto<UserWithoutPassword>
-  implements UsersFilters {
+  implements UsersFilters
+{
   @ToEnum({
     required: false,
     description: 'By role',

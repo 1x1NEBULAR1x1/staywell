@@ -14,9 +14,12 @@ import { AuthService } from './services/auth.service';
 import { CrudService } from '../users/services';
 import { ConfigService } from '@nestjs/config';
 
-import { RequestWithCookies, UserWithoutPassword } from '@shared/src/types/users-section';
+import {
+  RequestWithCookies,
+  UserWithoutPassword,
+} from '@shared/src/types/users-section';
 
-import { LoginDto, RegisterDto } from './dto';
+import { LoginDto, RegisterDto, ChangePasswordDto } from './dto';
 
 import { AuthenticatedRequest, JwtAuthGuard, Auth } from 'src/lib/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -30,7 +33,7 @@ export class AuthController {
     private readonly auth: AuthService,
     private readonly crud: CrudService,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
 
   @Post('register')
   @ApiOperation({ summary: 'Registration of a new user' })
@@ -131,6 +134,16 @@ export class AuthController {
     }
 
     return { token };
+  }
+
+  @Post('change-password')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Change user password' })
+  async changePassword(
+    @Auth() user: UserWithoutPassword,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ) {
+    return await this.auth.changePassword(user.id, changePasswordDto);
   }
 
   private getClientIp(req: Request): string {

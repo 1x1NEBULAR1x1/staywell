@@ -20,7 +20,8 @@ export const example_user: UserWithoutPassword = {
   email_verified: true,
   phone_verified: true,
   phone_number: "+12345678901",
-  role: Role.USER
+  role: Role.USER,
+  email_notifications: true,
 };
 
 export const example_users_list_result: BaseListResult<UserWithoutPassword> = {

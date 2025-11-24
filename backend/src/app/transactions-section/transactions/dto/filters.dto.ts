@@ -10,7 +10,8 @@ import { ToEnum } from 'src/lib/common';
 
 export class TransactionsFiltersDto
   extends BaseFiltersDto<Transaction>
-  implements TransactionsFilters {
+  implements TransactionsFilters
+{
   @ToUUID({
     required: false,
     description: 'User ID',

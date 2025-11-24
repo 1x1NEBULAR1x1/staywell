@@ -1,17 +1,33 @@
-import { Amenity, Apartment, ApartmentAmenity, BedType, Review, ApartmentBed, BookingVariant, Booking, Reservation, ApartmentImage } from "../../database";
+import { Amenity, Apartment, ApartmentAmenity, BedType, Review, ApartmentBed, BookingVariant, Booking, Reservation, ApartmentImage, Prisma } from "../../database";
+import { ExtendedBooking, ExtendedReservation } from "../bookings-section";
 import { SafeUser } from "../users-section";
 export interface ExtendedAmenity extends Amenity {
     apartment_amenities: ApartmentAmenity[];
 }
+export declare const EXTENDED_APARTMENT_INCLUDE: {
+    readonly apartment_amenities: true;
+};
 export interface ExtendedApartmentAmenity extends ApartmentAmenity {
     amenity: Amenity;
 }
+export declare const EXTENDED_APARTMENT_AMENITY_INCLUDE: {
+    readonly amenity: true;
+};
 export interface ExtendedApartmentBed extends ApartmentBed {
     bed_type: BedType;
 }
+export declare const EXTENDED_APARTMENT_BED_INCLUDE: {
+    readonly bed_type: true;
+};
 export type ExtendedReview = Review & {
     user: SafeUser;
-    apartment: Apartment;
+    apartment?: Apartment;
+};
+export declare const EXTENDED_REVIEW_INCLUDE: {
+    readonly user: {
+        readonly select: Prisma.UserSelect<import("src/database/runtime/library").DefaultArgs>;
+    };
+    readonly apartment: true;
 };
 export type AvailableApartment = Apartment & {
     price: number;
@@ -27,9 +43,11 @@ export type ExtendedApartment = AvailableApartment & {
     })[];
     images: ApartmentImage[];
     booking_variants: BookingVariant[];
-    reviews: Review[];
+    reviews: ExtendedReview[];
     cheapest_variant: BookingVariant | null;
     availability: ApartmentAvailabilityResult;
+    reservations: ExtendedReservation[];
+    bookings: ExtendedBooking[];
 };
 export type ApartmentAvailabilityResult = {
     is_available: boolean;

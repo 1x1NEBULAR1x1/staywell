@@ -1,0 +1,21 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.chat_tab {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  &_header {
+    padding: $spacing-xl;
+    border-bottom: $border-normal;
+    background-color: $background-main;
+  }
+
+  &_title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+    margin: 0;
+  }
+}

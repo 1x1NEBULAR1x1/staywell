@@ -4,7 +4,7 @@ import { Socket } from 'socket.io';
 
 @Injectable()
 export class WebsocketAuthGuard implements CanActivate {
-  constructor(private readonly auth: WebsocketAuthService) { }
+  constructor(private readonly auth: WebsocketAuthService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const client: Socket = context.switchToWs().getClient<Socket>();

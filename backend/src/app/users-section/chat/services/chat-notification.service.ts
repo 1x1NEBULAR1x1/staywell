@@ -22,7 +22,10 @@ export class ChatNotificationService {
       return;
     }
 
-    const room_name = this.getChatRoomName(message.sender_id, message.receiver_id);
+    const room_name = this.getChatRoomName(
+      message.sender_id,
+      message.receiver_id,
+    );
     this.server.to(room_name).emit('new_message', { message });
 
     // Notify all admins that chats list might need to be updated
@@ -36,7 +39,10 @@ export class ChatNotificationService {
   async notifyMessageEdited(message: Message): Promise<void> {
     if (!this.server) return;
 
-    const room_name = this.getChatRoomName(message.sender_id, message.receiver_id);
+    const room_name = this.getChatRoomName(
+      message.sender_id,
+      message.receiver_id,
+    );
     this.server.to(room_name).emit('message_edited', { message });
   }
 
@@ -46,14 +52,22 @@ export class ChatNotificationService {
   async notifyMessageDeleted(message: Message): Promise<void> {
     if (!this.server) return;
 
-    const room_name = this.getChatRoomName(message.sender_id, message.receiver_id);
-    this.server.to(room_name).emit('message_deleted', { message_id: message.id });
+    const room_name = this.getChatRoomName(
+      message.sender_id,
+      message.receiver_id,
+    );
+    this.server
+      .to(room_name)
+      .emit('message_deleted', { message_id: message.id });
   }
 
   /**
    * Notify about messages read
    */
-  async notifyMessagesRead(reader_id: string, chat_partner_id: string): Promise<void> {
+  async notifyMessagesRead(
+    reader_id: string,
+    chat_partner_id: string,
+  ): Promise<void> {
     if (!this.server) return;
 
     const room_name = this.getChatRoomName(reader_id, chat_partner_id);
@@ -66,7 +80,10 @@ export class ChatNotificationService {
   /**
    * Notify about user online status change
    */
-  async notifyUserOnlineStatus(user_id: string, last_seen: Date | null): Promise<void> {
+  async notifyUserOnlineStatus(
+    user_id: string,
+    last_seen: Date | null,
+  ): Promise<void> {
     if (!this.server) return;
 
     // Notify all connected admins

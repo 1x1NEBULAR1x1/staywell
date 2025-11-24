@@ -4,7 +4,8 @@ import { BookingsFilters } from '@shared/src/types/bookings-section';
 
 export class BookingsFiltersDto
   extends BaseFiltersDto<Booking>
-  implements BookingsFilters {
+  implements BookingsFilters
+{
   @ToEnum({
     required: false,
     description: 'Booking status',

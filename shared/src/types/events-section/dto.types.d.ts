@@ -16,6 +16,7 @@ export type EventsFilters = BaseFiltersOptions<Event> & {
 export type CreateEvent = Omit<CreativeOmit<Event>, 'guide_id'> & {
     image?: string;
     file?: File;
+    guide_id?: string;
 };
 export type UpdateEvent = Partial<CreateEvent> & {
     is_excluded?: boolean;

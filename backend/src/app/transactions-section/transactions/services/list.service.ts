@@ -9,7 +9,7 @@ import { TransactionsFiltersDto } from '../dto';
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   customFilters = (options: TransactionsFiltersDto) => {
     const {
@@ -50,34 +50,23 @@ export class ListService {
    */
   async findAll({
     user,
-    filters,
+    filters: filtersDto,
   }: {
     filters: TransactionsFiltersDto;
     user: User;
   }) {
-    const final_filters =
-      user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
-    delete final_filters.is_excluded;
-    const query_options = this.prisma.buildQuery<Transaction>(
-      final_filters,
-      'created',
-      'created',
-      this.customFilters,
-    );
-    const { items, total } = await this.prisma.findWithPagination<Transaction>(
-      this.prisma.transaction,
+    const user_id = user.role === Role.ADMIN ? filtersDto.user_id : user.id;
+    const filters = { ...filtersDto, user_id };
+    const query_options = this.prisma.buildQuery<Transaction>({
+      filters,
+      customFilters: this.customFilters,
+    });
+    const { items, total } = await this.prisma.findWithPagination<Transaction>({
+      model: this.prisma.transaction,
       query_options,
-      {
-        user: { select: SAFE_USER_SELECT },
-        card_detail: true,
-        transfer_detail: true,
-      },
-    );
-    return {
-      items,
-      total,
-      skip: query_options.skip,
-      take: query_options.take,
-    };
+      include: { user: { select: SAFE_USER_SELECT }, card_detail: true, transfer_detail: true },
+    });
+    const { take, skip } = query_options;
+    return { items, total, skip, take };
   }
 }

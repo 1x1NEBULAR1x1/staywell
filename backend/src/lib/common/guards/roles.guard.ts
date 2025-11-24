@@ -11,7 +11,7 @@ import { AuthenticatedRequest } from '@shared/src/types/users-section';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) { }
+  constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
     const required_roles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [

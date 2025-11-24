@@ -122,7 +122,7 @@ exports.example_reservation = {
 exports.example_extended_reservation = {
     ...exports.example_reservation,
     apartment: example_apartment,
-    user: users_section_1.example_safe_user
+    user: users_section_1.example_user
 };
 exports.example_extended_reservations_list_result = {
     items: [exports.example_extended_reservation],

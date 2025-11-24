@@ -144,7 +144,7 @@
       color: $foreground-white;
 
       &:hover:not(:disabled) {
-        background: color.mix($green, $foreground-white, 10%);
+        background: rgba($green, 0.9);
       }
 
       &:disabled {

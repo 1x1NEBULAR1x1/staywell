@@ -8,7 +8,7 @@ export class ChatConnectionService {
   constructor(
     private readonly redis: RedisService,
     private readonly userActivityService: UserActivityService,
-  ) { }
+  ) {}
 
   /**
    * Add connected user to chat

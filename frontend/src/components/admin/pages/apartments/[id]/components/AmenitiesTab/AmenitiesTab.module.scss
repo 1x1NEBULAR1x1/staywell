@@ -119,7 +119,8 @@
       color: $foreground-secondary;
       background: $background-main;
       border-radius: $border-radius-md;
-      border: 2px dashed $border-color-main;
+      border: $border-normal;
+      border-style: dashed;
 
       p {
         margin: 0;

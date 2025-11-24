@@ -17,7 +17,7 @@ import {
   DeleteMessageDto,
   GetHistoryDto,
   GetChatsDto,
-  JoinChatDto
+  JoinChatDto,
 } from './dto';
 
 @WebSocketGateway({ namespace: '/chat' })
@@ -27,7 +27,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private readonly chatWebsocketService: ChatWebsocketService,
     private readonly authService: WebsocketAuthService,
-  ) { }
+  ) {}
 
   afterInit() {
     // Set server in service after WebSocket initialization
@@ -36,7 +36,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     // Apply authentication middleware to this namespace
     this.server.use(async (socket, next) => {
       try {
-        const token = this.authService.extractTokenFromHandshake(socket.handshake);
+        const token = this.authService.extractTokenFromHandshake(
+          socket.handshake,
+        );
 
         if (!token) {
           return next(new Error('Authentication error'));
@@ -146,7 +148,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       const message = await this.chatWebsocketService.sendMessage(user, data);
       client.emit('message_sent', { message });
     } catch (error: any) {
-      client.emit('error', { message: error.message || 'Failed to send message' });
+      client.emit('error', {
+        message: error.message || 'Failed to send message',
+      });
     }
   }
 
@@ -162,7 +166,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       const message = await this.chatWebsocketService.editMessage(user, data);
       client.emit('message_edited', { message });
     } catch (error: any) {
-      client.emit('error', { message: error.message || 'Failed to edit message' });
+      client.emit('error', {
+        message: error.message || 'Failed to edit message',
+      });
     }
   }
 
@@ -178,7 +184,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       await this.chatWebsocketService.deleteMessage(user, data);
       client.emit('message_deleted', { message_id: data.message_id });
     } catch (error: any) {
-      client.emit('error', { message: error.message || 'Failed to delete message' });
+      client.emit('error', {
+        message: error.message || 'Failed to delete message',
+      });
     }
   }
 
@@ -191,10 +199,18 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     if (!user) return;
 
     try {
-      const history = await this.chatWebsocketService.getMessageHistory(user, data);
-      client.emit('history_loaded', { ...history, chat_partner_id: data.chat_partner_id });
+      const history = await this.chatWebsocketService.getMessageHistory(
+        user,
+        data,
+      );
+      client.emit('history_loaded', {
+        ...history,
+        chat_partner_id: data.chat_partner_id,
+      });
     } catch (error: any) {
-      client.emit('error', { message: error.message || 'Failed to load history' });
+      client.emit('error', {
+        message: error.message || 'Failed to load history',
+      });
     }
   }
 
@@ -206,12 +222,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const user = (client.data as { user: UserWithoutPassword }).user;
     if (!user) return;
 
-
     try {
       const chats = await this.chatWebsocketService.getChats(user, data);
       client.emit('chats_loaded', chats);
     } catch (error: any) {
-      client.emit('error', { message: error.message || 'Failed to load chats' });
+      client.emit('error', {
+        message: error.message || 'Failed to load chats',
+      });
     }
   }
 
@@ -224,9 +241,14 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     if (!user) return;
 
     try {
-      await this.chatWebsocketService.markMessagesAsRead(user, data.chat_partner_id);
+      await this.chatWebsocketService.markMessagesAsRead(
+        user,
+        data.chat_partner_id,
+      );
     } catch (error: any) {
-      client.emit('error', { message: error.message || 'Failed to mark messages as read' });
+      client.emit('error', {
+        message: error.message || 'Failed to mark messages as read',
+      });
     }
   }
 

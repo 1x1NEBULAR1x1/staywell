@@ -17,6 +17,7 @@ export declare const CRUDDABLE_DATA: {
     readonly CARD_DETAIL: "card-details";
     readonly BOOKING_EVENT: "booking-events";
     readonly BOOKING_ADDITIONAL_OPTION: "booking-additional-options";
+    readonly NOTIFICATION: "notifications";
 };
 export type CRUDDABLE_NAMES = keyof typeof CRUDDABLE_DATA;
 export type CRUDDABLE_PATHS = typeof CRUDDABLE_DATA[CRUDDABLE_NAMES];
@@ -41,6 +42,7 @@ export declare const GETTABLE_DATA: {
     readonly CARD_DETAIL: "card-details";
     readonly BOOKING_EVENT: "booking-events";
     readonly BOOKING_ADDITIONAL_OPTION: "booking-additional-options";
+    readonly NOTIFICATION: "notifications";
 };
 export type GETTABLE_NAMES = keyof typeof GETTABLE_DATA;
 export type GETTABLE_PATHS = typeof GETTABLE_DATA[GETTABLE_NAMES];

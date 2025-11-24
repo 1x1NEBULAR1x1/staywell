@@ -16,7 +16,7 @@
   <tr>
     <td style="border: 1px solid #ddd; padding: 12px;">Пользователь</td>
     <td style="border: 1px solid #ddd; padding: 12px;">код</td>
-    <td style="border: 1px solid #ddd; padding: 12px;">В процессе</td>
+    <td style="border: 1px solid #ddd; padding: 12px;">Готово</td>
   </tr>
   <tr>
     <td style="border: 1px solid #ddd; padding: 12px;">Чат</td>
@@ -55,12 +55,12 @@
   </tr>
   <tr>
     <td style="border: 1px solid #ddd; padding: 12px;">Уведомления</td>
-    <td style="border: 1px solid #ddd; padding: 12px;">дизайн + код</td>
+    <td style="border: 1px solid #ddd; padding: 12px;">В процессе</td>
     <td style="border: 1px solid #ddd; padding: 12px;"></td>
   </tr>
   <tr>
     <td style="border: 1px solid #ddd; padding: 12px;">Дашборд</td>
-    <td style="border: 1px solid #ddd; padding: 12px;">дизайн + код</td>
+    <td style="border: 1px solid #ddd; padding: 12px;">что там будет? + дизайн + код</td>
     <td style="border: 1px solid #ddd; padding: 12px;"></td>
   </tr>
 </table>

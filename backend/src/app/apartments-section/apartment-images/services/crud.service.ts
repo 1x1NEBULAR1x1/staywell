@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import { CreateApartmentImageDto, UpdateApartmentImageDto } from '../dto';
 import { FilesService } from 'src/lib/files';
@@ -8,7 +12,7 @@ export class CrudService {
   constructor(
     private prisma: PrismaService,
     private filesService: FilesService,
-  ) { }
+  ) {}
 
   private async checkApartment(id: string) {
     if (!(await this.prisma.apartment.findUnique({ where: { id } })))

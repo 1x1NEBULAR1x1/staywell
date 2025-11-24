@@ -6,7 +6,8 @@ import { BookingStatus } from '@shared/src/database';
 
 export class UpdateBookingDto
   extends PartialType(CreateBookingDto)
-  implements UpdateBooking {
+  implements UpdateBooking
+{
   @ToEnum({
     required: false,
     description: 'Status',

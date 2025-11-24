@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import { CardDetail, Prisma, User, Role } from '@shared/src/database';
 import { BaseListResult } from '@shared/src/common';
+import { SAFE_USER_SELECT } from '@shared/src/types/users-section';
 import { CardDetailsFiltersDto } from '../dto';
 
 /**
@@ -9,7 +10,7 @@ import { CardDetailsFiltersDto } from '../dto';
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   customFilters(options: CardDetailsFiltersDto) {
     const { user_id, holder, start, end } = options;
@@ -33,29 +34,23 @@ export class ListService {
    */
   async findAll({
     user,
-    filters,
+    filters: filtersDto,
   }: {
     filters: CardDetailsFiltersDto;
     user: User;
   }): Promise<BaseListResult<CardDetail>> {
-    const final_filters =
-      user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
-    const query_options = this.prisma.buildQuery<CardDetail>(
-      final_filters,
-      'created',
-      'created',
-      this.customFilters,
-    );
-    const { items, total } = await this.prisma.findWithPagination<CardDetail>(
-      this.prisma.cardDetail,
+    const user_id = user.role === Role.ADMIN ? filtersDto.user_id : user.id;
+    const filters = { ...filtersDto, user_id };
+    const query_options = this.prisma.buildQuery<CardDetail>({
+      filters,
+      customFilters: this.customFilters,
+    });
+    const { items, total } = await this.prisma.findWithPagination<CardDetail>({
+      model: this.prisma.cardDetail,
       query_options,
-      { user: true },
-    );
-    return {
-      items,
-      total,
-      skip: query_options.skip,
-      take: query_options.take,
-    };
+      include: { user: { select: SAFE_USER_SELECT } },
+    });
+    const { take, skip } = query_options;
+    return { items, total, skip, take };
   }
 }

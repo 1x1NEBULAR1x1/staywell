@@ -3,7 +3,7 @@ import { PrismaService } from 'src/lib/prisma';
 import { BookingAdditionalOption, Prisma, User } from '@shared/src/database';
 import { BookingAdditionalOptionsFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common';
-import { ExtendedBookingAdditionalOption } from '@shared/src/types/bookings-section';
+import { EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE, ExtendedBookingAdditionalOption } from '@shared/src/types/bookings-section';
 import { CheckService } from './check.service';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class ListService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly checkService: CheckService,
-  ) {}
+  ) { }
 
   customFilters(options: BookingAdditionalOptionsFiltersDto) {
     const { booking_id, option_id, min_amount, max_amount } = options;
@@ -27,26 +27,20 @@ export class ListService {
    * @param filterDto Filter and pagination parameters
    * @returns List of booking options with pagination metadata
    */
-  async findAll({
-    take,
-    skip,
-    ...filters
-  }: BookingAdditionalOptionsFiltersDto): Promise<
+  async findAll(filters: BookingAdditionalOptionsFiltersDto): Promise<
     BaseListResult<ExtendedBookingAdditionalOption>
   > {
-    const query_options = this.prisma.buildQuery(
-      { take, skip, ...filters },
-      'created',
-      'created',
-      (filters: BookingAdditionalOptionsFiltersDto) =>
-        this.customFilters(filters),
-    );
+    const query_options = this.prisma.buildQuery<BookingAdditionalOption>({
+      filters,
+      customFilters: this.customFilters,
+    });
     const { items, total } =
-      (await this.prisma.findWithPagination<BookingAdditionalOption>(
-        this.prisma.bookingAdditionalOption,
+      await this.prisma.findWithPagination<ExtendedBookingAdditionalOption>({
+        model: this.prisma.bookingAdditionalOption,
         query_options,
-        { additional_option: true },
-      )) as { items: ExtendedBookingAdditionalOption[]; total: number };
+        include: EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE,
+      });
+    const { take, skip } = query_options;
     return { items, total, skip, take };
   }
 

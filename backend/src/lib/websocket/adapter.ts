@@ -11,7 +11,9 @@ export class AuthenticatedIoAdapter extends IoAdapter {
     private readonly corsOrigin: string = (() => {
       const origin = process.env.FRONTEND_URL;
       if (!origin) {
-        throw new Error('FRONTEND_URL is not defined in the environment variables');
+        throw new Error(
+          'FRONTEND_URL is not defined in the environment variables',
+        );
       }
       return origin;
     })(),

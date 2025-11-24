@@ -11,7 +11,8 @@ import { ApartmentType, Apartment } from '@shared/src/database';
 
 export class ApartmentsFiltersDto
   extends BaseFiltersDto<Apartment>
-  implements ApartmentsFilters {
+  implements ApartmentsFilters
+{
   @ToDecimal({
     required: false,
     description: 'Minimum price',

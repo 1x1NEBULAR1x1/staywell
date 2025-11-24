@@ -1,0 +1,49 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.select {
+  width: 100%;
+  padding: $spacing-sm;
+  border: $border-normal;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-lg;
+  background: $background-main;
+  color: $foreground-main;
+  margin-bottom: $spacing-sm;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-main;
+  }
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-sm;
+
+  .details {
+    flex: 1;
+
+    .name {
+      display: block;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+      margin-bottom: $spacing-xs;
+    }
+
+
+    .note {
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+    }
+  }
+
+  .price {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-normal;
+    color: $foreground-main;
+    text-align: right;
+  }
+}

@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as argon2 from 'argon2';
 import { PrismaService } from 'src/lib/prisma';
-import { LoginDto, RegisterDto } from '../dto';
+import { LoginDto, RegisterDto, ChangePasswordDto } from '../dto';
 import { CrudService } from '../../users/services';
 import { SessionsService } from '.';
 
@@ -146,6 +146,38 @@ export class AuthService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password_hash, ...user_without_password } = user;
     return user_without_password;
+  }
+
+  async changePassword(user_id: string, data: ChangePasswordDto) {
+    // Find user with password hash
+    const user = await this.prisma.user.findUnique({
+      where: { id: user_id },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    // Verify current password
+    const is_current_password_valid = await this.comparePasswords(
+      data.current_password,
+      user.password_hash,
+    );
+
+    if (!is_current_password_valid) {
+      throw new UnauthorizedException('Current password is incorrect');
+    }
+
+    // Hash new password
+    const new_hash = await argon2.hash(data.new_password);
+
+    // Update user password
+    await this.prisma.user.update({
+      where: { id: user_id },
+      data: { password_hash: new_hash },
+    });
+
+    return { message: 'Password changed successfully' };
   }
 
   private generateTokens(payload: {

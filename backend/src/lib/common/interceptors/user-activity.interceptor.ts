@@ -11,9 +11,7 @@ import { UserWithoutPassword } from '@shared/src';
 
 @Injectable()
 export class UserActivityInterceptor implements NestInterceptor {
-  constructor(
-    private readonly userActivityService: UserActivityService,
-  ) { }
+  constructor(private readonly userActivityService: UserActivityService) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
