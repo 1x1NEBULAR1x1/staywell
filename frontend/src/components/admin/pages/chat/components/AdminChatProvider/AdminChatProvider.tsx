@@ -9,8 +9,8 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { useAdminChat } from "@/hooks/admin/chat/lib/useAdminChat";
 import type { ChatWithLastMessage } from "@/hooks/admin/chat/lib";
+import { useAdminChat } from "@/hooks/admin/chat/lib/useAdminChat";
 
 interface AdminChatContextType {
   // Ui State
@@ -93,7 +93,9 @@ export const AdminChatProvider = ({ children }: AdminChatProviderProps) => {
   );
 
   return (
-    <AdminChatContext.Provider value={contextValue}>{children}</AdminChatContext.Provider>
+    <AdminChatContext.Provider value={contextValue}>
+      {children}
+    </AdminChatContext.Provider>
   );
 };
 

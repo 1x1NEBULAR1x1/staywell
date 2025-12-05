@@ -11,8 +11,18 @@ import {
 export class CheckService {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async checkBooking({ id, user_id }: { id?: string; user_id: string }) {
-    if (!(await this.prisma.booking.findFirst({ where: { id, user_id } })))
+  public async checkBooking({
+    booking_id,
+    user_id,
+  }: {
+    booking_id?: string;
+    user_id: string;
+  }) {
+    if (
+      !(await this.prisma.booking.findFirst({
+        where: { id: booking_id, user_id },
+      }))
+    )
       throw new NotFoundException('Booking not found');
   }
 
@@ -23,20 +33,22 @@ export class CheckService {
 
   public async checkBookingAdditionalOption({
     booking_id,
-    option_id,
+    additional_option_id,
   }: {
     booking_id?: string;
-    option_id?: string;
+    additional_option_id?: string;
   }) {
     if (
       booking_id &&
-      option_id &&
+      additional_option_id &&
       !(await this.prisma.bookingAdditionalOption.findUnique({
-        where: { booking_id_option_id: { booking_id, option_id } },
+        where: {
+          booking_id_additional_option_id: { booking_id, additional_option_id },
+        },
       }))
     )
       throw new ConflictException(
-        'This option is already added to the booking',
+        'This additional option is already added to the booking',
       );
   }
 

@@ -1,2 +1,1 @@
-export { BookingsList } from './BookingsList';
-
+export { BookingsList } from "./BookingsList";

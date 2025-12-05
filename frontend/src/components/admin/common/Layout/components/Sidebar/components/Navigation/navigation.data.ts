@@ -1,11 +1,11 @@
-import { GETTABLE_ICONS } from '@shared/src/models/icons';
-import { Command, LayoutList, MessageSquare, Settings } from 'lucide-react';
+import { GETTABLE_ICONS } from "@shared/src/models/icons";
+import { Command, LayoutList, MessageSquare, Settings } from "lucide-react";
 
 export type NavButtonProps = {
   icon: typeof Command;
   label: string;
   href: string;
-}
+};
 
 export const main_buttons: NavButtonProps[] = [
   {
@@ -35,10 +35,10 @@ export const main_buttons: NavButtonProps[] = [
   },
   {
     icon: LayoutList,
-    label: 'Management',
+    label: "Management",
     href: "/admin/management",
-  }
-]
+  },
+];
 
 export const secondary_buttons: NavButtonProps[] = [
   {
@@ -60,5 +60,5 @@ export const secondary_buttons: NavButtonProps[] = [
     icon: Settings,
     label: "Settings",
     href: "/admin/settings",
-  }
-]
+  },
+];

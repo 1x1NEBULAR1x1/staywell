@@ -1,0 +1,96 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.booking_list {
+  width: $container-width-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .booking_card {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-xl;
+    background-color: $background-main;
+    border: $border-normal;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-sm;
+    text-decoration: none;
+    color: inherit;
+    transition: $transition-normal;
+
+    &:hover {
+      box-shadow: $box-shadow;
+      transform: translateY(-2px);
+    }
+
+    .booking_info {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .booking_id {
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-lg;
+        color: $primary-dark;
+      }
+
+      .apartment_name {
+        font-weight: $font-weight-normal;
+        font-size: $font-size-md;
+        color: $foreground-main;
+      }
+
+      .booking_status {
+        font-weight: $font-weight-normal;
+        font-size: $font-size-sm;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius-xs;
+        width: fit-content;
+        text-transform: uppercase;
+
+        &[data-status="confirmed"] {
+          background-color: $green;
+          color: $foreground-white;
+        }
+
+        &[data-status="pending"] {
+          background-color: $yellow;
+          color: $foreground-main;
+        }
+
+        &[data-status="cancelled"] {
+          background-color: $red;
+          color: $foreground-white;
+        }
+      }
+    }
+
+    .booking_dates {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+
+      .check_in, .check_out {
+        font-weight: $font-weight-light;
+      }
+    }
+
+    .booking_amount {
+      font-weight: $font-weight-bold;
+      font-size: $font-size-xl;
+      color: $primary-main;
+      align-self: flex-end;
+    }
+  }
+}
+
+
+
+
+
+
+
+

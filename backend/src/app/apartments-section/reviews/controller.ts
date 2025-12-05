@@ -26,7 +26,7 @@ export class ReviewsController {
   constructor(
     private readonly crudService: CrudService,
     private readonly listService: ListService,
-  ) { }
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)

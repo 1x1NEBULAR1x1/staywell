@@ -1,14 +1,19 @@
-import classes from './Amenity.module.scss';
-import no_image from '@/../public/common/no-image.jpeg';
+import type { ExtendedApartmentAmenity } from "@shared/src";
+import { X } from "lucide-react";
+import Image from "next/image";
+import no_image from "@/../public/common/no-image.jpeg";
+import { ToolTip } from "@/components/styles";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import classes from "./Amenity.module.scss";
 
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { ExtendedApartmentAmenity } from '@shared/src';
-import { ToolTip } from '@/components/styles';
-import Image from 'next/image';
-import { X } from 'lucide-react';
-
-export const Amenity = ({ amenity, refetch }: { amenity: ExtendedApartmentAmenity, refetch: () => void }) => {
-  const delete_mutation = useModel('APARTMENT_AMENITY').remove(amenity.id);
+export const Amenity = ({
+  amenity,
+  refetch,
+}: {
+  amenity: ExtendedApartmentAmenity;
+  refetch: () => void;
+}) => {
+  const delete_mutation = useModel("APARTMENT_AMENITY").remove(amenity.id);
 
   const handleDeleteAmenity = async () => {
     await delete_mutation.mutateAsync();
@@ -37,5 +42,5 @@ export const Amenity = ({ amenity, refetch }: { amenity: ExtendedApartmentAmenit
         </button>
       </div>
     </div>
-  )
+  );
 };

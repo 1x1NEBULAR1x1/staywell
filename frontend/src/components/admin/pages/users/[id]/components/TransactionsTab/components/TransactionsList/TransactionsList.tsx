@@ -1,7 +1,11 @@
-import classes from './TransactionsList.module.scss';
-import { Transaction } from '@shared/src';
+import type { Transaction } from "@shared/src";
+import classes from "./TransactionsList.module.scss";
 
-export const TransactionsList = ({ transactions }: { transactions: Transaction[] }) => {
+export const TransactionsList = ({
+  transactions,
+}: {
+  transactions: Transaction[];
+}) => {
   if (transactions.length === 0) {
     return <p className={classes.empty}>No transactions found</p>;
   }
@@ -12,7 +16,9 @@ export const TransactionsList = ({ transactions }: { transactions: Transaction[]
         <div key={transaction.id} className={classes.transaction_item}>
           <div className={classes.transaction_header}>
             <span className={classes.amount}>${transaction.amount}</span>
-            <span className={`${classes.status} ${classes[transaction.transaction_status.toLowerCase()]}`}>
+            <span
+              className={`${classes.status} ${classes[transaction.transaction_status.toLowerCase()]}`}
+            >
               {transaction.transaction_status}
             </span>
           </div>
@@ -41,4 +47,3 @@ export const TransactionsList = ({ transactions }: { transactions: Transaction[]
     </div>
   );
 };
-

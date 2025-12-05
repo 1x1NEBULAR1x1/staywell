@@ -45,7 +45,7 @@ export class ApartmentsController {
     private readonly eventsConfigService: EventsConfigService,
     private readonly crudService: CrudService,
     private readonly listService: ListService,
-  ) { }
+  ) {}
 
   @Post()
   @AdminOnly()

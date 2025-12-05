@@ -9,17 +9,23 @@ export type CreateAmenity = CreativeOmit<Amenity> & { image?: string, file?: Fil
 export type UpdateAmenity = Partial<CreateAmenity> & { is_excluded?: boolean }
 
 export type ApartmentsFilters = BaseFiltersOptions<Apartment> & {
+  min_price?: number;
+  max_price?: number;
+  min_capacity?: number;
+  max_capacity?: number;
   number?: number;
   name?: string;
   description?: string;
   deposit?: number;
   floor?: number;
   rooms_count?: number;
-  max_capacity?: number;
   is_available?: boolean;
   is_smoking?: boolean;
   is_pet_friendly?: boolean;
   type?: ApartmentType;
+  start_date?: Date;
+  end_date?: Date;
+  guests?: number;
 }
 export type CreateApartment = CreativeOmit<Apartment> & { image?: string, file?: File }
 export type UpdateApartment = Partial<CreateApartment> & { is_excluded?: boolean }

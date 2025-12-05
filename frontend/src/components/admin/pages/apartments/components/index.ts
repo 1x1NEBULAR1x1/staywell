@@ -1,1 +1,1 @@
-export { ApartmentCard, ApartmentCardShimmer } from './ApartmentCard';
+export { ApartmentCard, ApartmentCardShimmer } from "./ApartmentCard";

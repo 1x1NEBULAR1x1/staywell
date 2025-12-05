@@ -26,7 +26,7 @@ export class EventsController {
   constructor(
     private readonly crudService: CrudService,
     private readonly listService: ListService,
-  ) { }
+  ) {}
 
   @Post()
   @AdminOnly()
@@ -52,7 +52,7 @@ export class EventsController {
     example: example_events_list_result,
   })
   async findAll(@Query() filters: EventsFiltersDto) {
-    return this.listService.findAll(filters);
+    return this.listService.get(filters);
   }
 
   @Get(':id')
@@ -63,8 +63,8 @@ export class EventsController {
     example: example_extended_event,
   })
   @ApiResponse({ status: 404, description: 'Event not found' })
-  async findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.crudService.findOne(id);
+  async find(@Param('id', ParseUUIDPipe) id: string) {
+    return this.crudService.find({ id });
   }
 
   @Put(':id')

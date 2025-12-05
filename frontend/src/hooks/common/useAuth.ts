@@ -1,16 +1,19 @@
-import { useState, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useAccount } from '@/components/common/providers/AccountContext';
-import { Login, Register } from '@shared/src';
-import { AuthApi } from '@/lib/api/services';
-import { isAxiosError } from 'axios';
+import type { Login, Register } from "@shared/src";
+import { useMutation } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAccount } from "@/components/common/providers/AccountContext";
+import { AuthApi } from "@/lib/api/services";
 
 export interface UseAuthReturn {
   login: (data: Login) => void;
   register: (data: Register) => void;
   logout: () => void;
-  changePassword: ReturnType<typeof useMutation>;
+  changePassword: (data: {
+    current_password: string;
+    new_password: string;
+  }) => void;
   clearAuthError: () => void;
   is_loading: boolean;
   is_account_loading: boolean;
@@ -25,8 +28,14 @@ export interface UseAuthReturn {
  * @returns Методы и состояния для работы с авторизацией
  */
 export const useAuth = (): UseAuthReturn => {
-  const authApi = new AuthApi()
-  const { clearUser, refetch: refetchUser, error, is_error, is_loading } = useAccount();
+  const authApi = new AuthApi();
+  const {
+    clearUser,
+    refetch: refetchUser,
+    error,
+    is_error,
+    is_loading,
+  } = useAccount();
   const router = useRouter();
   const [auth_error, setAuthError] = useState<string | null>(null);
   /**
@@ -39,10 +48,12 @@ export const useAuth = (): UseAuthReturn => {
       authApi.onSuccessLogin({ data, refetchUser, router });
     },
     onError: (error: unknown) => {
-      console.warn(error)
-      const errorMessage = isAxiosError(error) ? error.response?.data?.message : 'Ошибка входа в систему';
+      console.warn(error);
+      const errorMessage = isAxiosError(error)
+        ? error.response?.data?.message
+        : "Ошибка входа в систему";
       setAuthError(errorMessage);
-    }
+    },
   });
 
   /**
@@ -55,9 +66,11 @@ export const useAuth = (): UseAuthReturn => {
       authApi.onSuccessLogin({ data, refetchUser, router });
     },
     onError: (error: unknown) => {
-      const errorMessage = isAxiosError(error) ? error.response?.data?.message : 'Ошибка регистрации';
+      const errorMessage = isAxiosError(error)
+        ? error.response?.data?.message
+        : "Ошибка регистрации";
       setAuthError(errorMessage);
-    }
+    },
   });
 
   /**
@@ -70,15 +83,19 @@ export const useAuth = (): UseAuthReturn => {
       authApi.onSuccessLogout({ clearUser, router });
     },
     onError: (error: unknown) => {
-      const errorMessage = isAxiosError(error) ? error.response?.data?.message : 'Ошибка выхода из системы';
+      const errorMessage = isAxiosError(error)
+        ? error.response?.data?.message
+        : "Ошибка выхода из системы";
       setAuthError(errorMessage);
-    }
+    },
   });
 
   // Обновляем ошибку при изменении ошибок из AccountContext
   useEffect(() => {
     if (error && is_error) {
-      const errorMessage = isAxiosError(error) ? error.response?.data?.message : 'Ошибка аутентификации';
+      const errorMessage = isAxiosError(error)
+        ? error.response?.data?.message
+        : "Ошибка аутентификации";
       setAuthError(errorMessage);
     }
   }, [error, is_error]);
@@ -114,9 +131,11 @@ export const useAuth = (): UseAuthReturn => {
     mutationFn: authApi.changePassword,
     onError: (error: unknown) => {
       console.warn(error);
-      const errorMessage = isAxiosError(error) ? error.response?.data?.message : 'Ошибка смены пароля';
+      const errorMessage = isAxiosError(error)
+        ? error.response?.data?.message
+        : "Ошибка смены пароля";
       setAuthError(errorMessage);
-    }
+    },
   });
 
   /**
@@ -130,9 +149,17 @@ export const useAuth = (): UseAuthReturn => {
     login,
     register,
     logout,
-    changePassword: change_password_mutation,
+    changePassword: (data: {
+      current_password: string;
+      new_password: string;
+    }) => change_password_mutation.mutate(data),
     clearAuthError,
-    is_loading: is_loading || login_mutation.isPending || register_mutation.isPending || logout_mutation.isPending || change_password_mutation.isPending,
+    is_loading:
+      is_loading ||
+      login_mutation.isPending ||
+      register_mutation.isPending ||
+      logout_mutation.isPending ||
+      change_password_mutation.isPending,
     auth_error,
     is_account_loading: is_loading,
     is_login_loading: login_mutation.isPending,

@@ -1,0 +1,57 @@
+@use "@/components/styles/_variables.scss" as *;
+@use "sass:color";
+
+
+.confirmation {
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $box-shadow-md;
+  border: $border-normal;
+  text-align: center;
+
+  h3 {
+    margin: 0 0 $spacing-sm 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $primary-dark;
+  }
+
+  >p {
+    margin: 0 0 $spacing-lg 0;
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+  }
+
+  .confirmButton {
+    width: 100%;
+    padding: $spacing-sm $spacing-lg;
+    background: $primary-main;
+    color: $foreground-white;
+    border: none;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: all $transition-normal;
+
+    &:hover {
+      background: color.adjust($primary-main, $lightness: -10%);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .confirmation {
+    padding: $spacing-md;
+
+    h3 {
+      font-size: $font-size-lg;
+    }
+  }
+}

@@ -1,2 +1,2 @@
-export { NotificationCard, NotificationCardShimmer } from './NotificationCard';
-export { BulkActions } from './BulkActions';
+export { BulkActions } from "./BulkActions";
+export { NotificationCard, NotificationCardShimmer } from "./NotificationCard";

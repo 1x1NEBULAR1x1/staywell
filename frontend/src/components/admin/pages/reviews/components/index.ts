@@ -1,1 +1,1 @@
-export { ReviewCard, ReviewCardShimmer } from './ReviewCard';
+export { ReviewCard, ReviewCardShimmer } from "./ReviewCard";

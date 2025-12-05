@@ -1,13 +1,15 @@
 import { CreateBooking } from '@shared/src/types/bookings-section';
-import { ToDate, ToString, ToUUID } from 'src/lib/common';
+import { CreateBookingEventDto } from 'src/app/events-section/booking-events/dto';
+import { ToDate, ToNested, ToString, ToUUID } from 'src/lib/common';
+import { CreateBookingAdditionalOptionDto } from '../../booking-additional-options/dto';
 
 export class CreateBookingDto implements CreateBooking {
   @ToUUID({
-    required: true,
+    required: false,
     description: 'User ID',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
-  user_id!: string;
+  user_id?: string;
 
   @ToUUID({
     required: true,
@@ -22,13 +24,6 @@ export class CreateBookingDto implements CreateBooking {
     example: 'Example message',
   })
   message?: string;
-
-  @ToUUID({
-    required: true,
-    description: 'Transaction ID',
-    example: '123e4567-e89b-12d3-a456-426614174002',
-  })
-  transaction_id!: string;
 
   @ToDate({
     required: true,
@@ -45,4 +40,20 @@ export class CreateBookingDto implements CreateBooking {
     example: '2025-01-01',
   })
   end!: Date;
+
+  @ToNested({
+    type: CreateBookingEventDto,
+    required: false,
+    description: 'Booking events',
+    each: true,
+  })
+  events: CreateBookingEventDto[] = [];
+
+  @ToNested({
+    type: CreateBookingAdditionalOptionDto,
+    required: false,
+    description: 'Booking additional options',
+    each: true,
+  })
+  additional_options: CreateBookingAdditionalOptionDto[] = [];
 }

@@ -1,39 +1,64 @@
-'use client';
+"use client";
 
-import { ExtendedApartment, CruddableTypes, ApartmentType } from '@shared/src';
-import { BaseFormModal } from '@/components/admin/common/Modal/BaseFormModal';
-import { useForm } from 'react-hook-form';
-import { ImageUploader, InputField, SelectField, TextareaField } from '@/components/admin/common/Form';
-import { formatToTitle } from '@/lib/api';
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useToast } from '@/hooks/common/useToast';
-import { isAxiosError } from 'axios';
+import {
+  ApartmentType,
+  type CruddableTypes,
+  type ExtendedApartment,
+} from "@shared/src";
+import { isAxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import {
+  ImageUploader,
+  InputField,
+  SelectField,
+  TextareaField,
+} from "@/components/admin/common/Form";
+import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { useToast } from "@/hooks/common/useToast";
+import { formatToTitle } from "@/lib/api";
 
 interface ApartmentModalProps {
   initial_data?: ExtendedApartment;
   onClose?: () => void;
 }
 
-type FormData = CruddableTypes<'APARTMENT'>['create'] & {
-  image_type: 'file' | 'url';
-}
+type FormData = CruddableTypes<"APARTMENT">["create"] & {
+  image_type: "file" | "url";
+};
 
-export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentModalProps) => {
-  const mutation = initial_data ? useModel('APARTMENT').update(initial_data.id) : useModel('APARTMENT').create();
-  const query = initial_data ? useModel('APARTMENT').find(initial_data.id) : { refetch: () => { } };
+export const ApartmentModal = ({
+  initial_data,
+  onClose = () => {},
+}: ApartmentModalProps) => {
+  const mutation = initial_data
+    ? useModel("APARTMENT").update(initial_data.id)
+    : useModel("APARTMENT").create();
+  const query = initial_data
+    ? useModel("APARTMENT").find(initial_data.id)
+    : { refetch: () => {} };
   const toast = useToast();
   const form = useForm<FormData>({
-    defaultValues: { ...initial_data, image: initial_data?.image || undefined, image_type: 'file' },
+    defaultValues: {
+      ...initial_data,
+      image: initial_data?.image || undefined,
+      image_type: "file",
+    },
   });
 
   const handleSubmit = async (data: FormData) => {
     try {
       await mutation.mutateAsync(data);
       onClose();
-      toast.success(`Apartment ${initial_data ? 'updated' : 'created'} successfully`);
+      toast.success(
+        `Apartment ${initial_data ? "updated" : "created"} successfully`,
+      );
     } catch (error) {
-      isAxiosError(error) && toast.error(`Error during ${initial_data ? 'update' : 'creation'}: ${error.message}`);
-      console.error('Failed to update apartment:', error);
+      isAxiosError(error) &&
+        toast.error(
+          `Error during ${initial_data ? "update" : "creation"}: ${error.message}`,
+        );
+      console.error("Failed to update apartment:", error);
     } finally {
       query.refetch();
     }
@@ -43,12 +68,12 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
     <BaseFormModal
       is_open
       onClose={onClose}
-      title={initial_data ? 'Edit Apartment' : 'Create Apartment'}
+      title={initial_data ? "Edit Apartment" : "Create Apartment"}
       form={form}
       onSubmit={handleSubmit}
       model="APARTMENT"
       id={initial_data?.id ?? undefined}
-      size='lg'
+      size="lg"
     >
       <ImageUploader
         is_loading={mutation.isPending}
@@ -88,7 +113,7 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
       <InputField
         label="Number"
         name="number"
-        step='1'
+        step="1"
         required
         placeholder="Number"
         register={form.register}
@@ -97,7 +122,7 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
       <InputField
         label="Floor"
         name="floor"
-        step='1'
+        step="1"
         required
         placeholder="Floor"
         register={form.register}
@@ -107,7 +132,7 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
       <InputField
         label="Rooms Count"
         name="rooms_count"
-        step='1'
+        step="1"
         required
         placeholder="Rooms Count"
         register={form.register}
@@ -117,7 +142,7 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
       <InputField
         label="Max Capacity"
         name="max_capacity"
-        step='1'
+        step="1"
         required
         placeholder="Max Capacity"
         register={form.register}
@@ -129,15 +154,18 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
         name="type"
         placeholder="Type"
         register={form.register}
-        options={Object.values(ApartmentType).map((type) => ({ label: formatToTitle(type), value: type }))}
+        options={Object.values(ApartmentType).map((type) => ({
+          label: formatToTitle(type),
+          value: type,
+        }))}
         errors={form.formState.errors}
       />
 
       <InputField
         label="Deposit"
         name="deposit"
-        type='number'
-        step='0.01'
+        type="number"
+        step="0.01"
         required
         placeholder="Deposit"
         register={form.register}
@@ -149,7 +177,10 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
         name="is_available"
         placeholder="Is Available"
         register={form.register}
-        options={[{ label: 'Yes', value: 'true' }, { label: 'No', value: 'false' }]}
+        options={[
+          { label: "Yes", value: "true" },
+          { label: "No", value: "false" },
+        ]}
         errors={form.formState.errors}
       />
       <SelectField
@@ -157,7 +188,10 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
         name="is_smoking"
         placeholder="Is Smoking"
         register={form.register}
-        options={[{ label: 'Yes', value: 'true' }, { label: 'No', value: 'false' }]}
+        options={[
+          { label: "Yes", value: "true" },
+          { label: "No", value: "false" },
+        ]}
         errors={form.formState.errors}
       />
       <SelectField
@@ -165,7 +199,10 @@ export const ApartmentModal = ({ initial_data, onClose = () => { } }: ApartmentM
         name="is_pet_friendly"
         placeholder="Is Pet Friendly"
         register={form.register}
-        options={[{ label: 'Yes', value: 'true' }, { label: 'No', value: 'false' }]}
+        options={[
+          { label: "Yes", value: "true" },
+          { label: "No", value: "false" },
+        ]}
         errors={form.formState.errors}
       />
     </BaseFormModal>

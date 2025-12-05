@@ -7,4 +7,4 @@ import { CrudService, ListService } from './services';
   providers: [CrudService, ListService],
   exports: [CrudService, ListService],
 })
-export class NotificationsModule { }
+export class NotificationsModule {}

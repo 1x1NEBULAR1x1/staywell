@@ -1,18 +1,22 @@
-'use client';
+"use client";
 
-import classes from './BooleanSelect.module.scss';
+import classes from "./BooleanSelect.module.scss";
 
 type BooleanSelectProps = {
   label: string;
   value: boolean | undefined;
   onChange: (value: boolean | undefined) => void;
-}
+};
 
-export const BooleanSelect = ({ label, value, onChange }: BooleanSelectProps) => {
+export const BooleanSelect = ({
+  label,
+  value,
+  onChange,
+}: BooleanSelectProps) => {
   const handleChange = (val: string) => {
-    if (val === '') {
+    if (val === "") {
       onChange(undefined);
-    } else if (val === 'true') {
+    } else if (val === "true") {
       onChange(true);
     } else {
       onChange(false);
@@ -24,7 +28,7 @@ export const BooleanSelect = ({ label, value, onChange }: BooleanSelectProps) =>
       <label className={classes.label}>{label}</label>
       <select
         className={classes.select}
-        value={value === undefined ? '' : value.toString()}
+        value={value === undefined ? "" : value.toString()}
         onChange={(e) => handleChange(e.target.value)}
       >
         <option value="">By default</option>
@@ -34,4 +38,3 @@ export const BooleanSelect = ({ label, value, onChange }: BooleanSelectProps) =>
     </div>
   );
 };
-

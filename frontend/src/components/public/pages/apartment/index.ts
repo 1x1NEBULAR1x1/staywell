@@ -1,1 +1,0 @@
-export { Apartment } from './[id]';

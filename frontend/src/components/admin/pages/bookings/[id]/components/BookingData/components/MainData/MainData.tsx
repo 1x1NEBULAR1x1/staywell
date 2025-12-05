@@ -1,12 +1,12 @@
-import classes from './MainData.module.scss';
-import { ExtendedBooking, BookingStatus } from '@shared/src';
+import type { BookingStatus, ExtendedBooking } from "@shared/src";
+import classes from "./MainData.module.scss";
 
 const getStatusText = (status: BookingStatus) => {
   const statusMap = {
-    PENDING: 'Pending Confirmation',
-    CONFIRMED: 'Confirmed',
-    COMPLETED: 'Completed',
-    CANCELLED: 'Cancelled'
+    PENDING: "Pending Confirmation",
+    CONFIRMED: "Confirmed",
+    COMPLETED: "Completed",
+    CANCELLED: "Cancelled",
   };
   return statusMap[status] || status;
 };
@@ -16,17 +16,17 @@ const getStatusClass = (status: BookingStatus) => {
     PENDING: classes.status_pending,
     CONFIRMED: classes.status_confirmed,
     COMPLETED: classes.status_completed,
-    CANCELLED: classes.status_cancelled
+    CANCELLED: classes.status_cancelled,
   };
-  return classMap[status] || '';
+  return classMap[status] || "";
 };
 
 export const MainData = ({
   booking,
-  setIsEditModalOpen
+  setIsEditModalOpen,
 }: {
-  booking: ExtendedBooking,
-  setIsEditModalOpen: (isEditModalOpen: boolean) => void
+  booking: ExtendedBooking;
+  setIsEditModalOpen: (isEditModalOpen: boolean) => void;
 }) => (
   <>
     <h1 className={classes.title_container}>
@@ -46,7 +46,8 @@ export const MainData = ({
       </button>
     </h1>
     <div className={classes.apartment_name}>
-      {booking.booking_variant.apartment.name} - Variant ${booking.booking_variant.price}/night
+      {booking.booking_variant.apartment.name} - Variant $
+      {booking.booking_variant.price}/night
     </div>
   </>
 );

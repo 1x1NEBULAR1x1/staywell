@@ -1,0 +1,33 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  .label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+  }
+
+  .input {
+    padding: $spacing-sm $spacing-md;
+    border: $border-normal;
+    border-radius: $border-radius-md;
+    background: $background-light;
+    color: $foreground-main;
+    font-size: $font-size-sm;
+    transition: all $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-main;
+      background: $background-main;
+    }
+
+    &::placeholder {
+      color: $foreground-light;
+    }
+  }
+}

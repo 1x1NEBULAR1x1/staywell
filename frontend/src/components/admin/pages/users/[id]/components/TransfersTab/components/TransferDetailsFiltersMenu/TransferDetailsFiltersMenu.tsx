@@ -1,18 +1,21 @@
-'use client';
+"use client";
 
-import classes from './TransferDetailsFiltersMenu.module.scss';
-import { SlidersHorizontal } from 'lucide-react';
-import { useState } from 'react';
-import { TransferDetailsFilters } from '@shared/src';
-import { InputField } from '@/components/admin/common/Form';
-import { useForm } from 'react-hook-form';
+import type { TransferDetailsFilters } from "@shared/src";
+import { SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { InputField } from "@/components/admin/common/Form";
+import classes from "./TransferDetailsFiltersMenu.module.scss";
 
 interface TransferDetailsFiltersMenuProps {
   filters: TransferDetailsFilters;
   setFilters: (filters: Partial<TransferDetailsFilters>) => void;
 }
 
-export const TransferDetailsFiltersMenu = ({ filters, setFilters }: TransferDetailsFiltersMenuProps) => {
+export const TransferDetailsFiltersMenu = ({
+  filters,
+  setFilters,
+}: TransferDetailsFiltersMenuProps) => {
   const [is_open, setIsOpen] = useState(false);
   const form = useForm<TransferDetailsFilters>({ defaultValues: filters });
 
@@ -23,10 +26,16 @@ export const TransferDetailsFiltersMenu = ({ filters, setFilters }: TransferDeta
 
   return (
     <div className={classes.container}>
-      <SlidersHorizontal className={classes.icon} onClick={() => setIsOpen(!is_open)} />
+      <SlidersHorizontal
+        className={classes.icon}
+        onClick={() => setIsOpen(!is_open)}
+      />
       {is_open && (
         <div className={classes.dropdown}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className={classes.form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className={classes.form}
+          >
             <InputField
               label="Bank Name"
               name="bank_name"
@@ -65,7 +74,9 @@ export const TransferDetailsFiltersMenu = ({ filters, setFilters }: TransferDeta
             />
 
             <div className={classes.buttons}>
-              <button type="submit" className={classes.apply_btn}>Apply</button>
+              <button type="submit" className={classes.apply_btn}>
+                Apply
+              </button>
               <button
                 type="button"
                 className={classes.reset_btn}

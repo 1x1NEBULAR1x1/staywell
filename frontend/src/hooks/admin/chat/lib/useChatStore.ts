@@ -67,7 +67,7 @@ export const useChatStore = create<Store>()(
 
       updateUserLastSeen: (user_id, last_seen) =>
         set((state) => {
-          const now = Date.now();
+          const _now = Date.now();
           const newOnlineUsers = { ...state.online_users };
 
           if (last_seen) {
@@ -78,7 +78,7 @@ export const useChatStore = create<Store>()(
           }
 
           // Update chats last_seen status
-          const updatedChats = state.chats.map(chat => {
+          const updatedChats = state.chats.map((chat) => {
             if (chat.user.id === user_id) {
               return { ...chat, last_seen };
             }

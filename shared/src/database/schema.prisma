@@ -109,7 +109,7 @@ model Message {
 model Apartment {
   id String @id @default(uuid())
 
-  image           String?
+  image           String
   name            String?
   description     String?
   rules           String?
@@ -346,17 +346,17 @@ model AdditionalOption {
 model BookingAdditionalOption {
   id String @id @default(uuid())
 
-  amount     Int
-  option_id  String
-  booking_id String
+  amount               Int
+  additional_option_id String
+  booking_id           String
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
   booking           Booking          @relation(fields: [booking_id], references: [id])
-  additional_option AdditionalOption @relation(fields: [option_id], references: [id])
+  additional_option AdditionalOption @relation(fields: [additional_option_id], references: [id])
 
-  @@unique([booking_id, option_id])
+  @@unique([booking_id, additional_option_id])
   @@map("booking_additional_options")
 }
 
@@ -364,17 +364,17 @@ model BookingEvent {
   id String @id @default(uuid())
 
   number_of_people Int
-  booking_id       String
+  booking_id       String?
+  transaction_id   String? @unique
   event_id         String
-  transaction_id   String @unique
 
   created     DateTime @default(now())
   updated     DateTime @updatedAt
   is_excluded Boolean  @default(false)
 
-  booking     Booking     @relation(fields: [booking_id], references: [id])
-  event       Event       @relation(fields: [event_id], references: [id])
-  transaction Transaction @relation(fields: [transaction_id], references: [id])
+  booking     Booking?     @relation(fields: [booking_id], references: [id])
+  transaction Transaction? @relation(fields: [transaction_id], references: [id])
+  event       Event        @relation(fields: [event_id], references: [id])
 
   @@map("booking_events")
 }

@@ -1,16 +1,16 @@
-import classes from './ApartmentInfo.module.scss';
-import { Apartment } from '@shared/src';
-import { Home, MapPin, Users, ExternalLink } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import type { Apartment } from "@shared/src";
+import { ExternalLink, Home, MapPin, Users } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import classes from "./ApartmentInfo.module.scss";
 
 const getApartmentTypeText = (type: string) => {
   const typeMap = {
-    BUDGET: 'Budget',
-    STANDARD: 'Standard',
-    EXCLUSIVE: 'Exclusive',
-    SUPERIOR: 'Superior',
-    LUXURY: 'Luxury'
+    BUDGET: "Budget",
+    STANDARD: "Standard",
+    EXCLUSIVE: "Exclusive",
+    SUPERIOR: "Superior",
+    LUXURY: "Luxury",
   };
   return typeMap[type as keyof typeof typeMap] || type;
 };
@@ -20,7 +20,10 @@ export const ApartmentInfo = ({ apartment }: { apartment: Apartment }) => (
     <div className={classes.header}>
       <Home className={classes.header_icon} />
       <h3 className={classes.title}>Apartment Information</h3>
-      <Link href={`/admin/apartments/${apartment.id}`} className={classes.link_button}>
+      <Link
+        href={`/admin/apartments/${apartment.id}`}
+        className={classes.link_button}
+      >
         <ExternalLink className={classes.link_icon} />
         View Apartment
       </Link>
@@ -48,7 +51,9 @@ export const ApartmentInfo = ({ apartment }: { apartment: Apartment }) => (
         <div className={classes.apartment_meta}>
           <div className={classes.meta_item}>
             <MapPin className={classes.meta_icon} />
-            <span>Floor {apartment.floor}, Room {apartment.number}</span>
+            <span>
+              Floor {apartment.floor}, Room {apartment.number}
+            </span>
           </div>
 
           <div className={classes.meta_item}>
@@ -67,7 +72,9 @@ export const ApartmentInfo = ({ apartment }: { apartment: Apartment }) => (
 
           <div className={classes.feature_item}>
             <span className={classes.feature_label}>Rooms:</span>
-            <span className={classes.feature_value}>{apartment.rooms_count}</span>
+            <span className={classes.feature_value}>
+              {apartment.rooms_count}
+            </span>
           </div>
 
           <div className={classes.feature_item}>
@@ -81,7 +88,7 @@ export const ApartmentInfo = ({ apartment }: { apartment: Apartment }) => (
             <span
               className={`${classes.status_badge} ${apartment.is_available ? classes.available : classes.unavailable}`}
             >
-              {apartment.is_available ? 'Available' : 'Unavailable'}
+              {apartment.is_available ? "Available" : "Unavailable"}
             </span>
 
             {apartment.is_smoking && (
@@ -91,7 +98,9 @@ export const ApartmentInfo = ({ apartment }: { apartment: Apartment }) => (
             )}
 
             {apartment.is_pet_friendly && (
-              <span className={`${classes.status_badge} ${classes.pet_friendly}`}>
+              <span
+                className={`${classes.status_badge} ${classes.pet_friendly}`}
+              >
                 Pet Friendly
               </span>
             )}

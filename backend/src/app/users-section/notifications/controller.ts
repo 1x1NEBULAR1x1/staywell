@@ -22,7 +22,10 @@ import {
 
 @Controller('notifications')
 export class NotificationsController {
-  constructor(private readonly crudService: CrudService, private readonly listService: ListService) { }
+  constructor(
+    private readonly crudService: CrudService,
+    private readonly listService: ListService,
+  ) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
@@ -54,7 +57,10 @@ export class NotificationsController {
 
   @Patch('/mark-as-read')
   @UseGuards(JwtAuthGuard)
-  async markAsRead(@Auth() user: User, @Body() { ids }: { ids: string[] }): Promise<{ count: number }> {
+  async markAsRead(
+    @Auth() user: User,
+    @Body() { ids }: { ids: string[] },
+  ): Promise<{ count: number }> {
     return await this.crudService.markAsRead({ ids, user });
   }
 

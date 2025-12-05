@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useAccount } from "@/hooks/common";
-import { useUsers } from "@/hooks/admin/queries/users";
 import { Bell, BellOff } from "lucide-react";
+import { useState } from "react";
+import { useUsers } from "@/hooks/admin/queries/users";
+import { useAccount } from "@/hooks/common";
 import { useToast } from "@/hooks/common/useToast";
 import classes from "./NotificationsToggle.module.scss";
 
@@ -27,7 +27,7 @@ export const NotificationsToggle = () => {
         toast.success(
           user.email_notifications
             ? "Email уведомления отключены"
-            : "Email уведомления включены"
+            : "Email уведомления включены",
         );
       }
     } catch (error) {
@@ -49,7 +49,7 @@ export const NotificationsToggle = () => {
 
       <div className={classes.toggle_container}>
         <button
-          className={`${classes.notification_button} ${user.email_notifications ? classes.active : ''}`}
+          className={`${classes.notification_button} ${user.email_notifications ? classes.active : ""}`}
           onClick={handleToggleNotifications}
           disabled={isLoading}
           type="button"

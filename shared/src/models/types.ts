@@ -26,7 +26,7 @@ import {
 } from '../types/events-section';
 
 import {
-  Transaction, TransactionsFilters, CreateTransaction, UpdateTransaction,
+  ExtendedTransaction, TransactionsFilters, CreateTransaction, UpdateTransaction,
   TransferDetail, TransferDetailsFilters, CreateTransferDetail, UpdateTransferDetail,
   CardDetail, CardDetailsFilters, CreateCardDetail, UpdateCardDetail,
 } from '../types/transactions-section';
@@ -64,7 +64,7 @@ export type CruddableTypes<T extends CRUDDABLE_NAMES> =
   T extends 'EVENT' ? CruddableTypeShape<ExtendedEvent, EventsFilters, CreateEvent, UpdateEvent> :
   T extends 'EVENT_IMAGE' ? CruddableTypeShape<EventImage, EventImagesFilters, CreateEventImage, UpdateEventImage> :
   T extends 'BOOKING_EVENT' ? CruddableTypeShape<ExtendedBookingEvent, BookingEventsFilters, CreateBookingEvent, UpdateBookingEvent> :
-  T extends 'TRANSACTION' ? CruddableTypeShape<Transaction, TransactionsFilters, CreateTransaction, UpdateTransaction> :
+  T extends 'TRANSACTION' ? CruddableTypeShape<ExtendedTransaction, TransactionsFilters, CreateTransaction, UpdateTransaction> :
   T extends 'TRANSFER_DETAIL' ? CruddableTypeShape<TransferDetail, TransferDetailsFilters, CreateTransferDetail, UpdateTransferDetail> :
   T extends 'CARD_DETAIL' ? CruddableTypeShape<CardDetail, CardDetailsFilters, CreateCardDetail, UpdateCardDetail> :
   T extends 'NOTIFICATION' ? CruddableTypeShape<Notification, NotificationsFilters, CreateNotification, UpdateNotification> :

@@ -34,6 +34,7 @@ exports.example_event = {
 };
 exports.example_extended_event = {
     ...exports.example_event,
+    available_spots: 10,
     images: [exports.example_event_image],
     guide: users_section_1.example_user,
 };

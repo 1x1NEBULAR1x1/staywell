@@ -1,0 +1,50 @@
+@use "@/components/styles/_variables.scss" as *;
+@use "sass:color";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  max-width: $container-width-xl;
+  margin: 0 auto;
+  min-height: 100%;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+
+    // Адаптивность
+    @media (max-width: 768px) {
+      padding: $spacing-md;
+      gap: $spacing-lg;
+    }
+
+    @media (max-width: 480px) {
+      padding: $spacing-sm;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

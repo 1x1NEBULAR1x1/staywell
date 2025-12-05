@@ -5,9 +5,16 @@ import { CreateApartmentDto, UpdateApartmentDto } from '../dto';
 import { FilesService } from 'src/lib/files';
 import { CheckService } from './check.service';
 import { AvailabilityService } from './availability.service';
-import { EXTENDED_APARTMENT_AMENITY_INCLUDE, EXTENDED_APARTMENT_BED_INCLUDE, EXTENDED_REVIEW_INCLUDE, ExtendedApartment, ExtendedReview } from '@shared/src/types/apartments-section';
-import { buildApartmentInclude } from './utils';
-import { EXTENDED_BOOKING_INCLUDE, EXTENDED_RESERVATION_INCLUDE } from '@shared/src/types/bookings-section';
+import {
+  EXTENDED_APARTMENT_AMENITY_INCLUDE,
+  EXTENDED_APARTMENT_BED_INCLUDE,
+  EXTENDED_REVIEW_INCLUDE,
+  ExtendedApartment,
+} from '@shared/src/types/apartments-section';
+import {
+  EXTENDED_BOOKING_INCLUDE,
+  EXTENDED_RESERVATION_INCLUDE,
+} from '@shared/src/types/bookings-section';
 
 @Injectable()
 export class CrudService {
@@ -16,7 +23,7 @@ export class CrudService {
     private readonly filesService: FilesService,
     private readonly checkService: CheckService,
     private readonly availabilityService: AvailabilityService,
-  ) { }
+  ) {}
   /**
    * Creates a new apartment
    * @param createApartmentDto Apartment creation data
@@ -43,9 +50,12 @@ export class CrudService {
    * @param id Apartment ID
    * @returns Extended apartment information with related data
    */
-  async findOne({ where, user }: {
-    where: Prisma.ApartmentWhereUniqueInput,
-    user?: User,
+  async findOne({
+    where,
+    user,
+  }: {
+    where: Prisma.ApartmentWhereUniqueInput;
+    user?: User;
   }): Promise<ExtendedApartment> {
     const apartment = await this.prisma.apartment.findUnique({
       where,
@@ -53,7 +63,7 @@ export class CrudService {
         images: true,
         apartment_beds: { include: EXTENDED_APARTMENT_BED_INCLUDE },
         apartment_amenities: { include: EXTENDED_APARTMENT_AMENITY_INCLUDE },
-      }
+      },
     });
     if (!apartment) throw new NotFoundException('Apartment not found');
     // Find the minimum price from booking variants
@@ -63,10 +73,10 @@ export class CrudService {
     const price =
       booking_variants.length > 0
         ? Math.min(
-          ...booking_variants.map((v) =>
-            v.is_available ? v.price : Infinity,
-          ),
-        )
+            ...booking_variants.map((v) =>
+              v.is_available ? v.price : Infinity,
+            ),
+          )
         : 0;
     // Find the maximum capacity from booking variants
     const capacity_from_variants =
@@ -79,14 +89,20 @@ export class CrudService {
       apartment.max_capacity || 0,
     );
     // Find reservations and bookings for the apartment if the user is an admin
-    const reservations = user?.role === Role.ADMIN ? await this.prisma.reservation.findMany({
-      where: { apartment_id: apartment.id },
-      include: EXTENDED_RESERVATION_INCLUDE,
-    }) : [];
-    const bookings = user?.role === Role.ADMIN ? await this.prisma.booking.findMany({
-      where: { booking_variant: { apartment_id: apartment.id } },
-      include: EXTENDED_BOOKING_INCLUDE,
-    }) : [];
+    const reservations =
+      user?.role === Role.ADMIN
+        ? await this.prisma.reservation.findMany({
+            where: { apartment_id: apartment.id },
+            include: EXTENDED_RESERVATION_INCLUDE,
+          })
+        : [];
+    const bookings =
+      user?.role === Role.ADMIN
+        ? await this.prisma.booking.findMany({
+            where: { booking_variant: { apartment_id: apartment.id } },
+            include: EXTENDED_BOOKING_INCLUDE,
+          })
+        : [];
 
     // Calculate average rating
     const reviews = await this.prisma.review.findMany({
@@ -96,7 +112,7 @@ export class CrudService {
     const rating =
       reviews.length > 0
         ? reviews.reduce((acc, review) => acc + review.rating, 0) /
-        reviews.length
+          reviews.length
         : 0;
     const availability =
       await this.availabilityService.checkApartmentAvailability({
@@ -114,15 +130,15 @@ export class CrudService {
       capacity,
       rating,
       booking_variants,
-      reviews: reviews.map(review => ({ ...review, apartment: undefined })),
+      reviews: reviews.map((review) => ({ ...review, apartment: undefined })),
       reservations,
       bookings,
       cheapest_variant:
         booking_variants.length > 0
           ? booking_variants.reduce(
-            (min, variant) => (variant.price < min.price ? variant : min),
-            booking_variants[0],
-          )
+              (min, variant) => (variant.price < min.price ? variant : min),
+              booking_variants[0],
+            )
           : null,
     };
   }
@@ -159,9 +175,9 @@ export class CrudService {
   async remove(where: Prisma.ApartmentWhereUniqueInput) {
     return !(await this.checkService.checkNotFound(where)).is_excluded
       ? await this.update({
-        where,
-        data: { is_available: false, is_excluded: false },
-      })
+          where,
+          data: { is_available: false, is_excluded: false },
+        })
       : await this.prisma.apartment.delete({ where });
   }
 }

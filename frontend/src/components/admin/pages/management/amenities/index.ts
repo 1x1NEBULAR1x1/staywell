@@ -1,4 +1,1 @@
-export * from './Amenities';
-
-
-
+export * from "./Amenities";

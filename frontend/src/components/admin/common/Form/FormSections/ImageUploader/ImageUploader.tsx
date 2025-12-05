@@ -1,12 +1,18 @@
-'use client';
+"use client";
 
-import { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch, Path, FieldValues } from 'react-hook-form';
-import { Camera, X } from 'lucide-react';
-import classes from './ImageUploader.module.scss';
-import { isValidImageUrl, getValidationRules } from './utils';
-import { useImageUploader } from './useImageUploader';
-import { Switch } from './components/Switch';
-import { isImageType } from './utils';
+import { Camera, X } from "lucide-react";
+import type {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
+import { Switch } from "./components/Switch";
+import classes from "./ImageUploader.module.scss";
+import { useImageUploader } from "./useImageUploader";
+import { getValidationRules, isImageType, isValidImageUrl } from "./utils";
 
 interface ImageUploaderProps<T extends FieldValues> {
   is_loading: boolean;
@@ -37,62 +43,75 @@ export const ImageUploader = <T extends FieldValues>({
   image_file_field_name,
   image_url_field_name,
   image_type_field_name,
-  accepted_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'svg'],
+  accepted_types = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+    "svg",
+  ],
   max_size_in_mb = 5,
   width = 150,
   height = 150,
-  className = ''
+  className = "",
 }: ImageUploaderProps<T>) => {
-
   const {
     handleTypeChange,
     handleImageChange,
     handleUrlChange,
     handleRemoveImage,
     preview_image,
-    image_type
+    image_type,
   } = useImageUploader<T>({
     image_type_field_name,
     image_url_field_name,
     image_file_field_name,
     watch,
-    setValue
+    setValue,
   });
 
   const containerStyle = {
     width: `${width}px`,
-    height: `${height}px`
+    height: `${height}px`,
   };
 
   return (
     <div className={`${classes.image_uploader} ${className}`}>
       {/* Превью изображения слева */}
       <div className={classes.image_uploader_preview_container}>
-        {image_type === 'file' ? (
-          <div className={classes.image_uploader_container} style={containerStyle}>
+        {image_type === "file" ? (
+          <div
+            className={classes.image_uploader_container}
+            style={containerStyle}
+          >
             {preview_image ? (
               <>
                 <input
                   type="file"
-                  accept={accepted_types.join(',')}
+                  accept={accepted_types.join(",")}
                   className={classes.image_uploader_hidden_input}
                   disabled={is_loading}
-                  {...register(image_file_field_name, getValidationRules<T>(accepted_types, max_size_in_mb))}
+                  {...register(
+                    image_file_field_name,
+                    getValidationRules<T>(accepted_types, max_size_in_mb),
+                  )}
                   onChange={(e) => {
                     // Сначала вызываем стандартный onChange из register
-                    const registerOnChange = register(image_file_field_name).onChange;
+                    const registerOnChange = register(
+                      image_file_field_name,
+                    ).onChange;
                     if (registerOnChange) {
                       registerOnChange(e);
                     }
                     // Затем наш кастомный обработчик для превью
                     handleImageChange(e);
                   }}
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                 />
                 <div className={classes.image_uploader_preview}>
                   <img
                     src={preview_image}
-                    alt={'Image preview'}
+                    alt={"Image preview"}
                     width={width}
                     height={height}
                     className={classes.image_uploader_preview_image}
@@ -111,13 +130,18 @@ export const ImageUploader = <T extends FieldValues>({
               <>
                 <input
                   type="file"
-                  accept={accepted_types.join(',')}
+                  accept={accepted_types.join(",")}
                   className={classes.image_uploader_hidden_input}
                   disabled={is_loading}
-                  {...register(image_file_field_name, getValidationRules<T>(accepted_types, max_size_in_mb))}
+                  {...register(
+                    image_file_field_name,
+                    getValidationRules<T>(accepted_types, max_size_in_mb),
+                  )}
                   onChange={(e) => {
                     // Сначала вызываем стандартный onChange из register
-                    const registerOnChange = register(image_file_field_name).onChange;
+                    const registerOnChange = register(
+                      image_file_field_name,
+                    ).onChange;
                     if (registerOnChange) {
                       registerOnChange(e);
                     }
@@ -133,12 +157,15 @@ export const ImageUploader = <T extends FieldValues>({
             )}
           </div>
         ) : (
-          <div className={classes.image_uploader_container} style={containerStyle}>
+          <div
+            className={classes.image_uploader_container}
+            style={containerStyle}
+          >
             {preview_image ? (
               <div className={classes.image_uploader_preview}>
                 <img
                   src={preview_image}
-                  alt={'Image preview'}
+                  alt={"Image preview"}
                   width={width}
                   height={height}
                   className={classes.image_uploader_preview_image}
@@ -153,7 +180,10 @@ export const ImageUploader = <T extends FieldValues>({
                 </button>
               </div>
             ) : (
-              <div className={classes.image_uploader_preview_placeholder} style={containerStyle}>
+              <div
+                className={classes.image_uploader_preview_placeholder}
+                style={containerStyle}
+              >
                 <Camera size={24} />
                 <span>Image preview</span>
               </div>
@@ -164,18 +194,20 @@ export const ImageUploader = <T extends FieldValues>({
 
       {/* Контролы справа */}
       <div className={classes.image_uploader_content}>
-        <label className={classes.image_uploader_label}>
-          {label}
-        </label>
+        <label className={classes.image_uploader_label}>{label}</label>
 
         {/* Переключатель типа изображения */}
-        <Switch image_type={isImageType(image_type) ? image_type : 'file'} handleTypeChange={handleTypeChange} is_loading={is_loading} />
+        <Switch
+          image_type={isImageType(image_type) ? image_type : "file"}
+          handleTypeChange={handleTypeChange}
+          is_loading={is_loading}
+        />
 
-        {image_type === 'url' && (
+        {image_type === "url" && (
           <div className={classes.image_uploader_url_input}>
             <input
               type="url"
-              className={`${classes.image_uploader_input} ${errors[image_url_field_name] ? classes.image_uploader_input_error : ''}`}
+              className={`${classes.image_uploader_input} ${errors[image_url_field_name] ? classes.image_uploader_input_error : ""}`}
               placeholder={placeholder}
               disabled={is_loading}
               {...register(image_url_field_name, {
@@ -183,9 +215,9 @@ export const ImageUploader = <T extends FieldValues>({
                   validUrl: (value: unknown): string | true => {
                     const url = String(value);
                     if (!url) return true;
-                    return isValidImageUrl(url) ? true : 'Invalid image URL';
-                  }
-                }
+                    return isValidImageUrl(url) ? true : "Invalid image URL";
+                  },
+                },
               })}
               onChange={handleUrlChange}
             />
@@ -194,15 +226,15 @@ export const ImageUploader = <T extends FieldValues>({
 
         {errors[image_file_field_name] && (
           <span className={classes.image_uploader_error}>
-            {String((errors[image_file_field_name])?.message || '')}
+            {String(errors[image_file_field_name]?.message || "")}
           </span>
         )}
         {errors[image_url_field_name] && (
           <span className={classes.image_uploader_error}>
-            {String((errors[image_url_field_name])?.message || '')}
+            {String(errors[image_url_field_name]?.message || "")}
           </span>
         )}
       </div>
     </div>
   );
-}; 
+};

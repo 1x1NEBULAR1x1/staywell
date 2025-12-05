@@ -1,7 +1,7 @@
 "use client";
 
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/common";
-import { Sun, Moon } from "lucide-react";
 import classes from "./ThemeToggle.module.scss";
 
 export const ThemeToggle = () => {
@@ -16,8 +16,8 @@ export const ThemeToggle = () => {
 
       <div className={classes.toggle_container}>
         <button
-          className={`${classes.theme_button} ${theme === 'light' ? classes.active : ''}`}
-          onClick={() => theme !== 'light' && toggleTheme()}
+          className={`${classes.theme_button} ${theme === "light" ? classes.active : ""}`}
+          onClick={() => theme !== "light" && toggleTheme()}
           type="button"
         >
           <Sun size={20} />
@@ -25,8 +25,8 @@ export const ThemeToggle = () => {
         </button>
 
         <button
-          className={`${classes.theme_button} ${theme === 'dark' ? classes.active : ''}`}
-          onClick={() => theme !== 'dark' && toggleTheme()}
+          className={`${classes.theme_button} ${theme === "dark" ? classes.active : ""}`}
+          onClick={() => theme !== "dark" && toggleTheme()}
           type="button"
         >
           <Moon size={20} />

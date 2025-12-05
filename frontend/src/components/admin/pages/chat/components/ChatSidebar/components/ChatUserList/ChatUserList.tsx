@@ -1,16 +1,15 @@
 "use client";
 
-import { ChatUserItem, EmptyMessage } from "./components";
-import classes from "./ChatUserList.module.scss";
 import { useChat } from "@/hooks/admin/chat/useChat";
 import { useQPId } from "@/hooks/common/useId";
+import classes from "./ChatUserList.module.scss";
+import { ChatUserItem, EmptyMessage } from "./components";
 
 export const ChatUserList = () => {
   const selected_chat_id = useQPId();
   const { chats, isTyping, getUserLastSeen } = useChat();
 
-  return chats.length > 0
-    ?
+  return chats.length > 0 ? (
     <div className={classes.list}>
       {chats.map((chat) => (
         <ChatUserItem
@@ -24,6 +23,7 @@ export const ChatUserList = () => {
         />
       ))}
     </div>
-    :
-    <EmptyMessage />;
+  ) : (
+    <EmptyMessage />
+  );
 };

@@ -1,2 +1,1 @@
-export { Gallery } from '../../EventData/components/Gallery';
-
+export { Gallery } from "../../EventData/components/Gallery";

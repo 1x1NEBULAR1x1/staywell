@@ -1,0 +1,85 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.pending_message {
+  width: $container-width-xl;
+  background-color: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-md;
+  padding: $spacing-3xl;
+  box-shadow: $box-shadow-sm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $spacing-xl;
+
+  .pending_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pending_title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $yellow;
+    margin: 0;
+  }
+
+  .pending_description {
+    font-size: $font-size-lg;
+    color: $foreground-secondary;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    width: 100%;
+    max-width: 400px;
+
+    .primary_button, .secondary_button {
+      display: inline-block;
+      padding: $spacing-lg $spacing-xl;
+      border-radius: $border-radius-md;
+      text-decoration: none;
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-md;
+      text-align: center;
+      transition: $transition-normal;
+    }
+
+    .primary_button {
+      background-color: $primary-main;
+      color: $foreground-white;
+      border: 2px solid $primary-main;
+
+      &:hover {
+        background-color: $primary-dark;
+        border-color: $primary-dark;
+      }
+    }
+
+    .secondary_button {
+      background-color: transparent;
+      color: $primary-main;
+      border: 2px solid $primary-main;
+
+      &:hover {
+        background-color: $primary-main;
+        color: $foreground-white;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+

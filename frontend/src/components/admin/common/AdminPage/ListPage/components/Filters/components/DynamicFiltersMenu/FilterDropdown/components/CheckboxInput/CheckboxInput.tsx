@@ -1,14 +1,18 @@
-'use client';
+"use client";
 
-import classes from './CheckboxInput.module.scss';
+import classes from "./CheckboxInput.module.scss";
 
 type CheckboxInputProps = {
   label: string;
   value: boolean | undefined;
   onChange: (value: boolean | undefined) => void;
-}
+};
 
-export const CheckboxInput = ({ label, value, onChange }: CheckboxInputProps) => {
+export const CheckboxInput = ({
+  label,
+  value,
+  onChange,
+}: CheckboxInputProps) => {
   const handleChange = () => {
     if (value === undefined) {
       onChange(true);
@@ -31,12 +35,11 @@ export const CheckboxInput = ({ label, value, onChange }: CheckboxInputProps) =>
         />
         <span className={classes.text}>
           {label}
-          {value === false && ' (No)'}
-          {value === true && ' (Yes)'}
-          {value === undefined && ' (All)'}
+          {value === false && " (No)"}
+          {value === true && " (Yes)"}
+          {value === undefined && " (All)"}
         </span>
       </label>
     </div>
   );
 };
-

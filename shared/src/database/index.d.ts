@@ -7354,7 +7354,7 @@ export namespace Prisma {
 
   export type ApartmentGroupByOutputType = {
     id: string
-    image: string | null
+    image: string
     name: string | null
     description: string | null
     rules: string | null
@@ -7503,7 +7503,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      image: string | null
+      image: string
       name: string | null
       description: string | null
       rules: string | null
@@ -19870,7 +19870,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionMinAggregateOutputType = {
     id: string | null
     amount: number | null
-    option_id: string | null
+    additional_option_id: string | null
     booking_id: string | null
     created: Date | null
     updated: Date | null
@@ -19879,7 +19879,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionMaxAggregateOutputType = {
     id: string | null
     amount: number | null
-    option_id: string | null
+    additional_option_id: string | null
     booking_id: string | null
     created: Date | null
     updated: Date | null
@@ -19888,7 +19888,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionCountAggregateOutputType = {
     id: number
     amount: number
-    option_id: number
+    additional_option_id: number
     booking_id: number
     created: number
     updated: number
@@ -19907,7 +19907,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionMinAggregateInputType = {
     id?: true
     amount?: true
-    option_id?: true
+    additional_option_id?: true
     booking_id?: true
     created?: true
     updated?: true
@@ -19916,7 +19916,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionMaxAggregateInputType = {
     id?: true
     amount?: true
-    option_id?: true
+    additional_option_id?: true
     booking_id?: true
     created?: true
     updated?: true
@@ -19925,7 +19925,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionCountAggregateInputType = {
     id?: true
     amount?: true
-    option_id?: true
+    additional_option_id?: true
     booking_id?: true
     created?: true
     updated?: true
@@ -20021,7 +20021,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionGroupByOutputType = {
     id: string
     amount: number
-    option_id: string
+    additional_option_id: string
     booking_id: string
     created: Date
     updated: Date
@@ -20049,7 +20049,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     amount?: boolean
-    option_id?: boolean
+    additional_option_id?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
@@ -20060,7 +20060,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     amount?: boolean
-    option_id?: boolean
+    additional_option_id?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
@@ -20071,7 +20071,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     amount?: boolean
-    option_id?: boolean
+    additional_option_id?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
@@ -20082,13 +20082,13 @@ export namespace Prisma {
   export type BookingAdditionalOptionSelectScalar = {
     id?: boolean
     amount?: boolean
-    option_id?: boolean
+    additional_option_id?: boolean
     booking_id?: boolean
     created?: boolean
     updated?: boolean
   }
 
-  export type BookingAdditionalOptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "option_id" | "booking_id" | "created" | "updated", ExtArgs["result"]["bookingAdditionalOption"]>
+  export type BookingAdditionalOptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "additional_option_id" | "booking_id" | "created" | "updated", ExtArgs["result"]["bookingAdditionalOption"]>
   export type BookingAdditionalOptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     booking?: boolean | BookingDefaultArgs<ExtArgs>
     additional_option?: boolean | AdditionalOptionDefaultArgs<ExtArgs>
@@ -20111,7 +20111,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       amount: number
-      option_id: string
+      additional_option_id: string
       booking_id: string
       created: Date
       updated: Date
@@ -20542,7 +20542,7 @@ export namespace Prisma {
   interface BookingAdditionalOptionFieldRefs {
     readonly id: FieldRef<"BookingAdditionalOption", 'String'>
     readonly amount: FieldRef<"BookingAdditionalOption", 'Int'>
-    readonly option_id: FieldRef<"BookingAdditionalOption", 'String'>
+    readonly additional_option_id: FieldRef<"BookingAdditionalOption", 'String'>
     readonly booking_id: FieldRef<"BookingAdditionalOption", 'String'>
     readonly created: FieldRef<"BookingAdditionalOption", 'DateTime'>
     readonly updated: FieldRef<"BookingAdditionalOption", 'DateTime'>
@@ -20984,8 +20984,8 @@ export namespace Prisma {
     id: string | null
     number_of_people: number | null
     booking_id: string | null
-    event_id: string | null
     transaction_id: string | null
+    event_id: string | null
     created: Date | null
     updated: Date | null
     is_excluded: boolean | null
@@ -20995,8 +20995,8 @@ export namespace Prisma {
     id: string | null
     number_of_people: number | null
     booking_id: string | null
-    event_id: string | null
     transaction_id: string | null
+    event_id: string | null
     created: Date | null
     updated: Date | null
     is_excluded: boolean | null
@@ -21006,8 +21006,8 @@ export namespace Prisma {
     id: number
     number_of_people: number
     booking_id: number
-    event_id: number
     transaction_id: number
+    event_id: number
     created: number
     updated: number
     is_excluded: number
@@ -21027,8 +21027,8 @@ export namespace Prisma {
     id?: true
     number_of_people?: true
     booking_id?: true
-    event_id?: true
     transaction_id?: true
+    event_id?: true
     created?: true
     updated?: true
     is_excluded?: true
@@ -21038,8 +21038,8 @@ export namespace Prisma {
     id?: true
     number_of_people?: true
     booking_id?: true
-    event_id?: true
     transaction_id?: true
+    event_id?: true
     created?: true
     updated?: true
     is_excluded?: true
@@ -21049,8 +21049,8 @@ export namespace Prisma {
     id?: true
     number_of_people?: true
     booking_id?: true
-    event_id?: true
     transaction_id?: true
+    event_id?: true
     created?: true
     updated?: true
     is_excluded?: true
@@ -21146,9 +21146,9 @@ export namespace Prisma {
   export type BookingEventGroupByOutputType = {
     id: string
     number_of_people: number
-    booking_id: string
+    booking_id: string | null
+    transaction_id: string | null
     event_id: string
-    transaction_id: string
     created: Date
     updated: Date
     is_excluded: boolean
@@ -21177,85 +21177,85 @@ export namespace Prisma {
     id?: boolean
     number_of_people?: boolean
     booking_id?: boolean
-    event_id?: boolean
     transaction_id?: boolean
+    event_id?: boolean
     created?: boolean
     updated?: boolean
     is_excluded?: boolean
-    booking?: boolean | BookingDefaultArgs<ExtArgs>
+    booking?: boolean | BookingEvent$bookingArgs<ExtArgs>
+    transaction?: boolean | BookingEvent$transactionArgs<ExtArgs>
     event?: boolean | EventDefaultArgs<ExtArgs>
-    transaction?: boolean | TransactionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bookingEvent"]>
 
   export type BookingEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     number_of_people?: boolean
     booking_id?: boolean
-    event_id?: boolean
     transaction_id?: boolean
+    event_id?: boolean
     created?: boolean
     updated?: boolean
     is_excluded?: boolean
-    booking?: boolean | BookingDefaultArgs<ExtArgs>
+    booking?: boolean | BookingEvent$bookingArgs<ExtArgs>
+    transaction?: boolean | BookingEvent$transactionArgs<ExtArgs>
     event?: boolean | EventDefaultArgs<ExtArgs>
-    transaction?: boolean | TransactionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bookingEvent"]>
 
   export type BookingEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     number_of_people?: boolean
     booking_id?: boolean
-    event_id?: boolean
     transaction_id?: boolean
+    event_id?: boolean
     created?: boolean
     updated?: boolean
     is_excluded?: boolean
-    booking?: boolean | BookingDefaultArgs<ExtArgs>
+    booking?: boolean | BookingEvent$bookingArgs<ExtArgs>
+    transaction?: boolean | BookingEvent$transactionArgs<ExtArgs>
     event?: boolean | EventDefaultArgs<ExtArgs>
-    transaction?: boolean | TransactionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bookingEvent"]>
 
   export type BookingEventSelectScalar = {
     id?: boolean
     number_of_people?: boolean
     booking_id?: boolean
-    event_id?: boolean
     transaction_id?: boolean
+    event_id?: boolean
     created?: boolean
     updated?: boolean
     is_excluded?: boolean
   }
 
-  export type BookingEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "number_of_people" | "booking_id" | "event_id" | "transaction_id" | "created" | "updated" | "is_excluded", ExtArgs["result"]["bookingEvent"]>
+  export type BookingEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "number_of_people" | "booking_id" | "transaction_id" | "event_id" | "created" | "updated" | "is_excluded", ExtArgs["result"]["bookingEvent"]>
   export type BookingEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    booking?: boolean | BookingDefaultArgs<ExtArgs>
+    booking?: boolean | BookingEvent$bookingArgs<ExtArgs>
+    transaction?: boolean | BookingEvent$transactionArgs<ExtArgs>
     event?: boolean | EventDefaultArgs<ExtArgs>
-    transaction?: boolean | TransactionDefaultArgs<ExtArgs>
   }
   export type BookingEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    booking?: boolean | BookingDefaultArgs<ExtArgs>
+    booking?: boolean | BookingEvent$bookingArgs<ExtArgs>
+    transaction?: boolean | BookingEvent$transactionArgs<ExtArgs>
     event?: boolean | EventDefaultArgs<ExtArgs>
-    transaction?: boolean | TransactionDefaultArgs<ExtArgs>
   }
   export type BookingEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    booking?: boolean | BookingDefaultArgs<ExtArgs>
+    booking?: boolean | BookingEvent$bookingArgs<ExtArgs>
+    transaction?: boolean | BookingEvent$transactionArgs<ExtArgs>
     event?: boolean | EventDefaultArgs<ExtArgs>
-    transaction?: boolean | TransactionDefaultArgs<ExtArgs>
   }
 
   export type $BookingEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BookingEvent"
     objects: {
-      booking: Prisma.$BookingPayload<ExtArgs>
+      booking: Prisma.$BookingPayload<ExtArgs> | null
+      transaction: Prisma.$TransactionPayload<ExtArgs> | null
       event: Prisma.$EventPayload<ExtArgs>
-      transaction: Prisma.$TransactionPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       number_of_people: number
-      booking_id: string
+      booking_id: string | null
+      transaction_id: string | null
       event_id: string
-      transaction_id: string
       created: Date
       updated: Date
       is_excluded: boolean
@@ -21653,9 +21653,9 @@ export namespace Prisma {
    */
   export interface Prisma__BookingEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    booking<T extends BookingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BookingDefaultArgs<ExtArgs>>): Prisma__BookingClient<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    booking<T extends BookingEvent$bookingArgs<ExtArgs> = {}>(args?: Subset<T, BookingEvent$bookingArgs<ExtArgs>>): Prisma__BookingClient<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    transaction<T extends BookingEvent$transactionArgs<ExtArgs> = {}>(args?: Subset<T, BookingEvent$transactionArgs<ExtArgs>>): Prisma__TransactionClient<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    transaction<T extends TransactionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TransactionDefaultArgs<ExtArgs>>): Prisma__TransactionClient<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21688,8 +21688,8 @@ export namespace Prisma {
     readonly id: FieldRef<"BookingEvent", 'String'>
     readonly number_of_people: FieldRef<"BookingEvent", 'Int'>
     readonly booking_id: FieldRef<"BookingEvent", 'String'>
-    readonly event_id: FieldRef<"BookingEvent", 'String'>
     readonly transaction_id: FieldRef<"BookingEvent", 'String'>
+    readonly event_id: FieldRef<"BookingEvent", 'String'>
     readonly created: FieldRef<"BookingEvent", 'DateTime'>
     readonly updated: FieldRef<"BookingEvent", 'DateTime'>
     readonly is_excluded: FieldRef<"BookingEvent", 'Boolean'>
@@ -22086,6 +22086,44 @@ export namespace Prisma {
      * Limit how many BookingEvents to delete.
      */
     limit?: number
+  }
+
+  /**
+   * BookingEvent.booking
+   */
+  export type BookingEvent$bookingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Booking
+     */
+    select?: BookingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Booking
+     */
+    omit?: BookingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookingInclude<ExtArgs> | null
+    where?: BookingWhereInput
+  }
+
+  /**
+   * BookingEvent.transaction
+   */
+  export type BookingEvent$transactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: TransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
   }
 
   /**
@@ -28286,7 +28324,7 @@ export namespace Prisma {
   export const BookingAdditionalOptionScalarFieldEnum: {
     id: 'id',
     amount: 'amount',
-    option_id: 'option_id',
+    additional_option_id: 'additional_option_id',
     booking_id: 'booking_id',
     created: 'created',
     updated: 'updated'
@@ -28299,8 +28337,8 @@ export namespace Prisma {
     id: 'id',
     number_of_people: 'number_of_people',
     booking_id: 'booking_id',
-    event_id: 'event_id',
     transaction_id: 'transaction_id',
+    event_id: 'event_id',
     created: 'created',
     updated: 'updated',
     is_excluded: 'is_excluded'
@@ -28903,7 +28941,7 @@ export namespace Prisma {
     OR?: ApartmentWhereInput[]
     NOT?: ApartmentWhereInput | ApartmentWhereInput[]
     id?: StringFilter<"Apartment"> | string
-    image?: StringNullableFilter<"Apartment"> | string | null
+    image?: StringFilter<"Apartment"> | string
     name?: StringNullableFilter<"Apartment"> | string | null
     description?: StringNullableFilter<"Apartment"> | string | null
     rules?: StringNullableFilter<"Apartment"> | string | null
@@ -28929,7 +28967,7 @@ export namespace Prisma {
 
   export type ApartmentOrderByWithRelationInput = {
     id?: SortOrder
-    image?: SortOrderInput | SortOrder
+    image?: SortOrder
     name?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     rules?: SortOrderInput | SortOrder
@@ -28959,7 +28997,7 @@ export namespace Prisma {
     AND?: ApartmentWhereInput | ApartmentWhereInput[]
     OR?: ApartmentWhereInput[]
     NOT?: ApartmentWhereInput | ApartmentWhereInput[]
-    image?: StringNullableFilter<"Apartment"> | string | null
+    image?: StringFilter<"Apartment"> | string
     name?: StringNullableFilter<"Apartment"> | string | null
     description?: StringNullableFilter<"Apartment"> | string | null
     rules?: StringNullableFilter<"Apartment"> | string | null
@@ -28984,7 +29022,7 @@ export namespace Prisma {
 
   export type ApartmentOrderByWithAggregationInput = {
     id?: SortOrder
-    image?: SortOrderInput | SortOrder
+    image?: SortOrder
     name?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     rules?: SortOrderInput | SortOrder
@@ -29012,7 +29050,7 @@ export namespace Prisma {
     OR?: ApartmentScalarWhereWithAggregatesInput[]
     NOT?: ApartmentScalarWhereWithAggregatesInput | ApartmentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Apartment"> | string
-    image?: StringNullableWithAggregatesFilter<"Apartment"> | string | null
+    image?: StringWithAggregatesFilter<"Apartment"> | string
     name?: StringNullableWithAggregatesFilter<"Apartment"> | string | null
     description?: StringNullableWithAggregatesFilter<"Apartment"> | string | null
     rules?: StringNullableWithAggregatesFilter<"Apartment"> | string | null
@@ -29762,7 +29800,7 @@ export namespace Prisma {
     NOT?: BookingAdditionalOptionWhereInput | BookingAdditionalOptionWhereInput[]
     id?: StringFilter<"BookingAdditionalOption"> | string
     amount?: IntFilter<"BookingAdditionalOption"> | number
-    option_id?: StringFilter<"BookingAdditionalOption"> | string
+    additional_option_id?: StringFilter<"BookingAdditionalOption"> | string
     booking_id?: StringFilter<"BookingAdditionalOption"> | string
     created?: DateTimeFilter<"BookingAdditionalOption"> | Date | string
     updated?: DateTimeFilter<"BookingAdditionalOption"> | Date | string
@@ -29773,7 +29811,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionOrderByWithRelationInput = {
     id?: SortOrder
     amount?: SortOrder
-    option_id?: SortOrder
+    additional_option_id?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -29783,23 +29821,23 @@ export namespace Prisma {
 
   export type BookingAdditionalOptionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    booking_id_option_id?: BookingAdditionalOptionBooking_idOption_idCompoundUniqueInput
+    booking_id_additional_option_id?: BookingAdditionalOptionBooking_idAdditional_option_idCompoundUniqueInput
     AND?: BookingAdditionalOptionWhereInput | BookingAdditionalOptionWhereInput[]
     OR?: BookingAdditionalOptionWhereInput[]
     NOT?: BookingAdditionalOptionWhereInput | BookingAdditionalOptionWhereInput[]
     amount?: IntFilter<"BookingAdditionalOption"> | number
-    option_id?: StringFilter<"BookingAdditionalOption"> | string
+    additional_option_id?: StringFilter<"BookingAdditionalOption"> | string
     booking_id?: StringFilter<"BookingAdditionalOption"> | string
     created?: DateTimeFilter<"BookingAdditionalOption"> | Date | string
     updated?: DateTimeFilter<"BookingAdditionalOption"> | Date | string
     booking?: XOR<BookingScalarRelationFilter, BookingWhereInput>
     additional_option?: XOR<AdditionalOptionScalarRelationFilter, AdditionalOptionWhereInput>
-  }, "id" | "booking_id_option_id">
+  }, "id" | "booking_id_additional_option_id">
 
   export type BookingAdditionalOptionOrderByWithAggregationInput = {
     id?: SortOrder
     amount?: SortOrder
-    option_id?: SortOrder
+    additional_option_id?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -29816,7 +29854,7 @@ export namespace Prisma {
     NOT?: BookingAdditionalOptionScalarWhereWithAggregatesInput | BookingAdditionalOptionScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"BookingAdditionalOption"> | string
     amount?: IntWithAggregatesFilter<"BookingAdditionalOption"> | number
-    option_id?: StringWithAggregatesFilter<"BookingAdditionalOption"> | string
+    additional_option_id?: StringWithAggregatesFilter<"BookingAdditionalOption"> | string
     booking_id?: StringWithAggregatesFilter<"BookingAdditionalOption"> | string
     created?: DateTimeWithAggregatesFilter<"BookingAdditionalOption"> | Date | string
     updated?: DateTimeWithAggregatesFilter<"BookingAdditionalOption"> | Date | string
@@ -29828,29 +29866,29 @@ export namespace Prisma {
     NOT?: BookingEventWhereInput | BookingEventWhereInput[]
     id?: StringFilter<"BookingEvent"> | string
     number_of_people?: IntFilter<"BookingEvent"> | number
-    booking_id?: StringFilter<"BookingEvent"> | string
+    booking_id?: StringNullableFilter<"BookingEvent"> | string | null
+    transaction_id?: StringNullableFilter<"BookingEvent"> | string | null
     event_id?: StringFilter<"BookingEvent"> | string
-    transaction_id?: StringFilter<"BookingEvent"> | string
     created?: DateTimeFilter<"BookingEvent"> | Date | string
     updated?: DateTimeFilter<"BookingEvent"> | Date | string
     is_excluded?: BoolFilter<"BookingEvent"> | boolean
-    booking?: XOR<BookingScalarRelationFilter, BookingWhereInput>
+    booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
+    transaction?: XOR<TransactionNullableScalarRelationFilter, TransactionWhereInput> | null
     event?: XOR<EventScalarRelationFilter, EventWhereInput>
-    transaction?: XOR<TransactionScalarRelationFilter, TransactionWhereInput>
   }
 
   export type BookingEventOrderByWithRelationInput = {
     id?: SortOrder
     number_of_people?: SortOrder
-    booking_id?: SortOrder
+    booking_id?: SortOrderInput | SortOrder
+    transaction_id?: SortOrderInput | SortOrder
     event_id?: SortOrder
-    transaction_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
     is_excluded?: SortOrder
     booking?: BookingOrderByWithRelationInput
-    event?: EventOrderByWithRelationInput
     transaction?: TransactionOrderByWithRelationInput
+    event?: EventOrderByWithRelationInput
   }
 
   export type BookingEventWhereUniqueInput = Prisma.AtLeast<{
@@ -29860,22 +29898,22 @@ export namespace Prisma {
     OR?: BookingEventWhereInput[]
     NOT?: BookingEventWhereInput | BookingEventWhereInput[]
     number_of_people?: IntFilter<"BookingEvent"> | number
-    booking_id?: StringFilter<"BookingEvent"> | string
+    booking_id?: StringNullableFilter<"BookingEvent"> | string | null
     event_id?: StringFilter<"BookingEvent"> | string
     created?: DateTimeFilter<"BookingEvent"> | Date | string
     updated?: DateTimeFilter<"BookingEvent"> | Date | string
     is_excluded?: BoolFilter<"BookingEvent"> | boolean
-    booking?: XOR<BookingScalarRelationFilter, BookingWhereInput>
+    booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
+    transaction?: XOR<TransactionNullableScalarRelationFilter, TransactionWhereInput> | null
     event?: XOR<EventScalarRelationFilter, EventWhereInput>
-    transaction?: XOR<TransactionScalarRelationFilter, TransactionWhereInput>
   }, "id" | "transaction_id">
 
   export type BookingEventOrderByWithAggregationInput = {
     id?: SortOrder
     number_of_people?: SortOrder
-    booking_id?: SortOrder
+    booking_id?: SortOrderInput | SortOrder
+    transaction_id?: SortOrderInput | SortOrder
     event_id?: SortOrder
-    transaction_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
     is_excluded?: SortOrder
@@ -29892,9 +29930,9 @@ export namespace Prisma {
     NOT?: BookingEventScalarWhereWithAggregatesInput | BookingEventScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"BookingEvent"> | string
     number_of_people?: IntWithAggregatesFilter<"BookingEvent"> | number
-    booking_id?: StringWithAggregatesFilter<"BookingEvent"> | string
+    booking_id?: StringNullableWithAggregatesFilter<"BookingEvent"> | string | null
+    transaction_id?: StringNullableWithAggregatesFilter<"BookingEvent"> | string | null
     event_id?: StringWithAggregatesFilter<"BookingEvent"> | string
-    transaction_id?: StringWithAggregatesFilter<"BookingEvent"> | string
     created?: DateTimeWithAggregatesFilter<"BookingEvent"> | Date | string
     updated?: DateTimeWithAggregatesFilter<"BookingEvent"> | Date | string
     is_excluded?: BoolWithAggregatesFilter<"BookingEvent"> | boolean
@@ -30678,7 +30716,7 @@ export namespace Prisma {
 
   export type ApartmentCreateInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -30704,7 +30742,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedCreateInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -30730,7 +30768,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30756,7 +30794,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30782,7 +30820,7 @@ export namespace Prisma {
 
   export type ApartmentCreateManyInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -30802,7 +30840,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30822,7 +30860,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31612,7 +31650,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionUncheckedCreateInput = {
     id?: string
     amount: number
-    option_id: string
+    additional_option_id: string
     booking_id: string
     created?: Date | string
     updated?: Date | string
@@ -31630,7 +31668,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
-    option_id?: StringFieldUpdateOperationsInput | string
+    additional_option_id?: StringFieldUpdateOperationsInput | string
     booking_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31639,7 +31677,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionCreateManyInput = {
     id?: string
     amount: number
-    option_id: string
+    additional_option_id: string
     booking_id: string
     created?: Date | string
     updated?: Date | string
@@ -31655,7 +31693,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
-    option_id?: StringFieldUpdateOperationsInput | string
+    additional_option_id?: StringFieldUpdateOperationsInput | string
     booking_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31667,17 +31705,17 @@ export namespace Prisma {
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
-    booking: BookingCreateNestedOneWithoutBooking_eventsInput
+    booking?: BookingCreateNestedOneWithoutBooking_eventsInput
+    transaction?: TransactionCreateNestedOneWithoutBooking_eventInput
     event: EventCreateNestedOneWithoutBooking_eventsInput
-    transaction: TransactionCreateNestedOneWithoutBooking_eventInput
   }
 
   export type BookingEventUncheckedCreateInput = {
     id?: string
     number_of_people: number
-    booking_id: string
+    booking_id?: string | null
+    transaction_id?: string | null
     event_id: string
-    transaction_id: string
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
@@ -31689,17 +31727,17 @@ export namespace Prisma {
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
-    booking?: BookingUpdateOneRequiredWithoutBooking_eventsNestedInput
+    booking?: BookingUpdateOneWithoutBooking_eventsNestedInput
+    transaction?: TransactionUpdateOneWithoutBooking_eventNestedInput
     event?: EventUpdateOneRequiredWithoutBooking_eventsNestedInput
-    transaction?: TransactionUpdateOneRequiredWithoutBooking_eventNestedInput
   }
 
   export type BookingEventUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     number_of_people?: IntFieldUpdateOperationsInput | number
-    booking_id?: StringFieldUpdateOperationsInput | string
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
     event_id?: StringFieldUpdateOperationsInput | string
-    transaction_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
@@ -31708,9 +31746,9 @@ export namespace Prisma {
   export type BookingEventCreateManyInput = {
     id?: string
     number_of_people: number
-    booking_id: string
+    booking_id?: string | null
+    transaction_id?: string | null
     event_id: string
-    transaction_id: string
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
@@ -31727,9 +31765,9 @@ export namespace Prisma {
   export type BookingEventUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     number_of_people?: IntFieldUpdateOperationsInput | number
-    booking_id?: StringFieldUpdateOperationsInput | string
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
     event_id?: StringFieldUpdateOperationsInput | string
-    transaction_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
@@ -33283,15 +33321,15 @@ export namespace Prisma {
     isNot?: AdditionalOptionWhereInput
   }
 
-  export type BookingAdditionalOptionBooking_idOption_idCompoundUniqueInput = {
+  export type BookingAdditionalOptionBooking_idAdditional_option_idCompoundUniqueInput = {
     booking_id: string
-    option_id: string
+    additional_option_id: string
   }
 
   export type BookingAdditionalOptionCountOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
-    option_id?: SortOrder
+    additional_option_id?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -33304,7 +33342,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionMaxOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
-    option_id?: SortOrder
+    additional_option_id?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -33313,7 +33351,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionMinOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
-    option_id?: SortOrder
+    additional_option_id?: SortOrder
     booking_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
@@ -33321,6 +33359,11 @@ export namespace Prisma {
 
   export type BookingAdditionalOptionSumOrderByAggregateInput = {
     amount?: SortOrder
+  }
+
+  export type TransactionNullableScalarRelationFilter = {
+    is?: TransactionWhereInput | null
+    isNot?: TransactionWhereInput | null
   }
 
   export type EventScalarRelationFilter = {
@@ -33332,8 +33375,8 @@ export namespace Prisma {
     id?: SortOrder
     number_of_people?: SortOrder
     booking_id?: SortOrder
-    event_id?: SortOrder
     transaction_id?: SortOrder
+    event_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
     is_excluded?: SortOrder
@@ -33347,8 +33390,8 @@ export namespace Prisma {
     id?: SortOrder
     number_of_people?: SortOrder
     booking_id?: SortOrder
-    event_id?: SortOrder
     transaction_id?: SortOrder
+    event_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
     is_excluded?: SortOrder
@@ -33358,8 +33401,8 @@ export namespace Prisma {
     id?: SortOrder
     number_of_people?: SortOrder
     booking_id?: SortOrder
-    event_id?: SortOrder
     transaction_id?: SortOrder
+    event_id?: SortOrder
     created?: SortOrder
     updated?: SortOrder
     is_excluded?: SortOrder
@@ -35033,24 +35076,36 @@ export namespace Prisma {
     connect?: BookingWhereUniqueInput
   }
 
-  export type EventCreateNestedOneWithoutBooking_eventsInput = {
-    create?: XOR<EventCreateWithoutBooking_eventsInput, EventUncheckedCreateWithoutBooking_eventsInput>
-    connectOrCreate?: EventCreateOrConnectWithoutBooking_eventsInput
-    connect?: EventWhereUniqueInput
-  }
-
   export type TransactionCreateNestedOneWithoutBooking_eventInput = {
     create?: XOR<TransactionCreateWithoutBooking_eventInput, TransactionUncheckedCreateWithoutBooking_eventInput>
     connectOrCreate?: TransactionCreateOrConnectWithoutBooking_eventInput
     connect?: TransactionWhereUniqueInput
   }
 
-  export type BookingUpdateOneRequiredWithoutBooking_eventsNestedInput = {
+  export type EventCreateNestedOneWithoutBooking_eventsInput = {
+    create?: XOR<EventCreateWithoutBooking_eventsInput, EventUncheckedCreateWithoutBooking_eventsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutBooking_eventsInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type BookingUpdateOneWithoutBooking_eventsNestedInput = {
     create?: XOR<BookingCreateWithoutBooking_eventsInput, BookingUncheckedCreateWithoutBooking_eventsInput>
     connectOrCreate?: BookingCreateOrConnectWithoutBooking_eventsInput
     upsert?: BookingUpsertWithoutBooking_eventsInput
+    disconnect?: BookingWhereInput | boolean
+    delete?: BookingWhereInput | boolean
     connect?: BookingWhereUniqueInput
     update?: XOR<XOR<BookingUpdateToOneWithWhereWithoutBooking_eventsInput, BookingUpdateWithoutBooking_eventsInput>, BookingUncheckedUpdateWithoutBooking_eventsInput>
+  }
+
+  export type TransactionUpdateOneWithoutBooking_eventNestedInput = {
+    create?: XOR<TransactionCreateWithoutBooking_eventInput, TransactionUncheckedCreateWithoutBooking_eventInput>
+    connectOrCreate?: TransactionCreateOrConnectWithoutBooking_eventInput
+    upsert?: TransactionUpsertWithoutBooking_eventInput
+    disconnect?: TransactionWhereInput | boolean
+    delete?: TransactionWhereInput | boolean
+    connect?: TransactionWhereUniqueInput
+    update?: XOR<XOR<TransactionUpdateToOneWithWhereWithoutBooking_eventInput, TransactionUpdateWithoutBooking_eventInput>, TransactionUncheckedUpdateWithoutBooking_eventInput>
   }
 
   export type EventUpdateOneRequiredWithoutBooking_eventsNestedInput = {
@@ -35059,14 +35114,6 @@ export namespace Prisma {
     upsert?: EventUpsertWithoutBooking_eventsInput
     connect?: EventWhereUniqueInput
     update?: XOR<XOR<EventUpdateToOneWithWhereWithoutBooking_eventsInput, EventUpdateWithoutBooking_eventsInput>, EventUncheckedUpdateWithoutBooking_eventsInput>
-  }
-
-  export type TransactionUpdateOneRequiredWithoutBooking_eventNestedInput = {
-    create?: XOR<TransactionCreateWithoutBooking_eventInput, TransactionUncheckedCreateWithoutBooking_eventInput>
-    connectOrCreate?: TransactionCreateOrConnectWithoutBooking_eventInput
-    upsert?: TransactionUpsertWithoutBooking_eventInput
-    connect?: TransactionWhereUniqueInput
-    update?: XOR<XOR<TransactionUpdateToOneWithWhereWithoutBooking_eventInput, TransactionUpdateWithoutBooking_eventInput>, TransactionUncheckedUpdateWithoutBooking_eventInput>
   }
 
   export type UserCreateNestedOneWithoutTransactionsInput = {
@@ -37210,7 +37257,7 @@ export namespace Prisma {
 
   export type ApartmentCreateWithoutReviewsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37235,7 +37282,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedCreateWithoutReviewsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37376,7 +37423,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37401,7 +37448,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37511,7 +37558,7 @@ export namespace Prisma {
 
   export type ApartmentCreateWithoutApartment_amenitiesInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37536,7 +37583,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedCreateWithoutApartment_amenitiesInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37602,7 +37649,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateWithoutApartment_amenitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37627,7 +37674,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateWithoutApartment_amenitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37683,7 +37730,7 @@ export namespace Prisma {
 
   export type ApartmentCreateWithoutImagesInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37708,7 +37755,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedCreateWithoutImagesInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37749,7 +37796,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateWithoutImagesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37774,7 +37821,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateWithoutImagesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37843,7 +37890,7 @@ export namespace Prisma {
 
   export type ApartmentCreateWithoutApartment_bedsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37868,7 +37915,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedCreateWithoutApartment_bedsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -37932,7 +37979,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateWithoutApartment_bedsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37957,7 +38004,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateWithoutApartment_bedsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38011,7 +38058,7 @@ export namespace Prisma {
 
   export type ApartmentCreateWithoutBooking_variantsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -38036,7 +38083,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedCreateWithoutBooking_variantsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -38119,7 +38166,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateWithoutBooking_variantsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38144,7 +38191,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateWithoutBooking_variantsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38185,7 +38232,7 @@ export namespace Prisma {
 
   export type ApartmentCreateWithoutReservationsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -38210,7 +38257,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedCreateWithoutReservationsInput = {
     id?: string
-    image?: string | null
+    image: string
     name?: string | null
     description?: string | null
     rules?: string | null
@@ -38308,7 +38355,7 @@ export namespace Prisma {
 
   export type ApartmentUpdateWithoutReservationsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38333,7 +38380,7 @@ export namespace Prisma {
 
   export type ApartmentUncheckedUpdateWithoutReservationsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     rules?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38544,15 +38591,15 @@ export namespace Prisma {
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
+    transaction?: TransactionCreateNestedOneWithoutBooking_eventInput
     event: EventCreateNestedOneWithoutBooking_eventsInput
-    transaction: TransactionCreateNestedOneWithoutBooking_eventInput
   }
 
   export type BookingEventUncheckedCreateWithoutBookingInput = {
     id?: string
     number_of_people: number
+    transaction_id?: string | null
     event_id: string
-    transaction_id: string
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
@@ -38579,7 +38626,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionUncheckedCreateWithoutBookingInput = {
     id?: string
     amount: number
-    option_id: string
+    additional_option_id: string
     created?: Date | string
     updated?: Date | string
   }
@@ -38823,9 +38870,9 @@ export namespace Prisma {
     NOT?: BookingEventScalarWhereInput | BookingEventScalarWhereInput[]
     id?: StringFilter<"BookingEvent"> | string
     number_of_people?: IntFilter<"BookingEvent"> | number
-    booking_id?: StringFilter<"BookingEvent"> | string
+    booking_id?: StringNullableFilter<"BookingEvent"> | string | null
+    transaction_id?: StringNullableFilter<"BookingEvent"> | string | null
     event_id?: StringFilter<"BookingEvent"> | string
-    transaction_id?: StringFilter<"BookingEvent"> | string
     created?: DateTimeFilter<"BookingEvent"> | Date | string
     updated?: DateTimeFilter<"BookingEvent"> | Date | string
     is_excluded?: BoolFilter<"BookingEvent"> | boolean
@@ -38853,7 +38900,7 @@ export namespace Prisma {
     NOT?: BookingAdditionalOptionScalarWhereInput | BookingAdditionalOptionScalarWhereInput[]
     id?: StringFilter<"BookingAdditionalOption"> | string
     amount?: IntFilter<"BookingAdditionalOption"> | number
-    option_id?: StringFilter<"BookingAdditionalOption"> | string
+    additional_option_id?: StringFilter<"BookingAdditionalOption"> | string
     booking_id?: StringFilter<"BookingAdditionalOption"> | string
     created?: DateTimeFilter<"BookingAdditionalOption"> | Date | string
     updated?: DateTimeFilter<"BookingAdditionalOption"> | Date | string
@@ -39110,6 +39157,41 @@ export namespace Prisma {
     create: XOR<BookingCreateWithoutBooking_eventsInput, BookingUncheckedCreateWithoutBooking_eventsInput>
   }
 
+  export type TransactionCreateWithoutBooking_eventInput = {
+    id?: string
+    amount: number
+    description: string
+    transaction_type: $Enums.TransactionType
+    transaction_status: $Enums.TransactionStatus
+    payment_method: $Enums.PaymentMethod
+    created?: Date | string
+    updated?: Date | string
+    user: UserCreateNestedOneWithoutTransactionsInput
+    card_detail?: CardDetailCreateNestedOneWithoutTransactionsInput
+    transfer_detail?: TransferDetailCreateNestedOneWithoutTransactionsInput
+    booking?: BookingCreateNestedOneWithoutTransactionInput
+  }
+
+  export type TransactionUncheckedCreateWithoutBooking_eventInput = {
+    id?: string
+    amount: number
+    user_id: string
+    description: string
+    card_details_id?: string | null
+    transfer_details_id?: string | null
+    transaction_type: $Enums.TransactionType
+    transaction_status: $Enums.TransactionStatus
+    payment_method: $Enums.PaymentMethod
+    created?: Date | string
+    updated?: Date | string
+    booking?: BookingUncheckedCreateNestedOneWithoutTransactionInput
+  }
+
+  export type TransactionCreateOrConnectWithoutBooking_eventInput = {
+    where: TransactionWhereUniqueInput
+    create: XOR<TransactionCreateWithoutBooking_eventInput, TransactionUncheckedCreateWithoutBooking_eventInput>
+  }
+
   export type EventCreateWithoutBooking_eventsInput = {
     id?: string
     name: string
@@ -39145,41 +39227,6 @@ export namespace Prisma {
   export type EventCreateOrConnectWithoutBooking_eventsInput = {
     where: EventWhereUniqueInput
     create: XOR<EventCreateWithoutBooking_eventsInput, EventUncheckedCreateWithoutBooking_eventsInput>
-  }
-
-  export type TransactionCreateWithoutBooking_eventInput = {
-    id?: string
-    amount: number
-    description: string
-    transaction_type: $Enums.TransactionType
-    transaction_status: $Enums.TransactionStatus
-    payment_method: $Enums.PaymentMethod
-    created?: Date | string
-    updated?: Date | string
-    user: UserCreateNestedOneWithoutTransactionsInput
-    card_detail?: CardDetailCreateNestedOneWithoutTransactionsInput
-    transfer_detail?: TransferDetailCreateNestedOneWithoutTransactionsInput
-    booking?: BookingCreateNestedOneWithoutTransactionInput
-  }
-
-  export type TransactionUncheckedCreateWithoutBooking_eventInput = {
-    id?: string
-    amount: number
-    user_id: string
-    description: string
-    card_details_id?: string | null
-    transfer_details_id?: string | null
-    transaction_type: $Enums.TransactionType
-    transaction_status: $Enums.TransactionStatus
-    payment_method: $Enums.PaymentMethod
-    created?: Date | string
-    updated?: Date | string
-    booking?: BookingUncheckedCreateNestedOneWithoutTransactionInput
-  }
-
-  export type TransactionCreateOrConnectWithoutBooking_eventInput = {
-    where: TransactionWhereUniqueInput
-    create: XOR<TransactionCreateWithoutBooking_eventInput, TransactionUncheckedCreateWithoutBooking_eventInput>
   }
 
   export type BookingUpsertWithoutBooking_eventsInput = {
@@ -39225,6 +39272,47 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutBookingNestedInput
   }
 
+  export type TransactionUpsertWithoutBooking_eventInput = {
+    update: XOR<TransactionUpdateWithoutBooking_eventInput, TransactionUncheckedUpdateWithoutBooking_eventInput>
+    create: XOR<TransactionCreateWithoutBooking_eventInput, TransactionUncheckedCreateWithoutBooking_eventInput>
+    where?: TransactionWhereInput
+  }
+
+  export type TransactionUpdateToOneWithWhereWithoutBooking_eventInput = {
+    where?: TransactionWhereInput
+    data: XOR<TransactionUpdateWithoutBooking_eventInput, TransactionUncheckedUpdateWithoutBooking_eventInput>
+  }
+
+  export type TransactionUpdateWithoutBooking_eventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    transaction_type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    transaction_status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
+    payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
+    card_detail?: CardDetailUpdateOneWithoutTransactionsNestedInput
+    transfer_detail?: TransferDetailUpdateOneWithoutTransactionsNestedInput
+    booking?: BookingUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type TransactionUncheckedUpdateWithoutBooking_eventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    user_id?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    card_details_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transfer_details_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    transaction_status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
+    payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    booking?: BookingUncheckedUpdateOneWithoutTransactionNestedInput
+  }
+
   export type EventUpsertWithoutBooking_eventsInput = {
     update: XOR<EventUpdateWithoutBooking_eventsInput, EventUncheckedUpdateWithoutBooking_eventsInput>
     create: XOR<EventCreateWithoutBooking_eventsInput, EventUncheckedCreateWithoutBooking_eventsInput>
@@ -39266,47 +39354,6 @@ export namespace Prisma {
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
     images?: EventImageUncheckedUpdateManyWithoutEventNestedInput
-  }
-
-  export type TransactionUpsertWithoutBooking_eventInput = {
-    update: XOR<TransactionUpdateWithoutBooking_eventInput, TransactionUncheckedUpdateWithoutBooking_eventInput>
-    create: XOR<TransactionCreateWithoutBooking_eventInput, TransactionUncheckedCreateWithoutBooking_eventInput>
-    where?: TransactionWhereInput
-  }
-
-  export type TransactionUpdateToOneWithWhereWithoutBooking_eventInput = {
-    where?: TransactionWhereInput
-    data: XOR<TransactionUpdateWithoutBooking_eventInput, TransactionUncheckedUpdateWithoutBooking_eventInput>
-  }
-
-  export type TransactionUpdateWithoutBooking_eventInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    description?: StringFieldUpdateOperationsInput | string
-    transaction_type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    transaction_status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-    payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
-    created?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
-    card_detail?: CardDetailUpdateOneWithoutTransactionsNestedInput
-    transfer_detail?: TransferDetailUpdateOneWithoutTransactionsNestedInput
-    booking?: BookingUpdateOneWithoutTransactionNestedInput
-  }
-
-  export type TransactionUncheckedUpdateWithoutBooking_eventInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    user_id?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    card_details_id?: NullableStringFieldUpdateOperationsInput | string | null
-    transfer_details_id?: NullableStringFieldUpdateOperationsInput | string | null
-    transaction_type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    transaction_status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-    payment_method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
-    created?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated?: DateTimeFieldUpdateOperationsInput | Date | string
-    booking?: BookingUncheckedUpdateOneWithoutTransactionNestedInput
   }
 
   export type UserCreateWithoutTransactionsInput = {
@@ -39467,14 +39514,14 @@ export namespace Prisma {
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
-    booking: BookingCreateNestedOneWithoutBooking_eventsInput
+    booking?: BookingCreateNestedOneWithoutBooking_eventsInput
     event: EventCreateNestedOneWithoutBooking_eventsInput
   }
 
   export type BookingEventUncheckedCreateWithoutTransactionInput = {
     id?: string
     number_of_people: number
-    booking_id: string
+    booking_id?: string | null
     event_id: string
     created?: Date | string
     updated?: Date | string
@@ -39679,14 +39726,14 @@ export namespace Prisma {
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
-    booking?: BookingUpdateOneRequiredWithoutBooking_eventsNestedInput
+    booking?: BookingUpdateOneWithoutBooking_eventsNestedInput
     event?: EventUpdateOneRequiredWithoutBooking_eventsNestedInput
   }
 
   export type BookingEventUncheckedUpdateWithoutTransactionInput = {
     id?: StringFieldUpdateOperationsInput | string
     number_of_people?: IntFieldUpdateOperationsInput | number
-    booking_id?: StringFieldUpdateOperationsInput | string
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
     event_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40138,15 +40185,15 @@ export namespace Prisma {
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
-    booking: BookingCreateNestedOneWithoutBooking_eventsInput
-    transaction: TransactionCreateNestedOneWithoutBooking_eventInput
+    booking?: BookingCreateNestedOneWithoutBooking_eventsInput
+    transaction?: TransactionCreateNestedOneWithoutBooking_eventInput
   }
 
   export type BookingEventUncheckedCreateWithoutEventInput = {
     id?: string
     number_of_people: number
-    booking_id: string
-    transaction_id: string
+    booking_id?: string | null
+    transaction_id?: string | null
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
@@ -41208,8 +41255,8 @@ export namespace Prisma {
   export type BookingEventCreateManyBookingInput = {
     id?: string
     number_of_people: number
+    transaction_id?: string | null
     event_id: string
-    transaction_id: string
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
@@ -41218,7 +41265,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionCreateManyBookingInput = {
     id?: string
     amount: number
-    option_id: string
+    additional_option_id: string
     created?: Date | string
     updated?: Date | string
   }
@@ -41253,15 +41300,15 @@ export namespace Prisma {
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
+    transaction?: TransactionUpdateOneWithoutBooking_eventNestedInput
     event?: EventUpdateOneRequiredWithoutBooking_eventsNestedInput
-    transaction?: TransactionUpdateOneRequiredWithoutBooking_eventNestedInput
   }
 
   export type BookingEventUncheckedUpdateWithoutBookingInput = {
     id?: StringFieldUpdateOperationsInput | string
     number_of_people?: IntFieldUpdateOperationsInput | number
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
     event_id?: StringFieldUpdateOperationsInput | string
-    transaction_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
@@ -41270,8 +41317,8 @@ export namespace Prisma {
   export type BookingEventUncheckedUpdateManyWithoutBookingInput = {
     id?: StringFieldUpdateOperationsInput | string
     number_of_people?: IntFieldUpdateOperationsInput | number
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
     event_id?: StringFieldUpdateOperationsInput | string
-    transaction_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
@@ -41288,7 +41335,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionUncheckedUpdateWithoutBookingInput = {
     id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
-    option_id?: StringFieldUpdateOperationsInput | string
+    additional_option_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41296,7 +41343,7 @@ export namespace Prisma {
   export type BookingAdditionalOptionUncheckedUpdateManyWithoutBookingInput = {
     id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
-    option_id?: StringFieldUpdateOperationsInput | string
+    additional_option_id?: StringFieldUpdateOperationsInput | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41532,8 +41579,8 @@ export namespace Prisma {
   export type BookingEventCreateManyEventInput = {
     id?: string
     number_of_people: number
-    booking_id: string
-    transaction_id: string
+    booking_id?: string | null
+    transaction_id?: string | null
     created?: Date | string
     updated?: Date | string
     is_excluded?: boolean
@@ -41575,15 +41622,15 @@ export namespace Prisma {
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
-    booking?: BookingUpdateOneRequiredWithoutBooking_eventsNestedInput
-    transaction?: TransactionUpdateOneRequiredWithoutBooking_eventNestedInput
+    booking?: BookingUpdateOneWithoutBooking_eventsNestedInput
+    transaction?: TransactionUpdateOneWithoutBooking_eventNestedInput
   }
 
   export type BookingEventUncheckedUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
     number_of_people?: IntFieldUpdateOperationsInput | number
-    booking_id?: StringFieldUpdateOperationsInput | string
-    transaction_id?: StringFieldUpdateOperationsInput | string
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean
@@ -41592,8 +41639,8 @@ export namespace Prisma {
   export type BookingEventUncheckedUpdateManyWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
     number_of_people?: IntFieldUpdateOperationsInput | number
-    booking_id?: StringFieldUpdateOperationsInput | string
-    transaction_id?: StringFieldUpdateOperationsInput | string
+    booking_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: DateTimeFieldUpdateOperationsInput | Date | string
     is_excluded?: BoolFieldUpdateOperationsInput | boolean

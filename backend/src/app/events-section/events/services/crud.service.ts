@@ -2,6 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import { CreateEventDto, UpdateEventDto } from '../dto';
 import { FilesService } from 'src/lib/files';
+import {
+  EXTENDED_EVENT_INCLUDE,
+  ExtendedEvent,
+} from '@shared/src/types/events-section/extended.types';
+import { Prisma } from '@shared/src/database';
 
 /**
  * Service for performing CRUD operations on events
@@ -32,19 +37,26 @@ export class CrudService {
   }
   /**
    * Find a specific event by ID
-   * @param id - Event's unique identifier
+   * @param where - Event's unique identifier
    * @returns Event with related images, guide, and booking events
    */
-  async findOne(id: string) {
+  async find(where: Prisma.EventWhereUniqueInput): Promise<ExtendedEvent> {
     const event = await this.prisma.event.findUnique({
-      where: { id },
-      include: {
-        images: true,
-        guide: true,
-      },
+      where,
+      include: EXTENDED_EVENT_INCLUDE,
     });
     if (!event) throw new NotFoundException('Event not found');
-    return event;
+    return {
+      ...event,
+      available_spots: Math.max(
+        0,
+        event.capacity -
+          event.booking_events.reduce(
+            (total, booking) => total + booking.number_of_people,
+            0,
+          ),
+      ),
+    };
   }
   /**
    * Update an existing event
@@ -61,7 +73,7 @@ export class CrudService {
     data: UpdateEventDto;
     file?: Express.Multer.File;
   }) {
-    await this.findOne(id);
+    await this.find({ id });
     const image = file
       ? this.filesService.saveImage({ file, dir_name: 'EVENTS' })
       : data.image;
@@ -76,7 +88,7 @@ export class CrudService {
    * @returns The deleted event
    */
   async remove(id: string) {
-    return !(await this.findOne(id))
+    return !(await this.find({ id })).is_excluded
       ? await this.update({ id, data: { is_excluded: true } })
       : await this.prisma.event.delete({ where: { id } });
   }

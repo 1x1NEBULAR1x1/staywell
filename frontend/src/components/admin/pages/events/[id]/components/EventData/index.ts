@@ -1,1 +1,1 @@
-export { EventData } from './EventData';
+export { EventData } from "./EventData";

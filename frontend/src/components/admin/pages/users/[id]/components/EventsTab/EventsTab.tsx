@@ -1,18 +1,17 @@
-'use client';
+"use client";
 
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useModelFilters } from '@/hooks/admin/actions/useModelFilters';
-import { EventsFiltersMenu, EventsList } from './components';
-import classes from '../Tab.module.scss';
+import { useModelFilters } from "@/hooks/admin/actions/useModelFilters";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import classes from "../Tab.module.scss";
+import { EventsFiltersMenu, EventsList } from "./components";
 
 export const EventsTab = ({ user_id }: { user_id: string }) => {
   const { filters, setFilters } = useModelFilters({
-    model: 'EVENT',
-    permanent_fields: { guide_id: user_id }
+    model: "EVENT",
+    permanent_fields: { guide_id: user_id },
   });
 
-  const { data: events } = useModel('EVENT').get(filters);
-
+  const { data: events } = useModel("EVENT").get(filters);
 
   return (
     <div className={classes.tab}>

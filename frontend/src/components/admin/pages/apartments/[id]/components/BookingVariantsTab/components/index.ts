@@ -1,2 +1,2 @@
-export { BookingVariantFornModal } from './BookingVariantFornModal';
-export { BookingVariantsList } from './BookingVariantsList';
+export { BookingVariantFornModal } from "./BookingVariantFornModal";
+export { BookingVariantsList } from "./BookingVariantsList";

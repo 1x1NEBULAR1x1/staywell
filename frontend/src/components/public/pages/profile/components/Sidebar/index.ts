@@ -1,2 +1,2 @@
-export { Sidebar } from "./Sidebar";
 export type { ProfileTab } from "./Sidebar";
+export { Sidebar } from "./Sidebar";

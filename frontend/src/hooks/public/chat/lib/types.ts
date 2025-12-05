@@ -13,7 +13,10 @@ export interface UseWebSocketChatOptions {
     chat_partner_id: string;
     is_typing: boolean;
   }) => void;
-  onUserOnlineStatus?: (data: { user_id: string; last_seen: Date | null }) => void;
+  onUserOnlineStatus?: (data: {
+    user_id: string;
+    last_seen: Date | null;
+  }) => void;
 }
 
 export interface UseWebSocketChatReturn {
@@ -41,4 +44,3 @@ export interface UseWebSocketChatReturn {
   support_online: boolean;
   support_last_seen: Date | null;
 }
-

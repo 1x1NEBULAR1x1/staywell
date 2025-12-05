@@ -1,1 +1,1 @@
-export { Management } from './Management';
+export { Management } from "./Management";

@@ -1,12 +1,16 @@
-'use client';
+"use client";
 
-import { UserWithoutPassword, AdminUpdateUser, Role } from '@shared/src';
-import { BaseFormModal } from '@/components/admin/common/Modal/BaseFormModal';
-import { useForm } from 'react-hook-form';
-import { InputField, SelectField } from '@/components/admin/common/Form';
-import { useUsers } from '@/hooks/admin/queries/users/useUsers';
-import { useToast } from '@/hooks/common/useToast';
-import { isAxiosError } from 'axios';
+import {
+  type AdminUpdateUser,
+  Role,
+  type UserWithoutPassword,
+} from "@shared/src";
+import { isAxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { InputField, SelectField } from "@/components/admin/common/Form";
+import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
+import { useUsers } from "@/hooks/admin/queries/users/useUsers";
+import { useToast } from "@/hooks/common/useToast";
 
 interface EditUserModalProps {
   user: UserWithoutPassword;
@@ -15,16 +19,20 @@ interface EditUserModalProps {
 }
 
 type FormData = AdminUpdateUser & {
-  image_type: 'file' | 'url';
-}
+  image_type: "file" | "url";
+};
 
-export const EditUserModal = ({ user, onClose, refetch }: EditUserModalProps) => {
+export const EditUserModal = ({
+  user,
+  onClose,
+  refetch,
+}: EditUserModalProps) => {
   const update_mutation = useUsers().update(user.id);
   const toast = useToast();
   const form = useForm<FormData>({
     defaultValues: {
       ...user,
-      image_type: 'url'
+      image_type: "url",
     },
   });
 
@@ -32,11 +40,12 @@ export const EditUserModal = ({ user, onClose, refetch }: EditUserModalProps) =>
     try {
       await update_mutation.mutateAsync(data);
       onClose();
-      toast.success('User has been updated successfully');
+      toast.success("User has been updated successfully");
       refetch();
     } catch (error) {
-      isAxiosError(error) && toast.error(`Error during update: ${error.message}`);
-      console.error('Failed to update user:', error);
+      isAxiosError(error) &&
+        toast.error(`Error during update: ${error.message}`);
+      console.error("Failed to update user:", error);
     }
   };
 
@@ -70,11 +79,11 @@ export const EditUserModal = ({ user, onClose, refetch }: EditUserModalProps) =>
         errors={form.formState.errors}
         type="email"
         rules={{
-          required: 'Email is required',
+          required: "Email is required",
           pattern: {
             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: 'Invalid email format'
-          }
+            message: "Invalid email format",
+          },
         }}
       />
 
@@ -94,8 +103,8 @@ export const EditUserModal = ({ user, onClose, refetch }: EditUserModalProps) =>
         rules={{
           minLength: {
             value: 8,
-            message: 'Password must be at least 8 characters'
-          }
+            message: "Password must be at least 8 characters",
+          },
         }}
       />
 
@@ -105,9 +114,9 @@ export const EditUserModal = ({ user, onClose, refetch }: EditUserModalProps) =>
         register={form.register}
         errors={form.formState.errors}
         options={[
-          { value: Role.USER, label: 'User' },
-          { value: Role.ADMIN, label: 'Admin' },
-          { value: Role.GUIDE, label: 'Guide' },
+          { value: Role.USER, label: "User" },
+          { value: Role.ADMIN, label: "Admin" },
+          { value: Role.GUIDE, label: "Guide" },
         ]}
       />
 
@@ -137,4 +146,3 @@ export const EditUserModal = ({ user, onClose, refetch }: EditUserModalProps) =>
     </BaseFormModal>
   );
 };
-

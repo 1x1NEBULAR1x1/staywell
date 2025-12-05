@@ -8,4 +8,4 @@ import { NotificationsModule } from './notifications/module';
   imports: [AuthModule, UsersModule, ChatModule, NotificationsModule],
   exports: [UsersModule, AuthModule, ChatModule, NotificationsModule],
 })
-export class UsersSectionModule { }
+export class UsersSectionModule {}

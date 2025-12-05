@@ -19,6 +19,3 @@ export class DatesConfigDto {
   })
   month!: number;
 }
-
-
-

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
-import { UseFormReturn, FieldValues } from 'react-hook-form';
-import { Modal } from '@/components/admin/common/Modal/Modal';
-import { ActionsSection, classes } from '@/components/admin/common/Form';
-import { GETTABLE_NAMES } from '@shared/src';
+import type { GETTABLE_NAMES } from "@shared/src";
+import type { ReactNode } from "react";
+import type { FieldValues, UseFormReturn } from "react-hook-form";
+import { ActionsSection, classes } from "@/components/admin/common/Form";
+import { Modal } from "@/components/admin/common/Modal/Modal";
 
 interface BaseFormModalProps<T extends FieldValues, M extends GETTABLE_NAMES> {
   is_open: boolean;
@@ -14,7 +14,7 @@ interface BaseFormModalProps<T extends FieldValues, M extends GETTABLE_NAMES> {
   form: UseFormReturn<T>;
   onSubmit: (data: T) => void;
   is_loading?: boolean;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: "sm" | "md" | "lg" | "xl";
   reset_on_close?: boolean;
   model: M;
   id?: string;
@@ -28,12 +28,16 @@ export const BaseFormModal = <T extends FieldValues, M extends GETTABLE_NAMES>({
   form,
   onSubmit,
   is_loading = false,
-  size = 'md',
+  size = "md",
   reset_on_close = true,
   model,
-  id
+  id,
 }: BaseFormModalProps<T, M>) => {
-  const { handleSubmit, reset, formState: { isValid: is_valid } } = form;
+  const {
+    handleSubmit,
+    reset,
+    formState: { isValid: is_valid },
+  } = form;
 
   const handleFormSubmit = (data: T) => {
     onSubmit(data);
@@ -46,12 +50,7 @@ export const BaseFormModal = <T extends FieldValues, M extends GETTABLE_NAMES>({
   };
 
   return (
-    <Modal
-      isOpen={is_open}
-      onClose={handleClose}
-      title={title}
-      size={size}
-    >
+    <Modal isOpen={is_open} onClose={handleClose} title={title} size={size}>
       <form
         className={classes.admin_form}
         onSubmit={handleSubmit(handleFormSubmit)}
@@ -63,10 +62,10 @@ export const BaseFormModal = <T extends FieldValues, M extends GETTABLE_NAMES>({
           is_valid={is_valid}
           handleClose={handleClose}
           model={model}
-          action={!id ? 'create' : 'update'}
+          action={!id ? "create" : "update"}
           id={id}
         />
       </form>
     </Modal>
   );
-}; 
+};

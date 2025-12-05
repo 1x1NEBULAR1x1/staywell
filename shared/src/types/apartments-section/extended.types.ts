@@ -2,16 +2,9 @@ import { Amenity, Apartment, ApartmentAmenity, BedType, Review, ApartmentBed, Bo
 import { ExtendedBooking, ExtendedReservation } from "../bookings-section";
 import { SAFE_USER_SELECT, SafeUser } from "../users-section";
 
-
 export interface ExtendedAmenity extends Amenity {
   apartment_amenities: ApartmentAmenity[];
 }
-
-
-export const EXTENDED_APARTMENT_INCLUDE = {
-  apartment_amenities: true,
-} as const satisfies Prisma.ApartmentInclude;
-
 
 export interface ExtendedApartmentAmenity extends ApartmentAmenity {
   amenity: Amenity;

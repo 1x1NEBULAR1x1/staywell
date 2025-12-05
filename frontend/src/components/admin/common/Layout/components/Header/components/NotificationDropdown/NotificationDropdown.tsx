@@ -1,22 +1,26 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import classes from './NotificationDropdown.module.scss';
-import { useNotifications } from '@/hooks/common/useNotifications';
-import { Notification, NotificationType, NotificationAction } from '@shared/src/database';
 import {
+  type Notification,
+  NotificationAction,
+  NotificationType,
+} from "@shared/src/database";
+import {
+  AlertCircle,
   Bell,
   BellDot,
-  Check,
   Calendar,
-  Home,
-  AlertCircle,
+  Check,
   CheckCircle,
-  XCircle,
   Clock,
-  MessageSquare
-} from 'lucide-react';
+  Home,
+  MessageSquare,
+  XCircle,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { useNotifications } from "@/hooks/common/useNotifications";
+import classes from "./NotificationDropdown.module.scss";
 
 export const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,23 +30,32 @@ export const NotificationDropdown = () => {
 
   const { get, markAsRead } = useNotifications();
 
-  const { data: notifications, isLoading } = get({ ...(showUnreadOnly ? { is_read: false } : {}), take: 1000, skip: 0 });
+  const { data: notifications, isLoading } = get({
+    ...(showUnreadOnly ? { is_read: false } : {}),
+    take: 1000,
+    skip: 0,
+  });
 
-  const unread_count = notifications?.items?.filter((notification) => !notification.is_read).length || 0;
+  const unread_count =
+    notifications?.items?.filter((notification) => !notification.is_read)
+      .length || 0;
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
@@ -63,7 +76,10 @@ export const NotificationDropdown = () => {
   };
 
   const handleMarkAllAsRead = async () => {
-    if (notifications?.items) await markAsRead.mutateAsync({ ids: notifications.items.map((notification) => notification.id) });
+    if (notifications?.items)
+      await markAsRead.mutateAsync({
+        ids: notifications.items.map((notification) => notification.id),
+      });
   };
 
   const getNotificationPath = (notification: Notification): string | null => {
@@ -128,7 +144,7 @@ export const NotificationDropdown = () => {
       case NotificationType.WARNING:
         return classes.warning;
       default:
-        return '';
+        return "";
     }
   };
 
@@ -140,7 +156,7 @@ export const NotificationDropdown = () => {
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
-    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 1) return "Just now";
     if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
     if (diffInHours < 24) return `${diffInHours}h ago`;
     if (diffInDays < 7) return `${diffInDays}d ago`;
@@ -158,7 +174,9 @@ export const NotificationDropdown = () => {
         {unread_count > 0 ? (
           <>
             <BellDot className={classes.bell_icon} />
-            <span className={classes.badge}>{unread_count > 99 ? '99+' : unread_count}</span>
+            <span className={classes.badge}>
+              {unread_count > 99 ? "99+" : unread_count}
+            </span>
           </>
         ) : (
           <Bell className={classes.bell_icon} />
@@ -176,7 +194,7 @@ export const NotificationDropdown = () => {
             </div>
             <div className={classes.header_actions}>
               <button
-                className={`${classes.filter_button} ${showUnreadOnly ? classes.active : ''}`}
+                className={`${classes.filter_button} ${showUnreadOnly ? classes.active : ""}`}
                 onClick={() => setShowUnreadOnly(!showUnreadOnly)}
               >
                 Unread only
@@ -214,8 +232,9 @@ export const NotificationDropdown = () => {
               notifications?.items?.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`${classes.notification_item} ${!notification.is_read ? classes.unread : ''
-                    } ${getNotificationTypeColor(notification.type)}`}
+                  className={`${classes.notification_item} ${
+                    !notification.is_read ? classes.unread : ""
+                  } ${getNotificationTypeColor(notification.type)}`}
                   onClick={() => handleNotificationClick(notification)}
                 >
                   <div className={classes.notification_icon}>
@@ -232,7 +251,8 @@ export const NotificationDropdown = () => {
                       </span>
                     </div>
                     <p className={classes.notification_message}>
-                      {notification.message || `${notification.action} notification`}
+                      {notification.message ||
+                        `${notification.action} notification`}
                     </p>
                   </div>
                   {!notification.is_read && (
@@ -248,7 +268,7 @@ export const NotificationDropdown = () => {
               <button
                 className={classes.view_all_button}
                 onClick={() => {
-                  router.push('/admin/notifications');
+                  router.push("/admin/notifications");
                   setIsOpen(false);
                 }}
               >
@@ -261,4 +281,3 @@ export const NotificationDropdown = () => {
     </div>
   );
 };
-

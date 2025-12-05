@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsUrl, IsOptional, ValidationOptions } from 'class-validator';
+import { IsUrl, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 interface ToUrlOptions {

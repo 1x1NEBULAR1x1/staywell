@@ -1,8 +1,8 @@
-import classes from './UserInfo.module.scss';
-import { UserWithoutPassword, } from '@shared/src';
-import { User, Mail, Phone, ExternalLink, MessageCircle } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import type { UserWithoutPassword } from "@shared/src";
+import { ExternalLink, Mail, MessageCircle, Phone, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import classes from "./UserInfo.module.scss";
 
 export const UserInfo = ({ user }: { user: UserWithoutPassword }) => (
   <div className={classes.user_info}>
@@ -10,7 +10,10 @@ export const UserInfo = ({ user }: { user: UserWithoutPassword }) => (
       <User className={classes.header_icon} />
       <h3 className={classes.title}>Guest Information</h3>
       <div className={classes.header_actions}>
-        <Link href={`/admin/chat?id=${user.id}`} className={classes.chat_button}>
+        <Link
+          href={`/admin/chat?id=${user.id}`}
+          className={classes.chat_button}
+        >
           <MessageCircle className={classes.link_icon} />
           Chat
         </Link>
@@ -26,8 +29,8 @@ export const UserInfo = ({ user }: { user: UserWithoutPassword }) => (
         <div className={classes.user_header}>
           <div className={classes.user_avatar}>
             <Image
-              src={user.image || '/common/default-avatar.png'}
-              alt={user.first_name || 'User'}
+              src={user.image || "/common/default-avatar.png"}
+              alt={user.first_name || "User"}
               width={60}
               height={60}
               className={classes.avatar_image}
@@ -36,8 +39,7 @@ export const UserInfo = ({ user }: { user: UserWithoutPassword }) => (
           <div className={classes.user_name}>
             {user.first_name && user.last_name
               ? `${user.first_name} ${user.last_name}`
-              : user.email
-            }
+              : user.email}
           </div>
         </div>
 
@@ -57,15 +59,23 @@ export const UserInfo = ({ user }: { user: UserWithoutPassword }) => (
 
         <div className={classes.verification_status}>
           <div className={classes.status_item}>
-            <span className={`${classes.status_badge} ${user.email_verified ? classes.verified : classes.not_verified}`}>
-              {user.email_verified ? '✓ Email Verified' : '⚠ Email Not Verified'}
+            <span
+              className={`${classes.status_badge} ${user.email_verified ? classes.verified : classes.not_verified}`}
+            >
+              {user.email_verified
+                ? "✓ Email Verified"
+                : "⚠ Email Not Verified"}
             </span>
           </div>
 
           {user.phone_number && (
             <div className={classes.status_item}>
-              <span className={`${classes.status_badge} ${user.phone_verified ? classes.verified : classes.not_verified}`}>
-                {user.phone_verified ? '✓ Phone Verified' : '⚠ Phone Not Verified'}
+              <span
+                className={`${classes.status_badge} ${user.phone_verified ? classes.verified : classes.not_verified}`}
+              >
+                {user.phone_verified
+                  ? "✓ Phone Verified"
+                  : "⚠ Phone Not Verified"}
               </span>
             </div>
           )}

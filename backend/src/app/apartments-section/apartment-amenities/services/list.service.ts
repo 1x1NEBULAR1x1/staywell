@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { EXTENDED_APARTMENT_AMENITY_INCLUDE, ExtendedApartmentAmenity } from '@shared/src/types/apartments-section';
+import {
+  EXTENDED_APARTMENT_AMENITY_INCLUDE,
+  ExtendedApartmentAmenity,
+} from '@shared/src/types/apartments-section';
 import { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
 import { Prisma, ApartmentAmenity } from '@shared/src/database';
 import { ApartmentAmenitiesFiltersDto } from '../dto';
@@ -7,7 +10,7 @@ import { PrismaService } from 'src/lib/prisma';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters(options: ApartmentAmenitiesFiltersDto) {
     const { amenity_id, apartment_id } = options;
@@ -22,18 +25,19 @@ export class ListService {
    * @param filters Filter parameters and pagination
    * @returns Filtered list of apartment amenities with pagination metadata
    */
-  async findAll(filters: ApartmentAmenitiesFiltersDto): Promise<
-    BaseListResult<ExtendedApartmentAmenity>
-  > {
+  async findAll(
+    filters: ApartmentAmenitiesFiltersDto,
+  ): Promise<BaseListResult<ExtendedApartmentAmenity>> {
     const query_options = this.prisma.buildQuery<ApartmentAmenity>({
       filters,
       customFilters: this.customFilters,
     });
-    const { items, total } = await this.prisma.findWithPagination<ExtendedApartmentAmenity>({
-      model: this.prisma.apartmentAmenity,
-      query_options,
-      include: EXTENDED_APARTMENT_AMENITY_INCLUDE,
-    });
+    const { items, total } =
+      await this.prisma.findWithPagination<ExtendedApartmentAmenity>({
+        model: this.prisma.apartmentAmenity,
+        query_options,
+        include: EXTENDED_APARTMENT_AMENITY_INCLUDE,
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

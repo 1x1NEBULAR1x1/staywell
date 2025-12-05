@@ -63,7 +63,7 @@ export class BookingVariantsController {
   })
   @ApiResponse({ status: 404, description: 'Booking variant not found' })
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.crudService.findOne(id);
+    return this.crudService.find({ where: { id } });
   }
 
   @Put(':id')
@@ -78,9 +78,9 @@ export class BookingVariantsController {
   @ApiResponse({ status: 404, description: 'Booking variant not found' })
   update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateBookingVariantDto: UpdateBookingVariantDto,
+    @Body() data: UpdateBookingVariantDto,
   ) {
-    return this.crudService.update(id, updateBookingVariantDto);
+    return this.crudService.update({ where: { id }, data });
   }
 
   @Delete(':id')
@@ -93,6 +93,6 @@ export class BookingVariantsController {
   })
   @ApiResponse({ status: 404, description: 'Booking variant not found' })
   remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.crudService.remove(id);
+    return this.crudService.remove({ where: { id } });
   }
 }

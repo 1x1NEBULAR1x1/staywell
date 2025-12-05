@@ -1,0 +1,66 @@
+"use client";
+
+import { Loader2 } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { useModelFilters } from "@/hooks/admin/actions/useModelFilters/useModelFilters";
+import { useInfinityAdditionalOptions } from "@/hooks/public/booking/useInfinityAdditionalOptions";
+import { AdditionalOptionsFilters } from "../AdditionalOptionsFilters";
+import classes from "./AdditionalOptionList.module.scss";
+import { AdditionalOptionCard } from "./components/AdditionalOptionCard";
+
+export const AdditionalOptionList = () => {
+  const { filters, setFilters } = useModelFilters({
+    model: "ADDITIONAL_OPTION",
+    default_filters: { take: 12, skip: 0 },
+  });
+
+  const {
+    additional_options,
+    loadMore,
+    isFetchingNextPage,
+    hasNextPage,
+    isLoading,
+  } = useInfinityAdditionalOptions(filters);
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          loadMore();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, loadMore]);
+
+  return (
+    <div className={classes.container}>
+      <AdditionalOptionsFilters filters={filters} setFilters={setFilters} />
+      <div className={classes.additional_options_list}>
+        {additional_options.map((option) => (
+          <AdditionalOptionCard key={option.id} additional_option={option} />
+        ))}
+      </div>
+
+      {/* Infinite scroll trigger */}
+      {hasNextPage && (
+        <div ref={observerRef} className={classes.loading_trigger}>
+          {isFetchingNextPage && (
+            <div className={classes.loading}>
+              <Loader2 className={classes.spinner} size={20} />
+              <span>Loading more additional options...</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};

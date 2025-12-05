@@ -50,7 +50,7 @@ export const example_booking_additional_option: BookingAdditionalOption = {
   id: "UUID",
   booking_id: "UUID",
   amount: 2,
-  option_id: "UUID",
+  additional_option_id: "UUID",
   created: new Date(),
   updated: new Date(),
 };
@@ -59,7 +59,7 @@ export const example_extended_booking_additional_option: ExtendedBookingAddition
 {
   id: "3fa85f64-5717-4562-b3fc-2c963f66afb1",
   booking_id: "UUID",
-  option_id: example_additional_option.id,
+  additional_option_id: example_additional_option.id,
   amount: 2,
   additional_option: example_additional_option,
   created: new Date(),
@@ -94,7 +94,13 @@ export const example_booking_variant: BookingVariant = {
 export const example_extended_booking_variant: ExtendedBookingVariant =
 {
   ...example_booking_variant,
-  apartment: example_apartment,
+  apartment: {
+    ...example_apartment,
+    images: [],
+    apartment_amenities: [],
+    apartment_beds: [],
+    reviews: [],
+  },
 };
 
 export const example_extended_booking_variants_list_result: BaseListResult<ExtendedBookingVariant> =
@@ -125,6 +131,7 @@ export const example_extended_booking: ExtendedBooking = {
   booking_variant: example_extended_booking_variant,
   transaction: example_transaction,
   booking_additional_options: [],
+  booking_events: [],
 };
 
 export const example_extended_bookings_list_result: BaseListResult<ExtendedBooking> =

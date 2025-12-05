@@ -1,19 +1,17 @@
-'use client';
+"use client";
 
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useModelFilters } from '@/hooks/admin/actions/useModelFilters';
-import { ReservationsList, ReservationsFiltersMenu } from './components';
-import classes from '../Tab.module.scss';
-
+import { useModelFilters } from "@/hooks/admin/actions/useModelFilters";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import classes from "../Tab.module.scss";
+import { ReservationsFiltersMenu, ReservationsList } from "./components";
 
 export const ReservationsTab = ({ user_id }: { user_id: string }) => {
   const { filters, setFilters } = useModelFilters({
-    model: 'RESERVATION',
-    permanent_fields: { user_id }
+    model: "RESERVATION",
+    permanent_fields: { user_id },
   });
 
-  const { data: reservations } = useModel('RESERVATION').get(filters);
-
+  const { data: reservations } = useModel("RESERVATION").get(filters);
 
   return (
     <div className={classes.tab}>
@@ -21,10 +19,7 @@ export const ReservationsTab = ({ user_id }: { user_id: string }) => {
       <div className={classes.section}>
         <div className={classes.header}>
           <h3 className={classes.title}>Reservations History</h3>
-          <ReservationsFiltersMenu
-            filters={filters}
-            setFilters={setFilters}
-          />
+          <ReservationsFiltersMenu filters={filters} setFilters={setFilters} />
         </div>
 
         <ReservationsList reservations={reservations?.items || []} />

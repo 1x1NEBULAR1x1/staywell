@@ -1,9 +1,10 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { Message, Role, SafeUser, UserWithoutPassword } from '@shared/src';
+import { Message, Role, UserWithoutPassword } from '@shared/src';
 import { GetHistoryDto, GetChatsDto } from '../dto';
 import { SAFE_USER_SELECT } from '@shared/src';
 import { ChatConnectionService } from './chat-connection.service';
+import { Prisma } from '@shared/src/database';
 
 // Special ID for support chat
 const SUPPORT_ID = 'support';
@@ -31,13 +32,13 @@ export class ChatHistoryService {
    * Get message history
    */
   async getMessageHistory(user: UserWithoutPassword, data: GetHistoryDto) {
-    let whereCondition: any;
+    let where: Prisma.MessageWhereInput;
     if (user.role === Role.USER) {
       // Users see their own messages with support
       if (data.chat_partner_id !== SUPPORT_ID) {
         throw new ForbiddenException('Users can only access support chat');
       }
-      whereCondition = {
+      where = {
         OR: [
           { sender_id: user.id, receiver_id: SUPPORT_ID },
           { sender: { role: Role.ADMIN }, receiver_id: user.id },
@@ -46,7 +47,7 @@ export class ChatHistoryService {
       };
     } else if (user.role === Role.ADMIN) {
       // Admins see messages with specific user
-      whereCondition = {
+      where = {
         OR: [
           { sender_id: user.id, receiver_id: data.chat_partner_id },
           { sender_id: data.chat_partner_id, receiver_id: user.id },
@@ -67,7 +68,7 @@ export class ChatHistoryService {
     }
 
     const messages = await this.prisma.message.findMany({
-      where: whereCondition,
+      where,
       include: {
         sender: { select: SAFE_USER_SELECT },
         replaces: {
@@ -81,9 +82,7 @@ export class ChatHistoryService {
       take: data.take,
     });
 
-    const total = await this.prisma.message.count({
-      where: whereCondition,
-    });
+    const total = await this.prisma.message.count({ where });
 
     return {
       items: messages.reverse(), // Return in chronological order
@@ -106,7 +105,7 @@ export class ChatHistoryService {
     }
 
     // Get recent messages to find chat partners
-    const recentMessages = await this.prisma.message.findMany({
+    const recent_messages = await this.prisma.message.findMany({
       where: {
         is_excluded: false,
       },
@@ -120,31 +119,31 @@ export class ChatHistoryService {
     });
 
     // Extract unique user IDs who have chatted with admins/support
-    const userIdsSet = new Set<string>();
-    for (const msg of recentMessages) {
+    const user_ids_map = new Set<string>();
+    for (const msg of recent_messages) {
       // Check if this message involves an admin or support
-      const isWithAdmin =
+      const is_with_admin =
         msg.sender_id === user.id || msg.receiver_id === user.id;
-      const isWithSupport =
+      const is_with_support =
         msg.sender_id === SUPPORT_ID || msg.receiver_id === SUPPORT_ID;
 
-      if (isWithAdmin || isWithSupport) {
+      if (is_with_admin || is_with_support) {
         // Add the user ID (not admin/support)
         if (msg.sender_id !== SUPPORT_ID && msg.sender_id !== user.id) {
-          userIdsSet.add(msg.sender_id);
+          user_ids_map.add(msg.sender_id);
         }
         if (msg.receiver_id !== SUPPORT_ID && msg.receiver_id !== user.id) {
-          userIdsSet.add(msg.receiver_id);
+          user_ids_map.add(msg.receiver_id);
         }
       }
     }
 
-    const userIds = Array.from(userIdsSet);
+    const user_ids_array = Array.from(user_ids_map);
 
     // Get user details
-    const chatUsers = await this.prisma.user.findMany({
+    const chat_users = await this.prisma.user.findMany({
       where: {
-        id: { in: userIds },
+        id: { in: user_ids_array },
         is_active: true,
       },
       select: {
@@ -156,60 +155,58 @@ export class ChatHistoryService {
     });
 
     // Create a map of user latest message dates from the recent messages we already have
-    const userLatestMessageMap = new Map<string, Date>();
-    for (const msg of recentMessages) {
-      const userId =
+    const user_latest_message_map = new Map<string, Date>();
+    for (const msg of recent_messages) {
+      const user_id =
         msg.sender_id !== SUPPORT_ID && msg.sender_id !== user.id
           ? msg.sender_id
           : msg.receiver_id !== SUPPORT_ID && msg.receiver_id !== user.id
             ? msg.receiver_id
             : null;
 
-      if (userId && userIds.includes(userId)) {
+      if (user_id && user_ids_array.includes(user_id)) {
         if (
-          !userLatestMessageMap.has(userId) ||
-          userLatestMessageMap.get(userId)! < msg.created
+          !user_latest_message_map.has(user_id) ||
+          user_latest_message_map.get(user_id)! < msg.created
         ) {
-          userLatestMessageMap.set(userId, msg.created);
+          user_latest_message_map.set(user_id, msg.created);
         }
       }
     }
 
     // Sort users by latest message date
-    const sortedUsers = chatUsers
-      .filter((u) => userLatestMessageMap.has(u.id))
+    const sorted_users = chat_users
+      .filter((u) => user_latest_message_map.has(u.id))
       .sort((a, b) => {
-        const dateA = userLatestMessageMap.get(a.id)!;
-        const dateB = userLatestMessageMap.get(b.id)!;
+        const dateA = user_latest_message_map.get(a.id)!;
+        const dateB = user_latest_message_map.get(b.id)!;
         return dateB.getTime() - dateA.getTime();
       });
 
-    const total = sortedUsers.length;
+    const total = sorted_users.length;
 
-    if (total === 0) {
-      return { items: [], total };
-    }
+    if (total === 0) return { items: [], total };
 
     // Apply pagination to sorted users
-    const paginatedUsers = sortedUsers.slice(
+    const paginated_users = sorted_users.slice(
       data.skip ?? 0,
       (data.skip ?? 0) + (data.take ?? 50),
     );
 
     // Get last messages and unread counts for each chat
-    const chatsData = await Promise.all(
-      paginatedUsers.map(async (userData) => {
+    const chats_data = await Promise.all(
+      paginated_users.map(async (user) => {
         // Get last message between user and admin/support
-        const lastMessage = await this.prisma.message.findFirst({
+        const last_message = await this.prisma.message.findFirst({
           where: {
             OR: [
               {
-                sender_id: userData.id,
+                sender_id: user.id,
                 receiver_id: { in: [SUPPORT_ID, user.id] },
               },
               {
                 sender_id: { in: [SUPPORT_ID, user.id] },
-                receiver_id: userData.id,
+                receiver_id: user.id,
               },
             ],
             is_excluded: false,
@@ -226,9 +223,9 @@ export class ChatHistoryService {
         });
 
         // Count unread messages from user to admin/support
-        const unreadCount = await this.prisma.message.count({
+        const unread_count = await this.prisma.message.count({
           where: {
-            sender_id: userData.id,
+            sender_id: user.id,
             receiver_id: { in: [SUPPORT_ID, user.id] },
             is_read: false,
             is_excluded: false,
@@ -236,17 +233,17 @@ export class ChatHistoryService {
         });
 
         // Get last seen time
-        const last_seen = await this.connectionService.getLastSeen(userData.id);
+        const last_seen = await this.connectionService.getLastSeen(user.id);
 
         return {
-          user: userData,
-          last_message: lastMessage,
-          unread_count: unreadCount,
+          user,
+          last_message,
+          unread_count,
           last_seen,
         };
       }),
     );
 
-    return { items: chatsData, total };
+    return { items: chats_data, total };
   }
 }

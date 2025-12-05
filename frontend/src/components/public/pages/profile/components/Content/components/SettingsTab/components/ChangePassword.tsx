@@ -1,11 +1,10 @@
 "use client";
 
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ActionsSection, InputField } from "@/components/admin/common/Form";
 import { useAuth } from "@/hooks/common";
-import { InputField } from "@/components/admin/common/Form";
-import { ActionsSection } from "@/components/admin/common/Form";
-import { Lock, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/common/useToast";
 import classes from "./ChangePassword.module.scss";
 
@@ -48,7 +47,7 @@ export const ChangePassword = () => {
   };
 
   const togglePasswordVisibility = (field: keyof typeof showPasswords) => {
-    setShowPasswords(prev => ({
+    setShowPasswords((prev) => ({
       ...prev,
       [field]: !prev[field],
     }));

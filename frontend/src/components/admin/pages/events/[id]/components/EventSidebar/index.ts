@@ -1,2 +1,1 @@
-export { EventSidebar } from './EventSidebar';
-
+export { EventSidebar } from "./EventSidebar";

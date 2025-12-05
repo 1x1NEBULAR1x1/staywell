@@ -44,4 +44,3 @@ export const ChatInput = ({
     </div>
   );
 };
-

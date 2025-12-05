@@ -9,7 +9,7 @@ import { TransferDetailsFiltersDto } from '../dto';
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(
     options: TransferDetailsFiltersDto,
@@ -42,16 +42,18 @@ export class ListService {
     user: User;
   }): Promise<BaseListResult<TransferDetail>> {
     const user_id = user.role === Role.ADMIN ? filtersDto.user_id : user.id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { is_excluded, ...filters } = { ...filtersDto, user_id };
     const query_options = this.prisma.buildQuery<TransferDetail>({
       filters,
-      customFilters: this.customFilters
+      customFilters: this.customFilters,
     });
-    const { items, total } = await this.prisma.findWithPagination<TransferDetail>({
-      model: this.prisma.transferDetail,
-      query_options,
-      include: { user: { select: SAFE_USER_SELECT } },
-    });
+    const { items, total } =
+      await this.prisma.findWithPagination<TransferDetail>({
+        model: this.prisma.transferDetail,
+        query_options,
+        include: { user: { select: SAFE_USER_SELECT } },
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

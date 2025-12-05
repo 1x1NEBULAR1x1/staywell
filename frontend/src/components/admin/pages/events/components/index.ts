@@ -1,1 +1,1 @@
-export { EventRow, EventRowShimmer } from './EventRow';
+export { EventRow, EventRowShimmer } from "./EventRow";

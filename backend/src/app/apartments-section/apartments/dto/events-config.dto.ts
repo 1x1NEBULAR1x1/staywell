@@ -17,6 +17,3 @@ export class EventsConfigDto {
   })
   end_date!: Date;
 }
-
-
-

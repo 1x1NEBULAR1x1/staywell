@@ -1,4 +1,4 @@
-import { useThemeStore } from '@/stores/common/useThemeStore';
+import { useThemeStore } from "@/stores/common/useThemeStore";
 
 /**
  * Хук для управления темой приложения
@@ -11,7 +11,7 @@ export const useTheme = () => {
     theme,
     setTheme,
     toggleTheme,
-    isDark: theme === 'dark',
-    isLight: theme === 'light',
+    isDark: theme === "dark",
+    isLight: theme === "light",
   };
 };

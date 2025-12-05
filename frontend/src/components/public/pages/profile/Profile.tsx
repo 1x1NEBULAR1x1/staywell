@@ -1,7 +1,6 @@
-import classes from "./Profile.module.scss";
-import { Sidebar } from "./components/Sidebar";
 import { Content } from "./components/Content";
-
+import { Sidebar } from "./components/Sidebar";
+import classes from "./Profile.module.scss";
 
 export const Profile = () => {
   return (

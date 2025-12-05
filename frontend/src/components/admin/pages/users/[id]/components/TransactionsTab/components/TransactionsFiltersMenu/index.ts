@@ -1,2 +1,1 @@
-export { TransactionsFiltersMenu } from './TransactionsFiltersMenu';
-
+export { TransactionsFiltersMenu } from "./TransactionsFiltersMenu";

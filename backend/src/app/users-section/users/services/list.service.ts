@@ -7,7 +7,7 @@ import { UserWithoutPassword } from '@shared/src/types/users-section';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters = (options: UsersFiltersDto) => {
     const {
@@ -39,7 +39,11 @@ export class ListService {
       filters.phone_number = phone_number;
     return filters;
   };
-  async findAll({ is_excluded, ...filters }: UsersFiltersDto): Promise<BaseListResult<UserWithoutPassword>> {
+  async findAll(
+    filtersDto: UsersFiltersDto,
+  ): Promise<BaseListResult<UserWithoutPassword>> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { is_excluded, ...filters } = filtersDto;
     const query_options = this.prisma.buildQuery<UserWithoutPassword>({
       filters,
       customFilters: this.customFilters,
@@ -50,7 +54,11 @@ export class ListService {
     });
     const { take, skip } = query_options;
     return {
-      items: items.map((item) => { const { password_hash, ...user } = item; return user; }),
+      items: items.map((item) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { password_hash, ...user } = item;
+        return user;
+      }),
       total,
       skip,
       take,

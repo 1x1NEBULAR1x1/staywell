@@ -1,23 +1,23 @@
-import classes from './AdditionalOptions.module.scss';
-import { ExtendedBookingAdditionalOption } from '@shared/src';
-import { Package, Edit } from 'lucide-react';
-import { useState } from 'react';
-import { EditOptionsModal } from './components';
+import type { ExtendedBookingAdditionalOption } from "@shared/src";
+import { Edit, Package } from "lucide-react";
+import { useState } from "react";
+import classes from "./AdditionalOptions.module.scss";
+import { EditOptionsModal } from "./components";
 
 export const AdditionalOptions = ({
   booking_additional_options,
   booking_id,
-  refetch
+  refetch,
 }: {
-  booking_additional_options: ExtendedBookingAdditionalOption[],
-  booking_id: string,
-  refetch: () => void
+  booking_additional_options: ExtendedBookingAdditionalOption[];
+  booking_id: string;
+  refetch: () => void;
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const totalOptionsPrice = booking_additional_options.reduce(
-    (total, option) => total + (option.additional_option.price * option.amount),
-    0
+    (total, option) => total + option.additional_option.price * option.amount,
+    0,
   );
 
   return (
@@ -36,9 +36,7 @@ export const AdditionalOptions = ({
 
       <div className={classes.content}>
         {booking_additional_options.length === 0 ? (
-          <div className={classes.no_options}>
-            No additional services added
-          </div>
+          <div className={classes.no_options}>No additional services added</div>
         ) : (
           <>
             <div className={classes.options_list}>
@@ -68,7 +66,9 @@ export const AdditionalOptions = ({
 
                   <div className={classes.option_actions}>
                     <span className={classes.option_total}>
-                      ${bookingOption.additional_option.price * bookingOption.amount}
+                      $
+                      {bookingOption.additional_option.price *
+                        bookingOption.amount}
                     </span>
                   </div>
                 </div>

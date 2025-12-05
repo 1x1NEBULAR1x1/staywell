@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { Role, TransactionStatus, User, SAFE_USER_SELECT } from '@shared/src';
+import { Role, TransactionStatus, User } from '@shared/src';
 import { CreateTransactionDto, UpdateTransactionDto } from '../dto';
+import { EXTENDED_TRANSACTION_INCLUDE } from '@shared/src/types/transactions-section';
 /**
  * Service for performing CRUD operations on transactions
  */
@@ -17,13 +18,7 @@ export class CrudService {
     const user_id = user.role === Role.ADMIN ? data.user_id : user.id;
     return this.prisma.transaction.create({
       data: { ...data, user_id, transaction_status: TransactionStatus.PENDING },
-      include: {
-        user: { select: SAFE_USER_SELECT },
-        card_detail: true,
-        transfer_detail: true,
-        booking: true,
-        booking_event: true,
-      },
+      include: EXTENDED_TRANSACTION_INCLUDE,
     });
   }
   /**
@@ -35,13 +30,7 @@ export class CrudService {
     const where = user.role === Role.ADMIN ? { id } : { id, user_id: user.id };
     return this.prisma.transaction.findUnique({
       where,
-      include: {
-        user: { select: SAFE_USER_SELECT },
-        card_detail: true,
-        transfer_detail: true,
-        booking: true,
-        booking_event: true,
-      },
+      include: EXTENDED_TRANSACTION_INCLUDE,
     });
   }
 
@@ -65,13 +54,7 @@ export class CrudService {
     return this.prisma.transaction.update({
       where: { id },
       data: { ...data, user_id },
-      include: {
-        user: { select: SAFE_USER_SELECT },
-        card_detail: true,
-        transfer_detail: true,
-        booking: true,
-        booking_event: true,
-      },
+      include: EXTENDED_TRANSACTION_INCLUDE,
     });
   }
 

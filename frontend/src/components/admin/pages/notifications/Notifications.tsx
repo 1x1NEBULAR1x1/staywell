@@ -1,14 +1,19 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
-import { Notification } from '@shared/src/database';
-
-import { NotificationCard, NotificationCardShimmer, BulkActions } from './components';
-import { ListPage } from '@/components/admin/common/AdminPage';
-import { columns, filters_config } from './config';
+import type { Notification } from "@shared/src/database";
+import { useState } from "react";
+import { ListPage } from "@/components/admin/common/AdminPage";
+import {
+  BulkActions,
+  NotificationCard,
+  NotificationCardShimmer,
+} from "./components";
+import { columns, filters_config } from "./config";
 
 export const Notifications = () => {
-  const [selectedNotifications, setSelectedNotifications] = useState<Set<string>>(new Set());
+  const [selectedNotifications, setSelectedNotifications] = useState<
+    Set<string>
+  >(new Set());
 
   const handleSelectNotification = (notification: Notification) => {
     const newSelected = new Set(selectedNotifications);
@@ -22,7 +27,10 @@ export const Notifications = () => {
 
   return (
     <div>
-      <BulkActions selectedNotifications={selectedNotifications} setSelectedNotifications={setSelectedNotifications} />
+      <BulkActions
+        selectedNotifications={selectedNotifications}
+        setSelectedNotifications={setSelectedNotifications}
+      />
       <ListPage
         model="NOTIFICATION"
         filters_config={filters_config}
@@ -37,16 +45,16 @@ export const Notifications = () => {
         shimmer_item={(key) => <NotificationCardShimmer key={key} />}
         columns={columns}
         sort_by_list={Object.keys({
-          id: '',
-          type: '',
-          action: '',
-          message: '',
+          id: "",
+          type: "",
+          action: "",
+          message: "",
           is_read: false,
           is_excluded: false,
           created: new Date(),
-          updated: new Date()
+          updated: new Date(),
         })}
       />
     </div>
   );
-}
+};

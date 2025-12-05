@@ -1,1 +1,1 @@
-export { AddImageModal } from './AddImageModal';
+export { AddImageModal } from "./AddImageModal";

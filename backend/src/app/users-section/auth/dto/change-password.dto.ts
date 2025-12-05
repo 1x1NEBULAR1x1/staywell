@@ -14,7 +14,7 @@ export class ChangePasswordDto {
     description: 'New password',
     min: 8,
     max: 1024,
-    is_strong_password: true
+    is_strong_password: true,
   })
   new_password!: string;
 }

@@ -1,6 +1,5 @@
-import { Chat } from "@/components/admin/pages/chat"
-
+import { Chat } from "@/components/admin/pages/chat";
 
 export default async function page() {
-  return <Chat />
+  return <Chat />;
 }

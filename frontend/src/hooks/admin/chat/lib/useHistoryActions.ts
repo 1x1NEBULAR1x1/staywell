@@ -29,7 +29,10 @@ export const useHistoryActions = (
   const getChats = useCallback(
     (skip: number = 0, take: number = 50) => {
       if (!socket || !is_connected) {
-        console.log("getChats: socket not connected", { socket: !!socket, is_connected });
+        console.log("getChats: socket not connected", {
+          socket: !!socket,
+          is_connected,
+        });
         return;
       }
       console.log("getChats: emitting get_chats", { skip, take });

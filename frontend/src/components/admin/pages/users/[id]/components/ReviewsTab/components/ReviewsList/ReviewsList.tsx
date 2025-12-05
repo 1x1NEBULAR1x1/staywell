@@ -1,5 +1,5 @@
-import classes from './ReviewsList.module.scss';
-import { ExtendedReview } from '@shared/src';
+import type { ExtendedReview } from "@shared/src";
+import classes from "./ReviewsList.module.scss";
 
 export const ReviewsList = ({ reviews }: { reviews: ExtendedReview[] }) => {
   if (reviews.length === 0) {
@@ -12,12 +12,14 @@ export const ReviewsList = ({ reviews }: { reviews: ExtendedReview[] }) => {
         <div key={review.id} className={classes.review_item}>
           <div className={classes.review_header}>
             <div className={classes.rating}>
-              {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+              {"★".repeat(review.rating)}
+              {"☆".repeat(5 - review.rating)}
               <span className={classes.rating_number}>{review.rating}/5</span>
             </div>
             {review.apartment && (
               <span className={classes.apartment_name}>
-                {review.apartment.name || `Apartment ${review.apartment.number}`}
+                {review.apartment.name ||
+                  `Apartment ${review.apartment.number}`}
               </span>
             )}
           </div>
@@ -36,4 +38,3 @@ export const ReviewsList = ({ reviews }: { reviews: ExtendedReview[] }) => {
     </div>
   );
 };
-

@@ -1,31 +1,47 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { FilterDropdown, TextInput, NumberInput, DateInput, SelectInput, BooleanSelect } from '@/components/admin/common/AdminPage/ListPage/components/Filters/components/DynamicFiltersMenu/FilterDropdown/components';
-import { FiltersConfig } from '../../types';
-import { GettableTypes } from '@shared/src/models/types';
-import { GETTABLE_NAMES } from '@shared/src/models/data';
+import type { GETTABLE_NAMES } from "@shared/src/models/data";
+import type { GettableTypes } from "@shared/src/models/types";
+import { useState } from "react";
+import {
+  BooleanSelect,
+  DateInput,
+  FilterDropdown,
+  NumberInput,
+  SelectInput,
+  TextInput,
+} from "@/components/admin/common/AdminPage/ListPage/components/Filters/components/DynamicFiltersMenu/FilterDropdown/components";
+import type { FiltersConfig } from "../../types";
 
 type DynamicFiltersMenuProps<M extends GETTABLE_NAMES> = {
   config: FiltersConfig;
-  filters: GettableTypes<M>['filters'];
-  setFilters: (filters: GettableTypes<M>['filters']) => void;
-}
+  filters: GettableTypes<M>["filters"];
+  setFilters: (filters: GettableTypes<M>["filters"]) => void;
+};
 
-export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({ config, filters, setFilters }: DynamicFiltersMenuProps<M>) => {
+export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({
+  config,
+  filters,
+  setFilters,
+}: DynamicFiltersMenuProps<M>) => {
   const [is_open, setIsOpen] = useState(false);
 
   const renderFilterField = <M extends GETTABLE_NAMES>(key: string) => {
     const fieldConfig = config[key];
-    const label = fieldConfig.label || key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    const value = filters[key as keyof GettableTypes<M>['filters']];
+    const label =
+      fieldConfig.label ||
+      key
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    const value = filters[key as keyof GettableTypes<M>["filters"]];
 
     const onChange = (newValue: any) => {
       setFilters({ ...filters, [key]: newValue });
     };
 
     switch (fieldConfig.type) {
-      case 'string':
+      case "string":
         return (
           <TextInput
             key={key}
@@ -36,12 +52,12 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({ config, filters, 
           />
         );
 
-      case 'number':
-      case 'integer':
+      case "number":
+      case "integer":
         return (
           <NumberInput
             key={key}
-            step={fieldConfig.type === 'integer' ? 1 : (fieldConfig.step || 0.01)}
+            step={fieldConfig.type === "integer" ? 1 : fieldConfig.step || 0.01}
             label={label}
             value={value ? Number(value) : undefined}
             onChange={onChange}
@@ -51,7 +67,7 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({ config, filters, 
           />
         );
 
-      case 'date':
+      case "date":
         return (
           <DateInput
             key={key}
@@ -61,18 +77,21 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({ config, filters, 
           />
         );
 
-      case 'enum':
+      case "enum":
         return (
           <SelectInput
             key={key}
             label={label}
             value={value ? String(value) : undefined}
             onChange={onChange}
-            options={fieldConfig.options.map(opt => ({ label: opt, value: opt }))}
+            options={fieldConfig.options.map((opt) => ({
+              label: opt,
+              value: opt,
+            }))}
           />
         );
 
-      case 'boolean':
+      case "boolean":
         return (
           <BooleanSelect
             key={key}
@@ -93,8 +112,7 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({ config, filters, 
       onToggle={() => setIsOpen(!is_open)}
       onClose={() => setIsOpen(false)}
     >
-      {Object.keys(config).map(key => renderFilterField(key))}
+      {Object.keys(config).map((key) => renderFilterField(key))}
     </FilterDropdown>
   );
 };
-

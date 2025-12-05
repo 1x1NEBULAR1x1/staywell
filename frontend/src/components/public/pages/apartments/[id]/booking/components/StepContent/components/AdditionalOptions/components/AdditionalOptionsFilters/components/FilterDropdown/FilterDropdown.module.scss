@@ -1,0 +1,96 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.container {
+  position: relative;
+}
+
+.filter_button {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  border: $border-normal;
+  border-radius: $border-radius-lg;
+  background: $background-main;
+  color: $foreground-secondary;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  cursor: pointer;
+  height: $spacing-2xl;
+  transition: all $transition-normal;
+
+  &:hover {
+    background: $background-light;
+    color: $foreground-main;
+  }
+
+  .icon {
+    width: $font-size-lg;
+    height: $font-size-lg;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + $spacing-sm);
+  right: 0;
+  min-width: 280px;
+  max-width: 320px;
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-lg;
+  z-index: $z-modal;
+  animation: dropdown-slide-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: $border-normal;
+    background: $background-light;
+
+    .title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+    }
+
+    .close_icon {
+      width: $font-size-lg;
+      height: $font-size-lg;
+      color: $foreground-secondary;
+      cursor: pointer;
+      transition: all $transition-normal;
+
+      &:hover {
+        color: $foreground-main;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    max-height: 420px;
+    overflow-y: auto;
+  }
+}
+
+@keyframes dropdown-slide-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+

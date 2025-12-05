@@ -1,7 +1,11 @@
-import classes from './ReservationsList.module.scss';
-import { ExtendedReservation } from '@shared/src';
+import type { ExtendedReservation } from "@shared/src";
+import classes from "./ReservationsList.module.scss";
 
-export const ReservationsList = ({ reservations }: { reservations: ExtendedReservation[] }) => {
+export const ReservationsList = ({
+  reservations,
+}: {
+  reservations: ExtendedReservation[];
+}) => {
   if (reservations.length === 0) {
     return <p className={classes.empty}>No reservations found</p>;
   }
@@ -12,14 +16,18 @@ export const ReservationsList = ({ reservations }: { reservations: ExtendedReser
         <div key={reservation.id} className={classes.reservation_item}>
           <div className={classes.reservation_header}>
             <span className={classes.apartment_name}>
-              {reservation.apartment.name || `Apartment ${reservation.apartment.number}`}
+              {reservation.apartment.name ||
+                `Apartment ${reservation.apartment.number}`}
             </span>
           </div>
 
           <div className={classes.reservation_details}>
             <div className={classes.detail}>
               <span className={classes.label}>Dates:</span>
-              <span>{new Date(reservation.start).toLocaleDateString()} - {new Date(reservation.end).toLocaleDateString()}</span>
+              <span>
+                {new Date(reservation.start).toLocaleDateString()} -{" "}
+                {new Date(reservation.end).toLocaleDateString()}
+              </span>
             </div>
             <div className={classes.detail}>
               <span className={classes.label}>Floor:</span>
@@ -31,7 +39,7 @@ export const ReservationsList = ({ reservations }: { reservations: ExtendedReser
             </div>
             <div className={classes.detail}>
               <span className={classes.label}>Capacity:</span>
-              <span>{reservation.apartment.max_capacity || 'N/A'}</span>
+              <span>{reservation.apartment.max_capacity || "N/A"}</span>
             </div>
           </div>
         </div>
@@ -39,4 +47,3 @@ export const ReservationsList = ({ reservations }: { reservations: ExtendedReser
     </div>
   );
 };
-

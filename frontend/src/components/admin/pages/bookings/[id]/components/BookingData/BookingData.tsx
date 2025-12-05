@@ -1,19 +1,23 @@
-import classes from './BookingData.module.scss';
-
-import { useState } from 'react';
-import { ExtendedBooking } from '@shared/src';
-
+import type { ExtendedBooking } from "@shared/src";
+import { useState } from "react";
+import classes from "./BookingData.module.scss";
 import {
+  AdditionalOptions,
+  ApartmentInfo,
+  EditBookingModal,
   MainData,
   MetaData,
-  UserInfo,
-  ApartmentInfo,
   TransactionInfo,
-  AdditionalOptions,
-  EditBookingModal
-} from './components';
+  UserInfo,
+} from "./components";
 
-export const BookingData = ({ booking, refetch }: { booking: ExtendedBooking, refetch: () => void }) => {
+export const BookingData = ({
+  booking,
+  refetch,
+}: {
+  booking: ExtendedBooking;
+  refetch: () => void;
+}) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   return (
@@ -21,7 +25,10 @@ export const BookingData = ({ booking, refetch }: { booking: ExtendedBooking, re
       <div className={classes.header}>
         <div className={classes.main_info}>
           <div className={classes.info}>
-            <MainData booking={booking} setIsEditModalOpen={setIsEditModalOpen} />
+            <MainData
+              booking={booking}
+              setIsEditModalOpen={setIsEditModalOpen}
+            />
             <MetaData booking={booking} />
 
             <div className={classes.connections}>

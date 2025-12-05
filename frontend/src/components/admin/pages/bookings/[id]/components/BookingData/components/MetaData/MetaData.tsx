@@ -1,12 +1,12 @@
-import classes from './MetaData.module.scss';
-import { ExtendedBooking } from '@shared/src';
-import { Calendar, Clock, Users, CreditCard } from 'lucide-react';
+import type { ExtendedBooking } from "@shared/src";
+import { Calendar, Clock, CreditCard, Users } from "lucide-react";
+import classes from "./MetaData.module.scss";
 
 const formatDate = (date: Date | string) => {
-  return new Date(date).toLocaleDateString('ru-RU', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
+  return new Date(date).toLocaleDateString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 };
 
@@ -19,7 +19,7 @@ const calculateNights = (start: Date | string, end: Date | string) => {
 };
 
 const formatNights = (nights: number) => {
-  return nights === 1 ? '1 night' : `${nights} nights`;
+  return nights === 1 ? "1 night" : `${nights} nights`;
 };
 
 const calculateTotalAmount = (booking: ExtendedBooking) => {
@@ -27,8 +27,8 @@ const calculateTotalAmount = (booking: ExtendedBooking) => {
   const basePrice = booking.booking_variant.price * nights;
 
   const optionsPrice = booking.booking_additional_options.reduce(
-    (total, option) => total + (option.additional_option.price * option.amount),
-    0
+    (total, option) => total + option.additional_option.price * option.amount,
+    0,
   );
 
   return basePrice + optionsPrice;
@@ -47,9 +47,7 @@ export const MetaData = ({ booking }: { booking: ExtendedBooking }) => {
             <span className={classes.date_range}>
               {formatDate(booking.start)} - {formatDate(booking.end)}
             </span>
-            <span className={classes.nights}>
-              {formatNights(nights)}
-            </span>
+            <span className={classes.nights}>{formatNights(nights)}</span>
           </div>
         </div>
 
@@ -73,15 +71,16 @@ export const MetaData = ({ booking }: { booking: ExtendedBooking }) => {
             </span>
             {booking.booking_additional_options.length > 0 && (
               <span className={classes.options_price}>
-                + ${booking.booking_additional_options.reduce(
-                  (total, option) => total + (option.additional_option.price * option.amount),
-                  0
-                )} (additional services)
+                + $
+                {booking.booking_additional_options.reduce(
+                  (total, option) =>
+                    total + option.additional_option.price * option.amount,
+                  0,
+                )}{" "}
+                (additional services)
               </span>
             )}
-            <span className={classes.total_price}>
-              Total: ${totalAmount}
-            </span>
+            <span className={classes.total_price}>Total: ${totalAmount}</span>
           </div>
         </div>
       </div>

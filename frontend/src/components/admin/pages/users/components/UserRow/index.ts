@@ -1,1 +1,1 @@
-export { UserRow, UserRowShimmer } from './UserRow';
+export { UserRow, UserRowShimmer } from "./UserRow";

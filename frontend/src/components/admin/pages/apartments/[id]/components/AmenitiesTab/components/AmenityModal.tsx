@@ -1,31 +1,41 @@
-import { ImageUploader, InputField } from '@/components/admin/common/Form';
-import { BaseFormModal } from '@/components/admin/common/Modal/BaseFormModal';
-import { useForm } from 'react-hook-form';
-import { CruddableTypes, ExtendedAmenity } from '@shared/src';
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useToast } from '@/hooks/common/useToast';
-import { isAxiosError } from 'axios';
+import type { CruddableTypes, ExtendedAmenity } from "@shared/src";
+import { isAxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { ImageUploader, InputField } from "@/components/admin/common/Form";
+import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { useToast } from "@/hooks/common/useToast";
 
-type FormData = CruddableTypes<'AMENITY'>['create'] & { image_type: 'file' | 'url', files: File[], url: string };
+type FormData = CruddableTypes<"AMENITY">["create"] & {
+  image_type: "file" | "url";
+  files: File[];
+  url: string;
+};
 
 interface AmenityModalProps {
-  onClose: () => void,
-  refetch: () => void,
-  editing_amenity?: ExtendedAmenity
+  onClose: () => void;
+  refetch: () => void;
+  editing_amenity?: ExtendedAmenity;
 }
 
-export const AmenityModal = ({ onClose, refetch, editing_amenity }: AmenityModalProps) => {
+export const AmenityModal = ({
+  onClose,
+  refetch,
+  editing_amenity,
+}: AmenityModalProps) => {
   const toast = useToast();
-  const mutation = editing_amenity ? useModel('AMENITY').update(editing_amenity.id) : useModel('AMENITY').create();
+  const mutation = editing_amenity
+    ? useModel("AMENITY").update(editing_amenity.id)
+    : useModel("AMENITY").create();
 
   const form = useForm<FormData>({
     defaultValues: {
-      name: editing_amenity?.name ?? '',
-      image: editing_amenity?.image ?? '',
-      description: editing_amenity?.description ?? '',
-      image_type: !!editing_amenity?.image ? 'url' : 'file',
+      name: editing_amenity?.name ?? "",
+      image: editing_amenity?.image ?? "",
+      description: editing_amenity?.description ?? "",
+      image_type: editing_amenity?.image ? "url" : "file",
       files: [],
-      url: editing_amenity?.image ?? '',
+      url: editing_amenity?.image ?? "",
     },
   });
 
@@ -33,14 +43,19 @@ export const AmenityModal = ({ onClose, refetch, editing_amenity }: AmenityModal
     try {
       await mutation.mutateAsync({
         name: data.name,
-        image: data.image_type === 'url' ? data.url : undefined,
-        file: data.image_type === 'file' ? data.files[0] : undefined,
+        image: data.image_type === "url" ? data.url : undefined,
+        file: data.image_type === "file" ? data.files[0] : undefined,
         description: data.description,
       });
-      toast.success(`Amenity ${!editing_amenity ? 'created' : 'updated'} successfully`);
+      toast.success(
+        `Amenity ${!editing_amenity ? "created" : "updated"} successfully`,
+      );
       onClose();
     } catch (error) {
-      isAxiosError(error) && toast.error(`Error during ${!editing_amenity ? 'creating' : 'updating'}: ${error.message}`);
+      isAxiosError(error) &&
+        toast.error(
+          `Error during ${!editing_amenity ? "creating" : "updating"}: ${error.message}`,
+        );
       console.error(error);
     } finally {
       refetch();
@@ -51,10 +66,10 @@ export const AmenityModal = ({ onClose, refetch, editing_amenity }: AmenityModal
     <BaseFormModal
       is_open
       onClose={onClose}
-      title='Add Amenity'
+      title="Add Amenity"
       form={form}
       onSubmit={handleCreate}
-      model='AMENITY'
+      model="AMENITY"
       is_loading={mutation.isPending}
       id={editing_amenity?.id}
     >
@@ -71,20 +86,20 @@ export const AmenityModal = ({ onClose, refetch, editing_amenity }: AmenityModal
         image_type_field_name="image_type"
       />
       <InputField
-        label='Name'
-        name='name'
-        placeholder='Name'
+        label="Name"
+        name="name"
+        placeholder="Name"
         required
         register={form.register}
         errors={form.formState.errors}
       />
       <InputField
-        label='Description'
-        name='description'
-        placeholder='Description'
+        label="Description"
+        name="description"
+        placeholder="Description"
         register={form.register}
         errors={form.formState.errors}
       />
     </BaseFormModal>
-  )
+  );
 };

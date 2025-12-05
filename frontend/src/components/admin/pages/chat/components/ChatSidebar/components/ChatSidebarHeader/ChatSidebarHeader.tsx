@@ -2,11 +2,12 @@
 
 import clsx from "clsx";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
-import classes from "./ChatSidebarHeader.module.scss";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import classes from "./ChatSidebarHeader.module.scss";
 
 export const ChatSidebarHeader = () => {
-  const { toggleCollapse, is_collapsed, search_query, setSearchQuery } = useChat()
+  const { toggleCollapse, is_collapsed, search_query, setSearchQuery } =
+    useChat();
   return (
     <div className={classes.header}>
       <button
@@ -26,7 +27,7 @@ export const ChatSidebarHeader = () => {
           type="text"
           placeholder="Search"
           value={search_query}
-          onChange={(e) => setSearchQuery(e.target.value ?? '')}
+          onChange={(e) => setSearchQuery(e.target.value ?? "")}
         />
       </div>
     </div>

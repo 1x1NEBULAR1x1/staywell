@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export type Theme = 'light' | 'dark';
+export type Theme = "light" | "dark";
 
 interface ThemeState {
   theme: Theme;
@@ -15,7 +15,7 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
-      theme: 'light',
+      theme: "light",
 
       setTheme: (theme: Theme) => {
         set({ theme });
@@ -25,13 +25,13 @@ export const useThemeStore = create<ThemeState>()(
 
       toggleTheme: () => {
         const currentTheme = get().theme;
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        const newTheme = currentTheme === "light" ? "dark" : "light";
         set({ theme: newTheme });
         applyTheme(newTheme);
       },
     }),
     {
-      name: 'theme-storage',
+      name: "theme-storage",
       partialize: (state) => ({
         theme: state.theme,
       }),
@@ -41,8 +41,8 @@ export const useThemeStore = create<ThemeState>()(
           applyTheme(state.theme);
         }
       },
-    }
-  )
+    },
+  ),
 );
 
 /**
@@ -52,18 +52,18 @@ function applyTheme(theme: Theme) {
   const root = document.documentElement;
 
   // Устанавливаем data-theme атрибут
-  root.setAttribute('data-theme', theme);
+  root.setAttribute("data-theme", theme);
 
   // Для совместимости с prefers-color-scheme
-  if (theme === 'dark') {
-    root.style.colorScheme = 'dark';
+  if (theme === "dark") {
+    root.style.colorScheme = "dark";
   } else {
-    root.style.colorScheme = 'light';
+    root.style.colorScheme = "light";
   }
 }
 
 // Инициализируем тему при загрузке модуля
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   const { theme } = useThemeStore.getState();
   applyTheme(theme);
 }

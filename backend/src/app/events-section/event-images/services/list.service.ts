@@ -9,7 +9,7 @@ import { EventImagesFiltersDto } from '../dto';
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: EventImagesFiltersDto) {
     const { event_id } = options;
@@ -22,7 +22,9 @@ export class ListService {
    * @param filterDto - Query parameters for filtering and pagination
    * @returns Paginated list of event images with total count
    */
-  async findAll(filters: EventImagesFiltersDto): Promise<BaseListResult<EventImage>> {
+  async findAll(
+    filters: EventImagesFiltersDto,
+  ): Promise<BaseListResult<EventImage>> {
     const query_options = this.prisma.buildQuery<EventImage>({
       filters,
       customFilters: this.customFilters,

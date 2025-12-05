@@ -1,3 +1,2 @@
-export { ReservationsFiltersMenu } from './ReservationsFiltersMenu';
-export { ReservationsList } from './ReservationsList';
-
+export { ReservationsFiltersMenu } from "./ReservationsFiltersMenu";
+export { ReservationsList } from "./ReservationsList";

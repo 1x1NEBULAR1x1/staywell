@@ -1,1 +1,1 @@
-export { Occupancy } from './Occupancy';
+export { Occupancy } from "./Occupancy";

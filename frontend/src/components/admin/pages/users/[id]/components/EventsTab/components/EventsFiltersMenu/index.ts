@@ -1,2 +1,1 @@
-export { EventsFiltersMenu } from './EventsFiltersMenu';
-
+export { EventsFiltersMenu } from "./EventsFiltersMenu";

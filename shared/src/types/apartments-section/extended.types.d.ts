@@ -4,9 +4,6 @@ import { SafeUser } from "../users-section";
 export interface ExtendedAmenity extends Amenity {
     apartment_amenities: ApartmentAmenity[];
 }
-export declare const EXTENDED_APARTMENT_INCLUDE: {
-    readonly apartment_amenities: true;
-};
 export interface ExtendedApartmentAmenity extends ApartmentAmenity {
     amenity: Amenity;
 }

@@ -1,0 +1,331 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.container {
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $box-shadow-sm;
+  transition: all $transition-normal;
+
+  &:hover {
+    box-shadow: $box-shadow-md;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $primary-dark;
+      margin: 0;
+    }
+
+    svg {
+      color: $primary-main;
+      flex-shrink: 0;
+    }
+  }
+
+  .image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-sm;
+  }
+
+  .thumbnails {
+    display: flex;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-md;
+    overflow-x: auto;
+    padding-bottom: $spacing-xs;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $background-light;
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $primary-main;
+      border-radius: 2px;
+    }
+
+    .thumbnail {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: $border-radius-sm;
+      flex-shrink: 0;
+    }
+
+    .more_images {
+      width: 80px;
+      height: 60px;
+      background: $background-light;
+      border: $border-normal;
+      border-radius: $border-radius-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-normal;
+      color: $foreground-secondary;
+      flex-shrink: 0;
+    }
+  }
+
+  .info {
+    margin-bottom: $spacing-lg;
+
+    .basic {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0 0 $spacing-sm 0;
+
+      .type {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-normal;
+        color: $foreground-secondary;
+        text-transform: capitalize;
+      }
+    }
+
+    .location_and_rating {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: $spacing-md;
+    }
+
+    .meta {
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+      margin: 0;
+
+      span {
+        color: $foreground-main;
+        font-weight: $font-weight-normal;
+      }
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+
+      .star_icon {
+        color: #ffd700;
+        flex-shrink: 0;
+      }
+
+      .rating_value {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+      }
+
+      .review_count {
+        font-size: $font-size-xs;
+        color: $foreground-secondary;
+      }
+    }
+
+    .description {
+      padding-top: $spacing-md;
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+      margin: 0;
+    }
+  }
+
+  .section_title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $primary-dark;
+    margin: 0 0 $spacing-sm 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .amenities {
+    margin-bottom: $spacing-lg;
+
+    .amenities_grid {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: $spacing-xs;
+    }
+
+    .amenity {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      padding: $spacing-xs $spacing-sm;
+      background: $background-light;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-xs;
+
+      svg {
+        color: $primary-main;
+        flex-shrink: 0;
+      }
+
+      .amenity_name {
+        color: $foreground-main;
+        font-weight: $font-weight-normal;
+      }
+    }
+
+    .more_amenities {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-xs $spacing-sm;
+      background: $background-light;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-xs;
+      color: $foreground-secondary;
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  .beds {
+    .beds_list {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+    }
+
+    .bed_item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      font-size: $font-size-sm;
+      color: $foreground-main;
+
+      svg {
+        color: $primary-main;
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .container {
+    padding: $spacing-md;
+
+    .image {
+      height: 150px;
+    }
+
+    .header {
+      h3 {
+        font-size: $font-size-md;
+      }
+    }
+
+    .thumbnails {
+      .thumbnail {
+        width: 70px;
+        height: 50px;
+      }
+
+      .more_images {
+        width: 70px;
+        height: 50px;
+        font-size: $font-size-xs;
+      }
+    }
+
+    .amenities {
+      .amenities_grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+
+      .amenity {
+        padding: $spacing-xs;
+        font-size: $font-size-xs;
+
+        .amenity_name {
+          font-size: $font-size-xs;
+        }
+      }
+    }
+
+    .beds {
+      .bed_item {
+        font-size: $font-size-xs;
+      }
+    }
+  }
+}
+
+// Shimmer styles
+.shimmer_icon {
+  border-radius: 50%;
+}
+
+.shimmer_title {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_thumbnail {
+  border-radius: $border-radius-sm;
+}
+
+.shimmer_more {
+  border-radius: $border-radius-sm;
+}
+
+.shimmer_basic {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_meta {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_star {
+  border-radius: 50%;
+}
+
+.shimmer_rating_value {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_review_count {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_section_title {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_amenity_icon {
+  border-radius: 50%;
+}
+
+.shimmer_amenity_name {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_bed_icon {
+  border-radius: 50%;
+}
+
+.shimmer_bed_text {
+  border-radius: $border-radius-xs;
+}

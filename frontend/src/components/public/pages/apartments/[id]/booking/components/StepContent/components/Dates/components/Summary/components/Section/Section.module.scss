@@ -1,0 +1,20 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $primary-main;
+    margin-bottom: $spacing-sm;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: $spacing-xs;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-sm;
+    }
+  }
+}

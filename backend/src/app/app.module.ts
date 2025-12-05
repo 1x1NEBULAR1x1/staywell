@@ -9,6 +9,8 @@ import { EventsSectionModule } from './events-section/module';
 import { TransactionsSectionModule } from './transactions-section/module';
 import { FilesModule } from 'src/lib/files';
 import { UserActivityInterceptor, UserActivityService } from 'src/lib/common';
+import { CheckoutsModule } from './checkouts/checkouts.module';
+import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { UserActivityInterceptor, UserActivityService } from 'src/lib/common';
     BookingsSectionModule,
     EventsSectionModule,
     TransactionsSectionModule,
+    CheckoutsModule,
+    WebhookModule,
   ],
   providers: [
     UserActivityService,

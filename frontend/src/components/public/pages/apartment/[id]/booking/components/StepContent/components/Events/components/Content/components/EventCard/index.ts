@@ -1,4 +1,0 @@
-export { EventCard } from './EventCard';
-
-
-

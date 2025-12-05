@@ -1,5 +1,5 @@
 import { ToBoolean, BaseFiltersDto } from 'src/lib/common';
-import { Role, User } from '@shared/src/database';
+import { Role } from '@shared/src/database';
 import { ToEnum, ToString } from 'src/lib/common';
 import {
   UserWithoutPassword,

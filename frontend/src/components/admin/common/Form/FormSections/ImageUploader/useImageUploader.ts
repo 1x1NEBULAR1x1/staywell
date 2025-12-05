@@ -1,6 +1,16 @@
-import { useState, useEffect } from "react";
-import { createSetValueWrapper, isImageType, isString, isValidImageUrl } from "./utils";
-import { UseFormWatch, UseFormSetValue, Path, FieldValues } from "react-hook-form";
+import { useEffect, useState } from "react";
+import type {
+  FieldValues,
+  Path,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
+import {
+  createSetValueWrapper,
+  isImageType,
+  isString,
+  isValidImageUrl,
+} from "./utils";
 
 interface UseImageUploaderProps<T extends FieldValues> {
   image_type_field_name: Path<T>;
@@ -15,12 +25,14 @@ export const useImageUploader = <T extends FieldValues>({
   image_url_field_name,
   image_file_field_name,
   watch,
-  setValue
+  setValue,
 }: UseImageUploaderProps<T>) => {
   const [preview_image, setPreviewImage] = useState<string | null>(null);
   const set_value_wrapper = createSetValueWrapper(setValue);
   const watched_image_type = watch(image_type_field_name);
-  const image_type = isImageType(watched_image_type) ? watched_image_type : 'file';
+  const image_type = isImageType(watched_image_type)
+    ? watched_image_type
+    : "file";
   const image_url = watch(image_url_field_name);
 
   // Обработка изменения файла
@@ -30,7 +42,7 @@ export const useImageUploader = <T extends FieldValues>({
       const reader = new FileReader();
       reader.onload = (e) => {
         const result = e.target?.result;
-        if (typeof result === 'string') {
+        if (typeof result === "string") {
           setPreviewImage(result);
         }
       };
@@ -43,7 +55,10 @@ export const useImageUploader = <T extends FieldValues>({
   // Обработка изменения URL
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
-    set_value_wrapper.setStringValue(image_url_field_name, url, { shouldValidate: true, shouldDirty: true });
+    set_value_wrapper.setStringValue(image_url_field_name, url, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
     if (url && isValidImageUrl(url)) {
       setPreviewImage(url);
     } else {
@@ -56,29 +71,39 @@ export const useImageUploader = <T extends FieldValues>({
     e.preventDefault();
     e.stopPropagation();
 
-    set_value_wrapper.setUndefinedValue(image_file_field_name, { shouldValidate: false });
-    set_value_wrapper.setStringValue(image_url_field_name, '', { shouldValidate: false });
+    set_value_wrapper.setUndefinedValue(image_file_field_name, {
+      shouldValidate: false,
+    });
+    set_value_wrapper.setStringValue(image_url_field_name, "", {
+      shouldValidate: false,
+    });
     setPreviewImage(null);
 
     // Очищаем файловый инпут с type guard
     const fileInput = document.querySelector(`input[type="file"]`);
     if (fileInput instanceof HTMLInputElement) {
-      fileInput.value = '';
+      fileInput.value = "";
     }
   };
 
   // Переключение типа изображения
-  const handleTypeChange = (type: 'file' | 'url') => {
-    set_value_wrapper.setImageTypeValue(image_type_field_name, type, { shouldValidate: false });
-    set_value_wrapper.setUndefinedValue(image_file_field_name, { shouldValidate: false });
-    set_value_wrapper.setStringValue(image_url_field_name, '', { shouldValidate: false });
+  const handleTypeChange = (type: "file" | "url") => {
+    set_value_wrapper.setImageTypeValue(image_type_field_name, type, {
+      shouldValidate: false,
+    });
+    set_value_wrapper.setUndefinedValue(image_file_field_name, {
+      shouldValidate: false,
+    });
+    set_value_wrapper.setStringValue(image_url_field_name, "", {
+      shouldValidate: false,
+    });
     setPreviewImage(null);
   };
 
   // Следим за изменениями URL для предпросмотра
   useEffect(() => {
     const typeString = String(image_type);
-    if (typeString === 'url' && image_url) {
+    if (typeString === "url" && image_url) {
       if (isString(image_url) && isValidImageUrl(image_url)) {
         setPreviewImage(image_url);
       } else {
@@ -93,6 +118,6 @@ export const useImageUploader = <T extends FieldValues>({
     handleImageChange,
     handleUrlChange,
     handleRemoveImage,
-    handleTypeChange
+    handleTypeChange,
   };
 };

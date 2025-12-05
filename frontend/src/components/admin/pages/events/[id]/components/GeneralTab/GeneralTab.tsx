@@ -1,19 +1,21 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import classes from './GeneralTab.module.scss';
-import { ExtendedEvent } from '@shared/src/types';
-import { MainData, MetaData, EditEventModal } from './components';
-import { Calendar, Clock } from 'lucide-react';
-import { useModel } from '@/hooks/admin/queries/useModel';
+import type { ExtendedEvent } from "@shared/src/types";
+import { Calendar, Clock } from "lucide-react";
+import { useState } from "react";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { EditEventModal, MainData, MetaData } from "./components";
+import classes from "./GeneralTab.module.scss";
 
 export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const { refetch } = useModel('EVENT').find(event.id);
+  const { refetch } = useModel("EVENT").find(event.id);
 
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
-  const duration = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  const duration = Math.ceil(
+    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+  );
 
   return (
     <>
@@ -35,17 +37,17 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
               <div className={classes.schedule_content}>
                 <span className={classes.schedule_label}>Start Date</span>
                 <span className={classes.schedule_value}>
-                  {startDate.toLocaleDateString('en-US', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
+                  {startDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
                   })}
                 </span>
                 <span className={classes.schedule_time}>
-                  {startDate.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
+                  {startDate.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </span>
               </div>
@@ -58,17 +60,17 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
               <div className={classes.schedule_content}>
                 <span className={classes.schedule_label}>End Date</span>
                 <span className={classes.schedule_value}>
-                  {endDate.toLocaleDateString('en-US', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
+                  {endDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
                   })}
                 </span>
                 <span className={classes.schedule_time}>
-                  {endDate.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
+                  {endDate.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </span>
               </div>
@@ -81,7 +83,7 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
               <div className={classes.schedule_content}>
                 <span className={classes.schedule_label}>Duration</span>
                 <span className={classes.schedule_value}>
-                  {duration} {duration === 1 ? 'day' : 'days'}
+                  {duration} {duration === 1 ? "day" : "days"}
                 </span>
               </div>
             </div>
@@ -103,7 +105,8 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
             <div className={classes.guide_card}>
               <div className={classes.guide_avatar}>
                 <span className={classes.guide_initials}>
-                  {event.guide.first_name[0]}{event.guide.last_name[0]}
+                  {event.guide.first_name[0]}
+                  {event.guide.last_name[0]}
                 </span>
               </div>
               <div className={classes.guide_info}>
@@ -112,7 +115,9 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
                 </h4>
                 <p className={classes.guide_email}>{event.guide.email}</p>
                 {event.guide.phone_number && (
-                  <p className={classes.guide_phone}>{event.guide.phone_number}</p>
+                  <p className={classes.guide_phone}>
+                    {event.guide.phone_number}
+                  </p>
                 )}
               </div>
             </div>
@@ -139,9 +144,13 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
 
           <div className={classes.stat_card}>
             <div className={classes.stat_header}>
-              <span className={classes.stat_label}>Total Revenue Potential</span>
+              <span className={classes.stat_label}>
+                Total Revenue Potential
+              </span>
             </div>
-            <div className={classes.stat_value}>${(event.price * event.capacity).toFixed(2)}</div>
+            <div className={classes.stat_value}>
+              ${(event.price * event.capacity).toFixed(2)}
+            </div>
             <div className={classes.stat_hint}>At full capacity</div>
           </div>
         </div>
@@ -157,4 +166,3 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
     </>
   );
 };
-

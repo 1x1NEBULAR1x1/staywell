@@ -1,0 +1,139 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 100%;
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  border: $border-normal;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  .transaction_info {
+    display: flex;
+    flex-direction: column;
+    border-bottom: $border-normal;
+
+    .header {
+      padding: $spacing-lg;
+      background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+      color: $foreground-white;
+
+      .amount_section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $spacing-md;
+
+        .amount {
+          font-size: $font-size-2xl;
+          font-weight: $font-weight-bold;
+          margin: 0;
+          line-height: 1;
+        }
+
+        .status_badge {
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $border-radius-md;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-semibold;
+          text-transform: uppercase;
+          color: white;
+        }
+      }
+
+      .transaction_details {
+        .transaction_type {
+          font-size: $font-size-lg;
+          font-weight: $font-weight-semibold;
+          margin: 0 0 $spacing-xs 0;
+          text-transform: capitalize;
+        }
+
+        .payment_method {
+          font-size: $font-size-md;
+          opacity: 0.9;
+          margin: 0;
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    .info_grid {
+      padding: $spacing-lg;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-md;
+
+      .info_item {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+
+        .info_label {
+          font-size: $font-size-xs;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-weight: $font-weight-normal;
+        }
+
+        .info_value {
+          font-size: $font-size-sm;
+          color: $foreground-main;
+          font-weight: $font-weight-semibold;
+        }
+      }
+    }
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: $spacing-xs;
+    overflow-y: auto;
+
+    .nav_button {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      padding: $spacing-sm $spacing-md;
+      border: none;
+      background: transparent;
+      color: $foreground-secondary;
+      font-size: $font-size-md;
+      font-weight: $font-weight-normal;
+      cursor: pointer;
+      border-radius: $border-radius-md;
+      transition: all $transition-fast;
+      text-align: left;
+
+      &:hover {
+        background: $background-light;
+        color: $foreground-main;
+      }
+
+      &.active {
+        background: $primary-main;
+        color: $foreground-white;
+
+        .nav_icon {
+          color: $foreground-white;
+        }
+      }
+
+      .nav_icon {
+        width: 18px;
+        height: 18px;
+        color: inherit;
+      }
+
+      .nav_label {
+        flex: 1;
+      }
+    }
+  }
+}

@@ -7,15 +7,14 @@ import {
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserActivityService } from '../services';
-import { UserWithoutPassword } from '@shared/src';
+import { AuthenticatedRequest } from '@shared/src';
 
 @Injectable()
 export class UserActivityInterceptor implements NestInterceptor {
   constructor(private readonly userActivityService: UserActivityService) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const request = context.switchToHttp().getRequest();
-    const user = request.user as UserWithoutPassword | undefined;
+    const { user } = context.switchToHttp().getRequest<AuthenticatedRequest>();
 
     return next.handle().pipe(
       tap(async () => {

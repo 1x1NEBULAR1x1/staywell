@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface JsonEditorState {
   expandedNodes: Set<string>;
@@ -53,16 +53,18 @@ export const useJsonEditorStore = create<JsonEditorStore>()(
         }),
     }),
     {
-      name: 'json-editor-storage',
+      name: "json-editor-storage",
       partialize: (state) => ({
         expandedNodes: Array.from(state.expandedNodes),
       }),
       onRehydrateStorage: () => (state) => {
         if (state) {
           // Преобразуем массив обратно в Set при восстановлении
-          state.expandedNodes = new Set(state.expandedNodes as unknown as string[]);
+          state.expandedNodes = new Set(
+            state.expandedNodes as unknown as string[],
+          );
         }
       },
-    }
-  )
-); 
+    },
+  ),
+);

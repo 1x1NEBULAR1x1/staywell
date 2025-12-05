@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useToast } from './useToast';
-import { ToastType } from '@/components/common/providers/ToastProvider/Toast/Toast';
+import { useEffect, useState } from "react";
+import type { ToastType } from "@/components/common/providers/ToastProvider/Toast/Toast";
+import { useToast } from "./useToast";
 
 /**
  * Хук для безопасного использования тостов в клиентских компонентах
@@ -18,7 +18,11 @@ export const useClientToast = () => {
   }, []);
 
   // Создаем безопасные обертки над методами тоста
-  const safeShowToast = (message: string, type: ToastType, duration?: number) => {
+  const safeShowToast = (
+    message: string,
+    type: ToastType,
+    duration?: number,
+  ) => {
     if (isMounted) {
       toast.showToast(message, type, duration);
     }
@@ -47,6 +51,6 @@ export const useClientToast = () => {
     success: safeSuccess,
     error: safeError,
     warning: safeWarning,
-    isMounted
+    isMounted,
   };
 };

@@ -1,11 +1,15 @@
-'use client';
-import classes from './FiltersModal.module.scss';
-import { classes as commonClasses, InputField, SelectField } from '@/components/admin/common/Form';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Modal } from '@/components/admin/common/Modal/Modal';
-import { ApartmentsFilters, ApartmentType } from '@shared/src';
-import { formatToTitle } from '@/lib/api';
+"use client";
+import { type ApartmentsFilters, ApartmentType } from "@shared/src";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import {
+  classes as commonClasses,
+  InputField,
+  SelectField,
+} from "@/components/admin/common/Form";
+import { Modal } from "@/components/admin/common/Modal/Modal";
+import { formatToTitle } from "@/lib/api";
+import classes from "./FiltersModal.module.scss";
 
 interface FiltersModalProps {
   onClose: () => void;
@@ -31,15 +35,15 @@ type FiltersFormData = {
 export const FiltersModal = ({
   onClose,
   currentFilters,
-  onApplyFilters
+  onApplyFilters,
 }: FiltersModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<FiltersFormData>({
     defaultValues: {
       number: currentFilters.number,
-      name: currentFilters.name || '',
-      description: currentFilters.description || '',
+      name: currentFilters.name || "",
+      description: currentFilters.description || "",
       deposit: currentFilters.deposit,
       floor: currentFilters.floor,
       rooms_count: currentFilters.rooms_count,
@@ -48,8 +52,8 @@ export const FiltersModal = ({
       is_smoking: currentFilters.is_smoking,
       is_pet_friendly: currentFilters.is_pet_friendly,
       type: currentFilters.type,
-      search: currentFilters.search || '',
-    }
+      search: currentFilters.search || "",
+    },
   });
 
   const handleSubmit = async (data: FiltersFormData) => {
@@ -57,9 +61,9 @@ export const FiltersModal = ({
 
     // Фильтруем пустые значения
     const filteredData = Object.fromEntries(
-      Object.entries(data).filter(([_, value]) =>
-        value !== undefined && value !== '' && value !== null
-      )
+      Object.entries(data).filter(
+        ([_, value]) => value !== undefined && value !== "" && value !== null,
+      ),
     ) as Partial<ApartmentsFilters>;
 
     onApplyFilters(filteredData);
@@ -70,8 +74,8 @@ export const FiltersModal = ({
   const handleReset = () => {
     form.reset({
       number: undefined,
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       deposit: undefined,
       floor: undefined,
       rooms_count: undefined,
@@ -80,20 +84,18 @@ export const FiltersModal = ({
       is_smoking: undefined,
       is_pet_friendly: undefined,
       type: undefined,
-      search: '',
+      search: "",
     });
     onApplyFilters({});
     onClose();
   };
 
   return (
-    <Modal
-      isOpen
-      onClose={onClose}
-      title="Filters for apartments"
-      size="lg"
-    >
-      <form onSubmit={form.handleSubmit(handleSubmit)} className={commonClasses.admin_form}>
+    <Modal isOpen onClose={onClose} title="Filters for apartments" size="lg">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className={commonClasses.admin_form}
+      >
         <InputField
           name="search"
           label="Search"
@@ -105,8 +107,8 @@ export const FiltersModal = ({
         <InputField
           name="number"
           label="Apartment number"
-          step='1'
-          type='number'
+          step="1"
+          type="number"
           placeholder="Number"
           register={form.register}
           errors={form.formState.errors}
@@ -115,8 +117,8 @@ export const FiltersModal = ({
         <InputField
           name="floor"
           label="Floor"
-          step='1'
-          type='number'
+          step="1"
+          type="number"
           placeholder="Floor"
           register={form.register}
           errors={form.formState.errors}
@@ -124,8 +126,8 @@ export const FiltersModal = ({
 
         <InputField
           name="rooms_count"
-          step='1'
-          type='number'
+          step="1"
+          type="number"
           label="Number of rooms"
           placeholder="Rooms"
           register={form.register}
@@ -134,8 +136,8 @@ export const FiltersModal = ({
 
         <InputField
           name="max_capacity"
-          step='1'
-          type='number'
+          step="1"
+          type="number"
           label="Maximum capacity"
           placeholder="Guests"
           register={form.register}
@@ -145,27 +147,31 @@ export const FiltersModal = ({
         <SelectField
           name="type"
           label="Apartment type"
-          options={Object.values(ApartmentType).map((type) => ({ label: formatToTitle(type), value: type }))}
+          options={Object.values(ApartmentType).map((type) => ({
+            label: formatToTitle(type),
+            value: type,
+          }))}
           register={form.register}
           errors={form.formState.errors}
         />
 
-
         <InputField
           name="deposit"
           label="Deposit"
-          step='0.01'
-          type='number'
+          step="0.01"
+          type="number"
           placeholder="Deposit"
           register={form.register}
           errors={form.formState.errors}
         />
 
-
         <SelectField
           name="is_pet_friendly"
           label="With pets"
-          options={[{ label: 'Allowed', value: 'true' }, { label: 'Not allowed', value: 'false' }]}
+          options={[
+            { label: "Allowed", value: "true" },
+            { label: "Not allowed", value: "false" },
+          ]}
           register={form.register}
           errors={form.formState.errors}
         />
@@ -173,7 +179,10 @@ export const FiltersModal = ({
         <SelectField
           name="is_available"
           label="Availability"
-          options={[{ label: 'Available', value: 'true' }, { label: 'Not available', value: 'false' }]}
+          options={[
+            { label: "Available", value: "true" },
+            { label: "Not available", value: "false" },
+          ]}
           register={form.register}
           errors={form.formState.errors}
         />
@@ -181,14 +190,20 @@ export const FiltersModal = ({
         <SelectField
           name="is_smoking"
           label="Smoking"
-          options={[{ label: 'Allowed', value: 'true' }, { label: 'Not allowed', value: 'false' }]}
+          options={[
+            { label: "Allowed", value: "true" },
+            { label: "Not allowed", value: "false" },
+          ]}
           register={form.register}
           errors={form.formState.errors}
         />
         <SelectField
           name="is_pet_friendly"
           label="With pets"
-          options={[{ label: 'Allowed', value: 'true' }, { label: 'Not allowed', value: 'false' }]}
+          options={[
+            { label: "Allowed", value: "true" },
+            { label: "Not allowed", value: "false" },
+          ]}
           register={form.register}
           errors={form.formState.errors}
         />
@@ -202,12 +217,8 @@ export const FiltersModal = ({
           >
             Reset
           </button>
-          <button
-            type="submit"
-            className={classes.button}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Applying...' : 'Apply'}
+          <button type="submit" className={classes.button} disabled={isLoading}>
+            {isLoading ? "Applying..." : "Apply"}
           </button>
         </div>
       </form>

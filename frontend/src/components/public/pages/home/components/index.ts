@@ -1,4 +1,4 @@
-export { Hero } from './Hero';
-export { Filters } from './Filters';
-export { Recomendations } from './Recomendations';
-export { Features } from './Features';
+export { Features } from "./Features";
+export { Filters } from "./Filters";
+export { Hero } from "./Hero";
+export { Recomendations } from "./Recomendations";

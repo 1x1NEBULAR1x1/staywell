@@ -1,22 +1,31 @@
-import classes from './Dropdown.module.scss';
-import { LogOut, Settings, User } from 'lucide-react';
-
-import Link from 'next/link';
-
-import type { Dispatch, SetStateAction } from 'react';
+import { LogOut, Settings, User } from "lucide-react";
+import Link from "next/link";
+import type { Dispatch, SetStateAction } from "react";
+import classes from "./Dropdown.module.scss";
 
 type DropdownProps = {
-  setIsDropdownOpen: Dispatch<SetStateAction<boolean>>
-  handleLogout: () => void
-}
+  setIsDropdownOpen: Dispatch<SetStateAction<boolean>>;
+  handleLogout: () => void;
+};
 
-export const Dropdown = ({ setIsDropdownOpen, handleLogout }: DropdownProps) => (
+export const Dropdown = ({
+  setIsDropdownOpen,
+  handleLogout,
+}: DropdownProps) => (
   <div className={classes.dropdown}>
-    <Link href="/admin/profile" className={classes.dropdown_item} onClick={() => setIsDropdownOpen(false)}>
+    <Link
+      href="/admin/profile"
+      className={classes.dropdown_item}
+      onClick={() => setIsDropdownOpen(false)}
+    >
       <User size={16} />
       <span>Profile</span>
     </Link>
-    <Link href="/admin/settings" className={classes.dropdown_item} onClick={() => setIsDropdownOpen(false)}>
+    <Link
+      href="/admin/settings"
+      className={classes.dropdown_item}
+      onClick={() => setIsDropdownOpen(false)}
+    >
       <Settings size={16} />
       <span>Settings</span>
     </Link>

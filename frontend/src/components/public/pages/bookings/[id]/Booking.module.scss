@@ -1,0 +1,26 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.page {
+  width: 100%;
+  min-height: 100lvh;
+  height: auto;
+  background-color: $background-light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-4xl;
+  padding-bottom: $spacing-4xl;
+}
+
+.main_content {
+  width: $container-width-xl;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-3xl;
+  align-items: start;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+    gap: $spacing-2xl;
+  }
+}

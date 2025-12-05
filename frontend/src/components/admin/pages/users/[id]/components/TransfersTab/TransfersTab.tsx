@@ -1,18 +1,17 @@
-'use client';
+"use client";
 
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useModelFilters } from '@/hooks/admin/actions/useModelFilters';
-import { TransferDetailsFiltersMenu, TransferDetailsList } from './components';
-import classes from '../Tab.module.scss';
-
+import { useModelFilters } from "@/hooks/admin/actions/useModelFilters";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import classes from "../Tab.module.scss";
+import { TransferDetailsFiltersMenu, TransferDetailsList } from "./components";
 
 export const TransfersTab = ({ user_id }: { user_id: string }) => {
   const { filters, setFilters } = useModelFilters({
-    model: 'TRANSFER_DETAIL',
-    permanent_fields: { user_id }
+    model: "TRANSFER_DETAIL",
+    permanent_fields: { user_id },
   });
 
-  const { data: transferDetails } = useModel('TRANSFER_DETAIL').get(filters);
+  const { data: transferDetails } = useModel("TRANSFER_DETAIL").get(filters);
 
   return (
     <div className={classes.tab}>

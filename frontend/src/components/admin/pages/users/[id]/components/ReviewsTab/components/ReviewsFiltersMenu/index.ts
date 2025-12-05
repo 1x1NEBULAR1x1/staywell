@@ -1,2 +1,1 @@
-export { ReviewsFiltersMenu } from './ReviewsFiltersMenu';
-
+export { ReviewsFiltersMenu } from "./ReviewsFiltersMenu";

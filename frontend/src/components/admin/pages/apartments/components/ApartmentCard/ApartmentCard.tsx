@@ -1,16 +1,21 @@
-import classes from './ApartmentCard.module.scss';
-import no_image from '@/../public/common/no-image.jpeg';
+import type { ExtendedApartment } from "@shared/src";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import no_image from "@/../public/common/no-image.jpeg";
+import { Shimmer } from "@/components/styles";
+import classes from "./ApartmentCard.module.scss";
 
-import Image from 'next/image';
-import { ExtendedApartment } from '@shared/src';
-import { Shimmer } from '@/components/styles';
-import { useRouter } from 'next/navigation';
-
-
-export const ApartmentCard = ({ apartment }: { apartment: ExtendedApartment }) => {
+export const ApartmentCard = ({
+  apartment,
+}: {
+  apartment: ExtendedApartment;
+}) => {
   const router = useRouter();
   return (
-    <tr className={classes.apartment_row} onClick={() => router.push(`/admin/apartments/${apartment.id}`)}>
+    <tr
+      className={classes.apartment_row}
+      onClick={() => router.push(`/admin/apartments/${apartment.id}`)}
+    >
       <td>
         <div className={classes.apartment_row_name_container}>
           <Image
@@ -23,40 +28,68 @@ export const ApartmentCard = ({ apartment }: { apartment: ExtendedApartment }) =
           <div className={classes.apartment_row_name_container_info}>
             <p className={classes.apartment_row_name_container_info_name}>
               {apartment.name}
-              <span className={classes.apartment_row_name_container_info_location}>
+              <span
+                className={classes.apartment_row_name_container_info_location}
+              >
                 {apartment.floor} - {apartment.number}
               </span>
             </p>
-            <p className={classes.apartment_row_name_container_info_description}>
-              {apartment.description || 'No description'}
+            <p
+              className={classes.apartment_row_name_container_info_description}
+            >
+              {apartment.description || "No description"}
             </p>
           </div>
         </div>
       </td>
-      <td ><span
-        className={`${classes.apartment_row_status} ${apartment.is_available ? classes.apartment_row_status_available : classes.apartment_row_status_unavailable}`}>
-        {apartment.is_available ? 'Available' : 'Unavailable'}
-      </span></td>
-      <td ><span className={classes.apartment_row_type}>{apartment.type.toLowerCase()}</span></td>
-      <td className={classes.apartment_row_created}>{new Date(apartment.created).toDateString()}</td>
-    </tr >
+      <td>
+        <span
+          className={`${classes.apartment_row_status} ${apartment.is_available ? classes.apartment_row_status_available : classes.apartment_row_status_unavailable}`}
+        >
+          {apartment.is_available ? "Available" : "Unavailable"}
+        </span>
+      </td>
+      <td>
+        <span className={classes.apartment_row_type}>
+          {apartment.type.toLowerCase()}
+        </span>
+      </td>
+      <td className={classes.apartment_row_created}>
+        {new Date(apartment.created).toDateString()}
+      </td>
+    </tr>
   );
-}
-
+};
 
 export const ApartmentCardShimmer = () => (
   <tr className={classes.apartment_row}>
     <td>
       <div className={classes.apartment_row_name_container}>
-        <Shimmer style={{ width: '6rem', height: '6rem', borderRadius: '4px' }} />
+        <Shimmer
+          style={{ width: "6rem", height: "6rem", borderRadius: "4px" }}
+        />
         <div className={classes.apartment_row_name_container_info}>
-          <Shimmer style={{ width: '150px', height: '18px', borderRadius: '4px' }} />
-          <Shimmer style={{ width: '200px', height: '14px', borderRadius: '4px' }} />
+          <Shimmer
+            style={{ width: "150px", height: "18px", borderRadius: "4px" }}
+          />
+          <Shimmer
+            style={{ width: "200px", height: "14px", borderRadius: "4px" }}
+          />
         </div>
       </div>
     </td>
-    <td><Shimmer style={{ width: '100px', height: '24px', borderRadius: '4px' }} /></td>
-    <td><Shimmer style={{ width: '90px', height: '24px', borderRadius: '4px' }} /></td>
-    <td><Shimmer style={{ width: '100px', height: '14px', borderRadius: '4px' }} /></td>
-  </tr >
-)
+    <td>
+      <Shimmer
+        style={{ width: "100px", height: "24px", borderRadius: "4px" }}
+      />
+    </td>
+    <td>
+      <Shimmer style={{ width: "90px", height: "24px", borderRadius: "4px" }} />
+    </td>
+    <td>
+      <Shimmer
+        style={{ width: "100px", height: "14px", borderRadius: "4px" }}
+      />
+    </td>
+  </tr>
+);

@@ -32,7 +32,9 @@ export const ChatWindowHeader = ({ selected_user }: ChatWindowHeaderProps) => {
   const avatar_url = selected_user.image || "/common/default-avatar.png";
 
   const lastSeen = getUserLastSeen(selected_user.id);
-  const isOnline = lastSeen ? (Date.now() - lastSeen.getTime()) < 5 * 60 * 1000 : false;
+  const isOnline = lastSeen
+    ? Date.now() - lastSeen.getTime() < 5 * 60 * 1000
+    : false;
 
   const statusText = isOnline
     ? "Online"
@@ -51,9 +53,11 @@ export const ChatWindowHeader = ({ selected_user }: ChatWindowHeaderProps) => {
       />
       <div className={classes.header_info}>
         <div className={classes.header_name}>{full_name}</div>
-        <div className={clsx(classes.header_status, {
-          [classes.header_status_online]: isOnline
-        })}>
+        <div
+          className={clsx(classes.header_status, {
+            [classes.header_status_online]: isOnline,
+          })}
+        >
           {statusText}
         </div>
       </div>

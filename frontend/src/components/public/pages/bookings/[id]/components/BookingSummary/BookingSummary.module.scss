@@ -1,0 +1,215 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.summary {
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $box-shadow-sm;
+  transition: all $transition-normal;
+
+  &:hover {
+    box-shadow: $box-shadow-md;
+  }
+
+  .title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $primary-dark;
+    margin: 0 0 $spacing-lg 0;
+    border-bottom: 2px solid $border-color;
+    padding-bottom: $spacing-sm;
+  }
+
+  .info_grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  .info_item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    .icon_wrapper {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: $background-light;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $primary-main;
+
+      svg {
+        flex-shrink: 0;
+      }
+
+      .status_confirmed {
+        color: $green;
+      }
+
+      .status_pending {
+        color: $yellow;
+      }
+
+      .status_cancelled {
+        color: $red;
+      }
+
+      .status_default {
+        color: $foreground-secondary;
+      }
+    }
+
+    .item_content {
+      flex: 1;
+      min-width: 0;
+      gap: $spacing-xs;
+
+      .label {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-normal;
+        color: $foreground-secondary;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: block;
+        margin-bottom: $spacing-xs;
+      }
+
+      .value {
+        font-size: $font-size-md;
+        font-weight: $font-weight-normal;
+        color: $foreground-main;
+
+        &.status_badge {
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $border-radius-xs;
+          width: fit-content;
+          text-transform: capitalize;
+          font-size: $font-size-md;
+          font-weight: $font-weight-normal;
+
+          &[data-status="CONFIRMED"] {
+            background-color: rgba($green, 0.1);
+            color: $green;
+          }
+
+          &[data-status="PENDING"] {
+            background-color: rgba($yellow, 0.1);
+            color: $yellow;
+          }
+
+          &[data-status="CANCELLED"] {
+            background-color: rgba($red, 0.1);
+            color: $red;
+          }
+
+          &[data-status="COMPLETED"] {
+            background-color: rgba($primary-main, 0.1);
+            color: $primary-main;
+          }
+        }
+      }
+
+      .nights {
+        font-size: $font-size-sm;
+        color: $foreground-secondary;
+        display: block;
+        margin-top: $spacing-xs;
+      }
+
+      .price {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $green;
+      }
+    }
+  }
+
+  .variant_info {
+    border-top: $border-normal;
+    padding-top: $spacing-lg;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .variant_name {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $primary-dark;
+    }
+
+    .variant_price {
+      font-size: $font-size-md;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .summary {
+    padding: $spacing-lg;
+
+    .title {
+      font-size: $font-size-lg;
+    }
+
+    .info_item {
+      gap: $spacing-sm;
+
+      .icon_wrapper {
+        width: 28px;
+        height: 28px;
+
+        svg {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+
+    .variant_info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+    }
+  }
+}
+
+// Shimmer styles
+.shimmer_title {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_icon {
+  border-radius: 50%;
+}
+
+.shimmer_label {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_value {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_nights {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_price {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_variant_name {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_variant_price {
+  border-radius: $border-radius-xs;
+}

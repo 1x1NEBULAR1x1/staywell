@@ -42,4 +42,3 @@ export const getAccessToken = async (): Promise<string | null> => {
     return null;
   }
 };
-

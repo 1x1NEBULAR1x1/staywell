@@ -1,2 +1,2 @@
-export { ImagePreview } from './InlineProfileForm/components/ImagePreview';
-export { InlineProfileForm } from './InlineProfileForm';
+export { InlineProfileForm } from "./InlineProfileForm";
+export { ImagePreview } from "./InlineProfileForm/components/ImagePreview";

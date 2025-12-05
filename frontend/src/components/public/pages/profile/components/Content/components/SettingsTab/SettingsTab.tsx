@@ -1,9 +1,9 @@
 "use client";
 
-import classes from "./SettingsTab.module.scss";
-import { ThemeToggle } from "./components/ThemeToggle";
-import { NotificationsToggle } from "./components/NotificationsToggle";
 import { ChangePassword } from "./components/ChangePassword";
+import { NotificationsToggle } from "./components/NotificationsToggle";
+import { ThemeToggle } from "./components/ThemeToggle";
+import classes from "./SettingsTab.module.scss";
 
 export const SettingsTab = () => {
   return (
@@ -21,4 +21,3 @@ export const SettingsTab = () => {
     </div>
   );
 };
-

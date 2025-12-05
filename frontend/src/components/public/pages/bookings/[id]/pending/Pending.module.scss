@@ -1,0 +1,21 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.page {
+  width: 100%;
+  min-height: 100lvh;
+  height: auto;
+  background-color: $background-main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-3xl;
+  padding-bottom: $spacing-3xl;
+}
+
+
+
+
+
+
+
+

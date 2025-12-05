@@ -1,0 +1,131 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.user_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    .section_title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+      border-bottom: 2px solid $border-color;
+      padding-bottom: $spacing-sm;
+    }
+
+    .user_profile {
+      display: flex;
+      align-items: center;
+      gap: $spacing-lg;
+      padding: $spacing-lg;
+      background: $background-light;
+      border-radius: $border-radius-md;
+      border: $border-normal;
+
+      .user_avatar {
+        flex-shrink: 0;
+
+        .avatar_image {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 3px solid $primary-main;
+        }
+      }
+
+      .user_info {
+        flex: 1;
+
+        .user_name {
+          font-size: $font-size-xl;
+          font-weight: $font-weight-semibold;
+          color: $foreground-main;
+          margin: 0 0 $spacing-xs 0;
+        }
+
+        .user_email {
+          font-size: $font-size-md;
+          color: $foreground-secondary;
+          margin: 0 0 $spacing-xs 0;
+        }
+
+        .user_phone {
+          font-size: $font-size-md;
+          color: $foreground-secondary;
+          margin: 0;
+        }
+      }
+
+      .user_status {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        align-items: flex-end;
+
+        .status_badge {
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $border-radius-sm;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-semibold;
+          text-transform: uppercase;
+
+          &.active {
+            background-color: $green;
+            color: $foreground-white;
+          }
+
+          &.inactive {
+            background-color: $red;
+            color: $foreground-white;
+          }
+        }
+
+        .verification_badge {
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $border-radius-sm;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-normal;
+          background-color: $primary-light;
+          color: $primary-main;
+        }
+      }
+    }
+
+    .details_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: $spacing-lg;
+
+      .detail_item {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        padding: $spacing-md;
+        background: $background-light;
+        border-radius: $border-radius-md;
+        border: $border-normal;
+
+        .detail_label {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-weight: $font-weight-normal;
+        }
+
+        .detail_value {
+          font-size: $font-size-md;
+          color: $foreground-main;
+          font-weight: $font-weight-semibold;
+        }
+      }
+    }
+  }
+}

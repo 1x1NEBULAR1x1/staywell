@@ -294,7 +294,7 @@ exports.Prisma.AdditionalOptionScalarFieldEnum = {
 exports.Prisma.BookingAdditionalOptionScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
-  option_id: 'option_id',
+  additional_option_id: 'additional_option_id',
   booking_id: 'booking_id',
   created: 'created',
   updated: 'updated'
@@ -304,8 +304,8 @@ exports.Prisma.BookingEventScalarFieldEnum = {
   id: 'id',
   number_of_people: 'number_of_people',
   booking_id: 'booking_id',
-  event_id: 'event_id',
   transaction_id: 'transaction_id',
+  event_id: 'event_id',
   created: 'created',
   updated: 'updated',
   is_excluded: 'is_excluded'

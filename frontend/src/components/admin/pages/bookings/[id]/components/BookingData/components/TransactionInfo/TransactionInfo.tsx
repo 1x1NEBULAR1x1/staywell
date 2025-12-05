@@ -1,13 +1,25 @@
-import classes from './TransactionInfo.module.scss';
-import { Transaction, TransactionStatus, PaymentMethod } from '@shared/src';
-import { CreditCard, Banknote, RefreshCw, AlertCircle, CheckCircle, Clock, XCircle } from 'lucide-react';
+import type {
+  PaymentMethod,
+  Transaction,
+  TransactionStatus,
+} from "@shared/src";
+import {
+  AlertCircle,
+  Banknote,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  RefreshCw,
+  XCircle,
+} from "lucide-react";
+import classes from "./TransactionInfo.module.scss";
 
 const getStatusText = (status: TransactionStatus) => {
   const statusMap = {
-    PENDING: 'Pending',
-    SUCCESS: 'Success',
-    CANCELED: 'Cancelled',
-    FAILED: 'Failed'
+    PENDING: "Pending",
+    SUCCESS: "Success",
+    CANCELED: "Cancelled",
+    FAILED: "Failed",
   };
   return statusMap[status] || status;
 };
@@ -17,7 +29,7 @@ const getStatusIcon = (status: TransactionStatus) => {
     PENDING: Clock,
     SUCCESS: CheckCircle,
     CANCELED: XCircle,
-    FAILED: AlertCircle
+    FAILED: AlertCircle,
   };
   return iconMap[status] || AlertCircle;
 };
@@ -27,16 +39,16 @@ const getStatusClass = (status: TransactionStatus) => {
     PENDING: classes.status_pending,
     SUCCESS: classes.status_success,
     CANCELED: classes.status_canceled,
-    FAILED: classes.status_failed
+    FAILED: classes.status_failed,
   };
-  return classMap[status] || '';
+  return classMap[status] || "";
 };
 
 const getPaymentMethodText = (method: PaymentMethod) => {
   const methodMap = {
-    CASH: 'Cash',
-    CARD: 'Card',
-    TRANSFER: 'Transfer'
+    CASH: "Cash",
+    CARD: "Card",
+    TRANSFER: "Transfer",
   };
   return methodMap[method] || method;
 };
@@ -45,12 +57,16 @@ const getPaymentMethodIcon = (method: PaymentMethod) => {
   const iconMap = {
     CASH: Banknote,
     CARD: CreditCard,
-    TRANSFER: RefreshCw
+    TRANSFER: RefreshCw,
   };
   return iconMap[method] || CreditCard;
 };
 
-export const TransactionInfo = ({ transaction }: { transaction: Transaction | null | undefined }) => {
+export const TransactionInfo = ({
+  transaction,
+}: {
+  transaction: Transaction | null | undefined;
+}) => {
   if (!transaction) {
     return (
       <div className={classes.transaction_info}>
@@ -59,9 +75,7 @@ export const TransactionInfo = ({ transaction }: { transaction: Transaction | nu
           <h3 className={classes.title}>Transaction Information</h3>
         </div>
         <div className={classes.content}>
-          <div className={classes.no_transaction}>
-            Transaction not found
-          </div>
+          <div className={classes.no_transaction}>Transaction not found</div>
         </div>
       </div>
     );
@@ -75,7 +89,9 @@ export const TransactionInfo = ({ transaction }: { transaction: Transaction | nu
       <div className={classes.header}>
         <PaymentIcon className={classes.header_icon} />
         <h3 className={classes.title}>Transaction Information</h3>
-        <div className={`${classes.status} ${getStatusClass(transaction.transaction_status)}`}>
+        <div
+          className={`${classes.status} ${getStatusClass(transaction.transaction_status)}`}
+        >
           <StatusIcon className={classes.status_icon} />
           {getStatusText(transaction.transaction_status)}
         </div>
@@ -85,7 +101,9 @@ export const TransactionInfo = ({ transaction }: { transaction: Transaction | nu
         <div className={classes.transaction_details}>
           <div className={classes.detail_row}>
             <span className={classes.detail_label}>Transaction ID:</span>
-            <span className={classes.detail_value}>#{transaction.id.slice(-8).toUpperCase()}</span>
+            <span className={classes.detail_value}>
+              #{transaction.id.slice(-8).toUpperCase()}
+            </span>
           </div>
 
           <div className={classes.detail_row}>
@@ -102,20 +120,24 @@ export const TransactionInfo = ({ transaction }: { transaction: Transaction | nu
 
           <div className={classes.detail_row}>
             <span className={classes.detail_label}>Transaction Type:</span>
-            <span className={classes.detail_value}>{transaction.transaction_type}</span>
+            <span className={classes.detail_value}>
+              {transaction.transaction_type}
+            </span>
           </div>
 
           {transaction.description && (
             <div className={classes.detail_row}>
               <span className={classes.detail_label}>Description:</span>
-              <span className={classes.detail_value}>{transaction.description}</span>
+              <span className={classes.detail_value}>
+                {transaction.description}
+              </span>
             </div>
           )}
 
           <div className={classes.detail_row}>
             <span className={classes.detail_label}>Created:</span>
             <span className={classes.detail_value}>
-              {new Date(transaction.created).toLocaleString('en-US')}
+              {new Date(transaction.created).toLocaleString("en-US")}
             </span>
           </div>
 
@@ -123,7 +145,7 @@ export const TransactionInfo = ({ transaction }: { transaction: Transaction | nu
             <div className={classes.detail_row}>
               <span className={classes.detail_label}>Updated:</span>
               <span className={classes.detail_value}>
-                {new Date(transaction.updated).toLocaleString('en-US')}
+                {new Date(transaction.updated).toLocaleString("en-US")}
               </span>
             </div>
           )}

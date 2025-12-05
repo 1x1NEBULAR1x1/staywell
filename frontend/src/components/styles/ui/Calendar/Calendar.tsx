@@ -1,17 +1,21 @@
-'use client';
+"use client";
 
-import classes from './Calendar.module.scss';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import clsx from 'clsx';
-import { MONTH_NAMES, DAY_NAMES } from './config';
-import { getDaysInMonth, isDateInRange, isDateRangeStart, isDateRangeEnd } from './utils';
-
+import clsx from "clsx";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import classes from "./Calendar.module.scss";
+import { DAY_NAMES, MONTH_NAMES } from "./config";
+import {
+  getDaysInMonth,
+  isDateInRange,
+  isDateRangeEnd,
+  isDateRangeStart,
+} from "./utils";
 
 export interface CalendarProps {
   current_month: Date;
   selected_range: { start?: Date; end?: Date };
   onRangeSelect: (range: { start?: Date; end?: Date }) => void;
-  onNavigateMonth: (direction: 'prev' | 'next') => void;
+  onNavigateMonth: (direction: "prev" | "next") => void;
   isDateAvailable: (date: Date) => boolean;
   is_loading?: boolean;
 }
@@ -24,7 +28,6 @@ export const Calendar: React.FC<CalendarProps> = ({
   isDateAvailable,
   is_loading = false,
 }) => {
-
   const days = getDaysInMonth({ date: current_month });
 
   const handleDateClick = (date: Date) => {
@@ -38,6 +41,11 @@ export const Calendar: React.FC<CalendarProps> = ({
 
     // Если начальная дата есть, но нет конечной
     if (selected_range.start && !selected_range.end) {
+      // Если выбранная дата совпадает с начальной, игнорируем (не разрешаем одинаковые даты)
+      if (date.getTime() === selected_range.start.getTime()) {
+        return;
+      }
+
       // Если выбранная дата раньше начальной, делаем её начальной
       if (date < selected_range.start) {
         onRangeSelect({ start: date });
@@ -54,7 +62,9 @@ export const Calendar: React.FC<CalendarProps> = ({
         current.setDate(current.getDate() + 1);
       }
 
-      const has_unavailable_dates = dates_between.some(d => !isDateAvailable(d));
+      const has_unavailable_dates = dates_between.some(
+        (d) => !isDateAvailable(d),
+      );
 
       if (has_unavailable_dates) {
         // Если есть недоступные даты между, сбрасываем и начинаем заново
@@ -74,7 +84,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         <button
           type="button"
           className={classes.navButton}
-          onClick={() => onNavigateMonth('prev')}
+          onClick={() => onNavigateMonth("prev")}
           disabled={is_loading}
         >
           <ChevronLeft size={20} />
@@ -87,7 +97,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         <button
           type="button"
           className={classes.navButton}
-          onClick={() => onNavigateMonth('next')}
+          onClick={() => onNavigateMonth("next")}
           disabled={is_loading}
         >
           <ChevronRight size={20} />
@@ -96,7 +106,7 @@ export const Calendar: React.FC<CalendarProps> = ({
 
       {/* Week days */}
       <div className={classes.weekDays}>
-        {DAY_NAMES.map(day => (
+        {DAY_NAMES.map((day) => (
           <div key={day} className={classes.weekDay}>
             {day}
           </div>
@@ -112,15 +122,21 @@ export const Calendar: React.FC<CalendarProps> = ({
               [classes.empty]: !date,
               [classes.occupied]: date && !isDateAvailable(date),
               [classes.available]: date && isDateAvailable(date),
-              [classes.selected]: date && isDateInRange({ date, selected_range: selected_range }),
-              [classes.rangeStart]: date && isDateRangeStart({ date, selected_range: selected_range }),
-              [classes.rangeEnd]: date && isDateRangeEnd({ date, selected_range: selected_range }),
-              [classes.today]: date && date.toDateString() === new Date().toDateString(),
+              [classes.selected]:
+                date && isDateInRange({ date, selected_range: selected_range }),
+              [classes.rangeStart]:
+                date &&
+                isDateRangeStart({ date, selected_range: selected_range }),
+              [classes.rangeEnd]:
+                date &&
+                isDateRangeEnd({ date, selected_range: selected_range }),
+              [classes.today]:
+                date && date.toDateString() === new Date().toDateString(),
               [classes.loading]: is_loading,
             })}
             onClick={date ? () => handleDateClick(date) : undefined}
           >
-            {date && date.getDate()}
+            {date?.getDate()}
           </div>
         ))}
       </div>

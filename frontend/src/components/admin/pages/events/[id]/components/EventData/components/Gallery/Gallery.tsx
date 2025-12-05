@@ -1,14 +1,16 @@
-import classes from './Gallery.module.scss';
-import no_image from '@/../public/common/no-image.jpeg';
-
-import { ExtendedEvent } from '@shared/src';
-import Image from 'next/image';
-import { useState } from 'react';
-import { GalleryImage, AddImageModal } from './components';
-import { AddButton } from '../AddButton';
+import type { ExtendedEvent } from "@shared/src";
+import Image from "next/image";
+import { useState } from "react";
+import no_image from "@/../public/common/no-image.jpeg";
+import { AddButton } from "../AddButton";
+import { AddImageModal, GalleryImage } from "./components";
+import classes from "./Gallery.module.scss";
 
 export const Gallery = ({ event }: { event: ExtendedEvent }) => {
-  const [currentImage, setCurrentImage] = useState<{ src: string, alt: string }>({ src: event.image || no_image.src, alt: event.name || 'Event' });
+  const [currentImage, setCurrentImage] = useState<{
+    src: string;
+    alt: string;
+  }>({ src: event.image || no_image.src, alt: event.name || "Event" });
   const [is_modal_open, setIsModalOpen] = useState(false);
 
   return (
@@ -26,7 +28,12 @@ export const Gallery = ({ event }: { event: ExtendedEvent }) => {
         </div>
         <div className={classes.images_grid}>
           <GalleryImage
-            image={{ src: event.image || no_image.src, alt: event.name || 'Event', id: event.id, name: event.name }}
+            image={{
+              src: event.image || no_image.src,
+              alt: event.name || "Event",
+              id: event.id,
+              name: event.name,
+            }}
             setCurrentImage={setCurrentImage}
             is_selected={currentImage.src === event.image}
             root
@@ -34,7 +41,12 @@ export const Gallery = ({ event }: { event: ExtendedEvent }) => {
           {event.images.map((image) => (
             <GalleryImage
               key={image.id}
-              image={{ src: image.image || no_image.src, alt: image.name || 'Event', id: image.id, name: image.name }}
+              image={{
+                src: image.image || no_image.src,
+                alt: image.name || "Event",
+                id: image.id,
+                name: image.name,
+              }}
               setCurrentImage={setCurrentImage}
               is_selected={currentImage.src === image.image}
             />
@@ -50,5 +62,5 @@ export const Gallery = ({ event }: { event: ExtendedEvent }) => {
         />
       )}
     </>
-  )
+  );
 };

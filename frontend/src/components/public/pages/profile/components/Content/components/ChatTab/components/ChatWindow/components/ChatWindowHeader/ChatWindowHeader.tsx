@@ -1,8 +1,8 @@
-import { Phone, Mail, MoreHorizontal } from "lucide-react";
+import { Mail, MoreHorizontal, Phone } from "lucide-react";
 import Image from "next/image";
+import default_avatar from "@/../public/common/default-avatar.png";
 import { useChat } from "@/hooks/public/chat";
 import classes from "./ChatWindowHeader.module.scss";
-import default_avatar from "@/../public/common/default-avatar.png";
 
 export const ChatWindowHeader = () => {
   const { support_online } = useChat();
@@ -35,4 +35,3 @@ export const ChatWindowHeader = () => {
     </div>
   );
 };
-

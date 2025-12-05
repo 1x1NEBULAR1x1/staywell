@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import default_avatar from "@/../public/common/default-avatar.png";
+import { useChat } from "@/hooks/admin/chat/useChat";
+import { useAccount } from "@/hooks/common/useAccount";
+import { useQPId } from "@/hooks/common/useId";
 import { MessageBubble } from "../MessageBubble";
 import classes from "./ChatMessages.module.scss";
-import { useAccount } from "@/hooks/common/useAccount";
-import { useChat } from "@/hooks/admin/chat/useChat";
-import { useQPId } from "@/hooks/common/useId";
-import default_avatar from "@/../public/common/default-avatar.png";
 
 interface ChatMessagesProps {
   is_loading: boolean;
@@ -131,7 +131,8 @@ export const ChatMessages = ({
 
     const container = messages_container_ref.current;
     const is_at_bottom =
-      container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+      container.scrollHeight - container.scrollTop - container.clientHeight <
+      100;
 
     // If user is at bottom and someone starts typing, scroll to show typing indicator
     if (selected_chat_id && isTyping(selected_chat_id) && is_at_bottom) {
@@ -144,7 +145,7 @@ export const ChatMessages = ({
         }
       }, 0);
     }
-  }, [selected_chat_id ? isTyping(selected_chat_id) : false, is_loading]);
+  }, [is_loading, isTyping, selected_chat_id]);
 
   // Mark messages as read when chat is opened and messages are loaded
   useEffect(() => {
@@ -167,7 +168,9 @@ export const ChatMessages = ({
     }
 
     // Mark messages as read when scrolled to bottom
-    const is_at_bottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+    const is_at_bottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight <
+      100;
     if (is_at_bottom && selected_chat_id && messages.length > 0) {
       markMessagesAsRead(selected_chat_id);
     }
@@ -211,7 +214,7 @@ export const ChatMessages = ({
           is_outgoing={message.sender_id === current_user?.id}
           sender_avatar={
             message.sender_id === current_user?.id
-              ? current_user?.image ?? default_avatar.src
+              ? (current_user?.image ?? default_avatar.src)
               : selected_user_avatar
           }
           is_new={new_message_ids.has(message.id)}

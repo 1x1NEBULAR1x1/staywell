@@ -1,11 +1,11 @@
 "use client";
 
+import type { Message } from "@shared/src/database";
 import { useCallback } from "react";
 import type { Socket } from "socket.io-client";
-import { useUserChatStore } from "./useChatStore";
 import { useAccount } from "@/hooks/common/useAccount";
-import type { Message } from "@shared/src/database";
 import { SUPPORT_CHAT_ID } from "./constants";
+import { useUserChatStore } from "./useChatStore";
 
 interface UseMessageActionsOptions {
   socket: Socket | null;
@@ -33,7 +33,7 @@ export const useMessageActions = (
 
       return {
         id: tempId,
-        sender_id: user!.id,
+        sender_id: user?.id,
         receiver_id: SUPPORT_CHAT_ID,
         message,
         booking_id: booking_id || null,
@@ -54,13 +54,19 @@ export const useMessageActions = (
 
       // Create optimistic message and add to messages list
       const optimisticMessage = createOptimisticMessage(message, booking_id);
-      chatStore.setMessages([
-        ...chatStore.messages,
-        optimisticMessage,
-      ].sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()));
+      chatStore.setMessages(
+        [...chatStore.messages, optimisticMessage].sort(
+          (a, b) =>
+            new Date(a.created).getTime() - new Date(b.created).getTime(),
+        ),
+      );
 
       // Send message to server
-      socket.emit("send_message", { receiver_id: SUPPORT_CHAT_ID, message, booking_id });
+      socket.emit("send_message", {
+        receiver_id: SUPPORT_CHAT_ID,
+        message,
+        booking_id,
+      });
     },
     [socket, is_connected, user, chatStore, createOptimisticMessage],
   );
@@ -93,4 +99,3 @@ export const useMessageActions = (
     markMessagesAsRead,
   };
 };
-

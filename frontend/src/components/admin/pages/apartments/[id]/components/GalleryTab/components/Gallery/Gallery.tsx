@@ -1,49 +1,59 @@
-import classes from './Gallery.module.scss';
-import no_image from '@/../public/common/no-image.jpeg';
-
-import { ExtendedApartment } from '@shared/src';
-import Image from 'next/image';
-import { useMemo, useState } from 'react';
-import { AddImageModal } from './components';
-import { Plus, Trash2, Star, SquareX } from 'lucide-react';
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { usePId } from '@/hooks/common/useId';
+import type { ExtendedApartment } from "@shared/src";
+import { Plus, SquareX, Star, Trash2 } from "lucide-react";
+import Image from "next/image";
+import { useMemo, useState } from "react";
+import no_image from "@/../public/common/no-image.jpeg";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { usePId } from "@/hooks/common/useId";
+import { AddImageModal } from "./components";
+import classes from "./Gallery.module.scss";
 
 export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
   const id = usePId();
-  const { refetch } = useModel('APARTMENT').find(id);
+  const { refetch } = useModel("APARTMENT").find(id);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [is_modal_open, setIsModalOpen] = useState(false);
   // Combine main image and gallery images
-  const allImages = useMemo(() => [
-    { src: apartment.image || no_image.src, alt: apartment.name || 'Main image', id: apartment.id, isMain: true, isExcluded: false },
-    ...apartment.images.map(img => ({
-      src: img.image || no_image.src,
-      alt: img.name || 'Apartment image',
-      id: img.id,
-      isMain: false,
-      isExcluded: img.is_excluded,
-      dbImage: img
-    }))
-  ], [apartment]);
+  const allImages = useMemo(
+    () => [
+      {
+        src: apartment.image || no_image.src,
+        alt: apartment.name || "Main image",
+        id: apartment.id,
+        isMain: true,
+        isExcluded: false,
+      },
+      ...apartment.images.map((img) => ({
+        src: img.image || no_image.src,
+        alt: img.name || "Apartment image",
+        id: img.id,
+        isMain: false,
+        isExcluded: img.is_excluded,
+        dbImage: img,
+      })),
+    ],
+    [apartment],
+  );
   const currentImage = allImages[currentImageIndex];
 
-  const delete_image_mutation = useModel('APARTMENT_IMAGE').remove(currentImage.id);
-  const update_apartment_mutation = useModel('APARTMENT').update(id);
+  const delete_image_mutation = useModel("APARTMENT_IMAGE").remove(
+    currentImage.id,
+  );
+  const update_apartment_mutation = useModel("APARTMENT").update(id);
 
   const handleDeleteImage = async () => {
     if (currentImage.isMain) {
       // If deleting main image, set it to null
       try {
         await update_apartment_mutation.mutateAsync({
-          image: undefined
+          image: undefined,
         });
         if (currentImageIndex === 0) {
           setCurrentImageIndex(0);
         }
         refetch();
       } catch (error) {
-        console.error('Failed to delete main image:', error);
+        console.error("Failed to delete main image:", error);
       }
     } else {
       // Delete from gallery
@@ -54,7 +64,7 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
         }
         refetch();
       } catch (error) {
-        console.error('Failed to delete image:', error);
+        console.error("Failed to delete image:", error);
       }
     }
   };
@@ -62,11 +72,11 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
   const handleSetAsMain = async (imageSrc: string) => {
     try {
       await update_apartment_mutation.mutateAsync({
-        image: imageSrc
+        image: imageSrc,
       });
       refetch();
     } catch (error) {
-      console.error('Failed to set main image:', error);
+      console.error("Failed to set main image:", error);
     }
   };
 
@@ -75,7 +85,9 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
       <div className={classes.gallery}>
         {/* Main Image Display */}
         <div className={classes.main_image_section}>
-          <div className={`${classes.current_image_container} ${currentImage.isExcluded ? classes.excluded_image : ''}`}>
+          <div
+            className={`${classes.current_image_container} ${currentImage.isExcluded ? classes.excluded_image : ""}`}
+          >
             <Image
               src={currentImage.src}
               alt={currentImage.alt}
@@ -88,7 +100,9 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
               <div className={classes.excluded_overlay}>
                 <div className={classes.excluded_badge}>
                   <span>Excluded</span>
-                  <span className={classes.excluded_text}>This image will not be displayed to users</span>
+                  <span className={classes.excluded_text}>
+                    This image will not be displayed to users
+                  </span>
                 </div>
               </div>
             )}
@@ -96,7 +110,9 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
               <div className={classes.image_navigation}>
                 <button
                   className={classes.nav_button}
-                  onClick={() => setCurrentImageIndex(Math.max(0, currentImageIndex - 1))}
+                  onClick={() =>
+                    setCurrentImageIndex(Math.max(0, currentImageIndex - 1))
+                  }
                   disabled={currentImageIndex === 0}
                 >
                   ←
@@ -106,7 +122,11 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
                 </span>
                 <button
                   className={classes.nav_button}
-                  onClick={() => setCurrentImageIndex(Math.min(allImages.length - 1, currentImageIndex + 1))}
+                  onClick={() =>
+                    setCurrentImageIndex(
+                      Math.min(allImages.length - 1, currentImageIndex + 1),
+                    )
+                  }
                   disabled={currentImageIndex === allImages.length - 1}
                 >
                   →
@@ -136,7 +156,11 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
             <button
               className={`${classes.action_button} ${classes.delete_button}`}
               onClick={handleDeleteImage}
-              title={currentImage.isExcluded ? "Permanently delete image" : "Delete image"}
+              title={
+                currentImage.isExcluded
+                  ? "Permanently delete image"
+                  : "Delete image"
+              }
             >
               <Trash2 size={16} />
               {currentImage.isExcluded ? "Permanently delete" : "Delete"}
@@ -150,7 +174,7 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
             {allImages.map((image, index) => (
               <div
                 key={image.id}
-                className={`${classes.thumbnail} ${currentImageIndex === index ? classes.thumbnail_active : ''} ${image.isMain ? classes.thumbnail_main : ''} ${image.isExcluded ? classes.thumbnail_excluded : ''}`}
+                className={`${classes.thumbnail} ${currentImageIndex === index ? classes.thumbnail_active : ""} ${image.isMain ? classes.thumbnail_main : ""} ${image.isExcluded ? classes.thumbnail_excluded : ""}`}
                 onClick={() => setCurrentImageIndex(index)}
               >
                 <Image
@@ -192,5 +216,5 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
         />
       )}
     </>
-  )
+  );
 };

@@ -10,7 +10,7 @@ import { ReservationsFiltersDto } from '../dto';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters(options: ReservationsFiltersDto) {
     const {
@@ -51,22 +51,21 @@ export class ListService {
     const final_filters =
       user.role === Role.ADMIN ? filters : { ...filters, user_id: user.id };
     delete final_filters.is_excluded;
-    const query_options = this.prisma.buildQuery(
-      {
-        filters: final_filters,
-        default_sort_field: 'created',
-        date_field: 'created',
-        customFilters: this.customFilters,
-      },
-    );
-    const { items, total } = await this.prisma.findWithPagination<ExtendedReservation>({
-      model: this.prisma.reservation,
-      query_options,
-      include: {
-        user: { select: USER_WITHOUT_PASSWORD_SELECT },
-        apartment: true,
-      },
+    const query_options = this.prisma.buildQuery({
+      filters: final_filters,
+      default_sort_field: 'created',
+      date_field: 'created',
+      customFilters: this.customFilters,
     });
+    const { items, total } =
+      await this.prisma.findWithPagination<ExtendedReservation>({
+        model: this.prisma.reservation,
+        query_options,
+        include: {
+          user: { select: USER_WITHOUT_PASSWORD_SELECT },
+          apartment: true,
+        },
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

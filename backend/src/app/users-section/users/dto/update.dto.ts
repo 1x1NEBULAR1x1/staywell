@@ -59,14 +59,15 @@ export class UpdateUserDto implements UpdateUser {
   @ToBoolean({
     required: false,
     description: 'Email notifications enabled',
-    example: true
+    example: true,
   })
   email_notifications?: boolean;
 }
 
 export class AdminUpdateUserDto
   extends UpdateUserDto
-  implements AdminUpdateUser {
+  implements AdminUpdateUser
+{
   @ToString({
     required: false,
     description: 'Email',

@@ -1,10 +1,10 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { GetApi } from '@/lib/api';
-import type { ApartmentsFilters, ExtendedApartment } from '@shared/src';
-import type { BaseListResult } from '@shared/src/common/base-types/base-list-result.interface';
-import { useCallback, useMemo } from 'react';
+import type { ApartmentsFilters, ExtendedApartment } from "@shared/src";
+import type { BaseListResult } from "@shared/src/common/base-types/base-list-result.interface";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
+import { GetApi } from "@/lib/api";
 
-const api = new GetApi('APARTMENT');
+const api = new GetApi("APARTMENT");
 
 /**
  * Hook for infinite loading apartments
@@ -13,15 +13,16 @@ const api = new GetApi('APARTMENT');
  * @returns Data with infinite loading
  */
 export const useInfinityApartments = (
-  filters: Omit<ApartmentsFilters, 'skip'> & { take?: number },
+  filters: Omit<ApartmentsFilters, "skip"> & { take?: number },
   options?: {
+    initial_data?: BaseListResult<ExtendedApartment>;
     enabled?: boolean;
-  }
+  },
 ) => {
   const take = filters.take || 10;
 
   const query = useInfiniteQuery({
-    queryKey: ['apartments', 'infinite', filters],
+    queryKey: ["apartments", "infinite", filters],
     queryFn: async ({ pageParam = 0 }) => {
       const result = await api.get({
         ...filters,
@@ -35,12 +36,18 @@ export const useInfinityApartments = (
       return has_more ? pages.length : undefined;
     },
     initialPageParam: 0,
+    initialData: options?.initial_data
+      ? {
+          pages: [options.initial_data],
+          pageParams: [0],
+        }
+      : undefined,
     enabled: options?.enabled !== false,
   });
 
   // Flat array of all apartments
   const apartments = useMemo(() => {
-    return query.data?.pages.flatMap(page => page.items) || [];
+    return query.data?.pages.flatMap((page) => page.items) || [];
   }, [query.data]);
 
   // Function to load the next page

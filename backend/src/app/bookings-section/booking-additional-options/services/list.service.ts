@@ -3,7 +3,10 @@ import { PrismaService } from 'src/lib/prisma';
 import { BookingAdditionalOption, Prisma, User } from '@shared/src/database';
 import { BookingAdditionalOptionsFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common';
-import { EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE, ExtendedBookingAdditionalOption } from '@shared/src/types/bookings-section';
+import {
+  EXTENDED_BOOKING_ADDITIONAL_OPTION_INCLUDE,
+  ExtendedBookingAdditionalOption,
+} from '@shared/src/types/bookings-section';
 import { CheckService } from './check.service';
 
 @Injectable()
@@ -11,13 +14,15 @@ export class ListService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly checkService: CheckService,
-  ) { }
+  ) {}
 
   customFilters(options: BookingAdditionalOptionsFiltersDto) {
-    const { booking_id, option_id, min_amount, max_amount } = options;
+    const { booking_id, additional_option_id, min_amount, max_amount } =
+      options;
     const filters: Prisma.BookingAdditionalOptionWhereInput = {};
     if (booking_id) filters.booking_id = booking_id;
-    if (option_id) filters.option_id = option_id;
+    if (additional_option_id)
+      filters.additional_option_id = additional_option_id;
     if (min_amount) filters.amount = { gte: min_amount };
     if (max_amount) filters.amount = { lte: max_amount };
     return filters;
@@ -27,9 +32,9 @@ export class ListService {
    * @param filterDto Filter and pagination parameters
    * @returns List of booking options with pagination metadata
    */
-  async findAll(filters: BookingAdditionalOptionsFiltersDto): Promise<
-    BaseListResult<ExtendedBookingAdditionalOption>
-  > {
+  async findAll(
+    filters: BookingAdditionalOptionsFiltersDto,
+  ): Promise<BaseListResult<ExtendedBookingAdditionalOption>> {
     const query_options = this.prisma.buildQuery<BookingAdditionalOption>({
       filters,
       customFilters: this.customFilters,

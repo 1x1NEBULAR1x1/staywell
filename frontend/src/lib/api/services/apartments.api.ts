@@ -1,6 +1,6 @@
-import { CrudApi } from "./crud.api";
-import { api } from "@/lib/api/axios";
 import type { AxiosResponse } from "axios";
+import { api } from "@/lib/api/axios";
+import { CrudApi } from "./crud.api";
 
 export interface DatesConfigParams {
   year: number;
@@ -9,32 +9,6 @@ export interface DatesConfigParams {
 
 export interface DatesConfigResult {
   occupied_dates: string[];
-}
-
-export interface EventsConfigParams {
-  start_date: Date;
-  end_date: Date;
-}
-
-export interface AvailableEvent {
-  id: string;
-  name: string;
-  image: string;
-  description: string;
-  price: number;
-  capacity: number;
-  available_spots: number;
-  start: string;
-  end: string;
-  guide?: {
-    id: string;
-    first_name: string;
-    last_name: string;
-  };
-}
-
-export interface EventsConfigResult {
-  available_events: AvailableEvent[];
 }
 
 /**
@@ -51,8 +25,13 @@ export class ApartmentsApi extends CrudApi<"APARTMENT"> {
    * @param params - параметры запроса (год, месяц)
    * @returns Promise с конфигом дат
    */
-  getDatesConfig = (id: string, params: DatesConfigParams): Promise<AxiosResponse<DatesConfigResult>> =>
-    api.get<DatesConfigResult>(`${this.endpoint}/dates-config/${id}`, { params });
+  getDatesConfig = (
+    id: string,
+    params: DatesConfigParams,
+  ): Promise<AxiosResponse<DatesConfigResult>> =>
+    api.get<DatesConfigResult>(`${this.endpoint}/dates-config/${id}`, {
+      params,
+    });
 
   /**
    * Проверяет доступность апартамента на заданный период
@@ -63,7 +42,10 @@ export class ApartmentsApi extends CrudApi<"APARTMENT"> {
    */
   checkAvailability = (id: string, start_date: Date, end_date: Date) =>
     api.get(`${this.endpoint}/available/${id}`, {
-      params: { start_date: start_date.toISOString(), end_date: end_date.toISOString() }
+      params: {
+        start_date: start_date.toISOString(),
+        end_date: end_date.toISOString(),
+      },
     });
 }
 

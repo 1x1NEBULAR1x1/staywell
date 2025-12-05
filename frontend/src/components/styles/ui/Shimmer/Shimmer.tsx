@@ -1,12 +1,11 @@
-import classes from './Shimmer.module.scss';
-
-import type { HTMLAttributes, ReactNode } from 'react';
-import clsx from 'clsx';
+import clsx from "clsx";
+import type { HTMLAttributes, ReactNode } from "react";
+import classes from "./Shimmer.module.scss";
 
 type ShimmerProps = HTMLAttributes<HTMLDivElement> & {
   show_animation?: boolean;
   children?: ReactNode;
-}
+};
 
 /**
  * Компонент Shimmer создает серый элемент с анимацией загрузки.
@@ -22,12 +21,9 @@ export const Shimmer = ({
   ...props
 }: ShimmerProps) => (
   <div
-    className={clsx(
-      className,
-      show_animation && classes.shimmer
-    )}
+    className={clsx(className, show_animation && classes.shimmer)}
     {...props}
   >
     {!show_animation ? children : <>&nbsp;</>}
   </div>
-);  
+);

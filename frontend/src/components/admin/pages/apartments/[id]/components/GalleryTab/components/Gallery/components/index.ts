@@ -1,2 +1,2 @@
-export { GalleryImage } from './GalleryImage';
-export { AddImageModal } from './AddImageModal';
+export { AddImageModal } from "./AddImageModal";
+export { GalleryImage } from "./GalleryImage";

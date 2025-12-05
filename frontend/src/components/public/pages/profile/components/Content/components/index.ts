@@ -1,7 +1,6 @@
-export { ChatTab } from "./ChatTab";
-export { ProfileInfoTab } from "./ProfileInfoTab";
 export { CardsTab } from "./CardsTab";
-export { SettingsTab } from "./SettingsTab";
+export { ChatTab } from "./ChatTab";
 export { NotificationTab } from "./NotificationTab";
+export { ProfileInfoTab } from "./ProfileInfoTab";
+export { SettingsTab } from "./SettingsTab";
 export { TransfersTab } from "./TransfersTab";
-

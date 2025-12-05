@@ -1,3 +1,2 @@
-export { useChat } from "./useChat";
 export * from "./lib";
-
+export { useChat } from "./useChat";

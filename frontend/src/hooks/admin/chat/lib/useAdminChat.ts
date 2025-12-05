@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAccount } from "@/hooks/common/useAccount";
+import { useQPId } from "@/hooks/common/useId";
 import type { UseWebSocketChatOptions, UseWebSocketChatReturn } from ".";
 import { useChatStore, WS_DISCONNECT_REASONS } from ".";
 import { useChatActions } from "./useChatActions";
@@ -10,7 +11,6 @@ import { useMessageActions } from "./useMessageActions";
 import { useTypingActions } from "./useTypingActions";
 import { useWebSocketConnection } from "./useWebSocketConnection";
 import { useWebSocketEventHandlers } from "./useWebSocketEventHandlers";
-import { useQPId } from "@/hooks/common/useId";
 
 export const useAdminChat = (
   options: UseWebSocketChatOptions = {},
@@ -52,7 +52,11 @@ export const useAdminChat = (
       }
     },
     onConnectError: (error) => {
-      if (["authentication", "token"].some((message) => error.message?.includes(message))) {
+      if (
+        ["authentication", "token"].some((message) =>
+          error.message?.includes(message),
+        )
+      ) {
         connection.refreshTokenAndReconnect();
       }
     },
@@ -115,7 +119,6 @@ export const useAdminChat = (
     }
   }, [connection.is_connected, user]);
 
-
   // Reset chats loaded flag when disconnected
   useEffect(() => {
     if (!connection.is_connected) {
@@ -124,21 +127,26 @@ export const useAdminChat = (
   }, [connection.is_connected]);
 
   // Helper function to get user last seen time
-  const getUserLastSeen = useCallback((userId: string) => {
-    const lastSeenTimestamp = chatStore.online_users[userId];
-    if (!lastSeenTimestamp) return null;
-    return new Date(lastSeenTimestamp);
-  }, [chatStore.online_users]);
+  const getUserLastSeen = useCallback(
+    (userId: string) => {
+      const lastSeenTimestamp = chatStore.online_users[userId];
+      if (!lastSeenTimestamp) return null;
+      return new Date(lastSeenTimestamp);
+    },
+    [chatStore.online_users],
+  );
 
   // Periodically update online status of users in chats based on last seen time
   useEffect(() => {
     const interval = setInterval(() => {
       chatStore.setChats(
-        chatStore.chats.map(chat => {
+        chatStore.chats.map((chat) => {
           const lastSeen = chat.last_seen;
-          const isOnline = lastSeen ? (Date.now() - new Date(lastSeen).getTime()) < 5 * 60 * 1000 : false;
+          const isOnline = lastSeen
+            ? Date.now() - new Date(lastSeen).getTime() < 5 * 60 * 1000
+            : false;
           return { ...chat, is_online: isOnline };
-        })
+        }),
       );
     }, 30 * 1000); // Update every 30 seconds
 
@@ -159,12 +167,11 @@ export const useAdminChat = (
     if (!chatStore.search_query.trim()) return users;
     const query = chatStore.search_query.toLowerCase();
     return users.filter((user) => {
-      const full_name = `${user.user.first_name} ${user.user.last_name}`.toLowerCase();
+      const full_name =
+        `${user.user.first_name} ${user.user.last_name}`.toLowerCase();
       return full_name.includes(query);
     });
   }, [chatStore.chats, chatStore.search_query]);
-
-
 
   return useMemo(
     () => ({

@@ -1,1 +1,1 @@
-export { NotificationCard, NotificationCardShimmer } from './NotificationCard';
+export { NotificationCard, NotificationCardShimmer } from "./NotificationCard";

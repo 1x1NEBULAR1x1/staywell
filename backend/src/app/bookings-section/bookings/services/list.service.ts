@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { Booking, Prisma, User, Role } from '@shared/src/database';
+import { Prisma, User, Role } from '@shared/src/database';
 import { BookingsFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common';
-import { BookingsFilters, ExtendedBooking, EXTENDED_BOOKING_INCLUDE } from '@shared/src/types/bookings-section';
+import {
+  ExtendedBooking,
+  EXTENDED_BOOKING_INCLUDE,
+} from '@shared/src/types/bookings-section';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: BookingsFiltersDto) {
     const {
@@ -25,7 +28,9 @@ export class ListService {
     if (transaction_id) filters.transaction_id = transaction_id;
     if (start_date || end_date) {
       if (start_date && end_date) {
-        filters.OR = [{ AND: [{ start: { lte: end_date } }, { end: { gte: start_date } }] }];
+        filters.OR = [
+          { AND: [{ start: { lte: end_date } }, { end: { gte: start_date } }] },
+        ];
       } else if (start_date) {
         filters.start = { gte: start_date };
       } else if (end_date) {
@@ -48,17 +53,19 @@ export class ListService {
     user: User;
   }): Promise<BaseListResult<ExtendedBooking>> {
     const user_id = user.role === Role.ADMIN ? filtersDto.user_id : user.id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { is_excluded, ...filters } = { ...filtersDto, user_id };
     const query_options = this.prisma.buildQuery({
       filters,
       date_field: 'start',
       customFilters: this.customFilters,
     });
-    const { items, total } = await this.prisma.findWithPagination<ExtendedBooking>({
-      model: this.prisma.booking,
-      query_options,
-      include: EXTENDED_BOOKING_INCLUDE,
-    });
+    const { items, total } =
+      await this.prisma.findWithPagination<ExtendedBooking>({
+        model: this.prisma.booking,
+        query_options,
+        include: EXTENDED_BOOKING_INCLUDE,
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

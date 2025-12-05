@@ -1,1 +1,1 @@
-export { EditEventModal } from './EditEventModal';
+export { EditEventModal } from "./EditEventModal";

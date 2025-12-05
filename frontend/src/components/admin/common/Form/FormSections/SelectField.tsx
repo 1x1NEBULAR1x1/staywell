@@ -1,5 +1,11 @@
-import { UseFormRegister, FieldErrors, RegisterOptions, Path, FieldValues } from 'react-hook-form';
-import classes from '../FormStyles.module.scss';
+import type {
+  FieldErrors,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  UseFormRegister,
+} from "react-hook-form";
+import classes from "../FormStyles.module.scss";
 
 interface SelectOption {
   value: string;
@@ -31,40 +37,40 @@ export const SelectField = <T extends FieldValues>({
   required = false,
   rules,
   hint,
-  disabled = false
+  disabled = false,
 }: SelectFieldProps<T>) => {
   return (
     <div className={classes.admin_form_section}>
       <div className={classes.admin_form_field}>
         <label className={classes.admin_form_label}>
-          {label} {required && '*'}
+          {label} {required && "*"}
         </label>
         <select
-          className={`${classes.admin_form_select} ${errors[name] ? classes.admin_form_select_error : ''}`}
+          className={`${classes.admin_form_select} ${errors[name] ? classes.admin_form_select_error : ""}`}
           disabled={is_loading || disabled}
           {...register(name, {
             required: required,
-            ...rules
+            ...rules,
           })}
         >
-          {is_loading ? <option value="">Loading...</option> : <option value="">{placeholder}</option>}
+          {is_loading ? (
+            <option value="">Loading...</option>
+          ) : (
+            <option value="">{placeholder}</option>
+          )}
           {options.map((option: SelectOption) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </select>
-        {hint && (
-          <div className={classes.admin_form_hint}>
-            {hint}
-          </div>
-        )}
+        {hint && <div className={classes.admin_form_hint}>{hint}</div>}
         {errors[name] && (
           <span className={classes.admin_form_error}>
-            {String(errors[name]?.message || '')}
+            {String(errors[name]?.message || "")}
           </span>
         )}
       </div>
     </div>
   );
-}; 
+};

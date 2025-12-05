@@ -1,13 +1,13 @@
-import { useContext } from 'react';
-import { ToastContext } from '@/components/common/providers/ToastProvider/ToastContext';
-import { ToastType } from '@/components/common/providers/ToastProvider/Toast/Toast';
+import { useContext } from "react";
+import type { ToastType } from "@/components/common/providers/ToastProvider/Toast/Toast";
+import { ToastContext } from "@/components/common/providers/ToastProvider/ToastContext";
 
 // Хук для удобного использования функций уведомлений
 export const useToast = () => {
   const context = useContext(ToastContext);
 
   if (!context) {
-    throw new Error('useToast должен использоваться внутри ToastProvider');
+    throw new Error("useToast должен использоваться внутри ToastProvider");
   }
 
   return {
@@ -55,6 +55,6 @@ export const useToast = () => {
      */
     info: (message: string, duration?: number) => {
       context.info(message, duration);
-    }
+    },
   };
 };

@@ -1,17 +1,22 @@
-'use client';
+"use client";
 
-import classes from './Account.module.scss';
-import default_avatar from '@/../public/common/default-avatar.png';
-
-import { ChevronDown, User, MessageSquare, Calendar, Settings, LogOut } from 'lucide-react';
-import { SafeUser } from '@shared/src';
-import Image from 'next/image';
-import { getImageUrl } from '@/lib/api';
-import { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/common';
-import clsx from 'clsx';
-
+import type { SafeUser } from "@shared/src";
+import clsx from "clsx";
+import {
+  Calendar,
+  ChevronDown,
+  LogOut,
+  MessageSquare,
+  Settings,
+  User,
+} from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import default_avatar from "@/../public/common/default-avatar.png";
+import { useAuth } from "@/hooks/common";
+import { getImageUrl } from "@/lib/api";
+import classes from "./Account.module.scss";
 
 export const Account = ({ user }: { user: SafeUser }) => {
   const [is_dropdown_open, setIsDropdownOpen] = useState(false);
@@ -21,15 +26,18 @@ export const Account = ({ user }: { user: SafeUser }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdown_ref.current && !dropdown_ref.current.contains(event.target as Node)) {
+      if (
+        dropdown_ref.current &&
+        !dropdown_ref.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
     if (is_dropdown_open) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [is_dropdown_open]);
 
@@ -46,7 +54,11 @@ export const Account = ({ user }: { user: SafeUser }) => {
   };
 
   return (
-    <div className={classes.account} ref={dropdown_ref} onClick={() => setIsDropdownOpen(!is_dropdown_open)}>
+    <div
+      className={classes.account}
+      ref={dropdown_ref}
+      onClick={() => setIsDropdownOpen(!is_dropdown_open)}
+    >
       <div className={classes.user_info}>
         <div className={classes.avatar_container}>
           <Image
@@ -64,13 +76,13 @@ export const Account = ({ user }: { user: SafeUser }) => {
         </div>
       </div>
 
-      <button
-        className={classes.dropdown_toggle}
-        aria-label="Account Menu"
-      >
+      <button className={classes.dropdown_toggle} aria-label="Account Menu">
         <ChevronDown
           size={20}
-          className={clsx(classes.chevron, is_dropdown_open && classes.chevron_rotated)}
+          className={clsx(
+            classes.chevron,
+            is_dropdown_open && classes.chevron_rotated,
+          )}
         />
       </button>
 
@@ -80,7 +92,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
-              router.push('/chat');
+              router.push("/chat");
             }}
           >
             <MessageSquare size={16} />
@@ -91,7 +103,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
-              router.push('/bookings');
+              router.push("/bookings");
             }}
           >
             <Calendar size={16} />
@@ -102,7 +114,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
-              router.push('/settings');
+              router.push("/settings");
             }}
           >
             <Settings size={16} />
@@ -113,7 +125,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
-              router.push('/profile');
+              router.push("/profile");
             }}
           >
             <User size={16} />
@@ -128,7 +140,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
             disabled={is_logout_loading}
           >
             <LogOut size={16} />
-            <span>{is_logout_loading ? 'Signing out...' : 'Logout'}</span>
+            <span>{is_logout_loading ? "Signing out..." : "Logout"}</span>
           </button>
         </div>
       )}

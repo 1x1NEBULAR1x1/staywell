@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { Reservation, SafeUser } from '@shared/src';
-import classes from './Reservations.module.scss';
-import { Calendar, User as UserIcon, Clock, ExternalLink } from 'lucide-react';
-import { format } from 'date-fns';
-import Link from 'next/link';
+import type { Reservation, SafeUser } from "@shared/src";
+import { format } from "date-fns";
+import { Calendar, Clock, ExternalLink, User as UserIcon } from "lucide-react";
+import Link from "next/link";
+import classes from "./Reservations.module.scss";
 
 type ReservationsProps = {
   reservations: (Reservation & { user: SafeUser })[];
-}
+};
 
 export const Reservations = ({ reservations }: ReservationsProps) => {
   if (reservations.length === 0) return null;
@@ -21,7 +21,9 @@ export const Reservations = ({ reservations }: ReservationsProps) => {
       </h4>
       <div className={classes.reservations_list}>
         {reservations.map((reservation) => {
-          const isCurrentReservation = new Date(reservation.start) <= new Date() && new Date() <= new Date(reservation.end);
+          const isCurrentReservation =
+            new Date(reservation.start) <= new Date() &&
+            new Date() <= new Date(reservation.end);
 
           return (
             <div key={reservation.id} className={classes.reservation_item}>
@@ -32,7 +34,9 @@ export const Reservations = ({ reservations }: ReservationsProps) => {
                     {reservation.user?.first_name} {reservation.user?.last_name}
                   </span>
                   {reservation.user?.email && (
-                    <span className={classes.user_email}>{reservation.user.email}</span>
+                    <span className={classes.user_email}>
+                      {reservation.user.email}
+                    </span>
                   )}
                 </div>
                 <Link
@@ -46,9 +50,9 @@ export const Reservations = ({ reservations }: ReservationsProps) => {
               <div className={classes.reservation_dates}>
                 <Clock size={14} />
                 <span>
-                  {format(new Date(reservation.start), 'MMM dd, yyyy')}
-                  {' → '}
-                  {format(new Date(reservation.end), 'MMM dd, yyyy')}
+                  {format(new Date(reservation.start), "MMM dd, yyyy")}
+                  {" → "}
+                  {format(new Date(reservation.end), "MMM dd, yyyy")}
                 </span>
                 {isCurrentReservation && (
                   <span className={classes.current_badge}>Current</span>

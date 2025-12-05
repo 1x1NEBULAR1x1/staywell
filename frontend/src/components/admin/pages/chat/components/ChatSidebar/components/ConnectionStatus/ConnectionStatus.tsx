@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import classes from "./ConnectionStatus.module.scss";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import classes from "./ConnectionStatus.module.scss";
 
 export const ConnectionStatus = () => {
   const { is_connected } = useChat();

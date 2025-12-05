@@ -1,28 +1,36 @@
-import classes from './NotificationCard.module.scss';
-import { Notification, NotificationType, NotificationAction } from '@shared/src/database';
-import { Shimmer } from '@/components/styles';
-import { useRouter } from 'next/navigation';
-import { useNotifications } from '@/hooks/common/useNotifications';
 import {
-  Calendar,
-  Home,
+  type Notification,
+  NotificationAction,
+  NotificationType,
+} from "@shared/src/database";
+import {
   AlertCircle,
-  CheckCircle,
-  XCircle,
-  Clock,
-  MessageSquare,
   Bell,
+  Calendar,
   Check,
-  Trash2
-} from 'lucide-react';
+  CheckCircle,
+  Clock,
+  Home,
+  MessageSquare,
+  Trash2,
+  XCircle,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Shimmer } from "@/components/styles";
+import { useNotifications } from "@/hooks/common/useNotifications";
+import classes from "./NotificationCard.module.scss";
 
 type NotificationCardProps = {
   notification: Notification;
   isSelected?: boolean;
   onSelect?: (notification: Notification) => void;
-}
+};
 
-export const NotificationCard = ({ notification, isSelected = false, onSelect }: NotificationCardProps) => {
+export const NotificationCard = ({
+  notification,
+  isSelected = false,
+  onSelect,
+}: NotificationCardProps) => {
   const router = useRouter();
   const { markAsRead, remove } = useNotifications();
 
@@ -50,7 +58,7 @@ export const NotificationCard = ({ notification, isSelected = false, onSelect }:
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (window.confirm('Are you sure you want to delete this notification?')) {
+    if (window.confirm("Are you sure you want to delete this notification?")) {
       await remove(notification.id).mutateAsync();
     }
   };
@@ -62,11 +70,14 @@ export const NotificationCard = ({ notification, isSelected = false, onSelect }:
 
   return (
     <tr
-      className={`${classes.notification_row} ${!notification.is_read ? classes.unread : ''} ${classes.clickable}`}
+      className={`${classes.notification_row} ${!notification.is_read ? classes.unread : ""} ${classes.clickable}`}
       onClick={handleNotificationClick}
     >
       <td>
-        <div className={classes.notification_type_container} onClick={(e) => e.stopPropagation()}>
+        <div
+          className={classes.notification_type_container}
+          onClick={(e) => e.stopPropagation()}
+        >
           <input
             type="checkbox"
             checked={isSelected}
@@ -87,8 +98,10 @@ export const NotificationCard = ({ notification, isSelected = false, onSelect }:
         {notification.message || `${notification.action} notification`}
       </td>
       <td>
-        <span className={`${classes.notification_read_status} ${notification.is_read ? classes.read : classes.unread}`}>
-          {notification.is_read ? 'Read' : 'Unread'}
+        <span
+          className={`${classes.notification_read_status} ${notification.is_read ? classes.read : classes.unread}`}
+        >
+          {notification.is_read ? "Read" : "Unread"}
         </span>
       </td>
       <td className={classes.notification_created}>
@@ -171,24 +184,46 @@ export const NotificationCardShimmer = () => (
   <tr className={classes.notification_row}>
     <td>
       <div className={classes.notification_type_container}>
-        <Shimmer style={{ width: '20px', height: '20px', borderRadius: '4px' }} />
-        <Shimmer style={{ width: '80px', height: '18px', borderRadius: '4px', marginLeft: '8px' }} />
+        <Shimmer
+          style={{ width: "20px", height: "20px", borderRadius: "4px" }}
+        />
+        <Shimmer
+          style={{
+            width: "80px",
+            height: "18px",
+            borderRadius: "4px",
+            marginLeft: "8px",
+          }}
+        />
       </div>
     </td>
     <td>
       <div className={classes.notification_action}>
-        <Shimmer style={{ width: '20px', height: '20px', borderRadius: '4px' }} />
-        <Shimmer style={{ width: '60px', height: '18px', borderRadius: '4px', marginLeft: '8px' }} />
+        <Shimmer
+          style={{ width: "20px", height: "20px", borderRadius: "4px" }}
+        />
+        <Shimmer
+          style={{
+            width: "60px",
+            height: "18px",
+            borderRadius: "4px",
+            marginLeft: "8px",
+          }}
+        />
       </div>
     </td>
     <td className={classes.notification_message}>
-      <Shimmer style={{ width: '200px', height: '18px', borderRadius: '4px' }} />
+      <Shimmer
+        style={{ width: "200px", height: "18px", borderRadius: "4px" }}
+      />
     </td>
     <td>
-      <Shimmer style={{ width: '60px', height: '24px', borderRadius: '4px' }} />
+      <Shimmer style={{ width: "60px", height: "24px", borderRadius: "4px" }} />
     </td>
     <td className={classes.notification_created}>
-      <Shimmer style={{ width: '100px', height: '18px', borderRadius: '4px' }} />
+      <Shimmer
+        style={{ width: "100px", height: "18px", borderRadius: "4px" }}
+      />
     </td>
   </tr>
 );

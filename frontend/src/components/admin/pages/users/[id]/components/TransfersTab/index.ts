@@ -1,2 +1,1 @@
-export { TransfersTab } from './TransfersTab';
-
+export { TransfersTab } from "./TransfersTab";

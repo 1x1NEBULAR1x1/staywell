@@ -1,0 +1,173 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.booking_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    .section_title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+      border-bottom: 2px solid $border-color;
+      padding-bottom: $spacing-sm;
+    }
+  }
+
+  .empty_state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-xl;
+    text-align: center;
+
+    .empty_title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0 0 $spacing-md 0;
+    }
+
+    .empty_description {
+      font-size: $font-size-md;
+      color: $foreground-secondary;
+      margin: 0;
+      max-width: 400px;
+    }
+  }
+
+  .booking_card,
+  .event_card {
+    background: $background-light;
+    border-radius: $border-radius-md;
+    border: $border-normal;
+    overflow: hidden;
+
+    .booking_header,
+    .event_header {
+      padding: $spacing-lg;
+      border-bottom: $border-normal;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .apartment_info,
+      .event_info {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+
+        .apartment_image,
+        .event_image {
+          width: 60px;
+          height: 60px;
+          border-radius: $border-radius-md;
+          object-fit: cover;
+          flex-shrink: 0;
+        }
+
+        .apartment_details,
+        .event_details {
+
+          .apartment_name,
+          .event_name {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-semibold;
+            color: $foreground-main;
+            margin: 0 0 $spacing-xs 0;
+          }
+
+          .apartment_location,
+          .event_description {
+            font-size: $font-size-sm;
+            color: $foreground-secondary;
+            margin: 0;
+          }
+        }
+      }
+
+      .status_badge {
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius-sm;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        color: $foreground-white;
+
+        &.pending {
+          background-color: $yellow;
+        }
+
+        &.confirmed {
+          background-color: $primary-main;
+        }
+
+        &.completed {
+          background-color: $green;
+        }
+
+        &.cancelled {
+          background-color: $red;
+        }
+      }
+    }
+
+    .booking_details,
+    .event_details_grid {
+      padding: $spacing-lg;
+
+      .detail_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: $spacing-md;
+
+        .detail_item {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-xs;
+
+          .detail_label {
+            font-size: $font-size-sm;
+            color: $foreground-secondary;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: $font-weight-normal;
+          }
+
+          .detail_value {
+            font-size: $font-size-md;
+            color: $foreground-main;
+            font-weight: $font-weight-semibold;
+          }
+        }
+      }
+    }
+
+    .booking_message {
+      padding: $spacing-lg;
+      background: rgba($primary-light, 0.1);
+      border-top: $border-normal;
+
+      .message_title {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        margin: 0 0 $spacing-sm 0;
+      }
+
+      .message_text {
+        font-size: $font-size-md;
+        color: $foreground-main;
+        line-height: 1.5;
+        margin: 0;
+      }
+    }
+  }
+}

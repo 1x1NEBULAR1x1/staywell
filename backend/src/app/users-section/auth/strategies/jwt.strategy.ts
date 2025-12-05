@@ -25,16 +25,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly config: ConfigService,
   ) {
     super({
-      jwtFromRequest: (request: Request) => {
-        const req = request as RequestWithCookies;
+      jwtFromRequest: (request: RequestWithCookies) => {
         // Try to get token from cookies first
-        if (req?.cookies?.access_token) {
-          return req.cookies.access_token;
+        if (request?.cookies?.access_token) {
+          return request.cookies.access_token;
         }
         // Fallback to Authorization header
-        const authHeader = req?.headers?.authorization;
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-          return authHeader.substring(7);
+        const auth_header = request?.headers?.authorization;
+        if (auth_header && auth_header.startsWith('Bearer ')) {
+          return auth_header.substring(7);
         }
         return null;
       },

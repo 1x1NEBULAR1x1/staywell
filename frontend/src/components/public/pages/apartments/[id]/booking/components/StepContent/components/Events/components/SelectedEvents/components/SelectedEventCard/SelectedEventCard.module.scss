@@ -1,0 +1,277 @@
+@use "@/components/styles/_variables.scss" as *;
+@use "sass:color";
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $spacing-md;
+  background: $background-main;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-sm;
+  transition: all $transition-normal;
+  border: $border-normal;
+
+  .image_container {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    aspect-ratio: 1/1;
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .remove_button {
+      position: absolute;
+      top: $spacing-xs;
+      right: $spacing-xs;
+      background: $red;
+      color: $foreground-white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all $transition-normal;
+      box-shadow: $box-shadow-sm;
+
+      &:hover {
+        background: color.adjust($red, $lightness: -10%);
+        transform: scale(1.1);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  .content {
+    padding: $spacing-sm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    .info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+
+      .title {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        line-height: 1.3;
+        width: 100%;
+        overflow: hidden;
+        line-clamp: 1;
+        max-lines: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+      }
+
+      .datetime {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-xs;
+        font-size: $font-size-sm;
+        color: $foreground-main;
+
+        svg {
+          flex-shrink: 0;
+          color: $primary-main;
+        }
+      }
+    }
+
+    .controls {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: end;
+
+      .people_control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $spacing-xs;
+
+        .people_label {
+          font-size: $font-size-md;
+          font-weight: $font-weight-normal;
+          color: $foreground-main;
+          margin-right: $spacing-sm;
+        }
+
+        .counter {
+          display: flex;
+          align-items: center;
+          gap: $spacing-xs;
+
+          .counter_button {
+            background: $background-light;
+            border: $border-normal;
+            border-radius: $border-radius-sm;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all $transition-normal;
+
+            &:hover:not(:disabled) {
+              background: $primary-light;
+              border-color: $primary-main;
+            }
+
+            &:disabled {
+              background: $background-disabled;
+              border-color: $border-color-input;
+              cursor: not-allowed;
+              opacity: 0.5;
+            }
+
+            svg {
+              width: 18px;
+              height: 18px;
+              color: $foreground-main;
+            }
+          }
+
+          .count {
+            font-weight: $font-weight-semibold;
+            font-size: $font-size-md;
+            min-width: 20px;
+            text-align: center;
+            color: $foreground-main;
+          }
+        }
+      }
+
+      .price_info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: $spacing-xs;
+
+        .unit_price {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+        }
+
+        .total_price {
+          font-size: $font-size-md;
+          font-weight: $font-weight-bold;
+          color: $primary-main;
+        }
+      }
+    }
+  }
+
+}
+
+@media (max-width: 768px) {
+  .image_container {
+    height: 140px;
+
+    .price_badge {
+      padding: $spacing-xs $spacing-sm;
+      font-size: $font-size-sm;
+    }
+
+    .remove_button {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .content {
+    padding: $spacing-md;
+
+    .title {
+      font-size: $font-size-md;
+    }
+
+    .description {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .controls {
+    padding: 0 $spacing-md $spacing-md $spacing-md;
+
+    .people_control {
+      .counter {
+        .counter_button {
+          width: 24px;
+          height: 24px;
+        }
+
+        .count {
+          font-size: $font-size-sm;
+          min-width: 20px;
+        }
+      }
+    }
+
+    .price_info {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: $spacing-xs;
+
+      .unit_price {
+        font-size: $font-size-xs;
+      }
+
+      .total_price {
+        font-size: $font-size-md;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    border-radius: $border-radius-md;
+  }
+
+  .image_container {
+    height: 120px;
+  }
+
+  .content {
+    padding: $spacing-sm;
+
+    .title {
+      font-size: $font-size-md;
+      margin-bottom: $spacing-xs;
+    }
+
+    .datetime,
+    .guide {
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-xs;
+    }
+
+    .description {
+      margin: $spacing-xs 0;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .controls {
+    padding: 0 $spacing-sm $spacing-sm $spacing-sm;
+  }
+}

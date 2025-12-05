@@ -1,5 +1,3 @@
-
-
 export const formatMessageTime = (date: Date | string) => {
   const message_date = new Date(date);
   const now = new Date();

@@ -1,1 +1,1 @@
-export { SortDirectionSelect } from './SortDirectionSelect';
+export { SortDirectionSelect } from "./SortDirectionSelect";

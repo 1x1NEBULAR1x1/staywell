@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { SAFE_USER_SELECT } from '@shared/src';
 import { Prisma, User, Role, Transaction } from '@shared/src/database';
 import { TransactionsFiltersDto } from '../dto';
+import { EXTENDED_TRANSACTION_INCLUDE } from '@shared/src/types/transactions-section';
 
 /**
  * Service for retrieving lists of transactions with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters = (options: TransactionsFiltersDto) => {
     const {
@@ -64,7 +64,7 @@ export class ListService {
     const { items, total } = await this.prisma.findWithPagination<Transaction>({
       model: this.prisma.transaction,
       query_options,
-      include: { user: { select: SAFE_USER_SELECT }, card_detail: true, transfer_detail: true },
+      include: EXTENDED_TRANSACTION_INCLUDE,
     });
     const { take, skip } = query_options;
     return { items, total, skip, take };

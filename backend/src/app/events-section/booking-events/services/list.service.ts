@@ -3,14 +3,17 @@ import { PrismaService } from 'src/lib/prisma';
 import { BookingEvent, Prisma, User, Role } from '@shared/src/database';
 import { BookingEventsFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common';
-import { EXTENDED_BOOKING_EVENT_INCLUDE, ExtendedBookingEvent } from '@shared/src/types/events-section';
+import {
+  EXTENDED_BOOKING_EVENT_INCLUDE,
+  ExtendedBookingEvent,
+} from '@shared/src/types/events-section';
 
 /**
  * Service for retrieving lists of event bookings with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: BookingEventsFiltersDto) {
     const { booking_id, event_id, transaction_id, user_id } = options;
@@ -40,11 +43,12 @@ export class ListService {
       customFilters: this.customFilters,
     });
 
-    const { items, total } = await this.prisma.findWithPagination<ExtendedBookingEvent>({
-      model: this.prisma.bookingEvent,
-      query_options,
-      include: EXTENDED_BOOKING_EVENT_INCLUDE,
-    });
+    const { items, total } =
+      await this.prisma.findWithPagination<ExtendedBookingEvent>({
+        model: this.prisma.bookingEvent,
+        query_options,
+        include: EXTENDED_BOOKING_EVENT_INCLUDE,
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

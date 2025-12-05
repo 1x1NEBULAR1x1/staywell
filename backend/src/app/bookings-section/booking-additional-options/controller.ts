@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Param,
   Delete,
@@ -19,7 +18,6 @@ import {
 import { ApiTags, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard, Auth, AdminOnly } from 'src/lib/common';
 import {
-  CreateBookingAdditionalOptionDto,
   UpdateBookingAdditionalOptionDto,
   BookingAdditionalOptionsFiltersDto,
 } from './dto';
@@ -32,18 +30,6 @@ export class BookingAdditionalOptionsController {
     private readonly crudService: CrudService,
     private readonly listService: ListService,
   ) {}
-
-  @Post()
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Add additional option to booking' })
-  @ApiResponse({
-    status: 201,
-    description: 'Additional option has been successfully added to booking',
-    example: example_extended_booking_additional_option,
-  })
-  create(@Auth() user: User, @Body() data: CreateBookingAdditionalOptionDto) {
-    return this.crudService.create({ user, data });
-  }
 
   @Get()
   @ApiOperation({

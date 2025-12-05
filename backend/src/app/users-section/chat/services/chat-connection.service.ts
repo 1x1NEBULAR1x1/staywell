@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RedisService } from 'src/lib/redis';
 import { UserActivityService } from 'src/lib/common';
-import { Server } from 'socket.io';
 
 @Injectable()
 export class ChatConnectionService {

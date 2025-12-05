@@ -1,2 +1,1 @@
-export { BookingVariantsTab } from './BookingVariantsTab';
-
+export { BookingVariantsTab } from "./BookingVariantsTab";

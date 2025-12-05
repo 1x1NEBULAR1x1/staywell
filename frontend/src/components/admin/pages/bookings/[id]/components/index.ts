@@ -1,1 +1,1 @@
-export { BookingData } from './BookingData';
+export { BookingData } from "./BookingData";

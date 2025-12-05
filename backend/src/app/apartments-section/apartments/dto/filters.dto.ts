@@ -109,12 +109,4 @@ export class ApartmentsFiltersDto
     example: '2025-01-01',
   })
   end?: Date;
-
-  @ToBoolean({
-    required: false,
-    default: true,
-    description: 'Check availability for dates',
-    example: true,
-  })
-  check_availability?: boolean;
 }

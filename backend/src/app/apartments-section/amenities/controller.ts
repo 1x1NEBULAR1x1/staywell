@@ -20,7 +20,7 @@ export class AmenitiesController {
   constructor(
     private readonly crudService: CrudService,
     private readonly listService: ListService,
-  ) { }
+  ) {}
 
   @Post()
   @AdminOnly()

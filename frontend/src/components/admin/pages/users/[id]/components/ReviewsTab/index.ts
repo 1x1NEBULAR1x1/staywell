@@ -1,2 +1,1 @@
-export { ReviewsTab } from './ReviewsTab';
-
+export { ReviewsTab } from "./ReviewsTab";

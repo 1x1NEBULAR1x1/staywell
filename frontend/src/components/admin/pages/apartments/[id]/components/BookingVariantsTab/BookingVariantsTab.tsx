@@ -1,11 +1,15 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ExtendedApartment } from '@shared/src';
-import classes from './BookingVariantsTab.module.scss';
-import { BookingVariantFornModal, BookingVariantsList } from './components';
+import type { ExtendedApartment } from "@shared/src";
+import { useState } from "react";
+import classes from "./BookingVariantsTab.module.scss";
+import { BookingVariantFornModal, BookingVariantsList } from "./components";
 
-export const BookingVariantsTab = ({ apartment }: { apartment: ExtendedApartment }) => {
+export const BookingVariantsTab = ({
+  apartment,
+}: {
+  apartment: ExtendedApartment;
+}) => {
   const [isAddingVariant, setIsAddingVariant] = useState(false);
 
   return (
@@ -21,7 +25,7 @@ export const BookingVariantsTab = ({ apartment }: { apartment: ExtendedApartment
           className={classes.add_button}
           onClick={() => setIsAddingVariant(!isAddingVariant)}
         >
-          {isAddingVariant ? 'Cancel' : '+ Add Variant'}
+          {isAddingVariant ? "Cancel" : "+ Add Variant"}
         </button>
       </div>
 
@@ -30,9 +34,10 @@ export const BookingVariantsTab = ({ apartment }: { apartment: ExtendedApartment
       )}
 
       <div className={classes.variants_section}>
-        <BookingVariantsList booking_variants={apartment?.booking_variants || []} />
+        <BookingVariantsList
+          booking_variants={apartment?.booking_variants || []}
+        />
       </div>
     </div>
   );
 };
-

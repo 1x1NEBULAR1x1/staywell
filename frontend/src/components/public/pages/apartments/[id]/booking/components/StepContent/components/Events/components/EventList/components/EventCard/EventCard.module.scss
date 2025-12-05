@@ -1,0 +1,245 @@
+@use "@/components/styles/_variables.scss" as *;
+@use "sass:color";
+
+.card {
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  transition: all $transition-normal;
+  border: $border-normal;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $spacing-md;
+  max-height: 200px;
+
+  .image_container {
+    height: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .price_badge {
+      position: absolute;
+      top: $spacing-sm;
+      right: $spacing-sm;
+      background: $primary-main;
+      color: $foreground-white;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-md;
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-sm;
+      box-shadow: $box-shadow-sm;
+    }
+  }
+
+
+  .content {
+    padding: $spacing-sm;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+
+      .title {
+        margin: 0 0 $spacing-sm 0;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $foreground-main;
+        line-height: 1.3;
+        overflow: hidden;
+        line-clamp: 1;
+        max-lines: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+      }
+
+      .datetime,
+      .capacity {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-xs;
+        font-size: $font-size-md;
+        color: $foreground-secondary;
+
+        svg {
+          flex-shrink: 0;
+          color: $primary-main;
+        }
+
+        &>span {
+          display: flex;
+          flex-direction: column;
+
+
+          &>p {
+            font-size: $font-size-sm;
+            color: $foreground-main;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 100%;
+          }
+        }
+      }
+
+      .description {
+        margin: $spacing-sm 0;
+        font-size: $font-size-sm;
+        line-height: 1.5;
+        color: $foreground-secondary;
+        overflow: hidden;
+        line-clamp: 3;
+        max-lines: 3;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding: 0;
+
+      .capacity {
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+
+        &>svg {
+          flex-shrink: 0;
+          color: $primary-main;
+        }
+      }
+
+      .add_button {
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-sm;
+        padding: $spacing-sm $spacing-md;
+        background: $primary-main;
+        color: $foreground-white;
+        border: none;
+        border-radius: $border-radius-sm;
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-sm;
+        cursor: pointer;
+        transition: all $transition-normal;
+
+        &:hover:not(:disabled) {
+          background: color.adjust($primary-main, $lightness: -10%);
+          transform: translateY(-1px);
+        }
+
+        &:disabled {
+          background: $background-disabled;
+          color: $foreground-secondary;
+          cursor: not-allowed;
+          transform: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    height: 100px;
+  }
+
+  .image_container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .content {
+    padding: $spacing-sm;
+
+    .title {
+      font-size: $font-size-md;
+    }
+
+    .description {
+      font-size: $font-size-sm;
+    }
+
+    .controls {
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    height: 80px;
+    border-radius: $border-radius-md;
+  }
+
+  .image_container {
+    width: 80px;
+    height: 80px;
+
+    .price_badge {
+      padding: $spacing-xs $spacing-sm;
+      font-size: $font-size-sm;
+    }
+  }
+
+  .content {
+    padding: $spacing-sm;
+
+    .title {
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-xs;
+    }
+
+    .datetime,
+    .guide {
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-xs;
+    }
+
+    .description {
+      margin: $spacing-xs 0;
+      font-size: $font-size-sm;
+    }
+
+    .controls {
+      padding: 0;
+
+      .capacity {
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-xs;
+      }
+
+      .add_button {
+        padding: $spacing-xs $spacing-sm;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}

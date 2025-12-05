@@ -1,40 +1,66 @@
-'use client';
+"use client";
 
-import { ExtendedEvent, CruddableTypes } from '@shared/src';
-import { BaseFormModal } from '@/components/admin/common/Modal/BaseFormModal';
-import { useForm } from 'react-hook-form';
-import { ImageUploader, InputField, SelectField, TextareaField } from '@/components/admin/common/Form';
-import { formatToTitle } from '@/lib/api';
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useToast } from '@/hooks/common/useToast';
-import { isAxiosError } from 'axios';
+import type { CruddableTypes, ExtendedEvent } from "@shared/src";
+import { isAxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import {
+  ImageUploader,
+  InputField,
+  SelectField,
+  TextareaField,
+} from "@/components/admin/common/Form";
+import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { useToast } from "@/hooks/common/useToast";
+import { formatToTitle } from "@/lib/api";
 
 interface EventModalProps {
   initial_data?: ExtendedEvent;
   onClose?: () => void;
 }
 
-type FormData = CruddableTypes<'EVENT'>['create'] & {
-  image_type: 'file' | 'url';
-}
+type FormData = CruddableTypes<"EVENT">["create"] & {
+  image_type: "file" | "url";
+};
 
-export const EventModal = ({ initial_data, onClose = () => { } }: EventModalProps) => {
-  const mutation = initial_data ? useModel('EVENT').update(initial_data.id) : useModel('EVENT').create();
-  const { data, isLoading: is_guides_loading } = useModel('USER').get({ role: 'GUIDE', skip: 0, take: 1000 });
-  const query = initial_data ? useModel('EVENT').find(initial_data.id) : { refetch: () => { } };
+export const EventModal = ({
+  initial_data,
+  onClose = () => {},
+}: EventModalProps) => {
+  const mutation = initial_data
+    ? useModel("EVENT").update(initial_data.id)
+    : useModel("EVENT").create();
+  const { data, isLoading: is_guides_loading } = useModel("USER").get({
+    role: "GUIDE",
+    skip: 0,
+    take: 1000,
+  });
+  const query = initial_data
+    ? useModel("EVENT").find(initial_data.id)
+    : { refetch: () => {} };
   const toast = useToast();
   const form = useForm<FormData>({
-    defaultValues: { ...initial_data, image: initial_data?.image, image_type: 'file', guide_id: initial_data?.guide?.id },
+    defaultValues: {
+      ...initial_data,
+      image: initial_data?.image,
+      image_type: "file",
+      guide_id: initial_data?.guide?.id,
+    },
   });
 
   const handleSubmit = async (data: FormData) => {
     try {
       await mutation.mutateAsync(data);
       onClose();
-      toast.success(`Event ${initial_data ? 'updated' : 'created'} successfully`);
+      toast.success(
+        `Event ${initial_data ? "updated" : "created"} successfully`,
+      );
     } catch (error) {
-      isAxiosError(error) && toast.error(`Error during ${initial_data ? 'update' : 'creation'}: ${error.message}`);
-      console.error('Failed to update event:', error);
+      isAxiosError(error) &&
+        toast.error(
+          `Error during ${initial_data ? "update" : "creation"}: ${error.message}`,
+        );
+      console.error("Failed to update event:", error);
     } finally {
       query.refetch();
     }
@@ -44,12 +70,12 @@ export const EventModal = ({ initial_data, onClose = () => { } }: EventModalProp
     <BaseFormModal
       is_open
       onClose={onClose}
-      title={initial_data ? 'Edit Event' : 'Create Event'}
+      title={initial_data ? "Edit Event" : "Create Event"}
       form={form}
       onSubmit={handleSubmit}
       model="EVENT"
       id={initial_data?.id ?? undefined}
-      size='lg'
+      size="lg"
     >
       <ImageUploader
         is_loading={mutation.isPending}
@@ -95,7 +121,7 @@ export const EventModal = ({ initial_data, onClose = () => { } }: EventModalProp
       <InputField
         label="Capacity"
         name="capacity"
-        step='1'
+        step="1"
         required
         placeholder="Capacity"
         register={form.register}
@@ -125,11 +151,23 @@ export const EventModal = ({ initial_data, onClose = () => { } }: EventModalProp
       <SelectField
         label="Guide"
         name="guide_id"
-        placeholder={!is_guides_loading && data?.items.length === 0 ? "No guides found" : "Select a guide"}
+        placeholder={
+          !is_guides_loading && data?.items.length === 0
+            ? "No guides found"
+            : "Select a guide"
+        }
         is_loading={is_guides_loading}
         disabled={is_guides_loading || data?.items.length === 0}
         register={form.register}
-        options={data?.items.map((guide) => ({ label: formatToTitle(guide.first_name) + ' ' + formatToTitle(guide.last_name), value: guide.id })) || []}
+        options={
+          data?.items.map((guide) => ({
+            label:
+              formatToTitle(guide.first_name) +
+              " " +
+              formatToTitle(guide.last_name),
+            value: guide.id,
+          })) || []
+        }
         errors={form.formState.errors}
       />
     </BaseFormModal>

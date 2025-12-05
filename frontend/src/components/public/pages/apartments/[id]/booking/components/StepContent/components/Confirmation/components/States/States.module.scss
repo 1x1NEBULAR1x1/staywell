@@ -1,0 +1,30 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.loading,
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-3xl $spacing-md;
+  text-align: center;
+  color: $foreground-secondary;
+
+  svg {
+    margin-bottom: $spacing-md;
+    opacity: 0.6;
+  }
+
+  h3 {
+    margin: 0 0 $spacing-sm 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  p {
+    margin: 0;
+    font-size: $font-size-md;
+    line-height: 1.5;
+    max-width: $container-width-md;
+  }
+}

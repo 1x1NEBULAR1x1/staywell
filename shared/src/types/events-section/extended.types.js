@@ -8,4 +8,9 @@ exports.EXTENDED_BOOKING_EVENT_INCLUDE = {
 exports.EXTENDED_EVENT_INCLUDE = {
     images: true,
     guide: { select: users_section_1.SAFE_USER_SELECT },
+    booking_events: {
+        select: {
+            number_of_people: true,
+        },
+    },
 };

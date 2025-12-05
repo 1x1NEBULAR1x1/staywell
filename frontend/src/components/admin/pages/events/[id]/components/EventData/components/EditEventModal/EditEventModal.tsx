@@ -1,12 +1,16 @@
-'use client';
+"use client";
 
-import { ExtendedEvent, CruddableTypes } from '@shared/src';
-import { BaseFormModal } from '@/components/admin/common/Modal/BaseFormModal';
-import { useForm } from 'react-hook-form';
-import { ImageUploader, InputField, TextareaField } from '@/components/admin/common/Form';
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useToast } from '@/hooks/common/useToast';
-import { isAxiosError } from 'axios';
+import type { CruddableTypes, ExtendedEvent, UpdateEvent } from "@shared/src";
+import { isAxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import {
+  ImageUploader,
+  InputField,
+  TextareaField,
+} from "@/components/admin/common/Form";
+import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { useToast } from "@/hooks/common/useToast";
 
 interface EditEventModalProps {
   event: ExtendedEvent;
@@ -14,25 +18,51 @@ interface EditEventModalProps {
   refetch: () => void;
 }
 
-type FormData = CruddableTypes<'EVENT'>['update'] & {
-  image_type: 'file' | 'url';
-}
+type FormData = Omit<CruddableTypes<"EVENT">["update"], "start" | "end"> & {
+  start: string;
+  end: string;
+  image_type: "file" | "url";
+};
 
-export const EditEventModal = ({ event, onClose, refetch }: EditEventModalProps) => {
-  const update_mutation = useModel('EVENT').update(event.id);
+export const EditEventModal = ({
+  event,
+  onClose,
+  refetch,
+}: EditEventModalProps) => {
+  const update_mutation = useModel("EVENT").update(event.id);
   const toast = useToast();
   const form = useForm<FormData>({
-    defaultValues: { ...event, image: event.image || undefined, image_type: 'url' },
+    defaultValues: {
+      ...event,
+      start: new Date(event.start).toISOString().slice(0, 16),
+      end: new Date(event.end).toISOString().slice(0, 16),
+      image: event.image || undefined,
+      image_type: "url",
+      guide_id: event.guide?.id || undefined,
+      file: undefined,
+    },
   });
 
   const handleSubmit = async (data: FormData) => {
     try {
-      await update_mutation.mutateAsync(data);
+      const update: UpdateEvent = {
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        capacity: data.capacity,
+        start: new Date(data.start),
+        end: new Date(data.end),
+        guide_id: data.guide_id,
+        image: data.image,
+        file: data.file,
+      };
+      await update_mutation.mutateAsync(update);
       onClose();
-      toast.success('Event has been updated successfully');
+      toast.success("Event has been updated successfully");
     } catch (error) {
-      isAxiosError(error) && toast.error(`Error during update: ${error.message}`);
-      console.error('Failed to update event:', error);
+      isAxiosError(error) &&
+        toast.error(`Error during update: ${error.message}`);
+      console.error("Failed to update event:", error);
     } finally {
       refetch();
     }
@@ -56,7 +86,7 @@ export const EditEventModal = ({ event, onClose, refetch }: EditEventModalProps)
         watch={form.watch}
         label="Event Image"
         placeholder="https://example.com/event-image.jpg"
-        image_file_field_name="image"
+        image_file_field_name="file"
         image_url_field_name="image"
         image_type_field_name="image_type"
       />

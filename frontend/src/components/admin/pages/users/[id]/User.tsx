@@ -1,34 +1,50 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useUsers } from '@/hooks/admin/queries/users/useUsers';
+import { useState } from "react";
 import { AdminPage } from "@/components/admin/common/AdminPage";
-import { UserProfileSidebar, TransfersTab, BookingsTab, TransactionsTab, ReservationsTab, ReviewsTab, EventsTab, ProfileTab } from "./components";
-import classes from './User.module.scss';
+import { useUsers } from "@/hooks/admin/queries/users/useUsers";
+import {
+  BookingsTab,
+  EventsTab,
+  ProfileTab,
+  ReservationsTab,
+  ReviewsTab,
+  TransactionsTab,
+  TransfersTab,
+  UserProfileSidebar,
+} from "./components";
+import classes from "./User.module.scss";
 
-export type UserTab = 'profile' | 'bookings' | 'transactions' | 'reservations' | 'reviews' | 'events' | 'transfers';
+export type UserTab =
+  | "profile"
+  | "bookings"
+  | "transactions"
+  | "reservations"
+  | "reviews"
+  | "events"
+  | "transfers";
 
 export const User = ({ id }: { id: string }) => {
   const { data: user, refetch } = useUsers().find(id);
-  const [activeTab, setActiveTab] = useState<UserTab>('profile');
+  const [activeTab, setActiveTab] = useState<UserTab>("profile");
 
   if (!user) return null;
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'profile':
+      case "profile":
         return <ProfileTab user={user} refetch={refetch} />;
-      case 'bookings':
+      case "bookings":
         return <BookingsTab user_id={user.id} />;
-      case 'transactions':
+      case "transactions":
         return <TransactionsTab user_id={user.id} />;
-      case 'reservations':
+      case "reservations":
         return <ReservationsTab user_id={user.id} />;
-      case 'reviews':
+      case "reviews":
         return <ReviewsTab user_id={user.id} />;
-      case 'events':
+      case "events":
         return <EventsTab user_id={user.id} />;
-      case 'transfers':
+      case "transfers":
         return <TransfersTab user_id={user.id} />;
       default:
         return null;
@@ -43,9 +59,7 @@ export const User = ({ id }: { id: string }) => {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
-        <div className={classes.content}>
-          {renderTabContent()}
-        </div>
+        <div className={classes.content}>{renderTabContent()}</div>
       </div>
     </AdminPage>
   );

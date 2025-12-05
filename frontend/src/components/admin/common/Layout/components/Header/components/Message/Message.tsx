@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import classes from './Message.module.scss';
+import classes from "./Message.module.scss";
 
 export const Message = () => {
   const message = "Hello, World!";
@@ -11,5 +11,5 @@ export const Message = () => {
       <span className={classes.message}>{message}</span>
       <span className={classes.sub_message}>{sub_message}</span>
     </div>
-  )
+  );
 };

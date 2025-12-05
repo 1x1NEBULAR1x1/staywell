@@ -1,36 +1,43 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { ExtendedApartment, ExtendedAmenity } from '@shared/src';
-import classes from './AmenitiesTab.module.scss';
-import { Amenity, AmenityModal } from './components';
-import { Plus, Eye, EyeOff } from 'lucide-react';
-import Image from 'next/image';
-import { usePId } from '@/hooks/common/useId';
+import type { ExtendedAmenity, ExtendedApartment } from "@shared/src";
+import { Eye, EyeOff, Plus } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { usePId } from "@/hooks/common/useId";
+import classes from "./AmenitiesTab.module.scss";
+import { Amenity, AmenityModal } from "./components";
 
-export const AmenitiesTab = ({ apartment }: { apartment: ExtendedApartment }) => {
+export const AmenitiesTab = ({
+  apartment,
+}: {
+  apartment: ExtendedApartment;
+}) => {
   const id = usePId();
-  const { refetch } = useModel('APARTMENT').find(id);
+  const { refetch } = useModel("APARTMENT").find(id);
   const [show_excluded, setShowExcluded] = useState(false);
   const [is_add_amenity_modal_open, setIsAddAmenityModalOpen] = useState(false);
-  const [editing_amenity, setEditingAmenity] = useState<ExtendedAmenity | undefined>(undefined);
+  const [editing_amenity, setEditingAmenity] = useState<
+    ExtendedAmenity | undefined
+  >(undefined);
   const [show_available_amenities, setShowAvailableAmenities] = useState(true);
 
-  const { data: amenities } = useModel('AMENITY').get({
+  const { data: amenities } = useModel("AMENITY").get({
     skip: 0,
     take: 1000,
-    is_excluded: show_excluded
+    is_excluded: show_excluded,
   });
 
-  const create_mutation = useModel('APARTMENT_AMENITY').create();
+  const create_mutation = useModel("APARTMENT_AMENITY").create();
 
-  const available_amenities = amenities?.items.filter(
-    amenity => !apartment.apartment_amenities.some(
-      apartmentAmenity => apartmentAmenity.amenity_id === amenity.id
-    )
-  ) || [];
+  const available_amenities =
+    amenities?.items.filter(
+      (amenity) =>
+        !apartment.apartment_amenities.some(
+          (apartmentAmenity) => apartmentAmenity.amenity_id === amenity.id,
+        ),
+    ) || [];
 
   const handleAddAmenity = async (amenity: ExtendedAmenity) => {
     try {
@@ -40,7 +47,7 @@ export const AmenitiesTab = ({ apartment }: { apartment: ExtendedApartment }) =>
       });
       refetch();
     } catch (error) {
-      console.error('Failed to add amenity:', error);
+      console.error("Failed to add amenity:", error);
     }
   };
 
@@ -57,7 +64,10 @@ export const AmenitiesTab = ({ apartment }: { apartment: ExtendedApartment }) =>
 
         {apartment.apartment_amenities.length === 0 ? (
           <div className={classes.empty_state}>
-            <p>No amenities added yet. Add some from the available amenities below.</p>
+            <p>
+              No amenities added yet. Add some from the available amenities
+              below.
+            </p>
           </div>
         ) : (
           <div className={classes.amenities_grid}>
@@ -80,16 +90,18 @@ export const AmenitiesTab = ({ apartment }: { apartment: ExtendedApartment }) =>
           <div className={classes.header_actions}>
             <button
               className={classes.toggle_button}
-              onClick={() => setShowAvailableAmenities(!show_available_amenities)}
+              onClick={() =>
+                setShowAvailableAmenities(!show_available_amenities)
+              }
             >
-              {show_available_amenities ? 'Hide Available' : 'Show Available'}
+              {show_available_amenities ? "Hide Available" : "Show Available"}
             </button>
             <button
               className={classes.filter_button}
               onClick={() => setShowExcluded(!show_excluded)}
             >
               {show_excluded ? <EyeOff size={18} /> : <Eye size={18} />}
-              {show_excluded ? 'Hide Excluded' : 'Show Excluded'}
+              {show_excluded ? "Hide Excluded" : "Show Excluded"}
             </button>
             <button
               className={classes.add_button}
@@ -107,8 +119,8 @@ export const AmenitiesTab = ({ apartment }: { apartment: ExtendedApartment }) =>
               <div className={classes.empty_state}>
                 <p>
                   {show_excluded
-                    ? 'No excluded amenities available'
-                    : 'All amenities have been added to this apartment'}
+                    ? "No excluded amenities available"
+                    : "All amenities have been added to this apartment"}
                 </p>
               </div>
             ) : (
@@ -129,7 +141,9 @@ export const AmenitiesTab = ({ apartment }: { apartment: ExtendedApartment }) =>
                       />
                     </div>
                     <div className={classes.amenity_info}>
-                      <span className={classes.amenity_name}>{amenity.name}</span>
+                      <span className={classes.amenity_name}>
+                        {amenity.name}
+                      </span>
                       {amenity.description && (
                         <span className={classes.amenity_description}>
                           {amenity.description}
@@ -161,4 +175,3 @@ export const AmenitiesTab = ({ apartment }: { apartment: ExtendedApartment }) =>
     </div>
   );
 };
-

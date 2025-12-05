@@ -1,21 +1,26 @@
+import {
+  BOOKING_STEPS,
+  type BookingStep,
+} from "@/components/public/pages/apartments/[id]/booking/config";
 import { useBookingStore } from "@/stores/public/pages/booking/useBookingStore";
-import { BOOKING_STEPS, BookingStep } from "@/components/public/pages/apartment/[id]/booking/Booking";
-
-
 
 export const useBookingState = () => {
   const { selected_dates, selected_booking_variant_id } = useBookingStore();
 
   const canProceedToNextStep = (action: BookingStep): boolean => {
     switch (action) {
-      case 'dates':
-        return !!(selected_dates.start && selected_dates.end && selected_booking_variant_id);
-      case 'events':
+      case "dates":
+        return !!(
+          selected_dates.start &&
+          selected_dates.end &&
+          selected_booking_variant_id
+        );
+      case "events":
         return true;
-      case 'payment':
+      case "additional_options":
         return true;
-      case 'confirmation':
-        return true;
+      case "confirmation":
+        return false;
       default:
         return false;
     }

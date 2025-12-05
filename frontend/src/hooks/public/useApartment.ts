@@ -1,8 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { GetApi } from '@/lib/api';
-import { ExtendedApartment } from '@shared/src';
+import { useQuery } from "@tanstack/react-query";
+import { GetApi } from "@/lib/api";
 
-const apartmentsApi = new GetApi('APARTMENT');
+const apartmentsApi = new GetApi("APARTMENT");
 
 /**
  * Хук для получения одной квартиры по ID
@@ -14,10 +13,10 @@ export const useApartment = (
   id: string,
   options?: {
     enabled?: boolean;
-  }
+  },
 ) => {
   return useQuery({
-    queryKey: ['apartment', id],
+    queryKey: ["apartment", id],
     queryFn: () => apartmentsApi.find(id),
     select: (data) => data.data,
     enabled: options?.enabled !== false,

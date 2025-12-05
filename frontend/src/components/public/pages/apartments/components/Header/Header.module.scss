@@ -1,0 +1,35 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  padding: $spacing-4xl 0;
+  color: $foreground-white;
+
+  .title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-3xl;
+    }
+  }
+
+  .subtitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-light;
+    opacity: 0.9;
+    margin: 0;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-md;
+    }
+  }
+}

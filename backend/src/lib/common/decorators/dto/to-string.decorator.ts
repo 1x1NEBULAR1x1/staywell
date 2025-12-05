@@ -6,7 +6,7 @@ import {
   ValidationOptions,
   MinLength,
   MaxLength,
-  IsStrongPassword,
+  //IsStrongPassword,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -34,6 +34,7 @@ export function ToString(
     description,
     example,
     matches,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     is_strong_password,
   } = options;
 
@@ -59,14 +60,14 @@ export function ToString(
     if (min !== undefined) MinLength(min)(target, propertyKey);
     if (max !== undefined) MaxLength(max)(target, propertyKey);
     if (matches) Matches(matches)(target, propertyKey);
-    if (false && is_strong_password)
-      // TODO fix for P@SSword! matches
-      IsStrongPassword({
-        minLength: 8,
-        minUppercase: 1,
-        minLowercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })(target, propertyKey);
+    // if (false && is_strong_password)
+    //   // TODO fix for P@SSword! matches
+    //   IsStrongPassword({
+    //     minLength: 8,
+    //     minUppercase: 1,
+    //     minLowercase: 1,
+    //     minNumbers: 1,
+    //     minSymbols: 1,
+    //   })(target, propertyKey);
   };
 }

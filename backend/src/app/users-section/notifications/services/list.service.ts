@@ -5,13 +5,13 @@ import { BaseListResult } from '@shared/src/common';
 import { Injectable } from '@nestjs/common';
 import { NotificationsFilters } from '@shared/src/types/users-section/dto.types';
 
-
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-
-  customFilters = (options: NotificationsFiltersDto): Prisma.NotificationWhereInput => {
+  customFilters = (
+    options: NotificationsFiltersDto,
+  ): Prisma.NotificationWhereInput => {
     const { is_read, object_id, action, type } = options;
     const filters: Prisma.NotificationWhereInput = {};
     if (is_read !== undefined) filters.is_read = is_read;
@@ -55,24 +55,23 @@ export class ListService {
         user_id_condition = { user_id: filter_user_id };
       } else {
         user_id_condition = {
-          OR: [
-            { user_id: user.id },
-            { user_id: null }
-          ]
+          OR: [{ user_id: user.id }, { user_id: null }],
         };
       }
     }
     // Merge conditions
-    const { items, total } = await this.prisma.findWithPagination<Notification>({
-      model: this.prisma.notification,
-      query_options: {
-        ...query_options,
-        where: {
-          ...query_options.where,
-          ...user_id_condition
-        }
+    const { items, total } = await this.prisma.findWithPagination<Notification>(
+      {
+        model: this.prisma.notification,
+        query_options: {
+          ...query_options,
+          where: {
+            ...query_options.where,
+            ...user_id_condition,
+          },
+        },
       },
-    });
+    );
 
     const { take, skip } = query_options;
     return { items, total, skip, take };

@@ -1,12 +1,11 @@
 "use client";
 
+import type { Message } from "@shared/src/database";
 import { useCallback } from "react";
 import type { Socket } from "socket.io-client";
-import { useChatStore } from "./useChatStore";
 import { useAccount } from "@/hooks/common/useAccount";
-import type { Message } from "@shared/src/database";
-import type { UserWithoutPassword } from "@shared/src";
 import type { ChatWithLastMessage } from "./types";
+import { useChatStore } from "./useChatStore";
 
 interface UseMessageActionsOptions {
   socket: Socket | null;
@@ -14,7 +13,11 @@ interface UseMessageActionsOptions {
 }
 
 interface UseMessageActionsReturn {
-  sendMessage: (receiver_id: string, message: string, booking_id?: string) => void;
+  sendMessage: (
+    receiver_id: string,
+    message: string,
+    booking_id?: string,
+  ) => void;
   editMessage: (message_id: string, new_message: string) => void;
   deleteMessage: (message_id: string) => void;
   markMessagesAsRead: (chat_partner_id: string) => void;
@@ -34,7 +37,7 @@ export const useMessageActions = (
 
       return {
         id: tempId,
-        sender_id: user!.id,
+        sender_id: user?.id,
         receiver_id,
         message,
         booking_id: booking_id || null,
@@ -58,7 +61,7 @@ export const useMessageActions = (
             ...chat,
             last_message: {
               id: `temp-${Date.now()}`,
-              sender_id: user!.id,
+              sender_id: user?.id,
               receiver_id,
               message: `you: ${message}`,
               booking_id: null,
@@ -87,11 +90,17 @@ export const useMessageActions = (
       if (!socket || !is_connected || !user) return;
 
       // Create optimistic message and add to messages list
-      const optimisticMessage = createOptimisticMessage(receiver_id, message, booking_id);
-      chatStore.setMessages([
-        ...chatStore.messages,
-        optimisticMessage,
-      ].sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()));
+      const optimisticMessage = createOptimisticMessage(
+        receiver_id,
+        message,
+        booking_id,
+      );
+      chatStore.setMessages(
+        [...chatStore.messages, optimisticMessage].sort(
+          (a, b) =>
+            new Date(a.created).getTime() - new Date(b.created).getTime(),
+        ),
+      );
 
       // Update chat sidebar with "you: {message}"
       updateChatWithOptimisticMessage(receiver_id, message);
@@ -99,7 +108,14 @@ export const useMessageActions = (
       // Send message to server
       socket.emit("send_message", { receiver_id, message, booking_id });
     },
-    [socket, is_connected, user, chatStore, createOptimisticMessage, updateChatWithOptimisticMessage],
+    [
+      socket,
+      is_connected,
+      user,
+      chatStore,
+      createOptimisticMessage,
+      updateChatWithOptimisticMessage,
+    ],
   );
 
   const editMessage = useCallback(

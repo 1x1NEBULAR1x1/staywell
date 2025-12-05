@@ -10,7 +10,10 @@ export const Auth = createParamDecorator(
   (
     data: keyof UserWithoutPassword | undefined,
     ctx: ExecutionContext,
-  ): UserWithoutPassword | UserWithoutPassword[keyof UserWithoutPassword] | undefined => {
+  ):
+    | UserWithoutPassword
+    | UserWithoutPassword[keyof UserWithoutPassword]
+    | undefined => {
     const request = ctx
       .switchToHttp()
       .getRequest<{ user?: AuthenticatedRequest }>();

@@ -1,1 +1,1 @@
-export { InlineProfileForm } from './InlineProfileForm';
+export { InlineProfileForm } from "./InlineProfileForm";

@@ -1,4 +1,1 @@
-export * from './BedTypes';
-
-
-
+export * from "./BedTypes";

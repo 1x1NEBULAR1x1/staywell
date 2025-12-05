@@ -85,7 +85,11 @@ export class DatesConfigService {
   /**
    * Helper method to add a date range to the occupied dates set
    */
-  private addDateRangeToSet(dateSet: Set<string>, start: Date, end: Date): void {
+  private addDateRangeToSet(
+    dateSet: Set<string>,
+    start: Date,
+    end: Date,
+  ): void {
     const current = new Date(start);
     const endDate = new Date(end);
 
@@ -96,6 +100,3 @@ export class DatesConfigService {
     }
   }
 }
-
-
-

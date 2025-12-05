@@ -1,14 +1,13 @@
 "use client";
 
 import clsx from "clsx";
-import classes from "./Sidebar.module.scss";
-import { useAccount } from "@/hooks/common/useAccount";
 import Image from "next/image";
 import default_avatar from "@/../public/common/default-avatar.png";
-import { profile_tabs_config } from "../../config";
-import { useProfileNavigation } from "./useProfileNavigation";
+import { useAccount } from "@/hooks/common/useAccount";
 import { getImageUrl } from "@/lib/api";
-
+import { profile_tabs_config } from "../../config";
+import classes from "./Sidebar.module.scss";
+import { useProfileNavigation } from "./useProfileNavigation";
 
 export const Sidebar = () => {
   const { user } = useAccount();
@@ -38,7 +37,9 @@ export const Sidebar = () => {
           return (
             <button
               key={tab.href}
-              className={clsx(classes.nav_item, { [classes.nav_item_active]: isActiveTab(tab) })}
+              className={clsx(classes.nav_item, {
+                [classes.nav_item_active]: isActiveTab(tab),
+              })}
               onClick={() => handleNavigate(tab)}
             >
               <tab.icon size={24} className={classes.nav_item_icon} />

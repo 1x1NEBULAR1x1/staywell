@@ -1,2 +1,1 @@
-export { BedsTab } from './BedsTab';
-
+export { BedsTab } from "./BedsTab";

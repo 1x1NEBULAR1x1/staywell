@@ -1,2 +1,2 @@
-export { Filters } from './Filters';
-export type { FiltersConfig } from './types/filters.types';
+export { Filters } from "./Filters";
+export type { FiltersConfig } from "./types/filters.types";

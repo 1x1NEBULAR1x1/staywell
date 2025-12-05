@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { ExtendedEvent } from '@shared/src';
-import { EventTab } from '../../Event';
-import classes from './EventSidebar.module.scss';
-import { Calendar, Star, Image as ImageIcon, Users } from 'lucide-react';
-import Image from 'next/image';
+import type { ExtendedEvent } from "@shared/src";
+import { Calendar, Image as ImageIcon, Users } from "lucide-react";
+import Image from "next/image";
+import type { EventTab } from "../../Event";
+import classes from "./EventSidebar.module.scss";
 
 interface EventSidebarProps {
   event: ExtendedEvent;
@@ -13,23 +13,27 @@ interface EventSidebarProps {
 }
 
 const navItems = [
-  { id: 'general', label: 'General Info', icon: Calendar },
-  { id: 'gallery', label: 'Gallery', icon: ImageIcon },
-  { id: 'bookings', label: 'Bookings', icon: Users },
+  { id: "general", label: "General Info", icon: Calendar },
+  { id: "gallery", label: "Gallery", icon: ImageIcon },
+  { id: "bookings", label: "Bookings", icon: Users },
 ] as const;
 
-
-export const EventSidebar = ({ event, activeTab, setActiveTab }: EventSidebarProps) => {
-  const mainImage = event.images?.[0]?.image || event.image || '/common/no-image.jpeg';
+export const EventSidebar = ({
+  event,
+  activeTab,
+  setActiveTab,
+}: EventSidebarProps) => {
+  const mainImage =
+    event.images?.[0]?.image || event.image || "/common/no-image.jpeg";
   const bookingsCount = 0; // Will be calculated from booking_events when needed
   const isUpcoming = new Date(event.start) > new Date();
   const isPast = new Date(event.end) < new Date();
   const isActive = !isUpcoming && !isPast;
 
   const getStatusLabel = () => {
-    if (isPast) return 'Completed';
-    if (isActive) return 'Active';
-    return 'Upcoming';
+    if (isPast) return "Completed";
+    if (isActive) return "Active";
+    return "Upcoming";
   };
 
   const getStatusClass = () => {
@@ -44,7 +48,7 @@ export const EventSidebar = ({ event, activeTab, setActiveTab }: EventSidebarPro
         <div className={classes.image_container}>
           <Image
             src={mainImage}
-            alt={event.name || 'Event'}
+            alt={event.name || "Event"}
             width={260}
             height={180}
             className={classes.main_image}
@@ -57,7 +61,8 @@ export const EventSidebar = ({ event, activeTab, setActiveTab }: EventSidebarPro
         <div className={classes.info_content}>
           <h2 className={classes.event_name}>{event.name}</h2>
           <p className={classes.event_date}>
-            {new Date(event.start).toLocaleDateString()} - {new Date(event.end).toLocaleDateString()}
+            {new Date(event.start).toLocaleDateString()} -{" "}
+            {new Date(event.end).toLocaleDateString()}
           </p>
 
           <div className={classes.stats_grid}>
@@ -74,7 +79,9 @@ export const EventSidebar = ({ event, activeTab, setActiveTab }: EventSidebarPro
               <span className={classes.stat_label}>Bookings</span>
             </div>
             <div className={classes.stat_item}>
-              <span className={classes.stat_value}>{event.images?.length || 0}</span>
+              <span className={classes.stat_value}>
+                {event.images?.length || 0}
+              </span>
               <span className={classes.stat_label}>Images</span>
             </div>
           </div>
@@ -96,7 +103,7 @@ export const EventSidebar = ({ event, activeTab, setActiveTab }: EventSidebarPro
           return (
             <button
               key={item.id}
-              className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ''}`}
+              className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ""}`}
               onClick={() => setActiveTab(item.id)}
             >
               <Icon className={classes.nav_icon} />
@@ -108,4 +115,3 @@ export const EventSidebar = ({ event, activeTab, setActiveTab }: EventSidebarPro
     </div>
   );
 };
-

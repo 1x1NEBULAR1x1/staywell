@@ -28,14 +28,15 @@ export function ToUUID(
       required,
     })(target, propertyKey);
 
-    // Transform value to trimmed string
-    Transform(({ value }: { value: unknown }) => String(value).trim())(
-      target,
-      propertyKey,
-    );
-
-    if (!required) IsOptional()(target, propertyKey);
-
-    IsUUID(version, validationOptions)(target, propertyKey);
+    if (required) {
+      // Transform value to trimmed string
+      Transform(({ value }: { value: unknown }) => String(value).trim())(
+        target,
+        propertyKey,
+      );
+      IsUUID(version, validationOptions)(target, propertyKey);
+    } else {
+      IsOptional()(target, propertyKey);
+    }
   };
 }

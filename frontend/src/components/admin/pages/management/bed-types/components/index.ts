@@ -1,2 +1,2 @@
-export { BedTypeCard, BedTypeCardShimmer } from './BedTypeCard';
-export { FiltersMenu } from './FiltersMenu';
+export { BedTypeCard, BedTypeCardShimmer } from "./BedTypeCard";
+export { FiltersMenu } from "./FiltersMenu";

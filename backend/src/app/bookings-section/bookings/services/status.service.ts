@@ -5,7 +5,10 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
 import { BookingStatus } from '@shared/src/database';
-import { ExtendedBooking } from '@shared/src/types/bookings-section';
+import {
+  EXTENDED_BOOKING_INCLUDE,
+  ExtendedBooking,
+} from '@shared/src/types/bookings-section';
 
 @Injectable()
 export class StatusService {
@@ -33,16 +36,11 @@ export class StatusService {
         'Cannot confirm booking with unsuccessful transaction',
       );
     // Update booking status
-    return (await this.prisma.booking.update({
+    return await this.prisma.booking.update({
       where: { id },
       data: { status: BookingStatus.CONFIRMED },
-      include: {
-        user: true,
-        booking_variant: { include: { apartment: true } },
-        transaction: true,
-        booking_additional_options: true,
-      },
-    })) as unknown as ExtendedBooking; //TODO TYPE ERROR HERE
+      include: EXTENDED_BOOKING_INCLUDE,
+    });
   }
 
   /**
@@ -65,16 +63,11 @@ export class StatusService {
         'Cannot complete booking before its end date',
       );
     // Update booking status
-    return (await this.prisma.booking.update({
+    return await this.prisma.booking.update({
       where: { id },
       data: { status: BookingStatus.COMPLETED },
-      include: {
-        user: true,
-        booking_variant: { include: { apartment: true } },
-        transaction: true,
-        booking_additional_options: true,
-      },
-    })) as unknown as ExtendedBooking; //TODO TYPE ERROR HERE
+      include: EXTENDED_BOOKING_INCLUDE,
+    });
   }
 
   /**
@@ -94,44 +87,11 @@ export class StatusService {
       throw new BadRequestException('Cannot cancel a completed booking');
 
     // Update booking status
-    return (await this.prisma.booking.update({
+    return await this.prisma.booking.update({
       where: { id },
       data: { status: BookingStatus.CANCELLED },
-      include: {
-        user: true,
-        booking_variant: { include: { apartment: true } },
-        transaction: true,
-        booking_additional_options: true,
-      },
-    })) as unknown as ExtendedBooking; //TODO TYPE ERROR HERE
-  }
-
-  /**
-   * Updates booking status
-   * @param id Booking ID
-   * @param status New booking status
-   * @returns Updated booking with relations
-   */
-  async updateStatus(
-    id: string,
-    status: BookingStatus,
-  ): Promise<ExtendedBooking> {
-    const booking = await this.prisma.booking.findUnique({ where: { id } });
-
-    if (!booking) throw new NotFoundException('Booking not found');
-    // Validate status transition
-    this.validateStatusTransition(booking.status, status);
-    // Update booking status
-    return (await this.prisma.booking.update({
-      where: { id },
-      data: { status },
-      include: {
-        user: true,
-        booking_variant: { include: { apartment: true } },
-        transaction: true,
-        booking_additional_options: true,
-      },
-    })) as unknown as ExtendedBooking; //TODO TYPE ERROR HERE
+      include: EXTENDED_BOOKING_INCLUDE,
+    });
   }
 
   /**

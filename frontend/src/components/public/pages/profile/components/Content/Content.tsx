@@ -1,21 +1,22 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import classes from "./Content.module.scss";
 import {
-  ChatTab,
-  ProfileInfoTab,
   CardsTab,
-  SettingsTab,
+  ChatTab,
   NotificationTab,
-  TransfersTab
+  ProfileInfoTab,
+  SettingsTab,
+  TransfersTab,
 } from "./components";
-import { usePathname } from "next/navigation";
 
 export const Content = () => {
   const pathname = usePathname();
 
   // Извлекаем активную вкладку из пути
-  const active_tab = pathname === '/profile' ? '' : pathname.replace('/profile/', '');
+  const active_tab =
+    pathname === "/profile" ? "" : pathname.replace("/profile/", "");
 
   const renderContent = () => {
     switch (active_tab) {

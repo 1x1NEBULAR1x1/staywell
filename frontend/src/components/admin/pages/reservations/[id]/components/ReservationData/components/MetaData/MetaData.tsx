@@ -1,16 +1,15 @@
-'use client';
+"use client";
 
-import { useModel } from '@/hooks/admin/queries';
-import classes from './MetaData.module.scss';
-import { Calendar, Clock, Users, CreditCard } from 'lucide-react';
-import { usePId } from '@/hooks/common/useId';
-
+import { Calendar, Clock, CreditCard, Users } from "lucide-react";
+import { useModel } from "@/hooks/admin/queries";
+import { usePId } from "@/hooks/common/useId";
+import classes from "./MetaData.module.scss";
 
 const formatDate = (date: Date | string) => {
-  return new Date(date).toLocaleDateString('ru-RU', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
+  return new Date(date).toLocaleDateString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 };
 
@@ -23,11 +22,11 @@ const calculateNights = (start: Date | string, end: Date | string) => {
 };
 
 const formatNights = (nights: number) => {
-  return nights === 1 ? '1 night' : `${nights} nights`;
+  return nights === 1 ? "1 night" : `${nights} nights`;
 };
 
 export const MetaData = () => {
-  const { data: reservation } = useModel('RESERVATION').find(usePId());
+  const { data: reservation } = useModel("RESERVATION").find(usePId());
   if (!reservation) return null;
   const nights = calculateNights(reservation.start, reservation.end);
 
@@ -40,9 +39,7 @@ export const MetaData = () => {
             <span className={classes.date_range}>
               {formatDate(reservation.start)} - {formatDate(reservation.end)}
             </span>
-            <span className={classes.nights}>
-              {formatNights(nights)}
-            </span>
+            <span className={classes.nights}>{formatNights(nights)}</span>
           </div>
         </div>
 

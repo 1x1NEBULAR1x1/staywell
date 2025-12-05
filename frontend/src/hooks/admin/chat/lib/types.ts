@@ -1,5 +1,5 @@
+import type { UserWithoutPassword } from "@shared/src";
 import type { Message } from "@shared/src/database";
-import { UserWithoutPassword } from "@shared/src";
 
 export interface ChatWithLastMessage {
   user: UserWithoutPassword;
@@ -22,7 +22,10 @@ export interface UseWebSocketChatOptions {
     chat_partner_id: string;
     is_typing: boolean;
   }) => void;
-  onUserOnlineStatus?: (data: { user_id: string; last_seen: Date | null }) => void;
+  onUserOnlineStatus?: (data: {
+    user_id: string;
+    last_seen: Date | null;
+  }) => void;
 }
 
 export interface UseWebSocketChatReturn {
@@ -55,7 +58,6 @@ export interface UseWebSocketChatReturn {
   getHistory: (chat_partner_id: string, skip?: number, take?: number) => void;
   getChats: (skip?: number, take?: number) => void;
   chats: ChatWithLastMessage[];
-
 
   // Typing
   startTyping: (chat_partner_id: string) => void;

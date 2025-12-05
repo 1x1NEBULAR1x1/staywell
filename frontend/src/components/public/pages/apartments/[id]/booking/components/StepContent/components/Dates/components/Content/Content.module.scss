@@ -1,0 +1,18 @@
+@use "@/components/styles/_variables.scss" as *;
+
+
+.content {
+  width: $container-width-lg;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 auto;
+  gap: $spacing-xl;
+
+
+  .selector {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+}

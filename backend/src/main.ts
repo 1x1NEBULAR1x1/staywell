@@ -5,13 +5,18 @@ import cookieParser from 'cookie-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AuthenticatedIoAdapter } from './lib/websocket/adapter';
+import { ConfigService } from '@nestjs/config';
 // import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    rawBody: true,
+  });
+
+  const configService = app.get(ConfigService);
 
   // WebSocket adapter
-  app.useWebSocketAdapter(new AuthenticatedIoAdapter(app));
+  app.useWebSocketAdapter(new AuthenticatedIoAdapter(app, configService));
 
   // Trust proxy configuration for correct IP address retrieval
   app.getHttpAdapter().getInstance().set('trust proxy', true);
@@ -29,7 +34,7 @@ async function bootstrap(): Promise<void> {
 
   // CORS configuration
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: configService.getOrThrow('FRONTEND_URL'),
     credentials: true,
   });
   app.setGlobalPrefix('api');

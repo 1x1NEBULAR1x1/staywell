@@ -18,7 +18,8 @@ exports.example_user = {
     email_verified: true,
     phone_verified: true,
     phone_number: "+12345678901",
-    role: database_1.Role.USER
+    role: database_1.Role.USER,
+    email_notifications: true,
 };
 exports.example_users_list_result = {
     items: [exports.example_user],

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import { Camera, X, Upload } from 'lucide-react';
-import classes from './ImagePreview.module.scss';
-import Image from 'next/image';
-import { getImageUrl } from '@/lib/api';
+import { Camera, Upload, X } from "lucide-react";
+import Image from "next/image";
+import { useRef, useState } from "react";
 import default_avatar from "@/../public/common/default-avatar.png";
+import { getImageUrl } from "@/lib/api";
+import classes from "./ImagePreview.module.scss";
 
 interface ImagePreviewProps {
   imageFile?: File | null;
@@ -13,7 +13,11 @@ interface ImagePreviewProps {
   onFileSelect: (file: File | null) => void;
 }
 
-export const ImagePreview = ({ imageFile, currentImage, onFileSelect }: ImagePreviewProps) => {
+export const ImagePreview = ({
+  imageFile,
+  currentImage,
+  onFileSelect,
+}: ImagePreviewProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -22,14 +26,14 @@ export const ImagePreview = ({ imageFile, currentImage, onFileSelect }: ImagePre
     const file = event.target.files?.[0];
     if (file) {
       // Validate file type
-      if (!file.type.startsWith('image/')) {
-        alert('Please select an image file');
+      if (!file.type.startsWith("image/")) {
+        alert("Please select an image file");
         return;
       }
 
       // Validate file size (5MB max)
       if (file.size > 5 * 1024 * 1024) {
-        alert('File size must be less than 5MB');
+        alert("File size must be less than 5MB");
         return;
       }
 
@@ -47,7 +51,7 @@ export const ImagePreview = ({ imageFile, currentImage, onFileSelect }: ImagePre
     setPreviewUrl(null);
     onFileSelect(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -56,7 +60,10 @@ export const ImagePreview = ({ imageFile, currentImage, onFileSelect }: ImagePre
   };
 
   // Determine which image to show
-  const displayImage = previewUrl || (imageFile ? URL.createObjectURL(imageFile) : null) || getImageUrl(currentImage);
+  const displayImage =
+    previewUrl ||
+    (imageFile ? URL.createObjectURL(imageFile) : null) ||
+    getImageUrl(currentImage);
 
   return (
     <div className={classes.image_preview}>

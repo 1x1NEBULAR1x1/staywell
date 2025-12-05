@@ -43,14 +43,14 @@ exports.example_booking_additional_option = {
     id: "UUID",
     booking_id: "UUID",
     amount: 2,
-    option_id: "UUID",
+    additional_option_id: "UUID",
     created: new Date(),
     updated: new Date(),
 };
 exports.example_extended_booking_additional_option = {
     id: "3fa85f64-5717-4562-b3fc-2c963f66afb1",
     booking_id: "UUID",
-    option_id: exports.example_additional_option.id,
+    additional_option_id: exports.example_additional_option.id,
     amount: 2,
     additional_option: exports.example_additional_option,
     created: new Date(),
@@ -77,7 +77,13 @@ exports.example_booking_variant = {
 };
 exports.example_extended_booking_variant = {
     ...exports.example_booking_variant,
-    apartment: example_apartment,
+    apartment: {
+        ...example_apartment,
+        images: [],
+        apartment_amenities: [],
+        apartment_beds: [],
+        reviews: [],
+    },
 };
 exports.example_extended_booking_variants_list_result = {
     items: [exports.example_extended_booking_variant],
@@ -103,6 +109,7 @@ exports.example_extended_booking = {
     booking_variant: exports.example_extended_booking_variant,
     transaction: transactions_section_1.example_transaction,
     booking_additional_options: [],
+    booking_events: [],
 };
 exports.example_extended_bookings_list_result = {
     items: [exports.example_extended_booking],

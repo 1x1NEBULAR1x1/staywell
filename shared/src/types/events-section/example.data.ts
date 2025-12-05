@@ -41,6 +41,7 @@ export const example_event: Event = {
 
 export const example_extended_event: ExtendedEvent = {
   ...example_event,
+  available_spots: 10,
   images: [example_event_image],
   guide: example_user,
 };

@@ -6,7 +6,7 @@ import { BaseListResult } from '@shared/src/common/base-types/base-list-result.i
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters(options: BedTypesFiltersDto) {
     const { search, name } = options;

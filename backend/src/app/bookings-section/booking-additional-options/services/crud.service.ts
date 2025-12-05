@@ -15,28 +15,6 @@ export class CrudService {
     private readonly checkService: CheckService,
   ) {}
   /**
-   * Creates a new booking-option relationship
-   * @param createBookingOptionDto Booking option creation data
-   * @returns Created booking option with relations
-   */
-  async create({
-    data,
-    user,
-  }: {
-    user: User;
-    data: CreateBookingAdditionalOptionDto;
-  }): Promise<ExtendedBookingAdditionalOption> {
-    await Promise.all([
-      this.checkService.checkAdditionalOption(data.option_id),
-      this.checkService.checkBooking({ id: data.booking_id, user_id: user.id }),
-      this.checkService.checkBookingAdditionalOption(data),
-    ]);
-    return await this.prisma.bookingAdditionalOption.create({
-      data: data,
-      include: { additional_option: true },
-    });
-  }
-  /**
    * Finds a booking-option relationship by ID
    * @param id Booking option ID
    * @returns Booking option with relations
@@ -76,8 +54,11 @@ export class CrudService {
   }): Promise<ExtendedBookingAdditionalOption> {
     await Promise.all([
       this.findOne(id, user),
-      this.checkService.checkBooking({ id: data.booking_id, user_id: user.id }),
-      this.checkService.checkAdditionalOption(data.option_id),
+      this.checkService.checkBooking({
+        booking_id: data.booking_id,
+        user_id: user.id,
+      }),
+      this.checkService.checkAdditionalOption(data.additional_option_id),
       this.checkService.checkBookingAdditionalOption(data),
     ]);
     return await this.prisma.bookingAdditionalOption.update({

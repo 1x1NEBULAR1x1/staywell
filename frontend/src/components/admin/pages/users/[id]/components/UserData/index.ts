@@ -1,2 +1,1 @@
-export { UserData } from './UserData';
-
+export { UserData } from "./UserData";

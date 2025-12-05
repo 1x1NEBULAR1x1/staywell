@@ -1,11 +1,17 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import classes from './Filters.module.scss';
-import { CalendarDays, ChevronDown, Hotel, UserRoundPen, Filter } from 'lucide-react';
-import { FiltersModal } from './components';
-import { useHomePageStore } from '@/stores/public/pages/home/useHomePageStore';
-import { ApartmentsFilters } from '@shared/src';
+import type { ApartmentsFilters } from "@shared/src";
+import {
+  CalendarDays,
+  ChevronDown,
+  Filter,
+  Hotel,
+  UserRoundPen,
+} from "lucide-react";
+import { useState } from "react";
+import { useHomePageStore } from "@/stores/public/pages/home/useHomePageStore";
+import { FiltersModal } from "./components";
+import classes from "./Filters.module.scss";
 
 export const Filters = () => {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
@@ -20,7 +26,10 @@ export const Filters = () => {
   };
 
   const hasActiveFilters = Object.keys(filters).some(
-    key => key !== 'skip' && key !== 'take' && filters[key as keyof typeof filters] !== undefined
+    (key) =>
+      key !== "skip" &&
+      key !== "take" &&
+      filters[key as keyof typeof filters] !== undefined,
   );
 
   return (
@@ -42,22 +51,26 @@ export const Filters = () => {
             <p>Room Category</p>
           </button>
           <button
-            className={`${classes.button} ${hasActiveFilters ? classes.button_active : ''}`}
+            className={`${classes.button} ${hasActiveFilters ? classes.button_active : ""}`}
             onClick={() => setIsFiltersModalOpen(true)}
           >
             <Filter />
             <p>All Filters</p>
-            {hasActiveFilters && <span className={classes.filter_badge}>●</span>}
+            {hasActiveFilters && (
+              <span className={classes.filter_badge}>●</span>
+            )}
           </button>
           <button className={classes.search_button}>Search</button>
         </div>
       </section>
 
-      {isFiltersModalOpen && <FiltersModal
-        onClose={() => setIsFiltersModalOpen(false)}
-        currentFilters={filters}
-        onApplyFilters={handleApplyFilters}
-      />}
+      {isFiltersModalOpen && (
+        <FiltersModal
+          onClose={() => setIsFiltersModalOpen(false)}
+          currentFilters={filters}
+          onApplyFilters={handleApplyFilters}
+        />
+      )}
     </>
   );
 };

@@ -1,0 +1,249 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.final_summary {
+  width: $container-width-xl;
+  background: $background-main;
+  border: $border-normal;
+  border-radius: $border-radius-lg;
+  padding: $spacing-3xl;
+  box-shadow: $box-shadow-sm;
+  margin: $spacing-3xl 0;
+
+  .title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $primary-dark;
+    margin: 0 0 $spacing-2xl 0;
+    text-align: center;
+    border-bottom: 2px solid $border-color;
+    padding-bottom: $spacing-lg;
+  }
+
+  .summary_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-2xl;
+  }
+
+  .section_title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $primary-dark;
+    margin: 0 0 $spacing-lg 0;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: $spacing-sm;
+  }
+
+  // Booking Details Section
+  .details_section,
+  .transaction_section,
+  .cost_section,
+  .meta_section {
+
+    .details_grid,
+    .transaction_info,
+    .cost_breakdown,
+    .meta_info {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+  }
+
+  .detail_item,
+  .transaction_item,
+  .meta_item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+
+    svg {
+      flex-shrink: 0;
+      color: $primary-main;
+      margin-top: 2px;
+    }
+
+    .label {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-normal;
+      color: $foreground-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: $spacing-xs;
+    }
+
+    .value {
+      font-size: $font-size-md;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+
+      &.status_badge {
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius-xs;
+        width: fit-content;
+        text-transform: uppercase;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+
+        &[data-status="confirmed"] {
+          background-color: rgba($green, 0.1);
+          color: $green;
+        }
+
+        &[data-status="pending"] {
+          background-color: rgba($yellow, 0.1);
+          color: $yellow;
+        }
+
+        &[data-status="cancelled"] {
+          background-color: rgba($red, 0.1);
+          color: $red;
+        }
+      }
+    }
+  }
+
+  // Cost Breakdown Section
+  .cost_breakdown {
+    .cost_item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-md 0;
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.total {
+        border-top: 2px solid $border-color;
+        margin-top: $spacing-md;
+        padding-top: $spacing-lg;
+
+        .cost_label {
+          font-weight: $font-weight-bold;
+          font-size: $font-size-lg;
+          color: $primary-dark;
+        }
+
+        .cost_value {
+          font-size: $font-size-xl;
+          font-weight: $font-weight-bold;
+          color: $green;
+        }
+      }
+
+      .cost_label {
+        font-size: $font-size-md;
+        color: $foreground-main;
+        flex: 1;
+        margin-right: $spacing-md;
+      }
+
+      .cost_value {
+        font-size: $font-size-md;
+        font-weight: $font-weight-normal;
+        color: $foreground-main;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .no_transaction {
+    padding: $spacing-lg;
+    text-align: center;
+    color: $foreground-secondary;
+    font-style: italic;
+    background: $background-light;
+    border-radius: $border-radius-md;
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .final_summary {
+    padding: $spacing-2xl;
+
+    .summary_grid {
+      grid-template-columns: 1fr;
+      gap: $spacing-xl;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .final_summary {
+    padding: $spacing-xl;
+
+    .title {
+      font-size: $font-size-xl;
+    }
+
+    .detail_item,
+    .transaction_item,
+    .meta_item {
+      gap: $spacing-sm;
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    .cost_breakdown {
+      .cost_item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $spacing-xs;
+
+        .cost_label {
+          font-size: $font-size-sm;
+        }
+
+        .cost_value {
+          font-size: $font-size-md;
+        }
+
+        &.total {
+          .cost_label {
+            font-size: $font-size-md;
+          }
+
+          .cost_value {
+            font-size: $font-size-lg;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Shimmer styles
+.shimmer_title {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_section_title {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_icon {
+  border-radius: 50%;
+}
+
+.shimmer_label {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_value {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_cost_label {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_cost_value {
+  border-radius: $border-radius-xs;
+}

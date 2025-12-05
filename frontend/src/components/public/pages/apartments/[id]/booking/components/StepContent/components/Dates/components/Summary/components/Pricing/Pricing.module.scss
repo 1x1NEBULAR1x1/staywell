@@ -1,0 +1,39 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.pricing {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm 0;
+    font-size: $font-size-md;
+    color: $foreground-main;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-sm;
+      padding: $spacing-xs 0;
+    }
+  }
+
+  .row_total {
+    @extend .row;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-lg;
+    color: $primary-main;
+    border-bottom: 2px solid $primary-main;
+    padding-top: $spacing-md;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-md;
+    }
+  }
+}

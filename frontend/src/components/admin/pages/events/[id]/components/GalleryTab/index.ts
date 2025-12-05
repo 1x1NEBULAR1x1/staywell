@@ -1,2 +1,1 @@
-export { GalleryTab } from './GalleryTab';
-
+export { GalleryTab } from "./GalleryTab";

@@ -1,9 +1,8 @@
-import classes from './MetaData.module.scss';
-import clsx from 'clsx';
-import { ToolTip } from '@/components/styles/ui';
-import { Calendar, Clock, Users, User } from 'lucide-react';
-import { ExtendedEvent } from '@shared/src';
-
+import type { ExtendedEvent } from "@shared/src";
+import clsx from "clsx";
+import { Calendar, Clock, User, Users } from "lucide-react";
+import { ToolTip } from "@/components/styles/ui";
+import classes from "./MetaData.module.scss";
 
 export const MetaData = ({ event }: { event: ExtendedEvent }) => {
   const is_available = Date.now() < new Date(event.start).getTime();
@@ -11,8 +10,10 @@ export const MetaData = ({ event }: { event: ExtendedEvent }) => {
   return (
     <div className={classes.meta}>
       <div className={classes.meta_row}>
-        <span className={`${classes.status} ${is_available ? classes.available : classes.unavailable}`}>
-          {is_available ? 'Available' : 'Unavailable'}
+        <span
+          className={`${classes.status} ${is_available ? classes.available : classes.unavailable}`}
+        >
+          {is_available ? "Available" : "Unavailable"}
         </span>
         <ToolTip label="Event capacity" variant="blue" position="bottom">
           <div className={clsx(classes.icon_container)}>
@@ -31,7 +32,10 @@ export const MetaData = ({ event }: { event: ExtendedEvent }) => {
         <ToolTip label="Duration" variant="blue" position="bottom">
           <div className={clsx(classes.icon_container)}>
             <Clock className={classes.icon} />
-            <span>{new Date(event.start).toLocaleTimeString()} - {new Date(event.end).toLocaleTimeString()}</span>
+            <span>
+              {new Date(event.start).toLocaleTimeString()} -{" "}
+              {new Date(event.end).toLocaleTimeString()}
+            </span>
           </div>
         </ToolTip>
       </div>
@@ -40,7 +44,9 @@ export const MetaData = ({ event }: { event: ExtendedEvent }) => {
           <ToolTip label="Tour guide" variant="green" position="bottom">
             <div className={clsx(classes.icon_container)}>
               <User className={classes.icon} />
-              <span>{event.guide.first_name} {event.guide.last_name}</span>
+              <span>
+                {event.guide.first_name} {event.guide.last_name}
+              </span>
             </div>
           </ToolTip>
         </div>

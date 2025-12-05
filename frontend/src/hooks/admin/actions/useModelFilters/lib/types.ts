@@ -1,24 +1,27 @@
-import { GETTABLE_NAMES, GettableTypes } from '@shared/src';
-import type { BaseFiltersOptions } from '@shared/src';
+import type {
+  BaseFiltersOptions,
+  GETTABLE_NAMES,
+  GettableTypes,
+} from "@shared/src";
 
 type IsDebounceableField<FieldName extends string> =
   FieldName extends `${string}_id`
-  ? false
-  : FieldName extends keyof BaseFiltersOptions<{ id: string }>
-  ? false
-  : true;
+    ? false
+    : FieldName extends keyof BaseFiltersOptions<{ id: string }>
+      ? false
+      : true;
 
 // Извлекаем только строковые поля из TypeScript типов фильтров
 type ExtractStringFilterKeys<T> = T extends Record<string, any>
   ? {
-    [K in keyof T]: K extends string
-    ? T[K] extends string | undefined
-    ? IsDebounceableField<K> extends true
-    ? K
-    : never
-    : never
-    : never
-  }[keyof T]
+      [K in keyof T]: K extends string
+        ? T[K] extends string | undefined
+          ? IsDebounceableField<K> extends true
+            ? K
+            : never
+          : never
+        : never;
+    }[keyof T]
   : never;
 
 /**
@@ -28,23 +31,24 @@ type ExtractStringFilterKeys<T> = T extends Record<string, any>
  * - ID поля (заканчивающиеся на _id)
  * - Базовые поля фильтрации (skip, take, sort, etc.)
  * - Enum поля (union строковых литералов)
- * 
+ *
  * Тип автоматически анализирует TypeScript типы и извлекает только поля типа string | undefined
  */
-export type DebounceableField<M extends GETTABLE_NAMES> = ExtractStringFilterKeys<GettableTypes<M>['filters']>
+export type DebounceableField<M extends GETTABLE_NAMES> =
+  ExtractStringFilterKeys<GettableTypes<M>["filters"]>;
 
 /**
  * Field type for automatic filter rendering
  */
 export type FilterFieldType =
-  | 'text'
-  | 'number'
-  | 'integer'
-  | 'boolean'
-  | 'select'
-  | 'date'
-  | 'daterange'
-  | 'checkbox';
+  | "text"
+  | "number"
+  | "integer"
+  | "boolean"
+  | "select"
+  | "date"
+  | "daterange"
+  | "checkbox";
 
 /**
  * Configuration for a single filter field
@@ -90,18 +94,4 @@ export interface FilterFieldsConfig {
 export interface DebounceableSettings {
   fields: string[];
   delay?: number;
-}
-
-/**
- * Auto-filter configuration interface
- */
-export interface AutoFilterConfig<T extends BaseFiltersOptions<{ id: string }>> {
-  /** Field configurations */
-  fields: FilterFieldsConfig;
-  /** Default filters */
-  default_filters: T;
-  /** Fields to exclude from rendering */
-  exclude_fields?: string[];
-  /** Custom debounce settings */
-  debounce_settings?: DebounceableSettings;
 }

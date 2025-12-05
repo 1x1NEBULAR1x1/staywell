@@ -1,4 +1,4 @@
-export * from './axios';
-export { type AxiosResponse, isAxiosError, AxiosError } from 'axios';
-export * from './services';
-export * from './utils';
+export { AxiosError, type AxiosResponse, isAxiosError } from "axios";
+export * from "./axios";
+export * from "./services";
+export * from "./utils";

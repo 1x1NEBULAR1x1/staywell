@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { ReactNode, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useAccount } from '@/components/common/providers/AccountContext';
-import classes from './RoleGuard.module.scss';
-import { Role } from '@shared/src/database';
+import type { Role } from "@shared/src/database";
+import { usePathname, useRouter } from "next/navigation";
+import { type ReactNode, useEffect } from "react";
+import { useAccount } from "@/components/common/providers/AccountContext";
+import classes from "./RoleGuard.module.scss";
 
 interface RoleGuardProps {
   children: ReactNode;
@@ -19,7 +19,7 @@ interface RoleGuardProps {
  */
 const isAuthPage = (pathname: string): boolean => {
   // Проверяем, содержит ли путь /auth
-  return pathname.includes('/auth');
+  return pathname.includes("/auth");
 };
 
 /**
@@ -33,9 +33,9 @@ const isAuthPage = (pathname: string): boolean => {
 export const RoleGuard = ({
   children,
   required_roles,
-  redirect_to = '/auth/login',
+  redirect_to = "/auth/login",
   fallback,
-  require_auth = true
+  require_auth = true,
 }: RoleGuardProps) => {
   const { user, is_loading, is_authenticated } = useAccount();
   const router = useRouter();
@@ -58,14 +58,22 @@ export const RoleGuard = ({
 
     // Проверяем роль, если она указана
     if (required_roles && user) {
-
       if (!required_roles.includes(user.role)) {
         if (fallback) return;
         return router.push(redirect_to);
       }
     }
-
-  }, [user, is_loading, is_authenticated, required_roles, redirect_to, fallback, require_auth, router, isOnAuthPage, pathname]);
+  }, [
+    user,
+    is_loading,
+    is_authenticated,
+    required_roles,
+    redirect_to,
+    fallback,
+    require_auth,
+    router,
+    isOnAuthPage,
+  ]);
 
   // На страницах аутентификации всегда рендерим детей
   if (isOnAuthPage) return <>{children}</>;
@@ -89,15 +97,19 @@ export const RoleGuard = ({
 
   // Проверяем, не заблокирован ли пользователь
   if (!user?.is_active) {
-    return fallback || (
-      <div className={classes.banned_container}>
-        <div className={classes.banned_container_content}>
-          <h1 className={classes.banned_container_content_title}>Аккаунт заблокирован</h1>
-          <p className={classes.banned_container_content_description}>
-            Ваш аккаунт был заблокирован администратором.
-          </p>
+    return (
+      fallback || (
+        <div className={classes.banned_container}>
+          <div className={classes.banned_container_content}>
+            <h1 className={classes.banned_container_content_title}>
+              Аккаунт заблокирован
+            </h1>
+            <p className={classes.banned_container_content_description}>
+              Ваш аккаунт был заблокирован администратором.
+            </p>
+          </div>
         </div>
-      </div>
+      )
     );
   }
 

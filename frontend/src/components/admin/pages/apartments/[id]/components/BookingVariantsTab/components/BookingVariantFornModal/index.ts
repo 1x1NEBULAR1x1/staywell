@@ -1,1 +1,1 @@
-export { BookingVariantFornModal } from './BookingVariantFornModal';
+export { BookingVariantFornModal } from "./BookingVariantFornModal";

@@ -1,19 +1,25 @@
-'use client';
+"use client";
 
-import { ReactNode, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { X } from 'lucide-react';
-import styles from './Modal.module.scss';
+import { X } from "lucide-react";
+import { type ReactNode, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import styles from "./Modal.module.scss";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
-export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalProps) => {
+export const Modal = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  size = "md",
+}: ModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -23,20 +29,20 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
 
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add('modal-open');
+      document.body.classList.add("modal-open");
     } else {
-      document.body.classList.remove('modal-open');
+      document.body.classList.remove("modal-open");
     }
 
-    return () => document.body.classList.remove('modal-open');
+    return () => document.body.classList.remove("modal-open");
   }, [isOpen]);
 
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => (e.key === 'Escape') && onClose();
+    const handleEscape = (e: KeyboardEvent) => e.key === "Escape" && onClose();
 
-    if (isOpen) document.addEventListener('keydown', handleEscape);
+    if (isOpen) document.addEventListener("keydown", handleEscape);
 
-    return () => document.removeEventListener('keydown', handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
 
   if (!isMounted || !isOpen) {
@@ -49,7 +55,9 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
 
   return createPortal(
     <div className={styles.modal_overlay} onClick={handleOverlayClick}>
-      <div className={`${styles.modal_content} ${styles[`modal_content_${size}`]}`}>
+      <div
+        className={`${styles.modal_content} ${styles[`modal_content_${size}`]}`}
+      >
         <div className={styles.modal_header}>
           <h2 className={styles.modal_title}>{title}</h2>
           <button
@@ -60,11 +68,9 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
             <X size={20} />
           </button>
         </div>
-        <div className={styles.modal_body}>
-          {children}
-        </div>
+        <div className={styles.modal_body}>{children}</div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
-}; 
+};

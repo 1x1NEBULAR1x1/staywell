@@ -1,1 +1,1 @@
-export { BulkActions } from './BulkActions';
+export { BulkActions } from "./BulkActions";

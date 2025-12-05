@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageBubble } from "../MessageBubble";
-import classes from "./ChatMessages.module.scss";
+import default_avatar from "@/../public/common/default-avatar.png";
 import { useAccount } from "@/hooks/common/useAccount";
 import { useChat } from "@/hooks/public/chat";
-import default_avatar from "@/../public/common/default-avatar.png";
+import { MessageBubble } from "../MessageBubble";
+import classes from "./ChatMessages.module.scss";
 
 interface ChatMessagesProps {
   is_loading: boolean;
@@ -86,7 +86,8 @@ export const ChatMessages = ({
 
     const container = messages_container_ref.current;
     const is_at_bottom =
-      container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+      container.scrollHeight - container.scrollTop - container.clientHeight <
+      100;
 
     // If user is at bottom and someone starts typing, scroll to show typing indicator
     if (isTyping && is_at_bottom) {
@@ -140,7 +141,7 @@ export const ChatMessages = ({
           is_outgoing={message.sender_id === current_user?.id}
           sender_avatar={
             message.sender_id === current_user?.id
-              ? current_user?.image ?? default_avatar.src
+              ? (current_user?.image ?? default_avatar.src)
               : default_avatar.src
           }
           is_new={new_message_ids.has(message.id)}
@@ -168,4 +169,3 @@ export const ChatMessages = ({
     </div>
   );
 };
-

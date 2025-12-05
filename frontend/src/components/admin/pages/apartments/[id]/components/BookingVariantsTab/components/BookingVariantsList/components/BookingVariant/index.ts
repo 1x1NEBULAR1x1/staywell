@@ -1,1 +1,1 @@
-export { BookingVariant } from './BookingVariant';
+export { BookingVariant } from "./BookingVariant";

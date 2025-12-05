@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface UIState {
   // Состояния сайдбаров
@@ -24,10 +24,14 @@ export const useUIStore = create<UIState>()(
 
       // Методы для изменения состояния
       toggleMainSidebar: () =>
-        set((state) => ({ isMainSidebarCollapsed: !state.isMainSidebarCollapsed })),
+        set((state) => ({
+          isMainSidebarCollapsed: !state.isMainSidebarCollapsed,
+        })),
 
       toggleSecondarySidebar: () =>
-        set((state) => ({ isSecondarySidebarCollapsed: !state.isSecondarySidebarCollapsed })),
+        set((state) => ({
+          isSecondarySidebarCollapsed: !state.isSecondarySidebarCollapsed,
+        })),
 
       setMainSidebarCollapsed: (isCollapsed) =>
         set({ isMainSidebarCollapsed: isCollapsed }),
@@ -36,12 +40,12 @@ export const useUIStore = create<UIState>()(
         set({ isSecondarySidebarCollapsed: isCollapsed }),
     }),
     {
-      name: 'ui-storage', // имя для хранения в localStorage
+      name: "ui-storage", // имя для хранения в localStorage
       partialize: (state) => ({
         // Сохраняем только эти свойства в localStorage
         isMainSidebarCollapsed: state.isMainSidebarCollapsed,
         isSecondarySidebarCollapsed: state.isSecondarySidebarCollapsed,
       }),
-    }
-  )
-); 
+    },
+  ),
+);

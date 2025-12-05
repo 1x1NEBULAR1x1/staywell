@@ -1,0 +1,1 @@
+export { ApartmentCompactData } from "./ApartmentCompactData";

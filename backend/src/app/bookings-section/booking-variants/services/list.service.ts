@@ -7,7 +7,7 @@ import { BookingVariantsFiltersDto } from '../dto';
 
 @Injectable()
 export class ListService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   customFilters(options: BookingVariantsFiltersDto) {
     const {
@@ -38,19 +38,20 @@ export class ListService {
    * @param filterDto Filter parameters and pagination
    * @returns Filtered list of booking variants with pagination metadata
    */
-  async findAll(filters: BookingVariantsFiltersDto): Promise<
-    BaseListResult<ExtendedBookingVariant>
-  > {
+  async findAll(
+    filters: BookingVariantsFiltersDto,
+  ): Promise<BaseListResult<ExtendedBookingVariant>> {
     const query_options = this.prisma.buildQuery<BookingVariant>({
       filters,
       customFilters: this.customFilters,
     });
 
-    const { items, total } = await this.prisma.findWithPagination<ExtendedBookingVariant>({
-      model: this.prisma.bookingVariant,
-      query_options,
-      include: { apartment: true },
-    });
+    const { items, total } =
+      await this.prisma.findWithPagination<ExtendedBookingVariant>({
+        model: this.prisma.bookingVariant,
+        query_options,
+        include: { apartment: true },
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

@@ -1,25 +1,28 @@
-import classes from './Filters.module.scss';
-
-import type { ReactElement } from 'react';
-import type { GETTABLE_NAMES, GettableTypes } from '@shared/src';
-import type { FiltersConfig } from './types';
-
-import { SearchInput, SortBySelect, SortDirectionSelect, DynamicFiltersMenu } from './components';
+import type { GETTABLE_NAMES, GettableTypes } from "@shared/src";
+import type { ReactElement } from "react";
+import {
+  DynamicFiltersMenu,
+  SearchInput,
+  SortBySelect,
+  SortDirectionSelect,
+} from "./components";
+import classes from "./Filters.module.scss";
+import type { FiltersConfig } from "./types";
 
 type FiltersProps<T extends GETTABLE_NAMES> = {
   sort_by_list?: string[];
-  filters: GettableTypes<T>['filters'];
-  setFilters: (filters: GettableTypes<T>['filters']) => void;
+  filters: GettableTypes<T>["filters"];
+  setFilters: (filters: GettableTypes<T>["filters"]) => void;
   filters_config?: FiltersConfig;
-  create_button?: ReactElement
-}
+  create_button?: ReactElement;
+};
 
 export const Filters = <T extends GETTABLE_NAMES>({
   filters,
   setFilters,
   sort_by_list,
   filters_config,
-  create_button
+  create_button,
 }: FiltersProps<T>) => {
   return (
     <div className={classes.filters}>
@@ -36,7 +39,9 @@ export const Filters = <T extends GETTABLE_NAMES>({
           setSortBy={(sort_field) => setFilters({ ...filters, sort_field })}
         />
         <SortDirectionSelect
-          setSortDirection={(sort_direction) => setFilters({ ...filters, sort_direction })}
+          setSortDirection={(sort_direction) =>
+            setFilters({ ...filters, sort_direction })
+          }
         />
         {filters_config && (
           <DynamicFiltersMenu
@@ -47,5 +52,5 @@ export const Filters = <T extends GETTABLE_NAMES>({
         )}
       </div>
     </div>
-  )
+  );
 };

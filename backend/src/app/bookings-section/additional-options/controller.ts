@@ -75,8 +75,8 @@ export class AdditionalOptionsController {
     description: 'List of additional options',
     example: example_additional_options_list_result,
   })
-  findAll(@Query() filters: AdditionalOptionsFiltersDto) {
-    return this.listService.findAll(filters);
+  get(@Query() filters: AdditionalOptionsFiltersDto) {
+    return this.listService.get(filters);
   }
 
   @Get(':id')
@@ -87,8 +87,8 @@ export class AdditionalOptionsController {
     description: 'Additional option found',
     example: example_additional_option,
   })
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.crudService.findOne({ id });
+  find(@Param('id', ParseUUIDPipe) id: string) {
+    return this.crudService.find({ id });
   }
 
   @Put(':id')

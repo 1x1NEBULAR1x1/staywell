@@ -1,7 +1,7 @@
 "use client";
 
 import classes from "./ChatTab.module.scss";
-import { UserChatProvider, ChatWindow } from "./components";
+import { ChatWindow, UserChatProvider } from "./components";
 
 export const ChatTab = () => {
   return (
@@ -15,4 +15,3 @@ export const ChatTab = () => {
     </UserChatProvider>
   );
 };
-

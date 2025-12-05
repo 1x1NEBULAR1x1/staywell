@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { UserWithoutPassword } from '@shared/src';
-import classes from '../Tab.module.scss';
-import { EditUserModal } from '../UserData/components';
-import { useModel } from '@/hooks/admin/queries';
-import { AccountSection, Header, InfoSection } from './components';
+import type { UserWithoutPassword } from "@shared/src";
+import { useState } from "react";
+import { useModel } from "@/hooks/admin/queries";
+import classes from "../Tab.module.scss";
+import { EditUserModal } from "../UserData/components";
+import { AccountSection, Header, InfoSection } from "./components";
 
 interface ProfileTabProps {
   user: UserWithoutPassword;
@@ -14,7 +14,13 @@ interface ProfileTabProps {
 
 export const ProfileTab = ({ user, refetch }: ProfileTabProps) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const { data: sessions } = useModel('SESSION').get({ user_id: user.id, skip: 0, take: 1, sort_field: 'created', sort_direction: 'asc' });
+  const { data: sessions } = useModel("SESSION").get({
+    user_id: user.id,
+    skip: 0,
+    take: 1,
+    sort_field: "created",
+    sort_direction: "asc",
+  });
   return (
     <div className={classes.tab}>
       <Header user={user} setIsEditModalOpen={setIsEditModalOpen} />
@@ -33,4 +39,3 @@ export const ProfileTab = ({ user, refetch }: ProfileTabProps) => {
     </div>
   );
 };
-

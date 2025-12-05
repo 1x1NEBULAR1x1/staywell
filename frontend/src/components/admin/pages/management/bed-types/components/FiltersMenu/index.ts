@@ -1,1 +1,1 @@
-export { FiltersMenu } from './FiltersMenu';
+export { FiltersMenu } from "./FiltersMenu";

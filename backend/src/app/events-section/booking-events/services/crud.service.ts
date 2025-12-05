@@ -54,9 +54,12 @@ export class CrudService {
    */
   async create({ data, user }: { data: CreateBookingEventDto; user: User }) {
     await Promise.all([
-      this.checkBooking({ user, id: data.booking_id }),
+      this.checkBooking({ user, id: data.booking_id ?? undefined }),
       this.checkEvent(data.event_id),
-      this.checkBookingEvent(data),
+      this.checkBookingEvent({
+        booking_id: data.booking_id ?? undefined,
+        event_id: data.event_id ?? undefined,
+      }),
     ]);
     return this.prisma.bookingEvent.create({
       data,
@@ -88,7 +91,10 @@ export class CrudService {
       },
     });
     if (!booking_event) throw new NotFoundException('Booking event not found');
-    await this.checkBooking({ id: booking_event.booking_id, user });
+    await this.checkBooking({
+      id: booking_event.booking_id ?? undefined,
+      user,
+    });
     return booking_event;
   }
   /**
@@ -107,9 +113,12 @@ export class CrudService {
     user: User;
   }) {
     await Promise.all([
-      this.checkBooking({ id: data.booking_id, user }),
+      this.checkBooking({ id: data.booking_id ?? undefined, user }),
       this.checkEvent(data.event_id),
-      this.checkBookingEvent(data),
+      this.checkBookingEvent({
+        booking_id: data.booking_id ?? undefined,
+        event_id: data.event_id ?? undefined,
+      }),
     ]);
     return this.prisma.bookingEvent.update({
       where: { id },

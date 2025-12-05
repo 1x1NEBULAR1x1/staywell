@@ -1,12 +1,7 @@
 "use client";
 
 import type { Message } from "@shared/src/database";
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useMemo,
-} from "react";
+import { createContext, type ReactNode, useContext, useMemo } from "react";
 import { useUserChat } from "@/hooks/public/chat/lib/useUserChat";
 
 interface UserChatContextType {
@@ -76,4 +71,3 @@ export const useUserChatContext = () => {
   }
   return context;
 };
-

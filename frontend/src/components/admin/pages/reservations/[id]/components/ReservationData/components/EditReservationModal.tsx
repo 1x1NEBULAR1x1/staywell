@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { BaseFormModal } from '@/components/admin/common/Modal/BaseFormModal';
-import { InputField } from '@/components/admin/common/Form';
-import { ExtendedReservation, CruddableTypes } from '@shared/src';
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useToast } from '@/hooks/common/useToast';
-import { isAxiosError } from 'axios';
+import type { CruddableTypes, ExtendedReservation } from "@shared/src";
+import { isAxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { InputField } from "@/components/admin/common/Form";
+import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { useToast } from "@/hooks/common/useToast";
 
-type FormData = CruddableTypes<'RESERVATION'>['update'];
+type FormData = CruddableTypes<"RESERVATION">["update"];
 
 export const EditReservationModal = ({
   reservation,
   onClose,
-  refetch
+  refetch,
 }: {
   reservation: ExtendedReservation;
   onClose: () => void;
   refetch: () => void;
 }) => {
-  const update_mutation = useModel('RESERVATION').update(reservation.id);
+  const update_mutation = useModel("RESERVATION").update(reservation.id);
   const toast = useToast();
 
   const form = useForm<FormData>({
@@ -32,7 +32,7 @@ export const EditReservationModal = ({
   const handleSubmit = async (data: FormData) => {
     // Validate dates
     if (data.end && data.start && new Date(data.end) <= new Date(data.start)) {
-      toast.error('End date must be after start date');
+      toast.error("End date must be after start date");
       return;
     }
 
@@ -40,10 +40,11 @@ export const EditReservationModal = ({
       await update_mutation.mutateAsync(data);
       onClose();
       refetch();
-      toast.success('Reservation has been updated successfully');
+      toast.success("Reservation has been updated successfully");
     } catch (error) {
-      isAxiosError(error) && toast.error(`Error during update: ${error.message}`);
-      console.error('Failed to update reservation:', error);
+      isAxiosError(error) &&
+        toast.error(`Error during update: ${error.message}`);
+      console.error("Failed to update reservation:", error);
     }
   };
 

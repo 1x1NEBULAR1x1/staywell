@@ -11,7 +11,6 @@ import {
 import { Response, Request } from 'express';
 
 import { AuthService } from './services/auth.service';
-import { CrudService } from '../users/services';
 import { ConfigService } from '@nestjs/config';
 
 import {
@@ -31,7 +30,6 @@ import ms, { StringValue } from 'ms';
 export class AuthController {
   constructor(
     private readonly auth: AuthService,
-    private readonly crud: CrudService,
     private readonly config: ConfigService,
   ) {}
 
@@ -110,7 +108,7 @@ export class AuthController {
   @Get('me')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get data of the current user' })
-  async me(@Auth() user: UserWithoutPassword) {
+  me(@Auth() user: UserWithoutPassword) {
     // req.user contains the user object directly from JWT strategy validation
     return user;
   }
@@ -118,20 +116,18 @@ export class AuthController {
   @Get('ws-token')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get token for WebSocket authentication' })
-  async getWsToken(@Req() req: RequestWithCookies) {
+  getWsToken(@Req() req: RequestWithCookies) {
     // Extract token from request for WebSocket auth
-    const authHeader = req.headers['authorization'] as string;
+    const auth_header = req.headers['authorization'] as string;
     let token: string | null = null;
 
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      token = authHeader.substring(7);
+    if (auth_header && auth_header.startsWith('Bearer ')) {
+      token = auth_header.substring(7);
     } else if (req.cookies?.access_token) {
       token = req.cookies.access_token;
     }
 
-    if (!token) {
-      throw new BadRequestException('No token available');
-    }
+    if (!token) throw new BadRequestException('No token available');
 
     return { token };
   }

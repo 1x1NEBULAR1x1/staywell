@@ -1,3 +1,3 @@
-export { AccountSection } from './AccountSection';
-export { InfoSection } from './InfoSection';
-export { Header } from './Header';
+export { AccountSection } from "./AccountSection";
+export { Header } from "./Header";
+export { InfoSection } from "./InfoSection";

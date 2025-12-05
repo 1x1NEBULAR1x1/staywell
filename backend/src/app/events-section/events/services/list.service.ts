@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { Event, Prisma } from '@shared/src/database';
+import { BookingEvent, Event, Prisma } from '@shared/src/database';
 import { EventsFiltersDto } from '../dto';
 import { BaseListResult } from '@shared/src/common';
-import { EXTENDED_EVENT_INCLUDE, ExtendedEvent } from '@shared/src/types/events-section';
+import {
+  EXTENDED_EVENT_INCLUDE,
+  ExtendedEvent,
+} from '@shared/src/types/events-section';
 
 /**
  * Service for retrieving lists of events with filtering and pagination
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: EventsFiltersDto) {
     const {
@@ -46,17 +49,33 @@ export class ListService {
    * @param filters - Query parameters for filtering and pagination
    * @returns Paginated list of events with total count
    */
-  async findAll(filters: EventsFiltersDto): Promise<BaseListResult<ExtendedEvent>> {
+  async get(filters: EventsFiltersDto): Promise<BaseListResult<ExtendedEvent>> {
     const query_options = this.prisma.buildQuery<Event>({
       filters,
       customFilters: this.customFilters,
     });
-    const { items, total } = await this.prisma.findWithPagination<ExtendedEvent>({
-      model: this.prisma.event,
-      query_options,
-      include: EXTENDED_EVENT_INCLUDE,
+    const { items, total } =
+      await this.prisma.findWithPagination<ExtendedEvent>({
+        model: this.prisma.event,
+        query_options,
+        include: EXTENDED_EVENT_INCLUDE,
+      });
+
+    // Calculate available spots for each event
+    const items_with_available_spots = (
+      items as unknown as (ExtendedEvent & { booking_events: BookingEvent[] })[]
+    ).map((event) => {
+      const booked_spots = event.booking_events.reduce(
+        (total, booking) => total + booking.number_of_people,
+        0,
+      );
+      return {
+        ...event,
+        available_spots: Math.max(0, event.capacity - booked_spots),
+      };
     });
+
     const { take, skip } = query_options;
-    return { items, total, skip, take };
+    return { items: items_with_available_spots, total, skip, take };
   }
 }

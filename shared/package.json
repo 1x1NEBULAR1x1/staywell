@@ -18,7 +18,7 @@
   "scripts": {
     "build": "tsc --build --force",
     "clean": "find src -path \"src/database\" -prune -o -name \"*.js\" -print -o -name \"*.d.ts\" -print | xargs rm -f",
-    "db:seed": "tsx prisma/seed.ts",
+    "db:seed": "tsx prisma/seeder.ts",
     "db:reset": "npx prisma db push --force-reset"
   },
   "devDependencies": {

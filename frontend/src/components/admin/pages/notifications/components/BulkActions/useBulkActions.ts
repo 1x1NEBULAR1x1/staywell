@@ -1,6 +1,12 @@
 import { useNotifications } from "@/hooks/common/useNotifications";
 
-export const useBulkActions = ({ selectedNotifications, setSelectedNotifications }: { selectedNotifications: Set<string>, setSelectedNotifications: (notifications: Set<string>) => void }) => {
+export const useBulkActions = ({
+  selectedNotifications,
+  setSelectedNotifications,
+}: {
+  selectedNotifications: Set<string>;
+  setSelectedNotifications: (notifications: Set<string>) => void;
+}) => {
   const { get, markAsRead } = useNotifications();
   const { data: allNotifications } = get({ take: 1000, skip: 0 });
 
@@ -10,7 +16,9 @@ export const useBulkActions = ({ selectedNotifications, setSelectedNotifications
     if (selectedNotifications.size === allNotifications.items.length) {
       setSelectedNotifications(new Set());
     } else {
-      setSelectedNotifications(new Set(allNotifications.items.map(n => n.id)));
+      setSelectedNotifications(
+        new Set(allNotifications.items.map((n) => n.id)),
+      );
     }
   };
 
@@ -20,7 +28,6 @@ export const useBulkActions = ({ selectedNotifications, setSelectedNotifications
       setSelectedNotifications(new Set());
     }
   };
-
 
   return {
     handleSelectAll,

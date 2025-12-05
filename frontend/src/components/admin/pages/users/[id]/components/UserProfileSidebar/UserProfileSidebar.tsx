@@ -1,10 +1,17 @@
-'use client';
+"use client";
 
-import { UserWithoutPassword } from '@shared/src';
-import { UserTab } from '../../User';
-import classes from './UserProfileSidebar.module.scss';
-import { User, Calendar, DollarSign, Star, PartyPopper, ArrowLeftRight } from 'lucide-react';
-import Image from 'next/image';
+import type { UserWithoutPassword } from "@shared/src";
+import {
+  ArrowLeftRight,
+  Calendar,
+  DollarSign,
+  PartyPopper,
+  Star,
+  User,
+} from "lucide-react";
+import Image from "next/image";
+import type { UserTab } from "../../User";
+import classes from "./UserProfileSidebar.module.scss";
 
 interface UserProfileSidebarProps {
   user: UserWithoutPassword;
@@ -13,32 +20,40 @@ interface UserProfileSidebarProps {
 }
 
 const navItems = [
-  { id: 'profile' as UserTab, label: 'Profile', icon: User },
-  { id: 'bookings' as UserTab, label: 'Bookings', icon: Calendar },
-  { id: 'transactions' as UserTab, label: 'Transactions', icon: DollarSign },
-  { id: 'reservations' as UserTab, label: 'Reservations', icon: Calendar },
-  { id: 'reviews' as UserTab, label: 'Reviews', icon: Star },
-  { id: 'events' as UserTab, label: 'Events', icon: PartyPopper },
-  { id: 'transfers' as UserTab, label: 'Transfers', icon: ArrowLeftRight },
+  { id: "profile" as UserTab, label: "Profile", icon: User },
+  { id: "bookings" as UserTab, label: "Bookings", icon: Calendar },
+  { id: "transactions" as UserTab, label: "Transactions", icon: DollarSign },
+  { id: "reservations" as UserTab, label: "Reservations", icon: Calendar },
+  { id: "reviews" as UserTab, label: "Reviews", icon: Star },
+  { id: "events" as UserTab, label: "Events", icon: PartyPopper },
+  { id: "transfers" as UserTab, label: "Transfers", icon: ArrowLeftRight },
 ];
 
-export const UserProfileSidebar = ({ user, activeTab, setActiveTab }: UserProfileSidebarProps) => {
+export const UserProfileSidebar = ({
+  user,
+  activeTab,
+  setActiveTab,
+}: UserProfileSidebarProps) => {
   return (
     <div className={classes.sidebar}>
       <div className={classes.user_info}>
         <div className={classes.avatar_container}>
           <Image
-            src={user.image || '/common/default-avatar.png'}
+            src={user.image || "/common/default-avatar.png"}
             alt={`${user.first_name} ${user.last_name}`}
             width={80}
             height={80}
             className={classes.avatar}
           />
-          <div className={`${classes.status_badge} ${user.is_active ? classes.active : classes.inactive}`}>
-            {user.is_active ? 'Active' : 'Inactive'}
+          <div
+            className={`${classes.status_badge} ${user.is_active ? classes.active : classes.inactive}`}
+          >
+            {user.is_active ? "Active" : "Inactive"}
           </div>
         </div>
-        <h2 className={classes.user_name}>{user.first_name} {user.last_name}</h2>
+        <h2 className={classes.user_name}>
+          {user.first_name} {user.last_name}
+        </h2>
         <p className={classes.user_email}>{user.email}</p>
         <div className={classes.user_role}>{user.role}</div>
       </div>
@@ -49,7 +64,7 @@ export const UserProfileSidebar = ({ user, activeTab, setActiveTab }: UserProfil
           return (
             <button
               key={item.id}
-              className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ''}`}
+              className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ""}`}
               onClick={() => setActiveTab(item.id)}
             >
               <Icon className={classes.nav_icon} />
@@ -61,4 +76,3 @@ export const UserProfileSidebar = ({ user, activeTab, setActiveTab }: UserProfil
     </div>
   );
 };
-

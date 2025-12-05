@@ -1,3 +1,1 @@
-export * from './AmenityCard';
-
-
+export * from "./AmenityCard";

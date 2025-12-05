@@ -1,0 +1,261 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.options_section {
+  width: $container-width-xl;
+  margin: $spacing-3xl 0;
+
+  .options_container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: $spacing-xl;
+    align-items: start;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr;
+      gap: $spacing-lg;
+    }
+  }
+
+  .options_list {
+    .section_title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      color: $primary-dark;
+      margin: 0 0 $spacing-lg 0;
+    }
+
+    .options_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: $spacing-md;
+
+      @media (max-width: $breakpoint-md) {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: $spacing-sm;
+      }
+
+      @media (max-width: $breakpoint-sm) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .option_card {
+    background: $background-main;
+    border: $border-normal;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    box-shadow: $box-shadow-sm;
+    transition: all $transition-normal;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $box-shadow-md;
+    }
+
+    .option_image {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      overflow: hidden;
+
+      .image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .price_badge {
+        position: absolute;
+        top: $spacing-sm;
+        right: $spacing-sm;
+        background: $primary-main;
+        color: $foreground-white;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius-md;
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-sm;
+        box-shadow: $box-shadow-sm;
+      }
+    }
+
+    .option_info {
+      padding: $spacing-md;
+
+      .option_name {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        margin: 0 0 $spacing-sm 0;
+        line-height: 1.3;
+      }
+
+      .option_description {
+        font-size: $font-size-sm;
+        color: $foreground-secondary;
+        margin: 0 0 $spacing-sm 0;
+        line-height: 1.4;
+      }
+
+      .option_quantity {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        font-size: $font-size-sm;
+        color: $foreground-secondary;
+
+        svg {
+          flex-shrink: 0;
+          color: $primary-main;
+        }
+      }
+    }
+  }
+
+  .options_summary {
+    .summary_card {
+      background: $background-main;
+      border: $border-normal;
+      border-radius: $border-radius-lg;
+      padding: $spacing-lg;
+      box-shadow: $box-shadow-sm;
+      position: sticky;
+      top: $spacing-lg;
+
+      .summary_title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $primary-dark;
+        margin: 0 0 $spacing-md 0;
+      }
+
+      .summary_amount {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-md;
+        border-bottom: $border-normal;
+
+        .amount {
+          font-size: $font-size-2xl;
+          font-weight: $font-weight-bold;
+          color: $green;
+        }
+
+        .options_count {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+        }
+      }
+
+      .summary_breakdown {
+        .breakdown_item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: $spacing-sm 0;
+          border-bottom: 1px solid $border-color;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .item_name {
+            font-size: $font-size-sm;
+            color: $foreground-main;
+            flex: 1;
+            margin-right: $spacing-sm;
+          }
+
+          .item_price {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-normal;
+            color: $foreground-main;
+            flex-shrink: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .options_section {
+    .options_container {
+      gap: $spacing-md;
+    }
+
+    .options_list {
+      .section_title {
+        font-size: $font-size-lg;
+      }
+
+    }
+
+    .options_summary {
+      .summary_card {
+        padding: $spacing-md;
+
+        .summary_title {
+          font-size: $font-size-md;
+        }
+
+        .summary_amount {
+          .amount {
+            font-size: $font-size-xl;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Shimmer styles
+.shimmer_title {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_image {
+  border-radius: $border-radius-md;
+}
+
+.shimmer_price_badge {
+  border-radius: $border-radius-md;
+}
+
+.shimmer_option_name {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_description {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_icon {
+  border-radius: 50%;
+}
+
+.shimmer_quantity_text {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_summary_title {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_amount {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_options_count {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_item_name {
+  border-radius: $border-radius-xs;
+}
+
+.shimmer_item_price {
+  border-radius: $border-radius-xs;
+}

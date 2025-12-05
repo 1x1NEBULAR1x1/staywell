@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import classes from './SelectInput.module.scss';
+import classes from "./SelectInput.module.scss";
 
 type SelectOption = {
   value: string;
   label: string;
-}
+};
 
 type SelectInputProps = {
   label: string;
@@ -13,18 +13,24 @@ type SelectInputProps = {
   onChange: (value: string | undefined) => void;
   options: SelectOption[];
   placeholder?: string;
-}
+};
 
-export const SelectInput = ({ label, value, onChange, options, placeholder }: SelectInputProps) => {
+export const SelectInput = ({
+  label,
+  value,
+  onChange,
+  options,
+  placeholder,
+}: SelectInputProps) => {
   return (
     <div className={classes.field}>
       <label className={classes.label}>{label}</label>
       <select
         className={classes.select}
-        value={value || ''}
+        value={value || ""}
         onChange={(e) => onChange(e.target.value || undefined)}
       >
-        <option value="">{placeholder || 'All'}</option>
+        <option value="">{placeholder || "All"}</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -34,4 +40,3 @@ export const SelectInput = ({ label, value, onChange, options, placeholder }: Se
     </div>
   );
 };
-

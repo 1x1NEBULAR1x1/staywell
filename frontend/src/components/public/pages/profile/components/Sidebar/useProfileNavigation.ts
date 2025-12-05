@@ -1,5 +1,5 @@
 import { usePathname, useRouter } from "next/navigation";
-import { compile } from 'path-to-regexp';
+import { compile } from "path-to-regexp";
 import type { ProfileTabConfig } from "@/components/public/pages/profile/config";
 
 export const useProfileNavigation = () => {

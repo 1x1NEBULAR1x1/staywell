@@ -1,6 +1,6 @@
-import classes from './InfoSection.module.scss';
-import { UserWithoutPassword } from '@shared/src';
-import { Mail, Phone, Calendar, CheckCircle, XCircle } from 'lucide-react';
+import type { UserWithoutPassword } from "@shared/src";
+import { Calendar, CheckCircle, Mail, Phone, XCircle } from "lucide-react";
+import classes from "./InfoSection.module.scss";
 
 export const InfoSection = ({ user }: { user: UserWithoutPassword }) => (
   <div className={classes.info_grid}>
@@ -31,7 +31,7 @@ export const InfoSection = ({ user }: { user: UserWithoutPassword }) => (
         <span className={classes.info_label}>Phone Number</span>
       </div>
       <div className={classes.info_value}>
-        {user.phone_number || 'Not provided'}
+        {user.phone_number || "Not provided"}
       </div>
       {user.phone_number && (
         <div className={classes.verification_badge}>
@@ -58,7 +58,7 @@ export const InfoSection = ({ user }: { user: UserWithoutPassword }) => (
       <div className={classes.info_value}>
         {user.date_of_birth
           ? new Date(user.date_of_birth).toLocaleDateString()
-          : 'Not provided'}
+          : "Not provided"}
       </div>
     </div>
   </div>

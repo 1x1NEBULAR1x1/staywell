@@ -1,0 +1,27 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.dates {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+
+  &>svg {
+    color: $primary-main;
+  }
+
+  .date {
+    background: $background-main;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-normal;
+    color: $primary-dark;
+  }
+
+  .nights {
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
+    color: $primary-dark;
+  }
+}

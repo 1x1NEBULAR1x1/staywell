@@ -1,10 +1,17 @@
-'use client';
+"use client";
 
-import { ExtendedApartment } from '@shared/src';
-import { ApartmentTab } from '../../Apartment';
-import classes from './ApartmentSidebar.module.scss';
-import { Home, Star, Bed, Calendar, Sparkles, Image as ImageIcon } from 'lucide-react';
-import Image from 'next/image';
+import type { ExtendedApartment } from "@shared/src";
+import {
+  Bed,
+  Calendar,
+  Home,
+  Image as ImageIcon,
+  Sparkles,
+  Star,
+} from "lucide-react";
+import Image from "next/image";
+import type { ApartmentTab } from "../../Apartment";
+import classes from "./ApartmentSidebar.module.scss";
 
 interface ApartmentSidebarProps {
   apartment: ExtendedApartment;
@@ -13,17 +20,23 @@ interface ApartmentSidebarProps {
 }
 
 const navItems = [
-  { id: 'general', label: 'General Info', icon: Home },
-  { id: 'gallery', label: 'Gallery', icon: ImageIcon },
-  { id: 'beds', label: 'Beds', icon: Bed },
-  { id: 'amenities', label: 'Amenities', icon: Sparkles },
-  { id: 'booking_variants', label: 'Booking Variants', icon: Calendar },
-  { id: 'reviews', label: 'Reviews', icon: Star },
+  { id: "general", label: "General Info", icon: Home },
+  { id: "gallery", label: "Gallery", icon: ImageIcon },
+  { id: "beds", label: "Beds", icon: Bed },
+  { id: "amenities", label: "Amenities", icon: Sparkles },
+  { id: "booking_variants", label: "Booking Variants", icon: Calendar },
+  { id: "reviews", label: "Reviews", icon: Star },
 ] as const;
 
-
-export const ApartmentSidebar = ({ apartment, activeTab, setActiveTab }: ApartmentSidebarProps) => {
-  const mainImage = apartment.images?.[0]?.image || apartment.image || '/common/default-apartment.png';
+export const ApartmentSidebar = ({
+  apartment,
+  activeTab,
+  setActiveTab,
+}: ApartmentSidebarProps) => {
+  const mainImage =
+    apartment.images?.[0]?.image ||
+    apartment.image ||
+    "/common/default-apartment.png";
   const reviewsCount = apartment.reviews?.length || 0;
 
   return (
@@ -32,18 +45,22 @@ export const ApartmentSidebar = ({ apartment, activeTab, setActiveTab }: Apartme
         <div className={classes.image_container}>
           <Image
             src={mainImage}
-            alt={apartment.name || 'Apartment'}
+            alt={apartment.name || "Apartment"}
             width={260}
             height={180}
             className={classes.main_image}
           />
-          <div className={`${classes.status_badge} ${apartment.is_available ? classes.available : classes.unavailable}`}>
-            {apartment.is_available ? 'Available' : 'Unavailable'}
+          <div
+            className={`${classes.status_badge} ${apartment.is_available ? classes.available : classes.unavailable}`}
+          >
+            {apartment.is_available ? "Available" : "Unavailable"}
           </div>
         </div>
 
         <div className={classes.info_content}>
-          <h2 className={classes.apartment_name}>{apartment.name || `Room ${apartment.number}`}</h2>
+          <h2 className={classes.apartment_name}>
+            {apartment.name || `Room ${apartment.number}`}
+          </h2>
           <p className={classes.apartment_location}>
             Floor {apartment.floor}, Room {apartment.number}
           </p>
@@ -54,7 +71,9 @@ export const ApartmentSidebar = ({ apartment, activeTab, setActiveTab }: Apartme
               <span className={classes.stat_label}>Guests</span>
             </div>
             <div className={classes.stat_item}>
-              <span className={classes.stat_value}>{apartment.rating.toFixed(1)}</span>
+              <span className={classes.stat_value}>
+                {apartment.rating.toFixed(1)}
+              </span>
               <span className={classes.stat_label}>Rating</span>
             </div>
             <div className={classes.stat_item}>
@@ -75,7 +94,7 @@ export const ApartmentSidebar = ({ apartment, activeTab, setActiveTab }: Apartme
           return (
             <button
               key={item.id}
-              className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ''}`}
+              className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ""}`}
               onClick={() => setActiveTab(item.id)}
             >
               <Icon className={classes.nav_icon} />
@@ -87,4 +106,3 @@ export const ApartmentSidebar = ({ apartment, activeTab, setActiveTab }: Apartme
     </div>
   );
 };
-

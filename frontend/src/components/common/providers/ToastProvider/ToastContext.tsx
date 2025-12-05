@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { createContext, useCallback, useState, ReactNode } from 'react';
-import { ToastType } from './Toast/Toast';
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
+import { createContext, type ReactNode, useCallback, useState } from "react";
+import type { ToastType } from "./Toast/Toast";
 
 const ToastContainer = dynamic(
-  () => import('./Toast/ToastContainer').then(mod => mod.ToastContainer),
-  { ssr: false }
+  () => import("./Toast/ToastContainer").then((mod) => mod.ToastContainer),
+  { ssr: false },
 );
 
 export interface ToastItem {
@@ -25,36 +25,56 @@ export interface ToastContextType {
 }
 
 export const ToastContext = createContext<ToastContextType>({
-  showToast: () => { },
-  success: () => { },
-  error: () => { },
-  warning: () => { },
-  info: () => { },
+  showToast: () => {},
+  success: () => {},
+  error: () => {},
+  warning: () => {},
+  info: () => {},
 });
 
-export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ToastProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const showToast = useCallback((message: string, type: ToastType, duration?: number) => {
-    const id = Date.now().toString();
-    setToasts((prevToasts) => [...prevToasts, { id, message, type, duration }]);
-  }, []);
+  const showToast = useCallback(
+    (message: string, type: ToastType, duration?: number) => {
+      const id = Date.now().toString();
+      setToasts((prevToasts) => [
+        ...prevToasts,
+        { id, message, type, duration },
+      ]);
+    },
+    [],
+  );
 
-  const success = useCallback((message: string, duration?: number) => {
-    showToast(message, 'success', duration);
-  }, [showToast]);
+  const success = useCallback(
+    (message: string, duration?: number) => {
+      showToast(message, "success", duration);
+    },
+    [showToast],
+  );
 
-  const error = useCallback((message: string, duration?: number) => {
-    showToast(message, 'error', duration);
-  }, [showToast]);
+  const error = useCallback(
+    (message: string, duration?: number) => {
+      showToast(message, "error", duration);
+    },
+    [showToast],
+  );
 
-  const warning = useCallback((message: string, duration?: number) => {
-    showToast(message, 'warning', duration);
-  }, [showToast]);
+  const warning = useCallback(
+    (message: string, duration?: number) => {
+      showToast(message, "warning", duration);
+    },
+    [showToast],
+  );
 
-  const info = useCallback((message: string, duration?: number) => {
-    showToast(message, 'info', duration);
-  }, [showToast]);
+  const info = useCallback(
+    (message: string, duration?: number) => {
+      showToast(message, "info", duration);
+    },
+    [showToast],
+  );
 
   const removeToast = useCallback((id: string) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
@@ -68,4 +88,4 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   );
 };
 
-export default ToastProvider; 
+export default ToastProvider;

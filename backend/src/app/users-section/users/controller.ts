@@ -5,13 +5,16 @@ import {
   Body,
   Query,
   Put,
-  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { AdminOnly, Auth, ImageUploadInterceptor, JwtAuthGuard } from 'src/lib/common';
+import {
+  AdminOnly,
+  Auth,
+  ImageUploadInterceptor,
+  JwtAuthGuard,
+} from 'src/lib/common';
 import { Prisma, User } from '@shared/src/database';
 import { UsersFiltersDto, AdminUpdateUserDto, UpdateUserDto } from './dto';
 import { ListService, CrudService } from './services';
@@ -22,7 +25,7 @@ export class UsersController {
   constructor(
     private readonly listService: ListService,
     private readonly crudService: CrudService,
-  ) { }
+  ) {}
 
   @Get('find')
   @AdminOnly()
@@ -51,7 +54,7 @@ export class UsersController {
     @Auth() auth: User,
     @Query() where: Prisma.UserWhereUniqueInput,
     @Body() data: UpdateUserDto | AdminUpdateUserDto,
-    @UploadedFile() file?: Express.Multer.File | null
+    @UploadedFile() file?: Express.Multer.File | null,
   ) {
     return this.crudService.update({ auth, data, where, file });
   }

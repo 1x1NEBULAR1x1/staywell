@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { BaseListResult } from '@shared/src';
 import { Prisma, Review } from '@shared/src/database';
-import { EXTENDED_REVIEW_INCLUDE, ExtendedReview } from '@shared/src/types/apartments-section';
+import {
+  EXTENDED_REVIEW_INCLUDE,
+  ExtendedReview,
+} from '@shared/src/types/apartments-section';
 import { ReviewsFiltersDto } from '../dto';
 import { PrismaService } from 'src/lib/prisma';
 
@@ -10,7 +13,7 @@ import { PrismaService } from 'src/lib/prisma';
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: ReviewsFiltersDto) {
     const { apartment_id, user_id, booking_id, min_rating } = options;
@@ -30,16 +33,21 @@ export class ListService {
    * @param filters Filter options
    * @returns List of filtered reviews and count
    */
-  async findAll({ filters }: { filters: ReviewsFiltersDto }): Promise<BaseListResult<ExtendedReview>> {
+  async findAll({
+    filters,
+  }: {
+    filters: ReviewsFiltersDto;
+  }): Promise<BaseListResult<ExtendedReview>> {
     const query_options = this.prisma.buildQuery<Review>({
       filters,
       customFilters: this.customFilters,
     });
-    const { items, total } = await this.prisma.findWithPagination<ExtendedReview>({
-      model: this.prisma.review,
-      query_options,
-      include: EXTENDED_REVIEW_INCLUDE,
-    });
+    const { items, total } =
+      await this.prisma.findWithPagination<ExtendedReview>({
+        model: this.prisma.review,
+        query_options,
+        include: EXTENDED_REVIEW_INCLUDE,
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

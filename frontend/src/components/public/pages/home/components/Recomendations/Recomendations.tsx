@@ -1,35 +1,44 @@
-'use client';
+"use client";
 
-import { useEffect, useCallback } from 'react';
-import classes from './Recomendations.module.scss';
-import { useInfinityApartments } from '@/hooks/public/apartments';
-import { useHomePageStore } from '@/stores/public/pages/home/useHomePageStore';
-import { Shimmer } from '@/components/styles/ui';
-import Link from 'next/link';
-import { getTypeDisplayName, getTypeImage, ApartmentCard } from './components';
+import type { BaseListResult } from "@shared/src/common/base-types/base-list-result.interface";
+import type { ExtendedApartment } from "@shared/src/types/apartments-section/extended.types";
+import Link from "next/link";
+import { useCallback, useEffect } from "react";
+import { Shimmer } from "@/components/styles/ui";
+import { useInfinityApartments } from "@/hooks/public/apartments";
+import { useHomePageStore } from "@/stores/public/pages/home/useHomePageStore";
+import { getTypeDisplayName, getTypeImage } from "./components";
+import classes from "./Recomendations.module.scss";
 
-
-export const Recomendations = () => {
+export const Recomendations = ({
+  initial_data,
+}: {
+  initial_data?: BaseListResult<ExtendedApartment>;
+}) => {
   const { filters, setIsApartmentsLoading } = useHomePageStore();
 
-  const {
-    apartments,
-    isLoading,
-    loadMore,
-    hasNextPage,
-    isFetchingNextPage
-  } = useInfinityApartments({
-    ...filters,
-    take: 12,
-    is_available: true,
-  });
+  const { apartments, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
+    useInfinityApartments(
+      {
+        ...filters,
+        take: 12,
+        is_available: true,
+      },
+      {
+        initial_data: initial_data,
+      },
+    );
 
   useEffect(() => {
     setIsApartmentsLoading(isLoading);
   }, [isLoading, setIsApartmentsLoading]);
 
   const handleScroll = useCallback(() => {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetchingNextPage) {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight ||
+      isFetchingNextPage
+    ) {
       return;
     }
     if (hasNextPage) {
@@ -38,14 +47,14 @@ export const Recomendations = () => {
   }, [hasNextPage, isFetchingNextPage, loadMore]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
   // Берем первые 5 квартир для отображения в рекомендациях
   const featuredApartments = apartments.slice(0, 5);
 
-  if (isLoading && apartments.length === 0) return <RecomendationsShimmer />
+  if (isLoading && apartments.length === 0) return <RecomendationsShimmer />;
 
   return (
     <section className={classes.section_recommendations}>
@@ -54,16 +63,22 @@ export const Recomendations = () => {
       <div className={classes.images_container}>
         {featuredApartments[0] && (
           <div className={classes.left_image}>
-            <Link className={classes.image} href={`/apartments/${featuredApartments[0].id}`}>
+            <Link
+              className={classes.image}
+              href={`/apartments/${featuredApartments[0].id}`}
+            >
               <div className={classes.badge}>
-                ${featuredApartments[0].booking_variants?.[0]?.price || 'N/A'}
+                ${featuredApartments[0].booking_variants?.[0]?.price || "N/A"}
                 <p className={classes.pernight}>per night</p>
               </div>
               <div className={classes.room_title}>
                 {getTypeDisplayName(featuredApartments[0].type)}
               </div>
               <img
-                src={featuredApartments[0].image || getTypeImage(featuredApartments[0].type)}
+                src={
+                  featuredApartments[0].image ||
+                  getTypeImage(featuredApartments[0].type)
+                }
                 alt={getTypeDisplayName(featuredApartments[0].type)}
               />
             </Link>
@@ -72,32 +87,44 @@ export const Recomendations = () => {
 
         <div className={classes.images}>
           {featuredApartments[1] && (
-            <Link className={classes.image} href={`/apartments/${featuredApartments[1].id}`}>
+            <Link
+              className={classes.image}
+              href={`/apartments/${featuredApartments[1].id}`}
+            >
               <div className={classes.badge}>
-                ${featuredApartments[1].booking_variants?.[0]?.price || 'N/A'}
+                ${featuredApartments[1].booking_variants?.[0]?.price || "N/A"}
                 <p className={classes.pernight}>per night</p>
               </div>
               <div className={classes.room_title}>
                 {getTypeDisplayName(featuredApartments[1].type)}
               </div>
               <img
-                src={featuredApartments[1].image || getTypeImage(featuredApartments[1].type)}
+                src={
+                  featuredApartments[1].image ||
+                  getTypeImage(featuredApartments[1].type)
+                }
                 alt={getTypeDisplayName(featuredApartments[1].type)}
               />
             </Link>
           )}
 
           {featuredApartments[2] && (
-            <Link className={classes.image} href={`/apartments/${featuredApartments[2].id}`}>
+            <Link
+              className={classes.image}
+              href={`/apartments/${featuredApartments[2].id}`}
+            >
               <div className={classes.badge}>
-                ${featuredApartments[2].booking_variants?.[0]?.price || 'N/A'}
+                ${featuredApartments[2].booking_variants?.[0]?.price || "N/A"}
                 <p className={classes.pernight}>per night</p>
               </div>
               <div className={classes.room_title}>
                 {getTypeDisplayName(featuredApartments[2].type)}
               </div>
               <img
-                src={featuredApartments[2].image || getTypeImage(featuredApartments[2].type)}
+                src={
+                  featuredApartments[2].image ||
+                  getTypeImage(featuredApartments[2].type)
+                }
                 alt={getTypeDisplayName(featuredApartments[2].type)}
               />
             </Link>
@@ -106,32 +133,44 @@ export const Recomendations = () => {
 
         <div className={classes.images}>
           {featuredApartments[3] && (
-            <Link className={classes.image} href={`/apartments/${featuredApartments[3].id}`}>
+            <Link
+              className={classes.image}
+              href={`/apartments/${featuredApartments[3].id}`}
+            >
               <div className={classes.badge}>
-                ${featuredApartments[3].booking_variants?.[0]?.price || 'N/A'}
+                ${featuredApartments[3].booking_variants?.[0]?.price || "N/A"}
                 <p className={classes.pernight}>per night</p>
               </div>
               <div className={classes.room_title}>
                 {getTypeDisplayName(featuredApartments[3].type)}
               </div>
               <img
-                src={featuredApartments[3].image || getTypeImage(featuredApartments[3].type)}
+                src={
+                  featuredApartments[3].image ||
+                  getTypeImage(featuredApartments[3].type)
+                }
                 alt={getTypeDisplayName(featuredApartments[3].type)}
               />
             </Link>
           )}
 
           {featuredApartments[4] && (
-            <Link className={classes.image} href={`/apartments/${featuredApartments[4].id}`}>
+            <Link
+              className={classes.image}
+              href={`/apartments/${featuredApartments[4].id}`}
+            >
               <div className={classes.badge}>
-                ${featuredApartments[4].booking_variants?.[0]?.price || 'N/A'}
+                ${featuredApartments[4].booking_variants?.[0]?.price || "N/A"}
                 <p className={classes.pernight}>per night</p>
               </div>
               <div className={classes.room_title}>
                 {getTypeDisplayName(featuredApartments[4].type)}
               </div>
               <img
-                src={featuredApartments[4].images?.[0]?.image || getTypeImage(featuredApartments[4].type)}
+                src={
+                  featuredApartments[4].images?.[0]?.image ||
+                  getTypeImage(featuredApartments[4].type)
+                }
                 alt={getTypeDisplayName(featuredApartments[4].type)}
               />
             </Link>
@@ -141,7 +180,6 @@ export const Recomendations = () => {
     </section>
   );
 };
-
 
 const RecomendationsShimmer = () => (
   <section className={classes.section_recommendations}>
@@ -170,4 +208,4 @@ const RecomendationsShimmer = () => (
       </div>
     </div>
   </section>
-)
+);

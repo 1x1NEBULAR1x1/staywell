@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/lib/prisma';
-import { BookingVariant } from '@shared/src/database';
+import { BookingVariant, Prisma } from '@shared/src/database';
 import { CreateBookingVariantDto, UpdateBookingVariantDto } from '../dto';
 
 @Injectable()
@@ -20,9 +20,9 @@ export class CrudService {
     });
   }
 
-  async findOne(id: string) {
+  async find({ where }: { where: Prisma.BookingVariantWhereUniqueInput }) {
     const bookingVariant = await this.prisma.bookingVariant.findUnique({
-      where: { id },
+      where,
       include: { apartment: true },
     });
     if (!bookingVariant)
@@ -30,18 +30,28 @@ export class CrudService {
     return bookingVariant;
   }
 
-  async update(id: string, data: UpdateBookingVariantDto) {
-    await Promise.all([this.findOne(id)]);
+  async update({
+    where,
+    data,
+  }: {
+    where: Prisma.BookingVariantWhereUniqueInput;
+    data: UpdateBookingVariantDto;
+  }) {
+    await this.find({ where });
     return await this.prisma.bookingVariant.update({
-      where: { id },
+      where,
       data,
       include: { apartment: true },
     });
   }
 
-  async remove(id: string): Promise<BookingVariant> {
-    return !(await this.findOne(id)).is_excluded
-      ? await this.update(id, { is_excluded: true })
-      : await this.prisma.bookingVariant.delete({ where: { id } });
+  async remove({
+    where,
+  }: {
+    where: Prisma.BookingVariantWhereUniqueInput;
+  }): Promise<BookingVariant> {
+    return !(await this.find({ where })).is_excluded
+      ? await this.update({ where, data: { is_excluded: true } })
+      : await this.prisma.bookingVariant.delete({ where });
   }
 }

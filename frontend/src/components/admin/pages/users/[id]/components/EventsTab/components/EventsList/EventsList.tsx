@@ -1,5 +1,5 @@
-import classes from './EventsList.module.scss';
-import { ExtendedEvent } from '@shared/src';
+import type { ExtendedEvent } from "@shared/src";
+import classes from "./EventsList.module.scss";
 
 export const EventsList = ({ events }: { events: ExtendedEvent[] }) => {
   if (events.length === 0) {
@@ -22,7 +22,10 @@ export const EventsList = ({ events }: { events: ExtendedEvent[] }) => {
             </div>
             <div className={classes.detail}>
               <span className={classes.label}>Dates:</span>
-              <span>{new Date(event.start).toLocaleDateString()} - {new Date(event.end).toLocaleDateString()}</span>
+              <span>
+                {new Date(event.start).toLocaleDateString()} -{" "}
+                {new Date(event.end).toLocaleDateString()}
+              </span>
             </div>
           </div>
 
@@ -34,4 +37,3 @@ export const EventsList = ({ events }: { events: ExtendedEvent[] }) => {
     </div>
   );
 };
-

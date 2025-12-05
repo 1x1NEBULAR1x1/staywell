@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export const useProfileInfoTab = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -12,8 +12,3 @@ export const useProfileInfoTab = () => {
     stopEditing,
   };
 };
-
-
-
-
-

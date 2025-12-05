@@ -1,4 +1,1 @@
-export * from './BedTypeCard';
-
-
-
+export * from "./BedTypeCard";

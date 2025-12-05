@@ -1,2 +1,1 @@
-export { ApartmentSidebar } from './ApartmentSidebar';
-
+export { ApartmentSidebar } from "./ApartmentSidebar";

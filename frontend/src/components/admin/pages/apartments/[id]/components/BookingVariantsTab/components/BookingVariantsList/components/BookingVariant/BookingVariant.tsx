@@ -1,40 +1,55 @@
-import classes from './BookingVariant.module.scss';
+import type {
+  BookingVariant as BookingVariantType,
+  CruddableTypes,
+} from "@shared/src";
+import { isAxiosError } from "axios";
+import { useParams } from "next/navigation";
+import { useModel } from "@/hooks/admin/queries";
+import { useToast } from "@/hooks/common";
+import classes from "./BookingVariant.module.scss";
 
-import { BookingVariant as BookingVariantType, CruddableTypes } from '@shared/src';
-import { useModel } from '@/hooks/admin/queries';
-import { useToast } from '@/hooks/common';
-import { isAxiosError } from 'axios';
-import { useParams } from 'next/navigation';
+export const BookingVariant = ({
+  booking_variant,
+}: {
+  booking_variant: BookingVariantType;
+}) => {
+  const { id } = useParams<{ id: string }>();
+  const { refetch: refetch_apartment } = useModel("APARTMENT").find(id);
+  const toast = useToast();
+  const { update, remove } = useModel("BOOKING_VARIANT");
+  const [update_mutation, remove_mutation] = [
+    update(booking_variant.id),
+    remove(booking_variant.id),
+  ];
 
-export const BookingVariant = ({ booking_variant }: { booking_variant: BookingVariantType }) => {
-  const { id } = useParams<{ id: string }>()
-  const { refetch: refetch_apartment } = useModel('APARTMENT').find(id)
-  const toast = useToast()
-  const { update, remove } = useModel("BOOKING_VARIANT")
-  const [update_mutation, remove_mutation] = [update(booking_variant.id), remove(booking_variant.id)]
-
-  const handleUpdate = async (data: CruddableTypes<'BOOKING_VARIANT'>['update']) => {
+  const handleUpdate = async (
+    data: CruddableTypes<"BOOKING_VARIANT">["update"],
+  ) => {
     try {
-      await update_mutation.mutateAsync(data)
-      refetch_apartment()
-      toast.success('Booking variant has been updated successfully')
+      await update_mutation.mutateAsync(data);
+      refetch_apartment();
+      toast.success("Booking variant has been updated successfully");
     } catch (error) {
-      isAxiosError(error) && toast.error(`Error during update: ${error.message}`)
-      console.error(error)
+      isAxiosError(error) &&
+        toast.error(`Error during update: ${error.message}`);
+      console.error(error);
     }
-  }
+  };
   const handleRemove = async () => {
-    await remove_mutation.mutateAsync()
-    refetch_apartment()
-  }
-
+    await remove_mutation.mutateAsync();
+    refetch_apartment();
+  };
 
   return (
     <div key={booking_variant.id} className={classes.variant_item}>
       <div className={classes.variant_info}>
         <div className={classes.variant_details}>
-          <span className={classes.price}>${booking_variant.price.toFixed(2)}/night</span>
-          <span className={classes.capacity}>{booking_variant.capacity} guests</span>
+          <span className={classes.price}>
+            ${booking_variant.price.toFixed(2)}/night
+          </span>
+          <span className={classes.capacity}>
+            {booking_variant.capacity} guests
+          </span>
         </div>
 
         <div className={classes.variant_controls}>
@@ -45,7 +60,9 @@ export const BookingVariant = ({ booking_variant }: { booking_variant: BookingVa
               min="0"
               step="0.01"
               value={booking_variant.price}
-              onChange={(e) => handleUpdate({ price: parseFloat(e.target.value) || 0 })}
+              onChange={(e) =>
+                handleUpdate({ price: parseFloat(e.target.value) || 0 })
+              }
               className={classes.control_input}
               disabled={update_mutation.isPending}
             />
@@ -57,7 +74,9 @@ export const BookingVariant = ({ booking_variant }: { booking_variant: BookingVa
               type="number"
               min="1"
               value={booking_variant.capacity}
-              onChange={(e) => handleUpdate({ capacity: parseInt(e.target.value) || 1 })}
+              onChange={(e) =>
+                handleUpdate({ capacity: parseInt(e.target.value, 10) || 1 })
+              }
               className={classes.control_input}
               disabled={update_mutation.isPending}
             />
@@ -68,10 +87,12 @@ export const BookingVariant = ({ booking_variant }: { booking_variant: BookingVa
       <div className={classes.variant_actions}>
         <button
           className={`${classes.availability_button} ${booking_variant.is_available ? classes.available : classes.unavailable}`}
-          onClick={() => handleUpdate({ is_available: !booking_variant.is_available })}
+          onClick={() =>
+            handleUpdate({ is_available: !booking_variant.is_available })
+          }
           disabled={update_mutation.isPending}
         >
-          {booking_variant.is_available ? 'Available' : 'Unavailable'}
+          {booking_variant.is_available ? "Available" : "Unavailable"}
         </button>
 
         <button
@@ -83,5 +104,5 @@ export const BookingVariant = ({ booking_variant }: { booking_variant: BookingVa
         </button>
       </div>
     </div>
-  )
+  );
 };

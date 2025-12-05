@@ -10,7 +10,7 @@ import { CardDetailsFiltersDto } from '../dto';
  */
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: CardDetailsFiltersDto) {
     const { user_id, holder, start, end } = options;

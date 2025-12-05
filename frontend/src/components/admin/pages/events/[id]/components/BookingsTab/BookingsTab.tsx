@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { ExtendedEvent } from '@shared/src';
-import classes from './BookingsTab.module.scss';
-import { Users, DollarSign, Calendar, AlertCircle } from 'lucide-react';
+import type { ExtendedEvent } from "@shared/src";
+import { AlertCircle, Calendar, DollarSign, Users } from "lucide-react";
+import classes from "./BookingsTab.module.scss";
 
 export const BookingsTab = ({ event }: { event: ExtendedEvent }) => {
   // For now, showing placeholder as booking_events is not loaded
@@ -42,7 +42,9 @@ export const BookingsTab = ({ event }: { event: ExtendedEvent }) => {
           </div>
           <div className={classes.stat_content}>
             <span className={classes.stat_label}>Total Revenue</span>
-            <span className={classes.stat_value}>${totalRevenue.toFixed(2)}</span>
+            <span className={classes.stat_value}>
+              ${totalRevenue.toFixed(2)}
+            </span>
           </div>
         </div>
 
@@ -66,8 +68,8 @@ export const BookingsTab = ({ event }: { event: ExtendedEvent }) => {
           </span>
         </div>
         <div className={classes.progress_bar}>
-          <div 
-            className={classes.progress_fill} 
+          <div
+            className={classes.progress_fill}
             style={{ width: `${(totalParticipants / event.capacity) * 100}%` }}
           />
         </div>
@@ -84,19 +86,22 @@ export const BookingsTab = ({ event }: { event: ExtendedEvent }) => {
       {/* Bookings List */}
       <div className={classes.bookings_section}>
         <h3 className={classes.section_title}>Bookings List</h3>
-        
+
         {bookingsCount === 0 ? (
           <div className={classes.empty_state}>
             <AlertCircle className={classes.empty_icon} />
             <h4 className={classes.empty_title}>No Bookings Yet</h4>
             <p className={classes.empty_text}>
-              This event doesn't have any bookings yet. Bookings will appear here once users start registering.
+              This event doesn't have any bookings yet. Bookings will appear
+              here once users start registering.
             </p>
           </div>
         ) : (
           <div className={classes.bookings_list}>
             {/* Bookings will be displayed here when implemented */}
-            <p className={classes.placeholder}>Bookings list will be displayed here</p>
+            <p className={classes.placeholder}>
+              Bookings list will be displayed here
+            </p>
           </div>
         )}
       </div>
@@ -123,11 +128,15 @@ export const BookingsTab = ({ event }: { event: ExtendedEvent }) => {
             </div>
             <div className={classes.pricing_row}>
               <span className={classes.pricing_label}>Maximum capacity:</span>
-              <span className={classes.pricing_value}>{event.capacity} people</span>
+              <span className={classes.pricing_value}>
+                {event.capacity} people
+              </span>
             </div>
             <div className={classes.pricing_row}>
               <span className={classes.pricing_label}>Potential revenue:</span>
-              <span className={classes.pricing_value}>${(event.price * event.capacity).toFixed(2)}</span>
+              <span className={classes.pricing_value}>
+                ${(event.price * event.capacity).toFixed(2)}
+              </span>
             </div>
           </div>
         </div>
@@ -135,4 +144,3 @@ export const BookingsTab = ({ event }: { event: ExtendedEvent }) => {
     </div>
   );
 };
-

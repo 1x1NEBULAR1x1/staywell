@@ -41,4 +41,3 @@ export const WS_DISCONNECT_REASONS = {
   SERVER_DISCONNECT: "io server disconnect",
   CLIENT_DISCONNECT: "io client disconnect",
 };
-

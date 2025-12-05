@@ -1,0 +1,48 @@
+@use '@/components/styles/_variables.scss' as *;
+
+
+
+.terms {
+  h4 {
+    margin: 0 0 $spacing-md 0;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $primary-dark;
+  }
+
+  .termItems {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  .termItem {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+
+    svg {
+      color: $green;
+      flex-shrink: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .terms {
+    h4 {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .terms {
+    .termItems {
+      gap: $spacing-sm;
+    }
+  }
+
+}

@@ -1,2 +1,1 @@
-export { EditBookingModal } from './EditBookingModal';
-
+export { EditBookingModal } from "./EditBookingModal";

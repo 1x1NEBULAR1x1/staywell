@@ -1,1 +1,1 @@
-export { DynamicFiltersMenu } from './DynamicFiltersMenu';
+export { DynamicFiltersMenu } from "./DynamicFiltersMenu";

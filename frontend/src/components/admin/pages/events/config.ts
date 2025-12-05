@@ -1,52 +1,55 @@
-import { ColumnConfig, FiltersConfig } from "@/components/admin/common/AdminPage/ListPage";
-import { Event } from "@shared/src/database";
+import type { Event } from "@shared/src/database";
+import type {
+  ColumnConfig,
+  FiltersConfig,
+} from "@/components/admin/common/AdminPage/ListPage";
 
 export const columns: ColumnConfig<keyof Event>[] = [
-  { label: 'Name', field: 'name' },
-  { label: 'Status', field: 'is_excluded' },
-  { label: 'Capacity', field: 'capacity' },
-  { label: 'Created', field: 'created' }
-]
+  { label: "Name", field: "name" },
+  { label: "Status", field: "is_excluded" },
+  { label: "Capacity", field: "capacity" },
+  { label: "Created", field: "created" },
+];
 
 export const filters_config: FiltersConfig = {
   name: {
-    type: 'string',
-    placeholder: 'Search by name...'
+    type: "string",
+    placeholder: "Search by name...",
   },
   min_capacity: {
-    type: 'integer',
-    label: 'Min Capacity',
-    placeholder: 'Minimum capacity...'
+    type: "integer",
+    label: "Min Capacity",
+    placeholder: "Minimum capacity...",
   },
   max_capacity: {
-    type: 'integer',
-    label: 'Max Capacity',
-    placeholder: 'Maximum capacity...'
+    type: "integer",
+    label: "Max Capacity",
+    placeholder: "Maximum capacity...",
   },
   min_price: {
-    type: 'number',
-    label: 'Min Price',
-    placeholder: 'Minimum price...'
+    type: "number",
+    label: "Min Price",
+    placeholder: "Minimum price...",
   },
   max_price: {
-    type: 'number',
-    label: 'Max Price',
-    placeholder: 'Maximum price...'
+    type: "number",
+    label: "Max Price",
+    placeholder: "Maximum price...",
   },
   min_start: {
-    type: 'date',
-    label: 'Start Date From'
+    type: "date",
+    label: "Start Date From",
   },
   max_start: {
-    type: 'date',
-    label: 'Start Date To'
+    type: "date",
+    label: "Start Date To",
   },
   min_end: {
-    type: 'date',
-    label: 'End Date From'
+    type: "date",
+    label: "End Date From",
   },
   max_end: {
-    type: 'date',
-    label: 'End Date To'
+    type: "date",
+    label: "End Date To",
   },
-}
+};

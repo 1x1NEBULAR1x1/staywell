@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import classes from './NumberInput.module.scss';
+import classes from "./NumberInput.module.scss";
 
 type NumberInputProps = {
   label: string;
@@ -10,9 +10,17 @@ type NumberInputProps = {
   min?: number;
   max?: number;
   step?: number;
-}
+};
 
-export const NumberInput = ({ label, value, onChange, placeholder, min, max, step }: NumberInputProps) => {
+export const NumberInput = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  min,
+  max,
+  step,
+}: NumberInputProps) => {
   return (
     <div className={classes.field}>
       <label className={classes.label}>{label}</label>
@@ -20,10 +28,10 @@ export const NumberInput = ({ label, value, onChange, placeholder, min, max, ste
         type="number"
         className={classes.input}
         step={step}
-        value={value ?? ''}
+        value={value ?? ""}
         onChange={(e) => {
           const val = e.target.value;
-          onChange(val === '' ? undefined : Number(val));
+          onChange(val === "" ? undefined : Number(val));
         }}
         placeholder={placeholder}
         min={min}
@@ -32,4 +40,3 @@ export const NumberInput = ({ label, value, onChange, placeholder, min, max, ste
     </div>
   );
 };
-

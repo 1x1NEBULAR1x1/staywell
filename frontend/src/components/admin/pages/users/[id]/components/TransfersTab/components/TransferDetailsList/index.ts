@@ -1,2 +1,1 @@
-export { TransferDetailsList } from './TransferDetailsList';
-
+export { TransferDetailsList } from "./TransferDetailsList";

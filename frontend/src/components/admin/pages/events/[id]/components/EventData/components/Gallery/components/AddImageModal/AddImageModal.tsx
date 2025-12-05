@@ -1,24 +1,22 @@
-'use client';
+"use client";
 
-import { CruddableTypes } from '@shared/src';
-
-import { useModel } from '@/hooks/admin/queries';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { BaseFormModal } from '@/components/admin/common/Modal/BaseFormModal';
-import { ImageUploader, InputField } from '@/components/admin/common/Form';
+import type { CruddableTypes } from "@shared/src";
+import { useForm } from "react-hook-form";
+import { ImageUploader, InputField } from "@/components/admin/common/Form";
+import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
+import { useModel } from "@/hooks/admin/queries";
 
 type AddImageModalProps = {
   event_id: string;
   onClose: () => void;
-}
+};
 
-type FormData = CruddableTypes<'EVENT_IMAGE'>['create'] & {
-  image_type: 'file' | 'url';
-}
+type FormData = CruddableTypes<"EVENT_IMAGE">["create"] & {
+  image_type: "file" | "url";
+};
 
 export const AddImageModal = ({ event_id, onClose }: AddImageModalProps) => {
-  const create_mutation = useModel('EVENT_IMAGE').create();
+  const create_mutation = useModel("EVENT_IMAGE").create();
 
   const form = useForm<FormData>({
     defaultValues: {
@@ -26,34 +24,34 @@ export const AddImageModal = ({ event_id, onClose }: AddImageModalProps) => {
       description: null,
       image: undefined,
       file: undefined,
-      image_type: 'file',
-      event_id
+      image_type: "file",
+      event_id,
     },
-    mode: 'onChange'
+    mode: "onChange",
   });
 
   const onSubmit = async (data: FormData) => {
     try {
       await create_mutation.mutateAsync({
         ...data,
-        event_id
+        event_id,
       });
       onClose();
     } catch (error) {
-      console.error('Failed to create image:', error);
+      console.error("Failed to create image:", error);
     }
-  }
+  };
 
   return (
     <BaseFormModal
       is_open
       model="EVENT_IMAGE"
-      title='Add Image'
+      title="Add Image"
       onClose={onClose}
       form={form}
       onSubmit={onSubmit}
       is_loading={create_mutation.isPending}
-      size='md'
+      size="md"
       reset_on_close
     >
       <ImageUploader
@@ -62,25 +60,25 @@ export const AddImageModal = ({ event_id, onClose }: AddImageModalProps) => {
         errors={form.formState.errors}
         setValue={form.setValue}
         watch={form.watch}
-        label='Image'
-        placeholder='https://example.com/image.jpg'
-        image_file_field_name='file'
-        image_url_field_name='image'
-        image_type_field_name='image_type'
+        label="Image"
+        placeholder="https://example.com/image.jpg"
+        image_file_field_name="file"
+        image_url_field_name="image"
+        image_type_field_name="image_type"
       />
       <InputField
-        label='Name'
-        name='name'
-        placeholder='Name'
+        label="Name"
+        name="name"
+        placeholder="Name"
         rules={{ maxLength: 2048 }}
         required
         register={form.register}
         errors={form.formState.errors}
       />
       <InputField
-        label='Description'
-        name='description'
-        placeholder='Description'
+        label="Description"
+        name="description"
+        placeholder="Description"
         register={form.register}
         errors={form.formState.errors}
       />

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import classes from './BookingVariantsSection.module.scss';
-import { BookingVariantFornModal } from '../BookingVariantsTab/components/BookingVariantFornModal/BookingVariantFornModal';
-import { BookingVariantsList } from '../BookingVariantsTab/components/BookingVariantsList/BookingVariantsList';
-import { useParams } from 'next/navigation';
-import { useModel } from '@/hooks/admin/queries/useModel';
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import { BookingVariantFornModal } from "../BookingVariantsTab/components/BookingVariantFornModal/BookingVariantFornModal";
+import { BookingVariantsList } from "../BookingVariantsTab/components/BookingVariantsList/BookingVariantsList";
+import classes from "./BookingVariantsSection.module.scss";
 
 export const BookingVariantsSection = () => {
-  const { id } = useParams<{ id: string }>()
-  const { data: apartment } = useModel('APARTMENT').find(id)
+  const { id } = useParams<{ id: string }>();
+  const { data: apartment } = useModel("APARTMENT").find(id);
   const [isAddingVariant, setIsAddingVariant] = useState(false);
 
   return (
@@ -20,15 +20,19 @@ export const BookingVariantsSection = () => {
           className={classes.add_button}
           onClick={() => setIsAddingVariant(!isAddingVariant)}
         >
-          {isAddingVariant ? 'Cancel' : '+ Add Variant'}
+          {isAddingVariant ? "Cancel" : "+ Add Variant"}
         </button>
       </div>
 
       {/* Add Variant Form */}
-      {isAddingVariant && <BookingVariantFornModal onClose={() => setIsAddingVariant(false)} />}
+      {isAddingVariant && (
+        <BookingVariantFornModal onClose={() => setIsAddingVariant(false)} />
+      )}
 
       {/* Variants List */}
-      <BookingVariantsList booking_variants={apartment?.booking_variants || []} />
+      <BookingVariantsList
+        booking_variants={apartment?.booking_variants || []}
+      />
     </div>
   );
 };

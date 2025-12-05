@@ -1,9 +1,15 @@
 import { BaseFiltersDto, ToBoolean, ToEnum, ToUUID } from 'src/lib/common';
-import { Notification, NotificationAction, NotificationType } from '@shared/src/database';
+import {
+  Notification,
+  NotificationAction,
+  NotificationType,
+} from '@shared/src/database';
 import { NotificationsFilters } from '@shared/src/types/users-section/dto.types';
 
-
-export class NotificationsFiltersDto extends BaseFiltersDto<Notification> implements NotificationsFilters {
+export class NotificationsFiltersDto
+  extends BaseFiltersDto<Notification>
+  implements NotificationsFilters
+{
   @ToBoolean({
     required: false,
     description: 'By is read',

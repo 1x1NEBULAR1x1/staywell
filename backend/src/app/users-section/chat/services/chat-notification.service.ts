@@ -16,10 +16,9 @@ export class ChatNotificationService {
   /**
    * Notify about new message
    */
-  async notifyNewMessage(message: Message): Promise<void> {
+  notifyNewMessage(message: Message): void {
     if (!this.server) {
-      console.warn('WebSocket server not initialized yet');
-      return;
+      return console.warn('WebSocket server not initialized yet');
     }
 
     const room_name = this.getChatRoomName(
@@ -36,7 +35,7 @@ export class ChatNotificationService {
   /**
    * Notify about message edit
    */
-  async notifyMessageEdited(message: Message): Promise<void> {
+  notifyMessageEdited(message: Message): void {
     if (!this.server) return;
 
     const room_name = this.getChatRoomName(
@@ -49,7 +48,7 @@ export class ChatNotificationService {
   /**
    * Notify about message deletion
    */
-  async notifyMessageDeleted(message: Message): Promise<void> {
+  notifyMessageDeleted(message: Message): void {
     if (!this.server) return;
 
     const room_name = this.getChatRoomName(
@@ -64,10 +63,7 @@ export class ChatNotificationService {
   /**
    * Notify about messages read
    */
-  async notifyMessagesRead(
-    reader_id: string,
-    chat_partner_id: string,
-  ): Promise<void> {
+  notifyMessagesRead(reader_id: string, chat_partner_id: string): void {
     if (!this.server) return;
 
     const room_name = this.getChatRoomName(reader_id, chat_partner_id);
@@ -80,10 +76,7 @@ export class ChatNotificationService {
   /**
    * Notify about user online status change
    */
-  async notifyUserOnlineStatus(
-    user_id: string,
-    last_seen: Date | null,
-  ): Promise<void> {
+  notifyUserOnlineStatus(user_id: string, last_seen: Date | null): void {
     if (!this.server) return;
 
     // Notify all connected admins

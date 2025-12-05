@@ -1,1 +1,1 @@
-export { ReservationCard, ReservationCardShimmer } from './ReservationCard';
+export { ReservationCard, ReservationCardShimmer } from "./ReservationCard";

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Open_Sans } from "next/font/google";
+import { Open_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/common/providers";
 

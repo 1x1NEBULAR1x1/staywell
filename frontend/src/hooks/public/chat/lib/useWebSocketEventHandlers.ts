@@ -3,8 +3,8 @@
 import type { Message } from "@shared/src/database";
 import { useEffect, useRef } from "react";
 import type { Socket } from "socket.io-client";
-import { useUserChatStore } from ".";
 import { useAccount } from "@/hooks/common/useAccount";
+import { useUserChatStore } from ".";
 import { SUPPORT_CHAT_ID } from "./constants";
 
 interface UseWebSocketEventHandlersOptions {
@@ -17,7 +17,10 @@ interface UseWebSocketEventHandlersOptions {
     chat_partner_id: string;
     is_typing: boolean;
   }) => void;
-  onUserOnlineStatus?: (data: { user_id: string; last_seen: Date | null }) => void;
+  onUserOnlineStatus?: (data: {
+    user_id: string;
+    last_seen: Date | null;
+  }) => void;
 }
 
 export const useWebSocketEventHandlers = (
@@ -46,11 +49,15 @@ export const useWebSocketEventHandlers = (
       const newMessage = data.message;
 
       // Check if this is a replacement for an optimistic message
-      const optimisticIndex = existingMessages.findIndex(msg =>
-        msg.id.startsWith('temp-') && // optimistic messages have temp IDs
-        msg.sender_id === newMessage.sender_id &&
-        msg.message === newMessage.message &&
-        Math.abs(new Date(msg.created).getTime() - new Date(newMessage.created).getTime()) < 5000 // within 5 seconds
+      const optimisticIndex = existingMessages.findIndex(
+        (msg) =>
+          msg.id.startsWith("temp-") && // optimistic messages have temp IDs
+          msg.sender_id === newMessage.sender_id &&
+          msg.message === newMessage.message &&
+          Math.abs(
+            new Date(msg.created).getTime() -
+              new Date(newMessage.created).getTime(),
+          ) < 5000, // within 5 seconds
       );
 
       let updatedMessages;
@@ -83,7 +90,10 @@ export const useWebSocketEventHandlers = (
       chatStoreRef.current.setMessages(
         chatStoreRef.current.messages
           .map((m) => (m.id === data.message.id ? data.message : m))
-          .sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()),
+          .sort(
+            (a, b) =>
+              new Date(a.created).getTime() - new Date(b.created).getTime(),
+          ),
       );
       onMessageEdited?.(data.message);
     });
@@ -97,7 +107,12 @@ export const useWebSocketEventHandlers = (
     // History loaded
     socket.on(
       "history_loaded",
-      (data: { items: Message[]; total: number; skip: number; chat_partner_id: string }) => {
+      (data: {
+        items: Message[];
+        total: number;
+        skip: number;
+        chat_partner_id: string;
+      }) => {
         if (data.chat_partner_id !== SUPPORT_CHAT_ID) return;
 
         if (data.skip === 0) {
@@ -105,9 +120,16 @@ export const useWebSocketEventHandlers = (
           chatStoreRef.current.setMessages(data.items);
         } else {
           // Pagination - append new messages
-          const existingMessageIds = new Set(chatStoreRef.current.messages.map(m => m.id));
-          const newMessages = data.items.filter(m => !existingMessageIds.has(m.id));
-          chatStoreRef.current.setMessages([...chatStoreRef.current.messages, ...newMessages]);
+          const existingMessageIds = new Set(
+            chatStoreRef.current.messages.map((m) => m.id),
+          );
+          const newMessages = data.items.filter(
+            (m) => !existingMessageIds.has(m.id),
+          );
+          chatStoreRef.current.setMessages([
+            ...chatStoreRef.current.messages,
+            ...newMessages,
+          ]);
         }
       },
     );
@@ -148,6 +170,12 @@ export const useWebSocketEventHandlers = (
       socket.off("user_typing");
       socket.off("user_online_status");
     };
-  }, [socket, getHistory, onNewMessage, onMessageEdited, onUserTyping, onUserOnlineStatus, user]);
+  }, [
+    socket,
+    getHistory,
+    onNewMessage,
+    onMessageEdited,
+    onUserTyping,
+    onUserOnlineStatus,
+  ]);
 };
-

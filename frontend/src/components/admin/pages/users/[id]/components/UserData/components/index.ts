@@ -1,2 +1,1 @@
-export { EditUserModal } from './EditUserModal';
-
+export { EditUserModal } from "./EditUserModal";

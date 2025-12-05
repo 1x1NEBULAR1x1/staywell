@@ -54,10 +54,7 @@ export class EventsConfigService {
           },
           {
             // Event spans the entire booking period
-            AND: [
-              { start: { lte: start_date } },
-              { end: { gte: end_date } },
-            ],
+            AND: [{ start: { lte: start_date } }, { end: { gte: end_date } }],
           },
         ],
       },
@@ -81,33 +78,32 @@ export class EventsConfigService {
     });
 
     // Calculate available spots for each event
-    const availableEvents = events.map((event) => {
-      const bookedSpots = event.booking_events.reduce(
-        (total, booking) => total + booking.number_of_people,
-        0,
-      );
+    const availableEvents = events
+      .map((event) => {
+        const bookedSpots = event.booking_events.reduce(
+          (total, booking) => total + booking.number_of_people,
+          0,
+        );
 
-      const availableSpots = event.capacity - bookedSpots;
+        const availableSpots = event.capacity - bookedSpots;
 
-      return {
-        id: event.id,
-        name: event.name,
-        image: event.image,
-        description: event.description,
-        price: event.price,
-        capacity: event.capacity,
-        available_spots: Math.max(0, availableSpots), // Ensure non-negative
-        start: event.start,
-        end: event.end,
-        guide: event.guide || undefined,
-      };
-    }).filter(event => event.available_spots > 0); // Only return events with available spots
+        return {
+          id: event.id,
+          name: event.name,
+          image: event.image,
+          description: event.description,
+          price: event.price,
+          capacity: event.capacity,
+          available_spots: Math.max(0, availableSpots), // Ensure non-negative
+          start: event.start,
+          end: event.end,
+          guide: event.guide || undefined,
+        };
+      })
+      .filter((event) => event.available_spots > 0); // Only return events with available spots
 
     return {
       available_events: availableEvents,
     };
   }
 }
-
-
-

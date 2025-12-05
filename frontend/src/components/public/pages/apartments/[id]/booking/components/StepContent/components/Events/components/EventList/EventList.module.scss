@@ -1,0 +1,76 @@
+@use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
+
+.container {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  border-radius: $border-radius-lg;
+  border: $border-normal;
+  background-color: $background-main;
+  box-shadow: $box-shadow-lg;
+}
+
+.events_list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $background-light;
+  padding: $spacing-sm;
+  border-radius: $border-radius-lg;
+  gap: $spacing-md;
+  overflow-y: scroll;
+  height: 100%;
+
+  &::-webkit-scrollbar {
+    width: $spacing-xs;
+    padding: $spacing-sm;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-disabled;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: color.adjust($foreground-secondary, $alpha: 0.3);
+    border-radius: $border-radius-sm;
+
+    &:hover {
+      background: color.adjust($foreground-secondary, $alpha: 0.5);
+    }
+  }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-lg;
+  color: $foreground-secondary;
+  font-size: $font-size-md;
+
+  .spinner {
+    animation: spin 1s linear infinite;
+  }
+}
+
+.loading_trigger {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-md;
+  min-height: 60px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

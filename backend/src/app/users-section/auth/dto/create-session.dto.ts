@@ -1,4 +1,3 @@
-import { IsString, IsNotEmpty } from 'class-validator';
 import { ToUUID, ToString } from 'src/lib/common';
 
 export class CreateSessionDto {

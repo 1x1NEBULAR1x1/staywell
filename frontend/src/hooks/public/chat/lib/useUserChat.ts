@@ -52,7 +52,11 @@ export const useUserChat = (
       }
     },
     onConnectError: (error) => {
-      if (["authentication", "token"].some((message) => error.message?.includes(message))) {
+      if (
+        ["authentication", "token"].some((message) =>
+          error.message?.includes(message),
+        )
+      ) {
         connection.refreshTokenAndReconnect();
       }
     },
@@ -150,4 +154,3 @@ export const useUserChat = (
     ],
   );
 };
-

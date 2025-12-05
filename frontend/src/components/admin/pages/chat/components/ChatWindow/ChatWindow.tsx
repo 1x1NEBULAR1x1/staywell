@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useUsers } from "@/hooks/admin/queries";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import { useUsers } from "@/hooks/admin/queries";
 import { useQPId } from "@/hooks/common/useId";
 import classes from "./ChatWindow.module.scss";
 import { ChatInput, ChatMessages, ChatWindowHeader } from "./components";
@@ -13,8 +13,9 @@ export const ChatWindow = () => {
   const [message_input, setMessageInput] = useState("");
 
   const { sendMessage, startTyping, stopTyping } = useChat();
-  const { data: selected_user } = useUsers().find(selected_chat_id || "", { enabled: selected_chat_id !== null });
-
+  const { data: selected_user } = useUsers().find(selected_chat_id || "", {
+    enabled: selected_chat_id !== null,
+  });
 
   // Scroll to bottom when chat is selected
   useEffect(() => {
@@ -82,7 +83,7 @@ export const ChatWindow = () => {
         is_fetching_next_page={false}
         selected_user_avatar={avatar_url}
         should_scroll={should_scroll}
-        onLoadMore={() => { }} // No pagination for now
+        onLoadMore={() => {}} // No pagination for now
         onScrollComplete={handleScrollComplete}
       />
 

@@ -1,0 +1,124 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.general_tab {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    .section_title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $foreground-main;
+      margin: 0;
+      border-bottom: 2px solid $border-color;
+      padding-bottom: $spacing-sm;
+    }
+
+    .details_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: $spacing-lg;
+
+      .detail_item {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        padding: $spacing-md;
+        background: $background-light;
+        border-radius: $border-radius-md;
+        border: $border-normal;
+
+        .detail_label {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-weight: $font-weight-normal;
+        }
+
+        .detail_value {
+          font-size: $font-size-md;
+          color: $foreground-main;
+          font-weight: $font-weight-semibold;
+
+          .status_badge {
+            display: inline-block;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: $border-radius-sm;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-semibold;
+            text-transform: uppercase;
+            color: $foreground-white;
+
+            &.pending {
+              background-color: $yellow;
+            }
+
+            &.success {
+              background-color: $green;
+            }
+
+            &.failed,
+            &.canceled {
+              background-color: $red;
+            }
+          }
+        }
+      }
+    }
+
+    .description {
+      font-size: $font-size-md;
+      color: $foreground-main;
+      line-height: 1.6;
+      margin: 0;
+      padding: $spacing-lg;
+      background: $background-light;
+      border-radius: $border-radius-md;
+      border: $border-normal;
+    }
+
+    .related_entities {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+
+      .entity_item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        padding: $spacing-md;
+        background: $background-light;
+        border-radius: $border-radius-md;
+        border: $border-normal;
+
+        .entity_type {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-weight: $font-weight-normal;
+          min-width: 100px;
+        }
+
+        .entity_id {
+          font-size: $font-size-md;
+          color: $foreground-main;
+          font-weight: $font-weight-semibold;
+          font-family: monospace;
+        }
+
+        .entity_status {
+          font-size: $font-size-sm;
+          color: $foreground-secondary;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+}

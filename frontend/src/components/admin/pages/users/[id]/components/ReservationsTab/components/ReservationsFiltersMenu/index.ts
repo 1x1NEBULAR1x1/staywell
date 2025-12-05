@@ -1,2 +1,1 @@
-export { ReservationsFiltersMenu } from './ReservationsFiltersMenu';
-
+export { ReservationsFiltersMenu } from "./ReservationsFiltersMenu";

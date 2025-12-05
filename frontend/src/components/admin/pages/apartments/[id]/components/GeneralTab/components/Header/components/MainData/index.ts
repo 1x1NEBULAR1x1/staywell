@@ -1,1 +1,1 @@
-export { MainData } from './MainData';
+export { MainData } from "./MainData";

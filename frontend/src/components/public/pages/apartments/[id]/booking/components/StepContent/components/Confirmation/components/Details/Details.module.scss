@@ -1,0 +1,93 @@
+@use '@/components/styles/_variables.scss' as *;
+
+
+
+.booking_details {
+  h3 {
+    margin: 0 0 $spacing-sm 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $primary-dark;
+  }
+
+  .detail_cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: $spacing-sm;
+  }
+
+  .detail_card {
+    display: flex;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: $background-main;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-sm;
+    border: $border-normal;
+
+    .card_icon {
+      flex-shrink: 0;
+      width: $font-size-4xl;
+      height: $font-size-4xl;
+      background: $background-light;
+      border-radius: $border-radius-md;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $primary-main;
+    }
+
+    .card_content {
+      flex: 1;
+      min-width: 0;
+
+      h4 {
+        margin: 0 0 $spacing-sm 0;
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $primary-dark;
+      }
+
+      p {
+        margin: 0 0 $spacing-sm 0;
+        font-size: $font-size-sm;
+        color: $foreground-secondary;
+        line-height: 1.4;
+      }
+
+      .nights,
+      .price {
+        display: block;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-normal;
+        color: $primary-main;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .booking_details {
+    .detail_cards {
+      grid-template-columns: 1fr;
+    }
+
+    .detail_card {
+      padding: $spacing-md;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .booking_details {
+    .detail_card {
+      flex-direction: column;
+      text-align: center;
+      gap: $spacing-sm;
+
+      .card_icon {
+        align-self: center;
+      }
+    }
+  }
+}

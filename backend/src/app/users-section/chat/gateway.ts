@@ -34,7 +34,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.chatWebsocketService.setServer(this.server);
 
     // Apply authentication middleware to this namespace
-    this.server.use(async (socket, next) => {
+    this.server.use(async (socket: Socket, next: (err?: Error) => void) => {
       try {
         const token = this.authService.extractTokenFromHandshake(
           socket.handshake,
@@ -50,7 +50,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
           return next(new Error('Authentication error'));
         }
 
-        socket.data.user = user;
+        (socket.data as { user: UserWithoutPassword }).user = user;
         next();
       } catch (error) {
         next(new Error('Authentication error'));
@@ -118,8 +118,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       await client.join(roomName);
 
       client.emit('chat_joined', { chat_partner_id: data.chat_partner_id });
-    } catch (error: any) {
-      client.emit('error', { message: error.message || 'Failed to join chat' });
+    } catch (error: unknown) {
+      client.emit('error', {
+        message: error instanceof Error ? error.message : 'Failed to join chat',
+      });
     }
   }
 
@@ -147,9 +149,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       const message = await this.chatWebsocketService.sendMessage(user, data);
       client.emit('message_sent', { message });
-    } catch (error: any) {
+    } catch (error: unknown) {
       client.emit('error', {
-        message: error.message || 'Failed to send message',
+        message:
+          error instanceof Error ? error.message : 'Failed to send message',
       });
     }
   }
@@ -165,9 +168,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       const message = await this.chatWebsocketService.editMessage(user, data);
       client.emit('message_edited', { message });
-    } catch (error: any) {
+    } catch (error: unknown) {
       client.emit('error', {
-        message: error.message || 'Failed to edit message',
+        message:
+          error instanceof Error ? error.message : 'Failed to edit message',
       });
     }
   }
@@ -183,9 +187,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       await this.chatWebsocketService.deleteMessage(user, data);
       client.emit('message_deleted', { message_id: data.message_id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       client.emit('error', {
-        message: error.message || 'Failed to delete message',
+        message:
+          error instanceof Error ? error.message : 'Failed to delete message',
       });
     }
   }
@@ -207,9 +212,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         ...history,
         chat_partner_id: data.chat_partner_id,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       client.emit('error', {
-        message: error.message || 'Failed to load history',
+        message:
+          error instanceof Error ? error.message : 'Failed to load history',
       });
     }
   }
@@ -225,9 +231,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       const chats = await this.chatWebsocketService.getChats(user, data);
       client.emit('chats_loaded', chats);
-    } catch (error: any) {
+    } catch (error: unknown) {
       client.emit('error', {
-        message: error.message || 'Failed to load chats',
+        message:
+          error instanceof Error ? error.message : 'Failed to load chats',
       });
     }
   }
@@ -245,9 +252,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         user,
         data.chat_partner_id,
       );
-    } catch (error: any) {
+    } catch (error: unknown) {
       client.emit('error', {
-        message: error.message || 'Failed to mark messages as read',
+        message:
+          error instanceof Error
+            ? error.message
+            : 'Failed to mark messages as read',
       });
     }
   }

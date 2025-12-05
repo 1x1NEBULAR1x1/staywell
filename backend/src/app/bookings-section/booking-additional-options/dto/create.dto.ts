@@ -17,12 +17,5 @@ export class CreateBookingAdditionalOptionDto
     description: 'Additional option ID',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
-  option_id!: string;
-
-  @ToUUID({
-    required: true,
-    description: 'Booking ID',
-    example: '123e4567-e89b-12d3-a456-426614174001',
-  })
-  booking_id!: string;
+  additional_option_id!: string;
 }

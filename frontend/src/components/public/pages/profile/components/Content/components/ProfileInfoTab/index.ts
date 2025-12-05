@@ -1,2 +1,1 @@
 export { ProfileInfoTab } from "./ProfileInfoTab";
-

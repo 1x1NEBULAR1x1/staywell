@@ -1,5 +1,5 @@
-export { MetaData } from './MetaData';
-export { MainData } from './MainData';
-export { Gallery } from './Gallery';
-export { EditEventModal } from './EditEventModal';
-export { AddButton } from './AddButton';
+export { AddButton } from "./AddButton";
+export { EditEventModal } from "./EditEventModal";
+export { Gallery } from "./Gallery";
+export { MainData } from "./MainData";
+export { MetaData } from "./MetaData";

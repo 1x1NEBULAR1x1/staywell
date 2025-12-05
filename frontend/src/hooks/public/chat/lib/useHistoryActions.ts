@@ -22,7 +22,11 @@ export const useHistoryActions = (
     (skip: number = 0, take: number = 50) => {
       if (!socket || !is_connected) return;
       console.log("Getting history for support chat");
-      socket.emit("get_history", { chat_partner_id: SUPPORT_CHAT_ID, skip, take });
+      socket.emit("get_history", {
+        chat_partner_id: SUPPORT_CHAT_ID,
+        skip,
+        take,
+      });
     },
     [socket, is_connected],
   );
@@ -31,4 +35,3 @@ export const useHistoryActions = (
     getHistory,
   };
 };
-

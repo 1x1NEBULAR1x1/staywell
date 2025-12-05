@@ -1,15 +1,18 @@
-'use client';
+"use client";
 
-import classes from './BulkActions.module.scss';
-import { Check, Trash2, Square, CheckSquare } from 'lucide-react';
-import { useBulkActions } from './useBulkActions';
+import { Check, CheckSquare, Square } from "lucide-react";
+import classes from "./BulkActions.module.scss";
+import { useBulkActions } from "./useBulkActions";
 
 interface BulkActionsProps {
   selectedNotifications: Set<string>;
   setSelectedNotifications: (notifications: Set<string>) => void;
 }
 
-export const BulkActions = ({ selectedNotifications, setSelectedNotifications }: BulkActionsProps) => {
+export const BulkActions = ({
+  selectedNotifications,
+  setSelectedNotifications,
+}: BulkActionsProps) => {
   const {
     handleSelectAll,
     handleBulkMarkAsRead,
@@ -19,7 +22,9 @@ export const BulkActions = ({ selectedNotifications, setSelectedNotifications }:
 
   if (selectedNotifications.size === 0) return null;
 
-  const allSelected = allNotifications?.items && selectedNotifications.size === allNotifications.items.length;
+  const allSelected =
+    allNotifications?.items &&
+    selectedNotifications.size === allNotifications.items.length;
 
   return (
     <div className={classes.bulk_actions}>
@@ -30,7 +35,11 @@ export const BulkActions = ({ selectedNotifications, setSelectedNotifications }:
             onClick={handleSelectAll}
             title={allSelected ? "Deselect all" : "Select all"}
           >
-            {allSelected ? <CheckSquare className={classes.select_icon} /> : <Square className={classes.select_icon} />}
+            {allSelected ? (
+              <CheckSquare className={classes.select_icon} />
+            ) : (
+              <Square className={classes.select_icon} />
+            )}
             {selectedNotifications.size} selected
           </button>
         </div>

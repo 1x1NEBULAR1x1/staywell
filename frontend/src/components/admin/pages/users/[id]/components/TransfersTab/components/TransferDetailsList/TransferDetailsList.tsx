@@ -1,7 +1,11 @@
-import classes from './TransferDetailsList.module.scss';
-import { TransferDetail } from '@shared/src';
+import type { TransferDetail } from "@shared/src";
+import classes from "./TransferDetailsList.module.scss";
 
-export const TransferDetailsList = ({ transferDetails }: { transferDetails: TransferDetail[] }) => {
+export const TransferDetailsList = ({
+  transferDetails,
+}: {
+  transferDetails: TransferDetail[];
+}) => {
   if (transferDetails.length === 0) {
     return <p className={classes.empty}>No transfer details found</p>;
   }
@@ -11,9 +15,7 @@ export const TransferDetailsList = ({ transferDetails }: { transferDetails: Tran
       {transferDetails.map((transferDetail) => (
         <div key={transferDetail.id} className={classes.transfer_detail_item}>
           <div className={classes.transfer_info}>
-            <div className={classes.bank_name}>
-              {transferDetail.bank_name}
-            </div>
+            <div className={classes.bank_name}>{transferDetail.bank_name}</div>
             <div className={classes.account_number}>
               {transferDetail.account_number}
             </div>
@@ -38,4 +40,3 @@ export const TransferDetailsList = ({ transferDetails }: { transferDetails: Tran
     </div>
   );
 };
-

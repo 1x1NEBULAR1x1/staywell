@@ -1,0 +1,11 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  width: 100%;
+  max-width: $container-width-xl;
+  margin: 0 auto;
+  min-height: 100%;
+}

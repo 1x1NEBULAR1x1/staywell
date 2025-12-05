@@ -27,7 +27,7 @@ export class CrudService {
     data: CreateAdditionalOptionDto;
     file?: Express.Multer.File;
   }): Promise<AdditionalOption> {
-    if (await this.findOne({ name: data.name }))
+    if (await this.find({ name: data.name }))
       throw new ConflictException(
         'Additional option with this name already exists',
       );
@@ -43,7 +43,7 @@ export class CrudService {
    * @param id Option ID
    * @returns Additional option
    */
-  async findOne(
+  async find(
     where: Prisma.AdditionalOptionWhereUniqueInput,
   ): Promise<AdditionalOption> {
     const option = await this.prisma.additionalOption.findUnique({ where });
@@ -65,8 +65,8 @@ export class CrudService {
     data: UpdateAdditionalOptionDto;
     file?: Express.Multer.File;
   }): Promise<AdditionalOption> {
-    await this.findOne({ id });
-    if (await this.findOne({ name: data.name }))
+    await this.find({ id });
+    if (await this.find({ name: data.name }))
       throw new ConflictException(
         'Additional option with this name already exists',
       );
@@ -84,11 +84,11 @@ export class CrudService {
    * @returns Success message
    */
   async remove(id: string): Promise<AdditionalOption> {
-    const option = await this.findOne({ id });
+    const option = await this.find({ id });
 
     if (
       await this.prisma.bookingAdditionalOption.findFirst({
-        where: { option_id: id },
+        where: { additional_option_id: id },
       })
     )
       throw new ConflictException(

@@ -1,18 +1,17 @@
-'use client';
+"use client";
 
-import { useModel } from '@/hooks/admin/queries/useModel';
-import { useModelFilters } from '@/hooks/admin/actions/useModelFilters';
-import { ReviewsFiltersMenu, ReviewsList } from './components';
-import classes from '../Tab.module.scss';
-
+import { useModelFilters } from "@/hooks/admin/actions/useModelFilters";
+import { useModel } from "@/hooks/admin/queries/useModel";
+import classes from "../Tab.module.scss";
+import { ReviewsFiltersMenu, ReviewsList } from "./components";
 
 export const ReviewsTab = ({ user_id }: { user_id: string }) => {
   const { filters, setFilters } = useModelFilters({
-    model: 'REVIEW',
-    permanent_fields: { user_id }
+    model: "REVIEW",
+    permanent_fields: { user_id },
   });
 
-  const { data: reviews } = useModel('REVIEW').get(filters);
+  const { data: reviews } = useModel("REVIEW").get(filters);
 
   return (
     <div className={classes.tab}>
@@ -20,12 +19,8 @@ export const ReviewsTab = ({ user_id }: { user_id: string }) => {
       <div className={classes.section}>
         <div className={classes.header}>
           <h3 className={classes.title}>Reviews History</h3>
-          <ReviewsFiltersMenu
-            filters={filters}
-            setFilters={setFilters}
-          />
+          <ReviewsFiltersMenu filters={filters} setFilters={setFilters} />
         </div>
-
 
         <ReviewsList reviews={reviews?.items || []} />
       </div>

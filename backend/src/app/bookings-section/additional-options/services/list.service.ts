@@ -6,7 +6,7 @@ import { AdditionalOptionsFiltersDto } from '../dto';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   customFilters(options: AdditionalOptionsFiltersDto) {
     const { name, min_price, max_price } = options;
@@ -29,15 +29,18 @@ export class ListService {
    * @param filters Filter and pagination parameters
    * @returns List of additional options with pagination metadata
    */
-  async findAll(filters: AdditionalOptionsFiltersDto): Promise<BaseListResult<AdditionalOption>> {
+  async get(
+    filters: AdditionalOptionsFiltersDto,
+  ): Promise<BaseListResult<AdditionalOption>> {
     const query_options = this.prisma.buildQuery<AdditionalOption>({
       filters,
       customFilters: this.customFilters,
     });
-    const { items, total } = await this.prisma.findWithPagination<AdditionalOption>({
-      model: this.prisma.additionalOption,
-      query_options,
-    });
+    const { items, total } =
+      await this.prisma.findWithPagination<AdditionalOption>({
+        model: this.prisma.additionalOption,
+        query_options,
+      });
     const { take, skip } = query_options;
     return { items, total, skip, take };
   }

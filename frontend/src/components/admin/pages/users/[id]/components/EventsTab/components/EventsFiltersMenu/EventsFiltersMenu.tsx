@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import classes from './EventsFiltersMenu.module.scss';
-import { SlidersHorizontal } from 'lucide-react';
-import { useState } from 'react';
-import { EventsFilters } from '@shared/src';
-import { InputField } from '@/components/admin/common/Form';
-import { useForm } from 'react-hook-form';
+import type { EventsFilters } from "@shared/src";
+import { SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { InputField } from "@/components/admin/common/Form";
+import classes from "./EventsFiltersMenu.module.scss";
 
 interface EventsFiltersMenuProps {
   filters: EventsFilters;
@@ -13,7 +13,11 @@ interface EventsFiltersMenuProps {
   user_id: string;
 }
 
-export const EventsFiltersMenu = ({ filters, setFilters, user_id }: EventsFiltersMenuProps) => {
+export const EventsFiltersMenu = ({
+  filters,
+  setFilters,
+  user_id,
+}: EventsFiltersMenuProps) => {
   const [is_open, setIsOpen] = useState(false);
   const form = useForm<EventsFilters>({ defaultValues: filters });
 
@@ -24,10 +28,16 @@ export const EventsFiltersMenu = ({ filters, setFilters, user_id }: EventsFilter
 
   return (
     <div className={classes.container}>
-      <SlidersHorizontal className={classes.icon} onClick={() => setIsOpen(!is_open)} />
+      <SlidersHorizontal
+        className={classes.icon}
+        onClick={() => setIsOpen(!is_open)}
+      />
       {is_open && (
         <div className={classes.dropdown}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className={classes.form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className={classes.form}
+          >
             <InputField
               label="Event Name"
               name="name"
@@ -91,7 +101,9 @@ export const EventsFiltersMenu = ({ filters, setFilters, user_id }: EventsFilter
             />
 
             <div className={classes.buttons}>
-              <button type="submit" className={classes.apply_btn}>Apply</button>
+              <button type="submit" className={classes.apply_btn}>
+                Apply
+              </button>
               <button
                 type="button"
                 className={classes.reset_btn}

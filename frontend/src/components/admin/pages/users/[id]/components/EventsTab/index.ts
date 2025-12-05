@@ -1,2 +1,1 @@
-export { EventsTab } from './EventsTab';
-
+export { EventsTab } from "./EventsTab";

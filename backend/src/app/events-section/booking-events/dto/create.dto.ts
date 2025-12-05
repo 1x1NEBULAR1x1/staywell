@@ -11,11 +11,11 @@ export class CreateBookingEventDto implements CreateBookingEvent {
   number_of_people!: number;
 
   @ToUUID({
-    required: true,
+    required: false,
     description: 'Booking ID',
     example: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
   })
-  booking_id!: string;
+  booking_id: string | null = null;
 
   @ToUUID({
     required: true,
@@ -25,9 +25,9 @@ export class CreateBookingEventDto implements CreateBookingEvent {
   event_id!: string;
 
   @ToUUID({
-    required: true,
+    required: false,
     description: 'Transaction ID',
     example: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
   })
-  transaction_id!: string;
+  transaction_id: string | null = null;
 }

@@ -22,8 +22,13 @@ export const getDaysInMonth = ({ date }: { date: Date }) => {
   return days;
 };
 
-
-export const isDateInRange = ({ date, selected_range }: { date: Date, selected_range: { start?: Date; end?: Date } }) => {
+export const isDateInRange = ({
+  date,
+  selected_range,
+}: {
+  date: Date;
+  selected_range: { start?: Date; end?: Date };
+}) => {
   if (!selected_range.start) return false;
 
   if (selected_range.start && selected_range.end) {
@@ -33,10 +38,28 @@ export const isDateInRange = ({ date, selected_range }: { date: Date, selected_r
   return date.getTime() === new Date(selected_range.start).getTime();
 };
 
-export const isDateRangeStart = ({ date, selected_range }: { date: Date, selected_range: { start?: Date; end?: Date } }) => {
-  return selected_range.start && date.getTime() === new Date(selected_range.start).getTime();
+export const isDateRangeStart = ({
+  date,
+  selected_range,
+}: {
+  date: Date;
+  selected_range: { start?: Date; end?: Date };
+}) => {
+  return (
+    selected_range.start &&
+    date.getTime() === new Date(selected_range.start).getTime()
+  );
 };
 
-export const isDateRangeEnd = ({ date, selected_range }: { date: Date, selected_range: { start?: Date; end?: Date } }) => {
-  return selected_range.end && date.getTime() === new Date(selected_range.end).getTime();
+export const isDateRangeEnd = ({
+  date,
+  selected_range,
+}: {
+  date: Date;
+  selected_range: { start?: Date; end?: Date };
+}) => {
+  return (
+    selected_range.end &&
+    date.getTime() === new Date(selected_range.end).getTime()
+  );
 };

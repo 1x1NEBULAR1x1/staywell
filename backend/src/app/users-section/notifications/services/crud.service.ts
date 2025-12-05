@@ -1,12 +1,15 @@
 import { PrismaService } from 'src/lib/prisma/prisma.service';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { User, Role, Notification } from '@shared/src/database';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { User, Role, Notification, Prisma } from '@shared/src/database';
 import { CreateNotificationDto, UpdateNotificationDto } from '../dto';
-import { Prisma } from '@shared/src/database';
 
 @Injectable()
 export class CrudService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   /**
    * Create a notification
@@ -18,15 +21,15 @@ export class CrudService {
   }: {
     data: CreateNotificationDto;
   }): Promise<Notification> {
-    return await this.prisma.notification.create({ data });
+    return this.prisma.notification.create({ data });
   }
 
   /**
    * Create many notifications
    * @param data - The data to create the notifications with
    */
-  async createMany({ data }: { data: CreateNotificationDto[] }) {
-    return await this.prisma.notification.createMany({ data });
+  createMany({ data }: { data: CreateNotificationDto[] }) {
+    return this.prisma.notification.createMany({ data });
   }
 
   /**
@@ -35,17 +38,11 @@ export class CrudService {
    * @param user - The user who is finding the notification
    * @returns The notification
    */
-  async find({
-    id,
-    user,
-  }: {
-    id: string;
-    user: User;
-  }): Promise<Notification> {
+  async find({ id, user }: { id: string; user: User }): Promise<Notification> {
     // Admins can find all notifications, users can only find their own notifications
     const where: Prisma.NotificationWhereUniqueInput = {
       id,
-      ...(user.role !== Role.ADMIN && { user_id: user.id }),
+      ...(user.role !== Role.ADMIN ? { user_id: user.id } : {}),
     };
     // If the notification is not found, throw an error
     return (
@@ -55,8 +52,6 @@ export class CrudService {
       })()
     );
   }
-
-
 
   /**
    * Update a notification
@@ -103,7 +98,10 @@ export class CrudService {
         where.user_id = user.id;
       }
       console.log(ids, user.role);
-      const { count } = await this.prisma.notification.updateMany({ where, data: { is_read: true } });
+      const { count } = await this.prisma.notification.updateMany({
+        where,
+        data: { is_read: true },
+      });
       return { count };
     } catch (error) {
       throw new BadRequestException('Failed to mark notifications as read');
