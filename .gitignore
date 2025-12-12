@@ -15,5 +15,6 @@ node_modules
 
 .cursor
 .vscode
+.playwright-mcp
 
 .DS_Store
