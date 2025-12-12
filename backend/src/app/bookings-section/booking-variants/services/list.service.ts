@@ -9,7 +9,7 @@ import { BookingVariantsFiltersDto } from '../dto';
 export class ListService {
   constructor(private prisma: PrismaService) {}
 
-  customFilters(options: BookingVariantsFiltersDto) {
+  customFilters = (options: BookingVariantsFiltersDto) => {
     const {
       apartment_id,
       min_price,
@@ -32,7 +32,7 @@ export class ListService {
       if (max_capacity !== undefined) filters.capacity.lte = max_capacity;
     }
     return filters;
-  }
+  };
   /**
    * Find all booking variants based on filter criteria
    * @param filterDto Filter parameters and pagination

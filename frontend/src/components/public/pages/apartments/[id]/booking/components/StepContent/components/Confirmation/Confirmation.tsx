@@ -4,9 +4,9 @@ import type { ExtendedApartment } from "@shared/src/types/apartments-section/ext
 import classes from "./Confirmation.module.scss";
 import {
   Details,
-  Error,
+  ErrorMessage,
   Header,
-  Loading,
+  LoadingMessage,
   ProcessButton,
   Summary,
   Terms,
@@ -32,9 +32,9 @@ export const Confirmation = ({
     !selected_dates.end ||
     !selected_booking_variant_id
   )
-    return <Error />;
+    return <ErrorMessage />;
 
-  if (isLoadingBookingVariant) return <Loading />;
+  if (isLoadingBookingVariant) return <LoadingMessage />;
 
   return (
     <div className={classes.container}>

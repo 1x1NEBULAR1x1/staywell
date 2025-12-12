@@ -1,10 +1,7 @@
 import { CheckCircle, Loader2 } from "lucide-react";
 import classes from "./States.module.scss";
 
-type LoadingProps = {};
-type ErrorProps = {};
-
-export const Loading = ({}: LoadingProps) => (
+export const LoadingMessage = () => (
   <div className={classes.container}>
     <div className={classes.loading}>
       <Loader2 size={48} className={classes.spinner} />
@@ -13,7 +10,7 @@ export const Loading = ({}: LoadingProps) => (
   </div>
 );
 
-export const Error = ({}: ErrorProps) => (
+export const ErrorMessage = () => (
   <div className={classes.container}>
     <div className={classes.empty}>
       <CheckCircle size={48} />

@@ -43,7 +43,8 @@ export const ChatUserItem = ({
       : "No messages yet";
 
   return (
-    <div
+    <button
+      type="button"
       className={clsx(classes.user_item, {
         [classes.user_item_active]: is_active,
       })}
@@ -77,6 +78,6 @@ export const ChatUserItem = ({
       {typeof unread_count === "number" && unread_count > 0 && (
         <div className={classes.user_item_unread_badge}>{unread_count}</div>
       )}
-    </div>
+    </button>
   );
 };

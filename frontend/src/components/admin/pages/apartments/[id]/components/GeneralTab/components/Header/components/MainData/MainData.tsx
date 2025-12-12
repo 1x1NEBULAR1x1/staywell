@@ -17,6 +17,7 @@ export const MainData = ({
         <h1 className={classes.title_container}>
           <span className={classes.title}>{apartment.name}</span>
           <button
+            type="button"
             className={classes.edit_btn}
             onClick={() => setIsModalOpen(true)}
           >

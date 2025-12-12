@@ -87,13 +87,14 @@ export const ImagePreview = ({
                 className={classes.image_preview_img}
               />
               {/* Overlay for better UX */}
-              <div
+              <button
+                type="button"
                 className={classes.image_preview_overlay}
                 onClick={handleClick}
               >
                 <Upload size={24} />
                 <span>Change</span>
-              </div>
+              </button>
             </div>
             <button
               type="button"
@@ -105,13 +106,14 @@ export const ImagePreview = ({
             </button>
           </>
         ) : (
-          <div
+          <button
+            type="button"
             className={classes.image_preview_placeholder}
             onClick={handleClick}
           >
             <Camera size={32} />
             <span>Upload Photo</span>
-          </div>
+          </button>
         )}
       </div>
     </div>

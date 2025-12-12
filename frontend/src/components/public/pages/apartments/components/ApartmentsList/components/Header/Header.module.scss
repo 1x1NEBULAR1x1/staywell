@@ -1,0 +1,22 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.results_header {
+  margin-bottom: $spacing-lg;
+
+  .count {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+    margin: 0;
+    font-weight: $font-weight-normal;
+
+    &_shimmer {
+      display: inline-block;
+      width: 40px;
+      border-radius: $border-radius-md;
+      background-color: $background-disabled;
+    }
+  }
+}

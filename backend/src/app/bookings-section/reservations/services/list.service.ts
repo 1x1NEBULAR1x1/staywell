@@ -12,7 +12,7 @@ import { ReservationsFiltersDto } from '../dto';
 export class ListService {
   constructor(private prisma: PrismaService) {}
 
-  customFilters(options: ReservationsFiltersDto) {
+  customFilters = (options: ReservationsFiltersDto) => {
     const {
       user_id,
       apartment_id,
@@ -35,7 +35,7 @@ export class ListService {
       if (check_out_date_end) filters.end.lte = check_out_date_end;
     }
     return filters;
-  }
+  };
   /**
    * Find all reservations based on filter criteria
    * @param filters Filter parameters and pagination

@@ -8,13 +8,13 @@ import { BaseListResult } from '@shared/src/common/base-types/base-list-result.i
 export class ListService {
   constructor(private prisma: PrismaService) {}
 
-  customFilters(options: BedTypesFiltersDto) {
+  customFilters = (options: BedTypesFiltersDto) => {
     const { search, name } = options;
     const filters: Prisma.BedTypeWhereInput = {};
     if (search) filters.name = { contains: search, mode: 'insensitive' };
     if (name) filters.name = { contains: name, mode: 'insensitive' };
     return filters;
-  }
+  };
   /**
    * Finds all bed types based on filter criteria
    * @param filters Filter parameters and pagination

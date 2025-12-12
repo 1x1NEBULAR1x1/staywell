@@ -2,24 +2,20 @@
 
 import { type BedType, example_bed_type } from "@shared/src";
 import { useState } from "react";
-import { CreateButton, ListPage } from "@/components/admin/common/AdminPage";
+import { ListPage } from "@/components/admin/common/AdminPage";
 import { BedTypeModal } from "@/components/admin/common/Modal/models/BedTypeModal";
 import { BedTypeCard, BedTypeCardShimmer } from "./components";
 
 export const BedTypes = () => {
-  const [modal_data, setModalData] = useState<{
-    is_modal_open: boolean;
-    bed_type: BedType | undefined;
-  }>({ is_modal_open: false, bed_type: undefined });
+  const [is_modal_open, setIsModalOpen] = useState(false);
+  const [bed_type, setBedType] = useState<BedType | undefined>(undefined);
   return (
     <>
       <ListPage
-        create_button={
-          <CreateButton
-            label="Add Bed Type"
-            onClick={() =>
-              setModalData({ is_modal_open: true, bed_type: undefined })
-            }
+        create_modal={
+          <BedTypeModal
+            onClose={() => setIsModalOpen(false)}
+            initial_data={bed_type}
           />
         }
         model="BED_TYPE"
@@ -27,9 +23,7 @@ export const BedTypes = () => {
           <BedTypeCard
             key={bed_type.id}
             bed_type={bed_type}
-            setEditBedTypeData={(bed_type) =>
-              setModalData({ is_modal_open: true, bed_type })
-            }
+            setEditBedTypeData={(bed_type) => setBedType(bed_type)}
           />
         )}
         shimmer_item={(key) => <BedTypeCardShimmer key={key} />}
@@ -43,12 +37,10 @@ export const BedTypes = () => {
           )
           .sort()}
       />
-      {modal_data.is_modal_open && (
+      {is_modal_open && (
         <BedTypeModal
-          initial_data={modal_data.bed_type}
-          onClose={() =>
-            setModalData({ is_modal_open: false, bed_type: undefined })
-          }
+          initial_data={bed_type}
+          onClose={() => setIsModalOpen(false)}
         />
       )}
     </>

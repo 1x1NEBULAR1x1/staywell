@@ -30,9 +30,10 @@ export class WebsocketAuthService {
         where: { id: payload.user_id },
       });
       if (!user || !user.is_active) return null;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password_hash, ...user_without_password } = user;
       return user_without_password;
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -70,8 +71,10 @@ export class WebsocketAuthService {
 
     // Check token in query parameters
     const query_token = handshake.query?.token;
-    const auth_token = handshake.auth?.token;
-    const token =
+    const auth_token: string | undefined = (
+      handshake.auth as { token: string | undefined }
+    )?.token;
+    const token: string | null =
       (typeof query_token === 'string' && query_token) ||
       (typeof auth_token === 'string' && auth_token) ||
       null;

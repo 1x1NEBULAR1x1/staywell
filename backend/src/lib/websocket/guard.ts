@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { WebsocketAuthService } from './service';
 import { Socket } from 'socket.io';
+import { UserWithoutPassword } from '@shared/src';
 
 @Injectable()
 export class WebsocketAuthGuard implements CanActivate {
@@ -24,10 +25,10 @@ export class WebsocketAuthGuard implements CanActivate {
         return false;
       }
 
-      client.data.user = user;
+      (client.data as { user: UserWithoutPassword }).user = user;
 
       return true;
-    } catch (error) {
+    } catch {
       client.disconnect();
       return false;
     }

@@ -42,6 +42,7 @@ export const FilterDropdown = ({
   return (
     <div className={classes.container} ref={dropdownRef}>
       <button
+        type="button"
         className={`${classes.filter_button} ${is_open ? classes.active : ""}`}
         onClick={onToggle}
       >
@@ -54,7 +55,13 @@ export const FilterDropdown = ({
         >
           <div className={classes.header}>
             <h3 className={classes.title}>Filters</h3>
-            <X className={classes.close_icon} onClick={onClose} />
+            <button
+              type="button"
+              className={classes.close_icon}
+              onClick={onClose}
+            >
+              <X className={classes.close_icon} />
+            </button>
           </div>
           <div className={classes.content}>{children}</div>
         </div>

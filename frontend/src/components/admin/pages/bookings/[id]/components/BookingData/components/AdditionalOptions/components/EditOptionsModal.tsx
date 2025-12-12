@@ -16,7 +16,7 @@ interface EditOptionsModalProps {
 
 type FormData = {
   options: {
-    option_id: string;
+    additional_option_id: string;
     amount: number;
     existing_id?: string;
   }[];
@@ -31,12 +31,15 @@ export const EditOptionsModal = ({
   const [isLoading, setIsLoading] = useState(false);
 
   // Получаем все доступные опции
-  const { data: allOptions } = useModel("ADDITIONAL_OPTION").get({});
+  const { data: allOptions } = useModel("ADDITIONAL_OPTION").get({
+    skip: 0,
+    take: 1000,
+  });
 
   const form = useForm<FormData>({
     defaultValues: {
       options: current_options.map((opt) => ({
-        option_id: opt.option_id,
+        additional_option_id: opt.additional_option_id,
         amount: opt.amount,
         existing_id: opt.id,
       })),
@@ -64,7 +67,7 @@ export const EditOptionsModal = ({
 
       // Добавляем новые опции
       for (const option of data.options) {
-        if (option.option_id && option.amount > 0) {
+        if (option.additional_option_id && option.amount > 0) {
           await fetch("/api/booking-additional-options", {
             method: "POST",
             headers: {
@@ -73,7 +76,7 @@ export const EditOptionsModal = ({
             credentials: "include",
             body: JSON.stringify({
               booking_id,
-              option_id: option.option_id,
+              additional_option_id: option.additional_option_id,
               amount: option.amount,
             }),
           });
@@ -89,7 +92,7 @@ export const EditOptionsModal = ({
   };
 
   const addNewOption = () => {
-    append({ option_id: "", amount: 1 });
+    append({ additional_option_id: "", amount: 1 });
   };
 
   const availableOptions = allOptions?.items || [];
@@ -121,7 +124,7 @@ export const EditOptionsModal = ({
             <div style={{ flex: 2 }}>
               <SelectField
                 label="Service"
-                name={`options.${index}.option_id`}
+                name={`options.${index}.additional_option_id`}
                 placeholder="Select service"
                 register={form.register}
                 options={availableOptions.map((option) => ({

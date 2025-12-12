@@ -1,0 +1,1 @@
+export { ApartmentCardSkeleton } from "./ApartmentCardSkeleton";

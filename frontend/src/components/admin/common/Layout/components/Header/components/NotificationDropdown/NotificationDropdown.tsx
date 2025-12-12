@@ -5,6 +5,7 @@ import {
   NotificationAction,
   NotificationType,
 } from "@shared/src/database";
+import { format } from "date-fns";
 import {
   AlertCircle,
   Bell,
@@ -50,9 +51,7 @@ export const NotificationDropdown = () => {
       }
     };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    if (isOpen) document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -61,9 +60,8 @@ export const NotificationDropdown = () => {
 
   const handleNotificationClick = async (notification: Notification) => {
     // Mark as read if not already read
-    if (!notification.is_read) {
+    if (!notification.is_read)
       await markAsRead.mutateAsync({ id: notification.id });
-    }
 
     // Navigate to object if object_id exists
     if (notification.object_id) {
@@ -131,45 +129,13 @@ export const NotificationDropdown = () => {
     }
   };
 
-  const getNotificationTypeColor = (type: NotificationType) => {
-    switch (type) {
-      case NotificationType.BOOKING:
-        return classes.booking;
-      case NotificationType.RESERVATION:
-        return classes.reservation;
-      case NotificationType.MESSAGE:
-        return classes.message;
-      case NotificationType.ERROR:
-        return classes.error;
-      case NotificationType.WARNING:
-        return classes.warning;
-      default:
-        return "";
-    }
-  };
-
-  const formatTime = (date: Date | string) => {
-    const now = new Date();
-    const notificationDate = new Date(date);
-    const diffInMs = now.getTime() - notificationDate.getTime();
-    const diffInMinutes = Math.floor(diffInMs / 60000);
-    const diffInHours = Math.floor(diffInMinutes / 60);
-    const diffInDays = Math.floor(diffInHours / 24);
-
-    if (diffInMinutes < 1) return "Just now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    if (diffInDays < 7) return `${diffInDays}d ago`;
-
-    return notificationDate.toLocaleDateString();
-  };
-
   return (
     <div className={classes.notification_wrapper} ref={dropdownRef}>
       <button
         className={classes.notification_button}
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Notifications"
+        type="button"
       >
         {unread_count > 0 ? (
           <>
@@ -196,11 +162,13 @@ export const NotificationDropdown = () => {
               <button
                 className={`${classes.filter_button} ${showUnreadOnly ? classes.active : ""}`}
                 onClick={() => setShowUnreadOnly(!showUnreadOnly)}
+                type="button"
               >
                 Unread only
               </button>
               {unread_count > 0 && (
                 <button
+                  type="button"
                   className={classes.mark_all_button}
                   onClick={handleMarkAllAsRead}
                   disabled={markAsRead.isPending}
@@ -230,11 +198,11 @@ export const NotificationDropdown = () => {
               </div>
             ) : (
               notifications?.items?.map((notification) => (
-                <div
+                <button
+                  type="button"
                   key={notification.id}
-                  className={`${classes.notification_item} ${
-                    !notification.is_read ? classes.unread : ""
-                  } ${getNotificationTypeColor(notification.type)}`}
+                  className={classes.notification_item}
+                  data-type={notification.type}
                   onClick={() => handleNotificationClick(notification)}
                 >
                   <div className={classes.notification_icon}>
@@ -247,7 +215,10 @@ export const NotificationDropdown = () => {
                       </span>
                       {getNotificationActionIcon(notification.action)}
                       <span className={classes.notification_time}>
-                        {formatTime(notification.created)}
+                        {format(
+                          new Date(notification.created),
+                          "MMM d, yyyy h:mm a",
+                        )}
                       </span>
                     </div>
                     <p className={classes.notification_message}>
@@ -258,7 +229,7 @@ export const NotificationDropdown = () => {
                   {!notification.is_read && (
                     <div className={classes.unread_indicator} />
                   )}
-                </div>
+                </button>
               ))
             )}
           </div>
@@ -266,6 +237,7 @@ export const NotificationDropdown = () => {
           {notifications?.items && notifications?.items?.length > 0 && (
             <div className={classes.dropdown_footer}>
               <button
+                type="button"
                 className={classes.view_all_button}
                 onClick={() => {
                   router.push("/admin/notifications");

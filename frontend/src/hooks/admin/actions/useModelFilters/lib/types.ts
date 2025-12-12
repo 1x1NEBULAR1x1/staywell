@@ -12,7 +12,7 @@ type IsDebounceableField<FieldName extends string> =
       : true;
 
 // Извлекаем только строковые поля из TypeScript типов фильтров
-type ExtractStringFilterKeys<T> = T extends Record<string, any>
+type ExtractStringFilterKeys<T> = T extends Record<string, unknown>
   ? {
       [K in keyof T]: K extends string
         ? T[K] extends string | undefined

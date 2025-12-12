@@ -1,0 +1,73 @@
+@use "@/components/styles/_variables.scss" as *;
+
+.fullpage_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  width: 100%;
+}
+
+.loader_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  &.small {
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border-width: 2px;
+    }
+
+    .loader_text {
+      font-size: 0.875rem;
+    }
+  }
+
+  &.medium {
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border-width: 3px;
+    }
+
+    .loader_text {
+      font-size: 1rem;
+    }
+  }
+
+  &.large {
+    .spinner {
+      width: 64px;
+      height: 64px;
+      border-width: 4px;
+    }
+
+    .loader_text {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.spinner {
+  border: 3px solid rgba($primary-main, 0.1);
+  border-top-color: $primary-main;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader_text {
+  color: $foreground-main;
+  font-weight: $font-weight-normal;
+  text-align: center;
+  margin: 0;
+}

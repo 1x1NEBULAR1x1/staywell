@@ -8,47 +8,50 @@ type ReviewCardProps = {
   review: ExtendedReview;
 };
 
-export const ReviewCard = ({ review }: ReviewCardProps) => (
-  <tr className={classes.review_row}>
-    <td>
-      <div className={classes.review_row_name_container}>
-        <Image
-          src={review.apartment.image || no_image.src}
-          alt="No Image"
-          width={500}
-          height={500}
-          className={classes.review_row_avatar}
-        />
-        <div className={classes.review_row_name_container_info}>
-          <p className={classes.review_row_name_container_info_name}>
-            {review.apartment.name}
-            <span className={classes.review_row_name_container_info_location}>
-              {review.apartment.floor} - {review.apartment.number}
-            </span>
-          </p>
-          <p className={classes.apartment_row_name_container_info_description}>
-            {review.apartment.description || "No description"}
-          </p>
+export const ReviewCard = ({ review }: ReviewCardProps) =>
+  review.apartment && (
+    <tr className={classes.review_row}>
+      <td>
+        <div className={classes.review_row_name_container}>
+          <Image
+            src={review.apartment.image || no_image.src}
+            alt="No Image"
+            width={500}
+            height={500}
+            className={classes.review_row_avatar}
+          />
+          <div className={classes.review_row_name_container_info}>
+            <p className={classes.review_row_name_container_info_name}>
+              {review.apartment.name}
+              <span className={classes.review_row_name_container_info_location}>
+                {review.apartment.floor} - {review.apartment.number}
+              </span>
+            </p>
+            <p
+              className={classes.apartment_row_name_container_info_description}
+            >
+              {review.apartment.description || "No description"}
+            </p>
+          </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <span
-        className={`${classes.review_row_status} ${review.apartment.is_available ? classes.review_row_status_available : classes.review_row_status_unavailable}`}
-      >
-        {review.apartment.is_available ? "Available" : "Unavailable"}
-      </span>
-    </td>
-    <td>
-      <span className={classes.review_row_type}>
-        {review.apartment.type.toLowerCase()}
-      </span>
-    </td>
-    <td className={classes.review_row_created}>
-      {new Date(review.apartment.created).toDateString()}
-    </td>
-  </tr>
-);
+      </td>
+      <td>
+        <span
+          className={`${classes.review_row_status} ${review.apartment.is_available ? classes.review_row_status_available : classes.review_row_status_unavailable}`}
+        >
+          {review.apartment.is_available ? "Available" : "Unavailable"}
+        </span>
+      </td>
+      <td>
+        <span className={classes.review_row_type}>
+          {review.apartment.type.toLowerCase()}
+        </span>
+      </td>
+      <td className={classes.review_row_created}>
+        {new Date(review.apartment.created).toDateString()}
+      </td>
+    </tr>
+  );
 
 export const ReviewCardShimmer = () => (
   <tr className={classes.review_row}>

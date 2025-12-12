@@ -24,6 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly sessions: SessionsService,
     private readonly config: ConfigService,
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     super({
       jwtFromRequest: (request: RequestWithCookies) => {
         // Try to get token from cookies first
@@ -73,7 +74,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         session_id: payload.session_id,
         email: payload.email,
       };
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof UnauthorizedException) throw error;
       throw new UnauthorizedException('User is not authorized');
     }

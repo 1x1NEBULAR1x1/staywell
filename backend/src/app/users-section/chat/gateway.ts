@@ -34,27 +34,29 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.chatWebsocketService.setServer(this.server);
 
     // Apply authentication middleware to this namespace
-    this.server.use(async (socket: Socket, next: (err?: Error) => void) => {
-      try {
-        const token = this.authService.extractTokenFromHandshake(
-          socket.handshake,
-        );
+    this.server.use((socket: Socket, next: (err?: Error) => void) => {
+      void (async () => {
+        try {
+          const token = this.authService.extractTokenFromHandshake(
+            socket.handshake,
+          );
 
-        if (!token) {
-          return next(new Error('Authentication error'));
+          if (!token) {
+            return next(new Error('Authentication error'));
+          }
+
+          const user = await this.authService.validateToken(token);
+
+          if (!user) {
+            return next(new Error('Authentication error'));
+          }
+
+          (socket.data as { user: UserWithoutPassword }).user = user;
+          next();
+        } catch {
+          next(new Error('Authentication error'));
         }
-
-        const user = await this.authService.validateToken(token);
-
-        if (!user) {
-          return next(new Error('Authentication error'));
-        }
-
-        (socket.data as { user: UserWithoutPassword }).user = user;
-        next();
-      } catch (error) {
-        next(new Error('Authentication error'));
-      }
+      })();
     });
   }
 

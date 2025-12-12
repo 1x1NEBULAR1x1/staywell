@@ -59,8 +59,14 @@
     }
 
     .close_icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: $font-size-lg;
       height: $font-size-lg;
+      border: none;
+      background: transparent;
+      padding: 0;
       color: $foreground-secondary;
       cursor: pointer;
       transition: all $transition-normal;
@@ -93,4 +99,3 @@
     transform: translateY(0) scale(1);
   }
 }
-

@@ -38,21 +38,21 @@ export const EditProfileModal = ({
 
   const handleSubmit = async (data: FormData) => {
     try {
-      const updateData: any = {};
+      const update_data: Record<string, unknown> = {};
 
       // Only include fields that have changed
       if (data.first_name !== user.first_name)
-        updateData.first_name = data.first_name;
+        update_data.first_name = data.first_name;
       if (data.last_name !== user.last_name)
-        updateData.last_name = data.last_name;
+        update_data.last_name = data.last_name;
       if (data.phone_number !== user.phone_number)
-        updateData.phone_number = data.phone_number;
-      if (data.image !== user.image) updateData.image = data.image;
-      if (data.password) updateData.password = data.password;
+        update_data.phone_number = data.phone_number;
+      if (data.image !== user.image) update_data.image = data.image;
+      if (data.password) update_data.password = data.password;
 
       const response = await usersApi.update(
         { id: user.id },
-        updateData as UpdateUser,
+        update_data as UpdateUser,
       );
 
       if (response.data) {

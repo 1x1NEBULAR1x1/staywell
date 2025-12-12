@@ -15,12 +15,11 @@ import { useWebSocketEventHandlers } from "./useWebSocketEventHandlers";
 export const useAdminChat = (
   options: UseWebSocketChatOptions = {},
 ): UseWebSocketChatReturn => {
-  const { onNewMessage, onMessageEdited, onUserTyping, onUserOnlineStatus } =
-    options;
-  const chatStore = useChatStore();
+  const { onNewMessage, onMessageEdited, onUserOnlineStatus } = options;
+  const store = useChatStore();
   const { user } = useAccount();
   const selected_chat_id = useQPId();
-  const chatsLoadedRef = useRef(false);
+  const chats_loaded_ref = useRef(false);
   const [typing_users, setTypingUsers] = useState<Set<string>>(new Set());
 
   const handleUserTyping = useCallback(
@@ -44,9 +43,9 @@ export const useAdminChat = (
 
   // WebSocket connection management
   const connection = useWebSocketConnection({
-    onConnect: () => chatStore.setIsConnected(true),
+    onConnect: () => store.setIsConnected(true),
     onDisconnect: (reason) => {
-      chatStore.setIsConnected(false);
+      store.setIsConnected(false);
       if (Object.values(WS_DISCONNECT_REASONS).includes(reason)) {
         connection.refreshTokenAndReconnect();
       }
@@ -92,25 +91,22 @@ export const useAdminChat = (
     onUserOnlineStatus,
   });
 
-  const connectRef = useRef(connection.connect);
+  const connect_ref = useRef(connection.connect);
 
   // Keep connect ref updated
   useEffect(() => {
-    connectRef.current = connection.connect;
+    connect_ref.current = connection.connect;
   }, [connection.connect]);
-
-  // Auto-connect on mount if user is authenticated
-  useEffect(() => {
-    if (user && !connection.is_connected) {
-      connectRef.current().catch(console.error);
-    }
-  }, [user, connection.is_connected]);
 
   // Load chats when connected
   useEffect(() => {
-    if (connection.is_connected && user && !chatsLoadedRef.current) {
+    if (!connection.is_connected) chats_loaded_ref.current = false;
+    if (user && !connection.is_connected)
+      connect_ref.current().catch(console.error);
+
+    if (connection.is_connected && user && !chats_loaded_ref.current) {
       console.log("Connection established, loading chats");
-      chatsLoadedRef.current = true;
+      chats_loaded_ref.current = true;
       // Small delay to ensure connection is fully established
       const timer = setTimeout(() => {
         historyActions.getChats();
@@ -119,28 +115,21 @@ export const useAdminChat = (
     }
   }, [connection.is_connected, user]);
 
-  // Reset chats loaded flag when disconnected
-  useEffect(() => {
-    if (!connection.is_connected) {
-      chatsLoadedRef.current = false;
-    }
-  }, [connection.is_connected]);
-
   // Helper function to get user last seen time
   const getUserLastSeen = useCallback(
     (userId: string) => {
-      const lastSeenTimestamp = chatStore.online_users[userId];
+      const lastSeenTimestamp = store.online_users[userId];
       if (!lastSeenTimestamp) return null;
       return new Date(lastSeenTimestamp);
     },
-    [chatStore.online_users],
+    [store.online_users],
   );
 
   // Periodically update online status of users in chats based on last seen time
   useEffect(() => {
     const interval = setInterval(() => {
-      chatStore.setChats(
-        chatStore.chats.map((chat) => {
+      store.setChats(
+        store.chats.map((chat) => {
           const lastSeen = chat.last_seen;
           const isOnline = lastSeen
             ? Date.now() - new Date(lastSeen).getTime() < 5 * 60 * 1000
@@ -155,7 +144,7 @@ export const useAdminChat = (
 
   // Sort users by last message time
   const chats = useMemo(() => {
-    const users = chatStore.chats.sort((a, b) => {
+    const users = store.chats.sort((a, b) => {
       if (!a.last_message && !b.last_message) return 0;
       if (!a.last_message) return 1;
       if (!b.last_message) return -1;
@@ -164,61 +153,38 @@ export const useAdminChat = (
         new Date(a.last_message.created).getTime()
       );
     });
-    if (!chatStore.search_query.trim()) return users;
-    const query = chatStore.search_query.toLowerCase();
+    if (!store.search_query.trim()) return users;
+    const query = store.search_query.toLowerCase();
     return users.filter((user) => {
       const full_name =
         `${user.user.first_name} ${user.user.last_name}`.toLowerCase();
       return full_name.includes(query);
     });
-  }, [chatStore.chats, chatStore.search_query]);
+  }, [store.chats, store.search_query]);
 
-  return useMemo(
-    () => ({
-      // UI State & data
-      ...chatStore,
+  return {
+    // UI State & data
+    ...store,
 
-      // Connection
-      ...connection,
-      connect: connectRef.current,
+    // Connection
+    ...connection,
+    connect: connect_ref.current,
 
-      // Chat management
-      ...chatActions,
+    // Chat management
+    ...chatActions,
 
-      // Messages
-      ...messageActions,
+    // Messages
+    ...messageActions,
 
-      // History
-      ...historyActions,
-      chats,
+    // History
+    ...historyActions,
+    chats,
 
-      // Online status
-      getUserLastSeen,
+    // Online status
+    getUserLastSeen,
 
-      // Typing
-      ...typingActions,
-      isTyping,
-    }),
-    [
-      chatStore.is_collapsed,
-      chatStore.toggleCollapse,
-      connection.is_connected,
-      connection.disconnect,
-      chatActions.joinChat,
-      chatActions.leaveChat,
-      messageActions.sendMessage,
-      messageActions.editMessage,
-      messageActions.deleteMessage,
-      messageActions.markMessagesAsRead,
-      historyActions.getHistory,
-      historyActions.getChats,
-      typingActions.startTyping,
-      typingActions.stopTyping,
-      chatStore.chats,
-      chatStore.messages,
-      chatStore.online_users,
-      getUserLastSeen,
-      isTyping,
-    ],
-  );
+    // Typing
+    ...typingActions,
+    isTyping,
+  };
 };

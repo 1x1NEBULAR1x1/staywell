@@ -2,7 +2,6 @@
 
 import { ChangePassword } from "./components/ChangePassword";
 import { NotificationsToggle } from "./components/NotificationsToggle";
-import { ThemeToggle } from "./components/ThemeToggle";
 import classes from "./SettingsTab.module.scss";
 
 export const SettingsTab = () => {
@@ -14,7 +13,6 @@ export const SettingsTab = () => {
       </div>
 
       <div className={classes.settings_sections}>
-        <ThemeToggle />
         <NotificationsToggle />
         <ChangePassword />
       </div>

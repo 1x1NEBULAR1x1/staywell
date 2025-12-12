@@ -15,7 +15,7 @@ export const MetaData = ({ event }: { event: ExtendedEvent }) => {
         >
           {is_available ? "Available" : "Unavailable"}
         </span>
-        <ToolTip label="Event capacity" variant="blue" position="bottom">
+        <ToolTip label="Event capacity" variant="light" position="bottom">
           <div className={clsx(classes.icon_container)}>
             <Users className={classes.icon} />
             <span>{event.capacity} people</span>
@@ -23,13 +23,13 @@ export const MetaData = ({ event }: { event: ExtendedEvent }) => {
         </ToolTip>
       </div>
       <div className={classes.meta_row}>
-        <ToolTip label="Start date" variant="blue" position="bottom">
+        <ToolTip label="Start date" variant="light" position="bottom">
           <div className={clsx(classes.icon_container)}>
             <Calendar className={classes.icon} />
             <span>{new Date(event.start).toLocaleDateString()}</span>
           </div>
         </ToolTip>
-        <ToolTip label="Duration" variant="blue" position="bottom">
+        <ToolTip label="Duration" variant="light" position="bottom">
           <div className={clsx(classes.icon_container)}>
             <Clock className={classes.icon} />
             <span>

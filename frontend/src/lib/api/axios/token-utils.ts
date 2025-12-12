@@ -1,48 +1,40 @@
 import { api } from "./axios";
 
 /**
- * Функция для обновления токенов на клиентской стороне
+ * Function to refresh tokens on the client side
  */
 export async function refreshTokensClient(): Promise<boolean> {
   try {
-    const response = await api.post("/auth/refresh");
-
-    if (response.status === 200) {
-      return true;
-    }
-
-    return false;
-  } catch (_error) {
+    return (await api.post("/auth/refresh")).status === 200;
+  } catch {
     return false;
   }
 }
 
 /**
- * Функция для проверки валидности токена
+ * Function to check the validity of a token
  */
 export function isTokenExpired(token: string): boolean {
   try {
-    // Декодируем JWT токен (без проверки подписи, только для получения exp)
+    // Decode JWT token (without signature verification, only for getting exp)
     const payload = JSON.parse(atob(token.split(".")[1]));
-    const currentTime = Math.floor(Date.now() / 1000);
+    const current_time = Math.floor(Date.now() / 1000);
 
-    return payload.exp < currentTime;
+    return payload.exp < current_time;
   } catch (error) {
-    console.error("Ошибка при проверке токена:", error);
-    return true; // Считаем токен истекшим если не можем его проверить
+    console.error("Error checking token:", error);
+    return true; // Consider the token expired if we can't check it
   }
 }
 
 /**
- * Функция для получения токенов из cookies
+ * Function to get tokens from cookies
  */
 export function getTokensFromCookies(): {
   access_token?: string;
   refresh_token?: string;
 } {
-  if (typeof document === "undefined") {
-    return {}; // SSR
-  }
+  if (typeof document === "undefined") return {}; // For SSR
 
   const cookies = document.cookie.split(";").reduce(
     (acc, cookie) => {
@@ -60,13 +52,13 @@ export function getTokensFromCookies(): {
 }
 
 /**
- * Функция для очистки токенов из cookies
- * Обратите внимание: HttpOnly cookies нельзя удалить с клиента,
- * это должно происходить через сервер
+ * Function to clear tokens from cookies
+ * Note: HttpOnly cookies cannot be deleted from the client,
+ * this should happen through the server
  */
 export function clearTokensCookies(): void {
-  if (typeof document === "undefined") return; // SSR
-  // Очищаем обычные cookies (не HttpOnly)
+  if (typeof document === "undefined") return; // For SSR
+  // Clear regular cookies (not HttpOnly)
   document.cookie =
     "access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
   document.cookie =

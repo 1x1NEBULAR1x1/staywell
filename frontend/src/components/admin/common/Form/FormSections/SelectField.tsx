@@ -42,10 +42,11 @@ export const SelectField = <T extends FieldValues>({
   return (
     <div className={classes.admin_form_section}>
       <div className={classes.admin_form_field}>
-        <label className={classes.admin_form_label}>
+        <label htmlFor={`${name}-select`} className={classes.admin_form_label}>
           {label} {required && "*"}
         </label>
         <select
+          id={`${name}-select`}
           className={`${classes.admin_form_select} ${errors[name] ? classes.admin_form_select_error : ""}`}
           disabled={is_loading || disabled}
           {...register(name, {

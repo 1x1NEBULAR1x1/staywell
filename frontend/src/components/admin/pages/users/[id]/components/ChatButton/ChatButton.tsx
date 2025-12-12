@@ -1,17 +1,21 @@
+"use client";
+
 import { MessageCircle } from "lucide-react";
-import { useChatStore } from "@/hooks/admin/chat/lib/useChatStore";
+import { useRouter } from "next/navigation";
+import { useChat } from "@/hooks/admin/chat/useChat";
 import classes from "./ChatButton.module.scss";
 
 export const ChatButton = ({ user_id }: { user_id: string }) => {
-  const selectChat = useChatStore((state) => state.selectChat);
+  const { joinChat } = useChat();
+  const router = useRouter();
 
   return (
     <button
+      type="button"
       className={classes.chat_button}
       onClick={() => {
-        selectChat(user_id);
-        // TODO: Navigate to chat page when implemented
-        console.log("Navigate to chat with user:", user_id);
+        joinChat(user_id);
+        router.push(`/admin/chat?id=${user_id}`);
       }}
     >
       <MessageCircle className={classes.icon} />

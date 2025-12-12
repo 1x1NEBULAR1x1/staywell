@@ -7,7 +7,7 @@ import { Header, Sidebar } from "./components";
 import classes from "./Layout.module.scss";
 
 export const Layout = ({ children }: { children: ReactNode }) => (
-  <AccountProvider>
+  <AccountProvider initial_data={null}>
     <ToastProvider>
       <RoleGuard redirect_to="/auth/login" required_roles={[Role.ADMIN]}>
         <div className={classes.layout}>

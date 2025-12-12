@@ -25,8 +25,11 @@ export const BooleanSelect = ({
 
   return (
     <div className={classes.field}>
-      <label className={classes.label}>{label}</label>
+      <label htmlFor={`boolean-select-${label}`} className={classes.label}>
+        {label}
+      </label>
       <select
+        id={`boolean-select-${label}`}
         className={classes.select}
         value={value === undefined ? "" : value.toString()}
         onChange={(e) => handleChange(e.target.value)}

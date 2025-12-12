@@ -22,6 +22,7 @@ export const BookingVariantsTab = ({
           </p>
         </div>
         <button
+          type="button"
           className={classes.add_button}
           onClick={() => setIsAddingVariant(!isAddingVariant)}
         >

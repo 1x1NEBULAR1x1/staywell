@@ -1,7 +1,7 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { Loader } from "@/components/common/Loader";
 import { useModelFilters } from "@/hooks/admin/actions/useModelFilters/useModelFilters";
 import { useInfinityAdditionalOptions } from "@/hooks/public/booking/useInfinityAdditionalOptions";
 import { AdditionalOptionsFilters } from "../AdditionalOptionsFilters";
@@ -41,6 +41,28 @@ export const AdditionalOptionList = () => {
     return () => observer.disconnect();
   }, [hasNextPage, isFetchingNextPage, loadMore]);
 
+  if (isLoading && additional_options.length === 0) {
+    return (
+      <div className={classes.container}>
+        <AdditionalOptionsFilters filters={filters} setFilters={setFilters} />
+        <div className={classes.loading_container}>
+          <Loader size="medium" text="Loading additional options..." />
+        </div>
+      </div>
+    );
+  }
+
+  if (additional_options.length === 0 && !isLoading) {
+    return (
+      <div className={classes.container}>
+        <AdditionalOptionsFilters filters={filters} setFilters={setFilters} />
+        <div className={classes.empty_state}>
+          <p>No additional options available</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.container}>
       <AdditionalOptionsFilters filters={filters} setFilters={setFilters} />
@@ -55,8 +77,7 @@ export const AdditionalOptionList = () => {
         <div ref={observerRef} className={classes.loading_trigger}>
           {isFetchingNextPage && (
             <div className={classes.loading}>
-              <Loader2 className={classes.spinner} size={20} />
-              <span>Loading more additional options...</span>
+              <Loader size="small" text="Loading more options..." />
             </div>
           )}
         </div>

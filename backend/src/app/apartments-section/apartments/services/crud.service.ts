@@ -41,7 +41,14 @@ export class CrudService {
       ? this.filesService.saveImage({ file, dir_name: 'APARTMENTS' })
       : data.image;
     const apartment = await this.prisma.apartment.create({
-      data: { ...data, image },
+      data: {
+        ...data,
+        image:
+          image ??
+          (() => {
+            throw new Error('Image is required');
+          })(),
+      },
     });
     return await this.findOne({ where: { id: apartment.id } });
   }

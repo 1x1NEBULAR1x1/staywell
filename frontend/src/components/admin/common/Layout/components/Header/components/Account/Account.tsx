@@ -35,7 +35,8 @@ export const Account = () => {
   return (
     <div className={classes.account} ref={dropdown_ref}>
       <UserData user={account.user} />
-      <div
+      <button
+        type="button"
         className={classes.dropdown_toggle}
         onClick={() => setIsDropdownOpen(!is_dropdown_open)}
       >
@@ -43,7 +44,7 @@ export const Account = () => {
           size={16}
           className={`${classes.chevron} ${is_dropdown_open ? classes.chevron_rotated : ""}`}
         />
-      </div>
+      </button>
       {is_dropdown_open && (
         <Dropdown
           setIsDropdownOpen={setIsDropdownOpen}

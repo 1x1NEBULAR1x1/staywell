@@ -194,7 +194,11 @@ export const ChatMessages = ({
     >
       {has_next_page && (
         <div className={classes.messages_load_more}>
-          <button onClick={onLoadMore} disabled={is_fetching_next_page}>
+          <button
+            type="button"
+            onClick={onLoadMore}
+            disabled={is_fetching_next_page}
+          >
             {is_fetching_next_page ? (
               <span className={classes.messages_load_more_loading}>
                 <span className={classes.messages_load_more_spinner} />

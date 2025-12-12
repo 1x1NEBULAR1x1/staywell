@@ -24,7 +24,7 @@ export const SelectInput = ({
 }: SelectInputProps) => {
   return (
     <div className={classes.field}>
-      <label className={classes.label}>{label}</label>
+      <p className={classes.label}>{label}</p>
       <select
         className={classes.select}
         value={value || ""}

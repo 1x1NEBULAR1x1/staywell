@@ -1,8 +1,7 @@
 export * from './common';
-export {
+export type {
   User,
   Message,
-  Role,
   Review,
   Amenity,
   ApartmentAmenity,
@@ -20,11 +19,17 @@ export {
   CardDetail,
   Event,
   EventImage,
+  Notification
+} from './database';
+export {
+  Role,
+  NotificationType,
+  NotificationAction,
   ApartmentType,
   BookingStatus,
   PaymentMethod,
   TransactionStatus,
-  TransactionType,
-} from './database';
+  TransactionType
+} from './database'
 export * from './models';
 export * from './types';

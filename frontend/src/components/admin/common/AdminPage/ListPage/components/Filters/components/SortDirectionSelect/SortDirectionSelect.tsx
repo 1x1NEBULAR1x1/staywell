@@ -54,6 +54,7 @@ export const SortDirectionSelect = ({
   return (
     <div className={classes.dropdown_container} ref={dropdownRef}>
       <button
+        type="button"
         className={`${classes.dropdown_button} ${is_open ? classes.open : ""}`}
         onClick={() => setIsOpen(!is_open)}
       >
@@ -71,18 +72,20 @@ export const SortDirectionSelect = ({
         <div
           className={`${classes.dropdown_menu} ${is_open ? classes.menu_visible : ""}`}
         >
-          <div
+          <button
             className={`${classes.dropdown_item} ${!selected ? classes.selected : ""}`}
             onClick={() => handleSelect("")}
+            type="button"
           >
             <span>Direction</span>
             {!selected && <Check size={16} className={classes.check_icon} />}
-          </div>
+          </button>
           {Object.values(SortDirection).map((sort_direction) => (
-            <div
+            <button
               key={`sort-direction-${sort_direction.toString()}`}
               className={`${classes.dropdown_item} ${selected === sort_direction.toString() ? classes.selected : ""}`}
               onClick={() => handleSelect(sort_direction.toString())}
+              type="button"
             >
               <span className={classes.item_content}>
                 {getDirectionIcon(sort_direction)}
@@ -91,7 +94,7 @@ export const SortDirectionSelect = ({
               {selected === sort_direction.toString() && (
                 <Check size={16} className={classes.check_icon} />
               )}
-            </div>
+            </button>
           ))}
         </div>
       )}

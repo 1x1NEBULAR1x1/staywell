@@ -6,9 +6,7 @@ import { usePId } from "@/hooks/common/useId";
 import { Bookings, Reservations } from "./components";
 import classes from "./Occupancy.module.scss";
 
-type OccupancyProps = {};
-
-export const Occupancy = ({}: OccupancyProps) => {
+export const Occupancy = () => {
   const { data: apartment } = useModel("APARTMENT").find(usePId());
 
   // Filter active reservations and bookings

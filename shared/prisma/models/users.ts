@@ -6,7 +6,12 @@ const users_dir_name = `/static/${ImagePaths.USERS}`;
 
 export async function seedUsers(prisma: PrismaClient) {
   // Создание администратора
-  await createAdmin(prisma);
+  try {
+    await createAdmin(prisma);
+  } catch (error) {
+    console.warn('Admin already exists');
+
+  }
 
   // Создание тестовых пользователей
   // Jon Snow

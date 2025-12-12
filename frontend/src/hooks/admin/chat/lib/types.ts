@@ -67,4 +67,5 @@ export interface UseWebSocketChatReturn {
   // Data
   messages: Message[];
   online_users: Record<string, number>;
+  getUserLastSeen: (user_id: string) => Date | null;
 }

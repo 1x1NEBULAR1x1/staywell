@@ -73,8 +73,8 @@ export const SelectedEventCard = ({
             <div className={classes.datetime}>
               <Calendar size={16} />
               <span>
-                {format(new Date(event.start), "dd.mm HH:mm")} to{" "}
-                {format(new Date(event.end), "dd.mm HH:mm")}
+                {format(new Date(event.start), "dd.MM HH:mm")} to{" "}
+                {format(new Date(event.end), "dd.MM HH:mm")}
               </span>
             </div>
           </div>

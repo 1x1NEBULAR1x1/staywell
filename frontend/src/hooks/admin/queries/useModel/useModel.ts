@@ -48,23 +48,25 @@ export function useModel<M extends GETTABLE_NAMES>(model: M): UseModel<M> {
   const get = (
     filters: GettableTypes<M>["filters"] = { take: 1000, skip: 0 },
     options?: GetQueryOptions<M>,
-  ) =>
-    useQuery({
+  ) => {
+    return useQuery({
       queryKey: QUERY_KEYS(model).get(filters),
       queryFn: () => getApi.get(filters),
       select: (data) => data.data,
       enabled: options?.enabled === undefined ? true : options.enabled,
       initialData: options?.initial_data,
     });
+  };
 
-  const find = (id: string, options?: FindQueryOptions<M>) =>
-    useQuery({
+  const find = (id: string, options?: FindQueryOptions<M>) => {
+    return useQuery({
       queryKey: QUERY_KEYS(model).find(id),
       queryFn: () => getApi.find(id),
       select: (data) => data.data,
       enabled: options?.enabled === undefined ? true : options.enabled,
       initialData: options?.initial_data,
     });
+  };
 
   return isCruddableName(model)
     ? ({

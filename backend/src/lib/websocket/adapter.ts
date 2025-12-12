@@ -1,6 +1,6 @@
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { INestApplication } from '@nestjs/common';
-import { ServerOptions } from 'socket.io';
+import { Server, ServerOptions } from 'socket.io';
 import { ConfigService } from '@nestjs/config';
 
 export class AuthenticatedIoAdapter extends IoAdapter {
@@ -11,13 +11,13 @@ export class AuthenticatedIoAdapter extends IoAdapter {
     super(app);
   }
 
-  createIOServer(port: number, options?: ServerOptions) {
+  createIOServer(port: number, options?: ServerOptions): Server {
     return super.createIOServer(port, {
       ...options,
       cors: {
-        origin: this.configService.getOrThrow('FRONTEND_URL'),
+        origin: this.configService.get<string>('FRONTEND_URL'),
         credentials: true,
       },
-    });
+    }) as Server;
   }
 }

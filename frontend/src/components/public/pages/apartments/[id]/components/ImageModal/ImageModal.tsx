@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import classes from "./ImageModal.module.scss";
 
 interface ImageData {
@@ -12,21 +12,21 @@ interface ImageData {
 }
 
 interface ImageModalProps {
-  isOpen: boolean;
+  is_open: boolean;
   onClose: () => void;
   images: ImageData[];
-  currentIndex: number;
+  current_index: number;
   onImageChange: (index: number) => void;
 }
 
 export const ImageModal = ({
-  isOpen,
+  is_open,
   onClose,
   images,
-  currentIndex,
+  current_index,
   onImageChange,
 }: ImageModalProps) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const [is_mounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -34,14 +34,24 @@ export const ImageModal = ({
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
+    if (is_open) {
       document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
     }
 
     return () => document.body.classList.remove("modal-open");
-  }, [isOpen]);
+  }, [is_open]);
+
+  const handlePrevious = useCallback(() => {
+    const new_index = current_index > 0 ? current_index - 1 : images.length - 1;
+    onImageChange(new_index);
+  }, [current_index, images.length, onImageChange]);
+
+  const handleNext = useCallback(() => {
+    const new_index = current_index < images.length - 1 ? current_index + 1 : 0;
+    onImageChange(new_index);
+  }, [current_index, images.length, onImageChange]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -50,12 +60,12 @@ export const ImageModal = ({
       if (e.key === "ArrowRight") handleNext();
     };
 
-    if (isOpen) document.addEventListener("keydown", handleEscape);
+    if (is_open) document.addEventListener("keydown", handleEscape);
 
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [isOpen, handleNext, handlePrevious, onClose]);
+  }, [is_open, handleNext, handlePrevious, onClose]);
 
-  if (!isMounted || !isOpen || images.length === 0) {
+  if (!is_mounted || !is_open || images.length === 0) {
     return null;
   }
 
@@ -63,28 +73,26 @@ export const ImageModal = ({
     if (e.target === e.currentTarget) onClose();
   };
 
-  const handlePrevious = () => {
-    const newIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
-    onImageChange(newIndex);
-  };
-
-  const handleNext = () => {
-    const newIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
-    onImageChange(newIndex);
-  };
-
-  const currentImage = images[currentIndex];
+  const current_image = images[current_index];
 
   return (
-    <div className={classes.modal_overlay} onClick={handleOverlayClick}>
+    <button
+      type="button"
+      className={classes.modal_overlay}
+      onClick={handleOverlayClick}
+    >
       <div className={classes.modal_content}>
         <div className={classes.main_image_container}>
-          <button className={classes.close_button} onClick={onClose}>
+          <button
+            type="button"
+            className={classes.close_button}
+            onClick={onClose}
+          >
             <X size={24} />
           </button>
           <Image
-            src={currentImage.image}
-            alt={currentImage.name || "Apartment"}
+            src={current_image.image}
+            alt={current_image.name || "Apartment"}
             fill
             className={classes.main_image}
             sizes="100vw"
@@ -94,12 +102,14 @@ export const ImageModal = ({
           {images.length > 1 && (
             <>
               <button
+                type="button"
                 className={`${classes.nav_button} ${classes.nav_button_left}`}
                 onClick={handlePrevious}
               >
                 <ChevronLeft size={24} />
               </button>
               <button
+                type="button"
                 className={`${classes.nav_button} ${classes.nav_button_right}`}
                 onClick={handleNext}
               >
@@ -114,8 +124,9 @@ export const ImageModal = ({
             <div className={classes.thumbnails_slider}>
               {images.map((image, index) => (
                 <button
+                  type="button"
                   key={image.id}
-                  className={`${classes.thumbnail} ${index === currentIndex ? classes.thumbnail_active : ""}`}
+                  className={`${classes.thumbnail} ${index === current_index ? classes.thumbnail_active : ""}`}
                   onClick={() => onImageChange(index)}
                 >
                   <Image
@@ -131,6 +142,6 @@ export const ImageModal = ({
           </div>
         )}
       </div>
-    </div>
+    </button>
   );
 };

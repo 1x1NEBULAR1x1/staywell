@@ -16,7 +16,7 @@ import {
 import { BaseFormModal } from "@/components/admin/common/Modal/BaseFormModal";
 import { useModel } from "@/hooks/admin/queries/useModel";
 import { useToast } from "@/hooks/common/useToast";
-import { formatToTitle } from "@/lib/api";
+import { formatToTitle, query_client } from "@/lib/api";
 
 interface ApartmentModalProps {
   initial_data?: ExtendedApartment;
@@ -31,12 +31,8 @@ export const ApartmentModal = ({
   initial_data,
   onClose = () => {},
 }: ApartmentModalProps) => {
-  const mutation = initial_data
-    ? useModel("APARTMENT").update(initial_data.id)
-    : useModel("APARTMENT").create();
-  const query = initial_data
-    ? useModel("APARTMENT").find(initial_data.id)
-    : { refetch: () => {} };
+  const update_mutation = useModel("APARTMENT").update(initial_data?.id ?? "");
+  const create_mutation = useModel("APARTMENT").create();
   const toast = useToast();
   const form = useForm<FormData>({
     defaultValues: {
@@ -48,7 +44,9 @@ export const ApartmentModal = ({
 
   const handleSubmit = async (data: FormData) => {
     try {
-      await mutation.mutateAsync(data);
+      await (initial_data ? update_mutation : create_mutation).mutateAsync(
+        data,
+      );
       onClose();
       toast.success(
         `Apartment ${initial_data ? "updated" : "created"} successfully`,
@@ -60,7 +58,10 @@ export const ApartmentModal = ({
         );
       console.error("Failed to update apartment:", error);
     } finally {
-      query.refetch();
+      query_client.invalidateQueries({
+        queryKey: ["apartments"],
+        exact: false,
+      });
     }
   };
 
@@ -76,7 +77,9 @@ export const ApartmentModal = ({
       size="lg"
     >
       <ImageUploader
-        is_loading={mutation.isPending}
+        is_loading={
+          initial_data ? update_mutation.isPending : create_mutation.isPending
+        }
         register={form.register}
         errors={form.formState.errors}
         setValue={form.setValue}

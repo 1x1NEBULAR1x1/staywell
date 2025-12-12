@@ -8,13 +8,12 @@ import { usePId } from "@/hooks/common/useId";
 import {
   BookingTab,
   GeneralTab,
-  PaymentTab,
   TransactionSidebar,
   UserTab,
 } from "./components";
 import classes from "./Transaction.module.scss";
 
-export type TransactionTab = "general" | "user" | "booking" | "payment";
+export type TransactionTab = "general" | "user" | "booking";
 
 export const Transaction = () => {
   const { data: transaction } = useModel("TRANSACTION").find(usePId());
@@ -28,8 +27,6 @@ export const Transaction = () => {
         return <UserTab transaction={transaction} />;
       case "booking":
         return <BookingTab transaction={transaction} />;
-      case "payment":
-        return <PaymentTab transaction={transaction} />;
       default:
         return null;
     }

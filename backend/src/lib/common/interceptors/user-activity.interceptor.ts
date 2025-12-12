@@ -17,15 +17,13 @@ export class UserActivityInterceptor implements NestInterceptor {
     const { user } = context.switchToHttp().getRequest<AuthenticatedRequest>();
 
     return next.handle().pipe(
-      tap(async () => {
+      tap(() => {
         // Update last seen time for authenticated users
         if (user?.id) {
-          try {
-            await this.userActivityService.updateLastSeen(user.id);
-          } catch (error) {
+          this.userActivityService.updateLastSeen(user.id).catch((error) => {
             // Log error but don't fail the request
             console.error('Failed to update user activity:', error);
-          }
+          });
         }
       }),
     );

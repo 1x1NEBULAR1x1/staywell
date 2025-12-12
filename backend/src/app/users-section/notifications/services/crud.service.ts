@@ -103,7 +103,7 @@ export class CrudService {
         data: { is_read: true },
       });
       return { count };
-    } catch (error) {
+    } catch {
       throw new BadRequestException('Failed to mark notifications as read');
     }
   }

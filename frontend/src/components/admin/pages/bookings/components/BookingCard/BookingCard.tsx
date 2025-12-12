@@ -119,6 +119,7 @@ export const BookingCard = ({ booking }: { booking: ExtendedBooking }) => {
               {booking.status}
             </span>
             <button
+              type="button"
               className={classes.booking_card_edit_button}
               onClick={handleEdit}
             >

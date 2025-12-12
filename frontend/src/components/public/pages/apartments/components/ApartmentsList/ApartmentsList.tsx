@@ -1,9 +1,11 @@
 "use client";
 
 import type { ExtendedApartment } from "@shared/src/types/apartments-section/extended.types";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useId } from "react";
+import { Loader } from "@/components/common/Loader";
+import { ApartmentCardSkeleton } from "@/components/common/Skeletons";
 import classes from "./ApartmentsList.module.scss";
-import { ApartmentCard } from "./components/ApartmentCard";
+import { ApartmentCard, Header } from "./components";
 
 type ApartmentsListProps = {
   apartments: ExtendedApartment[];
@@ -20,7 +22,8 @@ export const ApartmentsList = ({
   hasNextPage,
   isFetchingNextPage,
 }: ApartmentsListProps) => {
-  // Бесконечная прокрутка
+  const id = useId();
+  // Infinite scroll
   const handleScroll = useCallback(() => {
     if (
       window.innerHeight + document.documentElement.scrollTop !==
@@ -51,22 +54,26 @@ export const ApartmentsList = ({
 
   return (
     <section className={classes.apartments_section}>
-      <div className={classes.results_header}>
-        <p className={classes.results_count}>
-          {apartments.length}{" "}
-          {apartments.length === 1 ? "apartment" : "apartments"} found
-        </p>
-      </div>
+      <Header isLoading={isLoading} total={apartments.length} />
 
       <div className={classes.apartments_grid}>
+        {/* Show skeletons while loading initial data */}
+        {isLoading &&
+          apartments.length === 0 &&
+          Array.from({ length: 6 }).map(() => (
+            <ApartmentCardSkeleton key={`${id}-skeleton`} />
+          ))}
+
+        {/* Show actual apartments */}
         {apartments.map((apartment) => (
           <ApartmentCard key={apartment.id} apartment={apartment} />
         ))}
       </div>
 
+      {/* Show loader when fetching next page */}
       {isFetchingNextPage && (
         <div className={classes.loading_more}>
-          <p>Loading more apartments...</p>
+          <Loader size="small" text="Loading more apartments..." />
         </div>
       )}
     </section>

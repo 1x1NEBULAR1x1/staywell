@@ -23,9 +23,10 @@ export const AdditionalOptionModal = ({
   initial_data,
 }: AdditionalOptionModalProps) => {
   const toast = useToast();
-  const mutation = initial_data
-    ? useModel("ADDITIONAL_OPTION").update(initial_data.id)
-    : useModel("ADDITIONAL_OPTION").create();
+  const update_mutation = useModel("ADDITIONAL_OPTION").update(
+    initial_data?.id ?? "",
+  );
+  const create_mutation = useModel("ADDITIONAL_OPTION").create();
 
   const form = useForm<FormData>({
     defaultValues: {
@@ -41,7 +42,7 @@ export const AdditionalOptionModal = ({
 
   const handleSubmit = async (data: FormData) => {
     try {
-      await mutation.mutateAsync({
+      await (initial_data ? update_mutation : create_mutation).mutateAsync({
         name: data.name,
         description: data.description,
         image: data.image_type === "url" ? data.url : undefined,
@@ -74,11 +75,15 @@ export const AdditionalOptionModal = ({
       form={form}
       onSubmit={handleSubmit}
       model="ADDITIONAL_OPTION"
-      is_loading={mutation.isPending}
+      is_loading={
+        initial_data ? update_mutation.isPending : create_mutation.isPending
+      }
       id={initial_data?.id}
     >
       <ImageUploader
-        is_loading={mutation.isPending}
+        is_loading={
+          initial_data ? update_mutation.isPending : create_mutation.isPending
+        }
         register={form.register}
         errors={form.formState.errors}
         setValue={form.setValue}

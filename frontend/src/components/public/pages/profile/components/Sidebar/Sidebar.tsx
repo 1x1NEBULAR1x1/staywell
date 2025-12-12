@@ -36,6 +36,7 @@ export const Sidebar = () => {
         {profile_tabs_config.map((tab) => {
           return (
             <button
+              type="button"
               key={tab.href}
               className={clsx(classes.nav_item, {
                 [classes.nav_item_active]: isActiveTab(tab),

@@ -1,33 +1,141 @@
 import type { ExtendedBooking } from "@shared/src";
-import { BadgeAlert } from "lucide-react";
+import { format } from "date-fns";
+import { AlertCircle, Calendar, Clock, CreditCard, Home } from "lucide-react";
 import Link from "next/link";
+import { useMemo } from "react";
 import classes from "./PendingMessage.module.scss";
 
 export const PendingMessage = ({ booking }: { booking: ExtendedBooking }) => {
+  const start_date = booking.start ? new Date(booking.start) : null;
+  const end_date = booking.end ? new Date(booking.end) : null;
+  const nights =
+    start_date && end_date
+      ? Math.ceil(
+          (end_date.getTime() - start_date.getTime()) / (1000 * 60 * 60 * 24),
+        )
+      : 0;
+
+  const total_price = useMemo(() => {
+    const booking_price =
+      booking.booking_variant.apartment.deposit +
+      booking.booking_variant.price * nights;
+    const options_price = booking.booking_additional_options.reduce(
+      (total, option) => total + option.additional_option.price * option.amount,
+      0,
+    );
+    const events_price = booking.booking_events.reduce(
+      (total, event) => total + event.event.price * event.number_of_people,
+      0,
+    );
+    return booking_price + options_price + events_price;
+  }, [
+    booking.booking_variant.apartment.deposit,
+    booking.booking_variant.price,
+    nights,
+    booking.booking_additional_options,
+    booking.booking_events,
+  ]);
+
   return (
-    <div className={classes.pending_message}>
-      <div className={classes.pending_icon}>
-        <BadgeAlert size={80} color="yellow" />
-      </div>
-      <h3 className={classes.pending_title}>Payment Processing</h3>
-      <p className={classes.pending_description}>
-        Your booking #{booking.id} for {booking.booking_variant.apartment.name}{" "}
-        is being paused. You can continue the payment process by clicking the
-        button below in{" "}
-        <Link href={`/bookings/${booking.id}`}>Booking Details</Link>. If you
-        don't complete the payment within 24 hours, your booking will be
-        cancelled.
-      </p>
-      <div className={classes.actions}>
-        <Link
-          href={`/bookings/${booking.id}`}
-          className={classes.primary_button}
-        >
-          View Booking Details
-        </Link>
-        <Link href="/bookings" className={classes.secondary_button}>
-          Back to My Bookings
-        </Link>
+    <div className={classes.pending_container}>
+      <div className={classes.pending_card}>
+        {/* Pending Icon with Animation */}
+        <div className={classes.icon_wrapper}>
+          <div className={classes.pending_icon}>
+            <Clock size={80} />
+          </div>
+          <div className={classes.icon_glow}></div>
+        </div>
+
+        {/* Main Message */}
+        <div className={classes.message_section}>
+          <h2 className={classes.title}>Payment Pending</h2>
+          <p className={classes.subtitle}>
+            Your booking is awaiting payment completion
+          </p>
+        </div>
+
+        {/* Warning Alert */}
+        <div className={classes.warning_alert}>
+          <AlertCircle size={20} />
+          <div className={classes.alert_content}>
+            <strong>Action Required:</strong> Complete your payment within 24
+            hours to confirm your booking. After this period, your reservation
+            will be automatically cancelled.
+          </div>
+        </div>
+
+        {/* Booking Summary Card */}
+        <div className={classes.booking_summary}>
+          <div className={classes.summary_header}>
+            <h3>Booking Information</h3>
+            <div className={classes.booking_number}>
+              <span>Reference #</span>
+              <code>{booking.id.split("-")[0]}</code>
+            </div>
+          </div>
+
+          <div className={classes.summary_grid}>
+            <div className={classes.summary_item}>
+              <div className={classes.item_icon}>
+                <Home size={20} />
+              </div>
+              <div className={classes.item_content}>
+                <span className={classes.item_label}>Apartment</span>
+                <span className={classes.item_value}>
+                  {booking.booking_variant.apartment.name}
+                </span>
+              </div>
+            </div>
+
+            {start_date && end_date && (
+              <div className={classes.summary_item}>
+                <div className={classes.item_icon}>
+                  <Calendar size={20} />
+                </div>
+                <div className={classes.item_content}>
+                  <span className={classes.item_label}>
+                    Check-in / Check-out
+                  </span>
+                  <span className={classes.item_value}>
+                    {format(start_date, "MMM dd, yyyy")} -{" "}
+                    {format(end_date, "MMM dd, yyyy")}
+                  </span>
+                  <span className={classes.item_detail}>
+                    {nights} {nights === 1 ? "night" : "nights"}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {total_price !== undefined && (
+              <div className={classes.summary_item}>
+                <div className={classes.item_icon}>
+                  <CreditCard size={20} />
+                </div>
+                <div className={classes.item_content}>
+                  <span className={classes.item_label}>Amount Due</span>
+                  <span className={classes.item_value_amount}>
+                    ${total_price.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className={classes.actions}>
+          <Link
+            href={`/bookings/${booking.id}`}
+            className={classes.primary_button}
+          >
+            Complete Payment
+          </Link>
+          <Link href="/bookings" className={classes.secondary_button}>
+            View All Bookings
+          </Link>
+        </div>
       </div>
     </div>
   );

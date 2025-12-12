@@ -45,6 +45,7 @@ export const SortBySelect = ({
   return (
     <div className={classes.dropdown_container} ref={dropdownRef}>
       <button
+        type="button"
         className={`${classes.dropdown_button} ${is_open ? classes.open : ""}`}
         onClick={() => setIsOpen(!is_open)}
       >
@@ -59,15 +60,17 @@ export const SortBySelect = ({
         <div
           className={`${classes.dropdown_menu} ${is_open ? classes.menu_visible : ""}`}
         >
-          <div
+          <button
             className={`${classes.dropdown_item} ${!selected ? classes.selected : ""}`}
             onClick={() => handleSelect("")}
+            type="button"
           >
             <span>Sort by</span>
             {!selected && <Check size={16} className={classes.check_icon} />}
-          </div>
+          </button>
           {sort_by_list?.map((sort_by) => (
-            <div
+            <button
+              type="button"
               key={`sort-by-${sort_by.toString()}`}
               className={`${classes.dropdown_item} ${selected === sort_by.toString() ? classes.selected : ""}`}
               onClick={() => handleSelect(sort_by.toString())}
@@ -76,7 +79,7 @@ export const SortBySelect = ({
               {selected === sort_by.toString() && (
                 <Check size={16} className={classes.check_icon} />
               )}
-            </div>
+            </button>
           ))}
         </div>
       )}

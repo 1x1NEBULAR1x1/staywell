@@ -1,5 +1,6 @@
 "use client";
 
+import { isAxiosError } from "axios";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useBookingCheckout } from "@/hooks/public/booking";
@@ -24,7 +25,6 @@ export const ProcessButton = ({
       errors.push("Booking variant not selected");
     }
 
-    console.log(selected_dates);
     if (
       !selected_dates.start ||
       !selected_dates.end ||
@@ -52,28 +52,31 @@ export const ProcessButton = ({
       // Create booking
       const data = await booking_checkout_mutation.mutateAsync();
       if (data?.session_url) router.push(data.session_url);
-    } catch (error: any) {
-      console.error("Error creating booking:", error);
+    } catch (error: unknown) {
+      if (!isAxiosError(error)) {
+        console.error("Error creating booking:", error);
+      } else {
+        // Define the type of error and show the corresponding message
+        let error_message =
+          "An unknown error occurred while creating the booking";
 
-      // Define the type of error and show the corresponding message
-      let errorMessage = "An unknown error occurred while creating the booking";
+        if (error?.response?.status === 409) {
+          error_message = "Dates are already taken. Please select other dates.";
+        } else if (error?.response?.status === 400) {
+          error_message =
+            "Invalid booking data. Please check the entered information.";
+        } else if (error?.response?.status === 401) {
+          error_message = "You need to be logged in to create a booking.";
+        } else if (error?.response?.status === 403) {
+          error_message =
+            "You do not have enough permissions to create a booking.";
+        } else if (error?.response?.data?.message) {
+          error_message = error.response.data.message;
+        }
 
-      if (error?.response?.status === 409) {
-        errorMessage = "Dates are already taken. Please select other dates.";
-      } else if (error?.response?.status === 400) {
-        errorMessage =
-          "Invalid booking data. Please check the entered information.";
-      } else if (error?.response?.status === 401) {
-        errorMessage = "You need to be logged in to create a booking.";
-      } else if (error?.response?.status === 403) {
-        errorMessage =
-          "You do not have enough permissions to create a booking.";
-      } else if (error?.response?.data?.message) {
-        errorMessage = error.response.data.message;
+        // Here you can add a toast notification or error state
+        alert(error_message);
       }
-
-      // Here you can add a toast notification or error state
-      alert(errorMessage);
     }
   };
 

@@ -163,13 +163,16 @@
 }
 
 .menu_item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
   width: 100%;
   padding: $spacing-sm $spacing-md;
   background: none;
   border: none;
   text-align: left;
   font-size: $font-size-sm;
+  font-weight: 500;
   color: $foreground-main;
   cursor: pointer;
   transition: background-color $transition-fast;
@@ -288,4 +291,3 @@
   margin-left: $spacing-xs;
   font-style: italic;
 }
-

@@ -54,7 +54,11 @@ export const Modal = ({
   };
 
   return createPortal(
-    <div className={styles.modal_overlay} onClick={handleOverlayClick}>
+    <button
+      type="button"
+      className={styles.modal_overlay}
+      onClick={handleOverlayClick}
+    >
       <div
         className={`${styles.modal_content} ${styles[`modal_content_${size}`]}`}
       >
@@ -70,7 +74,7 @@ export const Modal = ({
         </div>
         <div className={styles.modal_body}>{children}</div>
       </div>
-    </div>,
+    </button>,
     document.body,
   );
 };

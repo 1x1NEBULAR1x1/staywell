@@ -80,16 +80,27 @@
       margin: 0;
     }
 
-    .close_icon {
-      width: $font-size-lg;
-      height: $font-size-lg;
-      color: $foreground-secondary;
+    .close_button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: none;
+      background: transparent;
       cursor: pointer;
       transition: all 0.2s ease;
 
-      &:hover {
-        color: $foreground-main;
-        transform: rotate(90deg);
+      .close_icon {
+        width: $font-size-lg;
+        height: $font-size-lg;
+        color: $foreground-secondary;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: $foreground-main;
+          transform: rotate(90deg);
+        }
       }
     }
   }

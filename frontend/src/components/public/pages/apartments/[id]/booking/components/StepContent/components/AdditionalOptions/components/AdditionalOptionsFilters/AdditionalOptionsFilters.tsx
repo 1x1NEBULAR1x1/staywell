@@ -25,7 +25,7 @@ export const AdditionalOptionsFilters = ({
     setFilters({ ...filters, search: search || undefined });
   };
 
-  const handleFilterChange = (key: string, value: any) => {
+  const handleFilterChange = (key: string, value: unknown) => {
     setFilters({ ...filters, [key]: value });
   };
 

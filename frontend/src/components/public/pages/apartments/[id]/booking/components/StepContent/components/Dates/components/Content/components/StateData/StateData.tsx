@@ -33,6 +33,7 @@ export const StateData = ({ guests, setGuests, error }: StateDataProps) => {
         </div>
         <div className={classes.controls}>
           <button
+            type="button"
             className={classes.button}
             onClick={() => setGuests(guests - 1)}
           >
@@ -48,6 +49,7 @@ export const StateData = ({ guests, setGuests, error }: StateDataProps) => {
           />
 
           <button
+            type="button"
             className={classes.button}
             onClick={() => setGuests(guests + 1)}
           >

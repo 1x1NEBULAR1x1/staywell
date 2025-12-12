@@ -1,12 +1,11 @@
+import Link from "next/link";
 import hero_banner from "@/../public/pages/home/hero-image.jpg";
 import ic_cities from "@/../public/pages/home/ic-cities.png";
 import ic_traveler from "@/../public/pages/home/ic-traveler.png";
 import ic_treasure from "@/../public/pages/home/ic-treasure.png";
 import classes from "./Hero.module.scss";
 
-type HeroProps = {};
-
-export const Hero = ({}: HeroProps) => (
+export const Hero = () => (
   <section className={classes.section_hero}>
     <div className={classes.about}>
       <h1 className={classes.title}>
@@ -20,7 +19,9 @@ export const Hero = ({}: HeroProps) => (
         We’ll be happy to welcome you and make your stay truly special.
       </p>
 
-      <button className={classes.button}>Show More</button>
+      <Link href="/apartments" className={classes.button}>
+        Show More
+      </Link>
 
       <div className={classes.metrics}>
         <div className={classes.item}>

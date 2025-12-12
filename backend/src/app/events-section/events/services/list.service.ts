@@ -15,7 +15,7 @@ import {
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(options: EventsFiltersDto) {
+  customFilters = (options: EventsFiltersDto) => {
     const {
       search,
       guide_id,
@@ -23,6 +23,8 @@ export class ListService {
       max_capacity,
       max_price,
       min_price,
+      min_start,
+      max_end,
     } = options;
     const filters: Prisma.EventWhereInput = {};
     if (guide_id) filters.guide_id = guide_id;
@@ -30,6 +32,14 @@ export class ListService {
       filters.price = {};
       if (min_price) filters.price.gte = min_price;
       if (max_price) filters.price.lte = max_price;
+    }
+    if (min_start) {
+      filters.start = {};
+      filters.start.gte = min_start;
+    }
+    if (max_end) {
+      filters.end = {};
+      filters.end.lte = max_end;
     }
     if (min_capacity || max_capacity) {
       filters.capacity = {};
@@ -43,7 +53,7 @@ export class ListService {
       ];
     }
     return filters;
-  }
+  };
   /**
    * Find all events with filtering and pagination
    * @param filters - Query parameters for filtering and pagination

@@ -17,15 +17,16 @@ export const useUsers = () => {
   const api = new UsersApi();
   const toast = useToast();
 
-  const get = (filters: UsersFilters) =>
-    useQuery({
+  const get = (filters: UsersFilters) => {
+    return useQuery({
       queryKey: ["users", filters],
       queryFn: () => api.get(filters),
       select: (data) => data.data,
     });
+  };
 
-  const update = (id: string) =>
-    useMutation({
+  const update = (id: string) => {
+    return useMutation({
       mutationFn: (data: UpdateUser | AdminUpdateUser) =>
         api.update({ id }, data),
       onSuccess: () => {
@@ -33,14 +34,16 @@ export const useUsers = () => {
         invalidate_queries(id);
       },
     });
+  };
 
-  const find = (id: string, options?: FindQueryOptions<"USER">) =>
-    useQuery({
+  const find = (id: string, options?: FindQueryOptions<"USER">) => {
+    return useQuery({
       queryKey: QUERY_KEYS("USER").find(id),
       queryFn: () => api.find({ id }),
       select: (data) => data.data,
       enabled: options?.enabled === undefined ? true : options.enabled,
     });
+  };
 
   return {
     get,

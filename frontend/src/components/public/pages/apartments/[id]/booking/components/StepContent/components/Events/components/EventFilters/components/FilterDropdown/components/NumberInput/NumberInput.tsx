@@ -20,9 +20,12 @@ export const NumberInput = ({
   max,
 }: NumberInputProps) => (
   <div className={classes.container}>
-    <label className={classes.label}>{label}</label>
+    <label htmlFor={`number-input-${label}`} className={classes.label}>
+      {label}
+    </label>
     <input
       type="number"
+      id={`number-input-${label}`}
       className={classes.input}
       value={value ?? ""}
       onChange={(e) => {

@@ -12,7 +12,7 @@ import { CardDetailsFiltersDto } from '../dto';
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(options: CardDetailsFiltersDto) {
+  customFilters = (options: CardDetailsFiltersDto) => {
     const { user_id, holder, start, end } = options;
     const filters: Prisma.CardDetailWhereInput = {};
     if (user_id) filters.user_id = user_id;
@@ -26,7 +26,7 @@ export class ListService {
       filters.expiry_month = { lte: end.getMonth() };
     }
     return filters;
-  }
+  };
   /**
    * Find all card details with filtering and pagination
    * @param filters - Query parameters for filtering and pagination

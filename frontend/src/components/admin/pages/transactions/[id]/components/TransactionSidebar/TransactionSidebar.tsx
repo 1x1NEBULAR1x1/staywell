@@ -2,7 +2,7 @@
 
 import type { ExtendedTransaction } from "@shared/src";
 import { format } from "date-fns";
-import { Calendar, CreditCard, DollarSign, User } from "lucide-react";
+import { Calendar, CreditCard, User } from "lucide-react";
 import type { TransactionTab } from "../../Transaction";
 import classes from "./TransactionSidebar.module.scss";
 
@@ -16,7 +16,6 @@ const navItems = [
   { id: "general", label: "General Info", icon: CreditCard },
   { id: "user", label: "User", icon: User },
   { id: "booking", label: "Booking", icon: Calendar },
-  { id: "payment", label: "Payment", icon: DollarSign },
 ] as const;
 
 export const TransactionSidebar = ({
@@ -98,6 +97,7 @@ export const TransactionSidebar = ({
           const Icon = item.icon;
           return (
             <button
+              type="button"
               key={item.id}
               className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ""}`}
               onClick={() => setActiveTab(item.id)}

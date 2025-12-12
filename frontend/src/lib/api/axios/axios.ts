@@ -14,13 +14,13 @@ const api = axios.create({
 /**
  * Filter empty values from object
  */
-const filterEmptyValues = (data: any): any => {
+const filterEmptyValues = (data: unknown): unknown => {
   if (Array.isArray(data)) {
     return data.map((item) => filterEmptyValues(item));
   }
 
   if (data && typeof data === "object" && !(data instanceof File)) {
-    const filtered: any = {};
+    const filtered: Record<string, unknown> = {};
     Object.entries(data).forEach(([key, value]) => {
       if (value !== undefined && value !== "") {
         filtered[key] = filterEmptyValues(value);
@@ -88,8 +88,8 @@ export const createOptionalAuthConfig = (
 });
 
 // Variable for tracking the token update process
-let isRefreshing = false;
-let failedQueue: Array<{
+let is_refreshing = false;
+let failed_queue: Array<{
   resolve: (value?: string | null) => void;
   reject: (reason?: Error) => void;
 }> = [];
@@ -98,7 +98,7 @@ let failedQueue: Array<{
  * Process the queue of requests after the token update
  */
 const processQueue = (error: Error | null, token: string | null = null) => {
-  failedQueue.forEach(({ resolve, reject }) => {
+  failed_queue.forEach(({ resolve, reject }) => {
     if (error) {
       reject(error);
     } else {
@@ -106,7 +106,7 @@ const processQueue = (error: Error | null, token: string | null = null) => {
     }
   });
 
-  failedQueue = [];
+  failed_queue = [];
 };
 
 /**
@@ -114,7 +114,7 @@ const processQueue = (error: Error | null, token: string | null = null) => {
  */
 const redirectToLogin = () => {
   if (typeof window !== "undefined") {
-    const loginPath = `/auth/login`;
+    const login_path = `/auth/login`;
 
     // Clear all user data
     localStorage.clear();
@@ -128,11 +128,9 @@ const redirectToLogin = () => {
     });
 
     // Redirect to login page only if we are not on a public page
-    const isPublicPage = !window.location.pathname.includes("/admin");
+    const is_public_page = !window.location.pathname.includes("/admin");
 
-    if (!isPublicPage) {
-      window.location.href = loginPath;
-    }
+    if (!is_public_page) window.location.href = login_path;
   }
 };
 
@@ -142,59 +140,56 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const originalRequest = error.config;
+    const original_request = error.config;
 
     // If we received a 401 error
     if (error.response?.status === 401) {
       // Check if this is a public request or an optional request
-      const isPublicRequest =
-        originalRequest.url?.includes("/public") ||
-        originalRequest.headers?.["X-Optional-Auth"] === "true";
+      const is_public_request =
+        original_request.url?.includes("/public") ||
+        original_request.headers?.["X-Optional-Auth"] === "true";
 
       // For public or optional requests, just return the error without redirect
-      if (isPublicRequest) {
+      if (is_public_request) {
         return Promise.reject(error);
       }
 
       // Check if the error contains information about the session
-      const errorMessage = error.response?.data?.message || "";
-      const isSessionError =
-        errorMessage.includes("сессия") ||
-        errorMessage.includes("Сессия") ||
-        errorMessage.includes("session");
+      const error_message = error.response?.data?.message || "";
+      const is_session_error = error_message.includes("session");
 
       // If this is a session error or a repeated request, clear the data immediately
-      if (isSessionError || originalRequest._retry) {
+      if (is_session_error || original_request._retry) {
         redirectToLogin();
         return Promise.reject(error);
       }
 
       // If this is not a refresh/login/register request, try to update the tokens
       if (
-        !originalRequest._retry &&
-        !originalRequest.url?.includes("/auth/refresh") &&
-        !originalRequest.url?.includes("/auth/login") &&
-        !originalRequest.url?.includes("/auth/register")
+        !original_request._retry &&
+        !original_request.url?.includes("/auth/refresh") &&
+        !original_request.url?.includes("/auth/login") &&
+        !original_request.url?.includes("/auth/register")
       ) {
         // If the token is already being updated, add the request to the queue
-        if (isRefreshing) {
+        if (is_refreshing) {
           return new Promise((resolve, reject) => {
-            failedQueue.push({ resolve, reject });
+            failed_queue.push({ resolve, reject });
           })
             .then(() => {
-              return api(originalRequest);
+              return api(original_request);
             })
             .catch((err) => {
               return Promise.reject(err);
             });
         }
 
-        originalRequest._retry = true;
-        isRefreshing = true;
+        original_request._retry = true;
+        is_refreshing = true;
 
         try {
           // Try to update the tokens
-          const refreshResponse = await axios.post(
+          const refresh_response = await axios.post(
             `${api.defaults.baseURL}/auth/refresh`,
             {},
             {
@@ -202,29 +197,29 @@ api.interceptors.response.use(
             },
           );
 
-          if (refreshResponse.status === 200) {
+          if (refresh_response.status === 200) {
             // Process the queue with success
             processQueue(null, "success");
 
             // Repeat the original request
-            return api(originalRequest);
+            return api(original_request);
           }
-        } catch (refreshError: unknown) {
-          console.error("Failed to update tokens:", refreshError);
+        } catch (refresh_error: unknown) {
+          console.error("Failed to update tokens:", refresh_error);
 
           // Process the queue with error
           const error =
-            refreshError instanceof Error
-              ? refreshError
+            refresh_error instanceof Error
+              ? refresh_error
               : new Error("Token refresh failed");
           processQueue(error, null);
 
           // Clear the data and redirect
           redirectToLogin();
 
-          return Promise.reject(refreshError);
+          return Promise.reject(refresh_error);
         } finally {
-          isRefreshing = false;
+          is_refreshing = false;
         }
       }
     }

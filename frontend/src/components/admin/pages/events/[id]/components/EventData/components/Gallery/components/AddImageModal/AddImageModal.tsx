@@ -20,8 +20,8 @@ export const AddImageModal = ({ event_id, onClose }: AddImageModalProps) => {
 
   const form = useForm<FormData>({
     defaultValues: {
-      name: null,
-      description: null,
+      name: undefined,
+      description: undefined,
       image: undefined,
       file: undefined,
       image_type: "file",

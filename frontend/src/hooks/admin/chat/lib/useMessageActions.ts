@@ -27,17 +27,21 @@ export const useMessageActions = (
   options: UseMessageActionsOptions,
 ): UseMessageActionsReturn => {
   const { socket, is_connected } = options;
-  const chatStore = useChatStore();
+  const store = useChatStore();
   const { user } = useAccount();
 
   // Create optimistic message for immediate UI update
   const createOptimisticMessage = useCallback(
-    (receiver_id: string, message: string, booking_id?: string): Message => {
+    (
+      receiver_id: string,
+      message: string,
+      booking_id?: string,
+    ): Message | undefined => {
       const tempId = `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
+      if (!user) return;
       return {
         id: tempId,
-        sender_id: user?.id,
+        sender_id: user.id,
         receiver_id,
         message,
         booking_id: booking_id || null,
@@ -55,13 +59,14 @@ export const useMessageActions = (
   // Update chat list with optimistic message
   const updateChatWithOptimisticMessage = useCallback(
     (receiver_id: string, message: string) => {
-      const updatedChats = chatStore.chats.map((chat: ChatWithLastMessage) => {
+      if (!user) return;
+      const updated_chats = store.chats.map((chat: ChatWithLastMessage) => {
         if (chat.user.id === receiver_id) {
           return {
             ...chat,
             last_message: {
               id: `temp-${Date.now()}`,
-              sender_id: user?.id,
+              sender_id: user.id,
               receiver_id,
               message: `you: ${message}`,
               booking_id: null,
@@ -80,9 +85,9 @@ export const useMessageActions = (
         return chat;
       });
 
-      chatStore.setChats(updatedChats);
+      store.setChats(updated_chats);
     },
-    [chatStore, user],
+    [store, user],
   );
 
   const sendMessage = useCallback(
@@ -95,11 +100,13 @@ export const useMessageActions = (
         message,
         booking_id,
       );
-      chatStore.setMessages(
-        [...chatStore.messages, optimisticMessage].sort(
-          (a, b) =>
-            new Date(a.created).getTime() - new Date(b.created).getTime(),
-        ),
+      store.setMessages(
+        [...store.messages, optimisticMessage]
+          .filter((e) => typeof e !== "undefined")
+          .sort(
+            (a, b) =>
+              new Date(a.created).getTime() - new Date(b.created).getTime(),
+          ),
       );
 
       // Update chat sidebar with "you: {message}"
@@ -112,7 +119,7 @@ export const useMessageActions = (
       socket,
       is_connected,
       user,
-      chatStore,
+      store,
       createOptimisticMessage,
       updateChatWithOptimisticMessage,
     ],

@@ -20,9 +20,8 @@ interface AmenityModalProps {
 
 export const AmenityModal = ({ onClose, initial_data }: AmenityModalProps) => {
   const toast = useToast();
-  const mutation = initial_data
-    ? useModel("AMENITY").update(initial_data.id)
-    : useModel("AMENITY").create();
+  const update_mutation = useModel("AMENITY").update(initial_data?.id ?? "");
+  const create_mutation = useModel("AMENITY").create();
 
   const form = useForm<FormData>({
     defaultValues: {
@@ -37,7 +36,7 @@ export const AmenityModal = ({ onClose, initial_data }: AmenityModalProps) => {
 
   const handleSubmit = async (data: FormData) => {
     try {
-      await mutation.mutateAsync({
+      await (initial_data ? update_mutation : create_mutation).mutateAsync({
         name: data.name,
         image: data.image_type === "url" ? data.url : undefined,
         file: data.image_type === "file" ? data.files[0] : undefined,
@@ -66,11 +65,15 @@ export const AmenityModal = ({ onClose, initial_data }: AmenityModalProps) => {
       form={form}
       onSubmit={handleSubmit}
       model="AMENITY"
-      is_loading={mutation.isPending}
+      is_loading={
+        initial_data ? update_mutation.isPending : create_mutation.isPending
+      }
       id={initial_data?.id}
     >
       <ImageUploader
-        is_loading={mutation.isPending}
+        is_loading={
+          initial_data ? update_mutation.isPending : create_mutation.isPending
+        }
         register={form.register}
         errors={form.formState.errors}
         setValue={form.setValue}

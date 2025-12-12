@@ -1,7 +1,7 @@
 import type { BaseFiltersOptions } from "@shared/src";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import type { DebounceableSettings } from "./types";
-import { getStringValue, hasField } from "./utils";
+//import { getStringValue, hasField } from "./utils";
 
 /**
  * Options for useFilters hook
@@ -34,35 +34,35 @@ export interface UseFiltersReturn<
   setPage: (page: number) => void;
 }
 
-/**
- * Simple debounce function that returns a debounced version of a setter
- */
-function useDebouncedState<T>(
-  initialValue: T,
-  delay: number = 500,
-): [T, (value: T) => void] {
-  const [value, setValue] = useState<T>(initialValue);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+// /**
+//  * Simple debounce function that returns a debounced version of a setter
+//  */
+// function useDebouncedState<T>(
+//   initialValue: T,
+//   delay: number = 500,
+// ): [T, (value: T) => void] {
+//   const [value, setValue] = useState<T>(initialValue);
+//   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const setDebouncedValue = (newValue: T) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    timeoutRef.current = setTimeout(() => {
-      setValue(newValue);
-    }, delay);
-  };
+//   const setDebouncedValue = (newValue: T) => {
+//     if (timeoutRef.current) {
+//       clearTimeout(timeoutRef.current);
+//     }
+//     timeoutRef.current = setTimeout(() => {
+//       setValue(newValue);
+//     }, delay);
+//   };
 
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
+//   useEffect(() => {
+//     return () => {
+//       if (timeoutRef.current) {
+//         clearTimeout(timeoutRef.current);
+//       }
+//     };
+//   }, []);
 
-  return [value, setDebouncedValue];
-}
+//   return [value, setDebouncedValue];
+// }
 
 /**
  * Universal hook for managing filters with debounce support
@@ -72,7 +72,7 @@ export function useFilters<
 >({
   default_filters,
   permanent_fields,
-  debounce_settings = { fields: [], delay: 1000 },
+  //debounce_settings = { fields: [], delay: 1000 },
 }: UseFiltersOptions<B>): UseFiltersReturn<B> {
   // Мемоизируем permanent_fields чтобы избежать бесконечного рендеринга
   const memoized_permanent_fields = useMemo(
@@ -91,21 +91,21 @@ export function useFilters<
   );
 
   // Create debounced values for each field
-  const debounced_values = useMemo(() => {
-    const result: Record<string, string> = {};
-    debounce_settings.fields.forEach((field) => {
-      if (hasField(filters, field)) {
-        result[field] = getStringValue(filters, field);
-      }
-    });
-    return result;
-  }, [filters, debounce_settings.fields]);
+  // const debounced_values = useMemo(() => {
+  //   const result: Record<string, string> = {};
+  //   debounce_settings.fields.forEach((field) => {
+  //     if (hasField(filters, field)) {
+  //       result[field] = getStringValue(filters, field);
+  //     }
+  //   });
+  //   return result;
+  // }, [filters, debounce_settings.fields]);
 
   // Use debounced state for each field
-  const [final_debounced_values, _setFinalDebouncedValues] = useDebouncedState(
-    debounced_values,
-    debounce_settings.delay || 1000,
-  );
+  // const [final_debounced_values, _setFinalDebouncedValues] = useDebouncedState(
+  //   debounced_values,
+  //   debounce_settings.delay || 1000,
+  // );
 
   // Update debounced values when source values change
   // useEffect(() => { // TODO: fix rerender
@@ -116,17 +116,18 @@ export function useFilters<
   const debounced_filters = useMemo(() => {
     // Start with a fresh copy of filters
     const result = Object.assign({}, filters);
-    // Apply permanent fields
-    Object.entries(memoized_permanent_fields).forEach(([key, value]) =>
-      Object.assign(result, { [key]: value }),
-    );
-    // Apply debounced values to result
-    Object.entries(final_debounced_values).forEach(
-      ([field, value]) =>
-        hasField(result, field) && Object.assign(result, { [field]: value }),
-    );
+    // COMMENTED FOR FIX ERROR This callback passed to forEach() iterable method should not return a value.
+    // // Apply permanent fields
+    // Object.entries(memoized_permanent_fields).forEach(([key, value]) =>
+    //   Object.assign(result, { [key]: value }),
+    // );
+    // // Apply debounced values to result
+    // Object.entries(final_debounced_values).forEach(
+    //   ([field, value]) =>
+    //     hasField(result, field) && Object.assign(result, { [field]: value }),
+    // );
     return result;
-  }, [filters, final_debounced_values, memoized_permanent_fields]);
+  }, [filters]); //, final_debounced_values, memoized_permanent_fields]);
 
   /**
    * Update filters with partial new values
@@ -147,7 +148,8 @@ export function useFilters<
             key !== "take" &&
             key !== "skip" &&
             key in prev &&
-            (new_filters as any)[key] !== (prev as any)[key],
+            (new_filters as Record<string, unknown>)[key] !==
+              (prev as Record<string, unknown>)[key],
         );
         if (has_filter_changed) updated_filters.skip = 0;
       }

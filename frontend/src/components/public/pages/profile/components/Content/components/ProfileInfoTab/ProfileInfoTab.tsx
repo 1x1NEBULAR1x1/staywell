@@ -40,7 +40,11 @@ export const ProfileInfoTab = () => {
             <User className={classes.title_icon} size={24} />
             <h1>Edit Profile</h1>
           </div>
-          <button className={classes.cancel_button} onClick={stopEditing}>
+          <button
+            type="button"
+            className={classes.cancel_button}
+            onClick={stopEditing}
+          >
             Cancel
           </button>
         </div>
@@ -57,7 +61,11 @@ export const ProfileInfoTab = () => {
           <User className={classes.title_icon} size={24} />
           <h1>Profile Information</h1>
         </div>
-        <button className={classes.edit_button} onClick={startEditing}>
+        <button
+          type="button"
+          className={classes.edit_button}
+          onClick={startEditing}
+        >
           <Edit3 size={18} />
           Edit Profile
         </button>
@@ -96,7 +104,7 @@ export const ProfileInfoTab = () => {
                 <Mail size={20} />
               </div>
               <div className={classes.detail_content}>
-                <label className={classes.detail_label}>Email Address</label>
+                <p className={classes.detail_label}>Email Address</p>
                 <p className={classes.detail_value}>{user.email}</p>
                 <p className={classes.detail_note}>Email cannot be changed</p>
               </div>
@@ -107,7 +115,7 @@ export const ProfileInfoTab = () => {
                 <User size={20} />
               </div>
               <div className={classes.detail_content}>
-                <label className={classes.detail_label}>First Name</label>
+                <p className={classes.detail_label}>First Name</p>
                 <p className={classes.detail_value}>
                   {user.first_name || "Not provided"}
                 </p>
@@ -119,7 +127,7 @@ export const ProfileInfoTab = () => {
                 <User size={20} />
               </div>
               <div className={classes.detail_content}>
-                <label className={classes.detail_label}>Last Name</label>
+                <p className={classes.detail_label}>Last Name</p>
                 <p className={classes.detail_value}>
                   {user.last_name || "Not provided"}
                 </p>
@@ -131,7 +139,7 @@ export const ProfileInfoTab = () => {
                 <Phone size={20} />
               </div>
               <div className={classes.detail_content}>
-                <label className={classes.detail_label}>Phone Number</label>
+                <p className={classes.detail_label}>Phone Number</p>
                 <p className={classes.detail_value}>
                   {user.phone_number || "Not provided"}
                 </p>
@@ -143,9 +151,7 @@ export const ProfileInfoTab = () => {
                 <Shield size={20} />
               </div>
               <div className={classes.detail_content}>
-                <label className={classes.detail_label}>
-                  Account Verification
-                </label>
+                <p className={classes.detail_label}>Account Verification</p>
                 <div className={classes.verification_status}>
                   <div className={classes.verification_item}>
                     {user.email_verified ? (

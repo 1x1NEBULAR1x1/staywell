@@ -13,6 +13,11 @@ services:
             - postgres_staywell_data:/var/lib/postgresql/data
         networks:
             - staywell-backend
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DATABASE}" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
 
     redis:
         container_name: redis-staywell
@@ -25,6 +30,77 @@ services:
         networks:
             - staywell-backend
         command: redis-server --appendonly yes
+
+    db-seeder:
+        build:
+            context: .
+            dockerfile: shared/Dockerfile
+            target: seeder
+        container_name: staywell-db-seeder
+        environment:
+            - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DATABASE}
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - staywell-backend
+        restart: "no" # Не перезапускать после завершения
+
+    prisma-studio:
+        build:
+            context: .
+            dockerfile: shared/Dockerfile
+            target: studio
+        container_name: staywell-prisma-studio
+        environment:
+            - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DATABASE}
+        ports:
+            - "5555:5555"
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - staywell-backend
+        profiles:
+            - studio
+
+    backend:
+        build:
+            context: .
+            dockerfile: backend/Dockerfile
+        container_name: staywell-backend
+        restart: always
+        environment:
+            - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DATABASE}
+            - REDIS_URL=redis://redis:6379
+            - PORT=3001
+            - NODE_ENV=production
+        ports:
+            - "3001:3001"
+        depends_on:
+            db-seeder:
+                condition: service_completed_successfully
+            redis:
+                condition: service_started
+        networks:
+            - staywell-backend
+        volumes:
+            - ./backend/uploads:/app/uploads
+
+    frontend:
+        build:
+            context: .
+            dockerfile: frontend/Dockerfile
+        container_name: staywell-frontend
+        restart: always
+        environment:
+            - NEXT_PUBLIC_API_URL=http://backend:3001
+        ports:
+            - "3000:3000"
+        depends_on:
+            - backend
+        networks:
+            - staywell-backend
 
 volumes:
     postgres_staywell_data:

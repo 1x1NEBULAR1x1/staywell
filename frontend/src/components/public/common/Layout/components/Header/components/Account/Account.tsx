@@ -20,7 +20,7 @@ import classes from "./Account.module.scss";
 
 export const Account = ({ user }: { user: SafeUser }) => {
   const [is_dropdown_open, setIsDropdownOpen] = useState(false);
-  const dropdown_ref = useRef<HTMLDivElement>(null);
+  const dropdown_ref = useRef<HTMLButtonElement>(null);
   const router = useRouter();
   const { logout, is_logout_loading } = useAuth();
 
@@ -54,7 +54,8 @@ export const Account = ({ user }: { user: SafeUser }) => {
   };
 
   return (
-    <div
+    <button
+      type="button"
       className={classes.account}
       ref={dropdown_ref}
       onClick={() => setIsDropdownOpen(!is_dropdown_open)}
@@ -76,7 +77,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
         </div>
       </div>
 
-      <button className={classes.dropdown_toggle} aria-label="Account Menu">
+      <div className={classes.dropdown_toggle}>
         <ChevronDown
           size={20}
           className={clsx(
@@ -84,11 +85,12 @@ export const Account = ({ user }: { user: SafeUser }) => {
             is_dropdown_open && classes.chevron_rotated,
           )}
         />
-      </button>
+      </div>
 
       {is_dropdown_open && (
         <div className={classes.dropdown}>
           <button
+            type="button"
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
@@ -100,6 +102,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
           </button>
 
           <button
+            type="button"
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
@@ -111,6 +114,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
           </button>
 
           <button
+            type="button"
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
@@ -122,6 +126,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
           </button>
 
           <button
+            type="button"
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
@@ -135,6 +140,7 @@ export const Account = ({ user }: { user: SafeUser }) => {
           <div className={classes.dropdown_divider}></div>
 
           <button
+            type="button"
             className={classes.dropdown_item}
             onClick={handleLogout}
             disabled={is_logout_loading}
@@ -144,6 +150,6 @@ export const Account = ({ user }: { user: SafeUser }) => {
           </button>
         </div>
       )}
-    </div>
+    </button>
   );
 };

@@ -15,7 +15,7 @@ interface ChangePasswordForm {
 }
 
 export const ChangePassword = () => {
-  const { changePassword } = useAuth();
+  const { changePassword, is_change_password_loading } = useAuth();
   const toast = useToast();
   const [showPasswords, setShowPasswords] = useState({
     current: false,
@@ -33,7 +33,7 @@ export const ChangePassword = () => {
 
   const handleSubmit = async (data: ChangePasswordForm) => {
     try {
-      await changePassword.mutateAsync({
+      changePassword({
         current_password: data.current_password,
         new_password: data.new_password,
       });
@@ -150,7 +150,7 @@ export const ChangePassword = () => {
         </div>
 
         <ActionsSection
-          is_loading={changePassword.isPending}
+          is_loading={is_change_password_loading}
           is_valid={form.formState.isValid}
           handleClose={() => form.reset()}
           action="update"

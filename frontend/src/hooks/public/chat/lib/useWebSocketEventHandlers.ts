@@ -3,7 +3,6 @@
 import type { Message } from "@shared/src/database";
 import { useEffect, useRef } from "react";
 import type { Socket } from "socket.io-client";
-import { useAccount } from "@/hooks/common/useAccount";
 import { useUserChatStore } from ".";
 import { SUPPORT_CHAT_ID } from "./constants";
 
@@ -35,44 +34,43 @@ export const useWebSocketEventHandlers = (
     onUserOnlineStatus,
   } = options;
 
-  const { user } = useAccount();
-  const chatStore = useUserChatStore();
-  const chatStoreRef = useRef(chatStore);
-  chatStoreRef.current = chatStore;
+  const store = useUserChatStore();
+  const store_ref = useRef(store);
+  store_ref.current = store;
 
   useEffect(() => {
     if (!socket) return;
 
     // Message events
     socket.on("new_message", (data: { message: Message }) => {
-      const existingMessages = chatStoreRef.current.messages;
-      const newMessage = data.message;
+      const existing_messages = store_ref.current.messages;
+      const new_message = data.message;
 
       // Check if this is a replacement for an optimistic message
-      const optimisticIndex = existingMessages.findIndex(
-        (msg) =>
+      const optimistic_index = existing_messages.findIndex(
+        (msg: Message) =>
           msg.id.startsWith("temp-") && // optimistic messages have temp IDs
-          msg.sender_id === newMessage.sender_id &&
-          msg.message === newMessage.message &&
+          msg.sender_id === new_message.sender_id &&
+          msg.message === new_message.message &&
           Math.abs(
             new Date(msg.created).getTime() -
-              new Date(newMessage.created).getTime(),
+              new Date(new_message.created).getTime(),
           ) < 5000, // within 5 seconds
       );
 
-      let updatedMessages;
-      if (optimisticIndex !== -1) {
+      let updated_messages: Message[];
+      if (optimistic_index !== -1) {
         // Replace optimistic message with real one
-        updatedMessages = [...existingMessages];
-        updatedMessages[optimisticIndex] = newMessage;
+        updated_messages = [...existing_messages];
+        updated_messages[optimistic_index] = new_message;
       } else {
         // Add new message
-        updatedMessages = [...existingMessages, newMessage];
+        updated_messages = [...existing_messages, new_message];
       }
 
-      chatStoreRef.current.setMessages(
-        updatedMessages.sort(
-          (a, b) =>
+      store_ref.current.setMessages(
+        updated_messages.sort(
+          (a: Message, b: Message) =>
             new Date(a.created).getTime() - new Date(b.created).getTime(),
         ),
       );
@@ -87,11 +85,11 @@ export const useWebSocketEventHandlers = (
     });
 
     socket.on("message_edited", (data: { message: Message }) => {
-      chatStoreRef.current.setMessages(
-        chatStoreRef.current.messages
-          .map((m) => (m.id === data.message.id ? data.message : m))
+      store_ref.current.setMessages(
+        store_ref.current.messages
+          .map((m: Message) => (m.id === data.message.id ? data.message : m))
           .sort(
-            (a, b) =>
+            (a: Message, b: Message) =>
               new Date(a.created).getTime() - new Date(b.created).getTime(),
           ),
       );
@@ -99,8 +97,10 @@ export const useWebSocketEventHandlers = (
     });
 
     socket.on("message_deleted", (data: { message_id: string }) => {
-      chatStoreRef.current.setMessages(
-        chatStoreRef.current.messages.filter((m) => m.id !== data.message_id),
+      store_ref.current.setMessages(
+        store_ref.current.messages.filter(
+          (m: Message) => m.id !== data.message_id,
+        ),
       );
     });
 
@@ -117,18 +117,18 @@ export const useWebSocketEventHandlers = (
 
         if (data.skip === 0) {
           // First load or refresh - replace all messages
-          chatStoreRef.current.setMessages(data.items);
+          store_ref.current.setMessages(data.items);
         } else {
           // Pagination - append new messages
-          const existingMessageIds = new Set(
-            chatStoreRef.current.messages.map((m) => m.id),
+          const existing_message_ids = new Set(
+            store_ref.current.messages.map((m: Message) => m.id),
           );
-          const newMessages = data.items.filter(
-            (m) => !existingMessageIds.has(m.id),
+          const new_messages = data.items.filter(
+            (m: Message) => !existing_message_ids.has(m.id),
           );
-          chatStoreRef.current.setMessages([
-            ...chatStoreRef.current.messages,
-            ...newMessages,
+          store_ref.current.setMessages([
+            ...store_ref.current.messages,
+            ...new_messages,
           ]);
         }
       },
@@ -144,7 +144,7 @@ export const useWebSocketEventHandlers = (
       }) => {
         // Only handle typing from support
         if (data.user_id === SUPPORT_CHAT_ID) {
-          chatStoreRef.current.setIsTyping(data.is_typing);
+          store_ref.current.setIsTyping(data.is_typing);
         }
         onUserTyping?.(data);
       },
@@ -156,7 +156,7 @@ export const useWebSocketEventHandlers = (
       (data: { user_id: string; last_seen: Date | null }) => {
         // Only handle status from support
         if (data.user_id === SUPPORT_CHAT_ID) {
-          chatStoreRef.current.setSupportLastSeen(data.last_seen);
+          store_ref.current.setSupportLastSeen(data.last_seen);
         }
         onUserOnlineStatus?.(data);
       },

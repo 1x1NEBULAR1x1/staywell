@@ -4,9 +4,7 @@ import { Logo } from "@/components/common/Logo";
 import { Form } from "./components/Form";
 import classes from "./Login.module.scss";
 
-type LoginProps = {};
-
-export const Login = ({}: LoginProps) => {
+export const Login = () => {
   return (
     <div className={classes.page}>
       <div className={classes.image_container}>

@@ -11,12 +11,12 @@ import { EventImagesFiltersDto } from '../dto';
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(options: EventImagesFiltersDto) {
+  customFilters = (options: EventImagesFiltersDto) => {
     const { event_id } = options;
     const filters: Prisma.EventImageWhereInput = {};
     if (event_id) filters.event_id = event_id;
     return filters;
-  }
+  };
   /**
    * Find all event images with filtering and pagination
    * @param filterDto - Query parameters for filtering and pagination

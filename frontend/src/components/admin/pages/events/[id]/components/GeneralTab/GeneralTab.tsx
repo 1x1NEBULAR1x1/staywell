@@ -98,32 +98,6 @@ export const GeneralTab = ({ event }: { event: ExtendedEvent }) => {
           </div>
         )}
 
-        {/* Guide Section */}
-        {event.guide && (
-          <div className={classes.info_section}>
-            <h3 className={classes.section_title}>Tour Guide</h3>
-            <div className={classes.guide_card}>
-              <div className={classes.guide_avatar}>
-                <span className={classes.guide_initials}>
-                  {event.guide.first_name[0]}
-                  {event.guide.last_name[0]}
-                </span>
-              </div>
-              <div className={classes.guide_info}>
-                <h4 className={classes.guide_name}>
-                  {event.guide.first_name} {event.guide.last_name}
-                </h4>
-                <p className={classes.guide_email}>{event.guide.email}</p>
-                {event.guide.phone_number && (
-                  <p className={classes.guide_phone}>
-                    {event.guide.phone_number}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Capacity & Pricing */}
         <div className={classes.stats_section}>
           <div className={classes.stat_card}>

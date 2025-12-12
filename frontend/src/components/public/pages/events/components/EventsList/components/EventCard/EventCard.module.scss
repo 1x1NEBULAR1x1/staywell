@@ -1,0 +1,126 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.event_card {
+  display: flex;
+  flex-direction: column;
+  background-color: $background-main;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $box-shadow-md;
+  transition: $transition-normal;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $box-shadow-lg;
+  }
+
+  .event_image {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: $transition-normal;
+    }
+
+    .badge {
+      position: absolute;
+      top: $spacing-sm;
+      right: $spacing-md;
+      background: $primary-main;
+      color: $foreground-white;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius-md;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+
+      .per_person {
+        width: 100%;
+        text-align: right;
+        font-weight: $font-weight-light;
+        font-size: $font-size-xs;
+      }
+    }
+  }
+
+  .event_info {
+    padding: $spacing-lg;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .event_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: $spacing-md;
+
+      .event_name {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $foreground-main;
+        margin: 0;
+        flex: 1;
+        line-height: 1.3;
+      }
+    }
+
+    .event_details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: $spacing-xs $spacing-md;
+
+      .detail {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .label {
+          font-weight: $font-weight-semibold;
+          color: $foreground-secondary;
+          font-size: $font-size-xs;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        span:last-child {
+          font-size: $font-size-sm;
+          color: $foreground-main;
+        }
+      }
+    }
+
+    .event_description {
+      font-size: $font-size-sm;
+      color: $foreground-secondary;
+      line-height: 1.4;
+      margin: 0;
+      flex: 1;
+    }
+
+    .event_availability {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+
+      .availability {
+        font-size: $font-size-sm;
+        color: $foreground-secondary;
+        line-height: 1.4;
+        margin: 0;
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ export const Header = ({
     <div className={classes.actions}>
       <ChatButton user_id={user.id} />
       <button
+        type="button"
         className={classes.edit_button}
         onClick={() => setIsEditModalOpen(true)}
       >

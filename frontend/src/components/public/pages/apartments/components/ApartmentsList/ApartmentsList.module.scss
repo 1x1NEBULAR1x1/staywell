@@ -4,17 +4,6 @@
   width: 100%;
   width: $container-width-xl;
 
-  .results_header {
-    margin-bottom: $spacing-lg;
-
-    .results_count {
-      font-size: $font-size-md;
-      color: $foreground-secondary;
-      margin: 0;
-      font-weight: $font-weight-normal;
-    }
-  }
-
   .apartments_grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

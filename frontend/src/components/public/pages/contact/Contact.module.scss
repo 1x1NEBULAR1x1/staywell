@@ -1,0 +1,322 @@
+@use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
+
+.contact_page {
+  width: 100%;
+  min-height: 100vh;
+  background: $background-light;
+}
+
+.hero_section {
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  padding: $spacing-5xl $spacing-xl;
+  text-align: center;
+  color: $foreground-white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+}
+
+.hero_content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero_title {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  margin: 0 0 $spacing-lg 0;
+  animation: fade-in-up 0.6s ease-out;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+.hero_subtitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  margin: 0;
+  opacity: 0.95;
+  line-height: 1.6;
+  animation: fade-in-up 0.6s ease-out 0.2s both;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-md;
+  }
+}
+
+.container {
+  max-width: $container-width-xl;
+  margin: 0 auto;
+  padding: $spacing-4xl $spacing-xl;
+}
+
+.content_grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $spacing-3xl;
+  align-items: start;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+    gap: $spacing-2xl;
+  }
+}
+
+.contact_info {
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  padding: $spacing-2xl;
+  box-shadow: $box-shadow-md;
+  position: sticky;
+  top: $spacing-xl;
+
+  @media (max-width: $breakpoint-lg) {
+    position: relative;
+    top: 0;
+  }
+
+  h2 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $foreground-main;
+    margin: 0 0 $spacing-md 0;
+  }
+}
+
+.info_description {
+  font-size: $font-size-md;
+  color: $foreground-secondary;
+  line-height: 1.6;
+  margin-bottom: $spacing-2xl;
+}
+
+.info_items {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+}
+
+.info_item {
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $background-light;
+  }
+}
+
+.icon_wrapper {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  color: $foreground-white;
+  border-radius: $border-radius-md;
+  box-shadow: 0 4px 12px rgba($primary-main, 0.2);
+}
+
+.info_content {
+  flex: 1;
+
+  h3 {
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $foreground-main;
+    margin: 0 0 $spacing-xs 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  a,
+  p {
+    display: block;
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+    line-height: 1.6;
+    margin: $spacing-xs 0;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $primary-main;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.contact_form_section {
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  padding: $spacing-3xl;
+  box-shadow: $box-shadow-md;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-2xl;
+  }
+}
+
+.form_header {
+  margin-bottom: $spacing-2xl;
+
+  h2 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $foreground-main;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  p {
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+    margin: 0;
+  }
+}
+
+.contact_form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $foreground-main;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: $spacing-md;
+    font-size: $font-size-md;
+    color: $foreground-main;
+    background: $background-light;
+    border: 2px solid $border-color;
+    border-radius: $border-radius-md;
+    transition: all $transition-fast;
+    font-family: inherit;
+
+    &::placeholder {
+      color: $foreground-secondary;
+      opacity: 0.6;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-main;
+      background: $background-main;
+      box-shadow: 0 0 0 3px rgba($primary-main, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+.success_message,
+.error_message {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-md;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+
+  span {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.success_message {
+  background: rgba($green, 0.1);
+  color: color.adjust($green, $lightness: -10%);
+  border: 2px solid rgba($green, 0.3);
+}
+
+.error_message {
+  background: rgba($red, 0.1);
+  color: color.adjust($red, $lightness: -10%);
+  border: 2px solid rgba($red, 0.3);
+}
+
+.submit_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-lg $spacing-2xl;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $foreground-white;
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  border: none;
+  border-radius: $border-radius-lg;
+  cursor: pointer;
+  transition: all $transition-normal;
+  box-shadow: 0 4px 15px rgba($primary-main, 0.3);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($primary-main, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

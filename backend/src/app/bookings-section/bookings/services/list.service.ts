@@ -12,7 +12,7 @@ import {
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(options: BookingsFiltersDto) {
+  customFilters = (options: BookingsFiltersDto) => {
     const {
       status,
       user_id,
@@ -38,7 +38,7 @@ export class ListService {
       }
     }
     return filters;
-  }
+  };
 
   /**
    * Finds bookings based on filter criteria

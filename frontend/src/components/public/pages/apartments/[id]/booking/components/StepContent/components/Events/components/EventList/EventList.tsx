@@ -14,7 +14,7 @@ export const EventList = () => {
     default_filters: { take: 12, skip: 0 },
   });
 
-  const { events, loadMore, isFetchingNextPage, hasNextPage, isLoading } =
+  const { events, loadMore, isFetchingNextPage, hasNextPage } =
     useInfinityEvents(filters);
   const observerRef = useRef<HTMLDivElement>(null);
 

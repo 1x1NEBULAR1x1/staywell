@@ -7,7 +7,7 @@ import { BaseListResult } from '@shared/src/common/base-types/base-list-result.i
 export class ListService {
   constructor(private prisma: PrismaService) {}
 
-  customFilters(options: ApartmentImagesFiltersDto) {
+  customFilters = (options: ApartmentImagesFiltersDto) => {
     const { apartment_id, description, search, name } = options;
     const filters: Prisma.ApartmentImageWhereInput = {};
     if (apartment_id) filters.apartment_id = apartment_id;
@@ -21,7 +21,7 @@ export class ListService {
       ];
     }
     return filters;
-  }
+  };
   /**
    * Search for apartment images by filter params
    * @param apartment_id Apartment ID to filter by

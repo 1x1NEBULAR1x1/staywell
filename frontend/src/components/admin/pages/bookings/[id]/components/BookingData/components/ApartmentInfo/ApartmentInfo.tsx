@@ -1,4 +1,4 @@
-import type { Apartment } from "@shared/src";
+import type { Apartment } from "@shared/src/database";
 import { ExternalLink, Home, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

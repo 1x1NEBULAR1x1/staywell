@@ -1,0 +1,15 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.section_filters {
+  width: $container-width-xl;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: $spacing-lg $spacing-xl;
+  background-color: $primary-disabled;
+  border-radius: $border-radius-2xl;
+  gap: $spacing-lg;
+}

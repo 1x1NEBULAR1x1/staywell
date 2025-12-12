@@ -102,6 +102,7 @@ export const EventSidebar = ({
           const Icon = item.icon;
           return (
             <button
+              type="button"
               key={item.id}
               className={`${classes.nav_button} ${activeTab === item.id ? classes.active : ""}`}
               onClick={() => setActiveTab(item.id)}

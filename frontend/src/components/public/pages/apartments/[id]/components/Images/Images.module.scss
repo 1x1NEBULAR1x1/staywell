@@ -37,29 +37,40 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: $spacing-sm;
+  overflow-y: auto;
+  max-height: 500px;
+  padding-right: $spacing-xs;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-light;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary-main;
+    border-radius: 3px;
+
+    &:hover {
+      background: $primary-dark;
+    }
+  }
 
   @media (max-width: $breakpoint-md) {
     flex-direction: row;
+    overflow-y: hidden;
     overflow-x: auto;
+    max-height: unset;
+    padding-right: 0;
     padding-bottom: $spacing-sm;
 
     &::-webkit-scrollbar {
+      width: unset;
       height: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: $background-light;
-      border-radius: 3px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: $primary-main;
-      border-radius: 3px;
-
-      &:hover {
-        background: $primary-dark;
-      }
     }
   }
 }
@@ -78,35 +89,36 @@
 .thumbnail {
   position: relative;
   width: 100%;
-  min-height: 100px;
-  aspect-ratio: 22/9;
+  height: 110px;
+  flex-shrink: 0;
   border: 2px solid transparent;
   border-radius: $border-radius-md;
   overflow: hidden;
   cursor: pointer;
   background: $background-main;
-  box-shadow: $box-shadow;
-  transition: border-color $transition-fast;
-
+  box-shadow: $box-shadow-sm;
+  transition: all $transition-fast;
 
   &:hover {
-    border-color: rgba($primary-main, 0.2);
+    border-color: rgba($primary-main, 0.3);
+    box-shadow: $box-shadow;
+    transform: translateX(2px);
   }
 
   &_active {
     border-color: $primary-main !important;
+    box-shadow: $box-shadow-md;
   }
-
 
   @media (max-width: $breakpoint-md) {
     flex-shrink: 0;
-    width: 120px;
-    height: 80px;
+    width: 140px;
+    height: 95px;
   }
 
   @media (max-width: $breakpoint-sm) {
-    width: 100px;
-    height: 70px;
+    width: 120px;
+    height: 80px;
   }
 }
 

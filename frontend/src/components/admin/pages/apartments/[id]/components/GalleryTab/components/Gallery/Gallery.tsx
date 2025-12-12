@@ -109,6 +109,7 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
             {allImages.length > 1 && (
               <div className={classes.image_navigation}>
                 <button
+                  type="button"
                   className={classes.nav_button}
                   onClick={() =>
                     setCurrentImageIndex(Math.max(0, currentImageIndex - 1))
@@ -121,6 +122,7 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
                   {currentImageIndex + 1} / {allImages.length}
                 </span>
                 <button
+                  type="button"
                   className={classes.nav_button}
                   onClick={() =>
                     setCurrentImageIndex(
@@ -139,6 +141,7 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
           <div className={classes.image_actions}>
             {!currentImage.isMain && (
               <button
+                type="button"
                 className={classes.action_button}
                 onClick={() => handleSetAsMain(currentImage.src)}
                 title="Set as main image"
@@ -154,6 +157,7 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
               </div>
             )}
             <button
+              type="button"
               className={`${classes.action_button} ${classes.delete_button}`}
               onClick={handleDeleteImage}
               title={
@@ -172,7 +176,8 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
         <div className={classes.thumbnails_section}>
           <div className={classes.thumbnails_grid}>
             {allImages.map((image, index) => (
-              <div
+              <button
+                type="button"
                 key={image.id}
                 className={`${classes.thumbnail} ${currentImageIndex === index ? classes.thumbnail_active : ""} ${image.isMain ? classes.thumbnail_main : ""} ${image.isExcluded ? classes.thumbnail_excluded : ""}`}
                 onClick={() => setCurrentImageIndex(index)}
@@ -194,11 +199,12 @@ export const Gallery = ({ apartment }: { apartment: ExtendedApartment }) => {
                     <SquareX size={14} />
                   </div>
                 )}
-              </div>
+              </button>
             ))}
 
             {/* Add Image Button */}
             <button
+              type="button"
               className={classes.add_thumbnail}
               onClick={() => setIsModalOpen(true)}
               title="Add new image"

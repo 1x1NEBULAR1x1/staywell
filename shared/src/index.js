@@ -14,10 +14,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransactionType = exports.TransactionStatus = exports.PaymentMethod = exports.BookingStatus = exports.ApartmentType = exports.Role = void 0;
+exports.TransactionType = exports.TransactionStatus = exports.PaymentMethod = exports.BookingStatus = exports.ApartmentType = exports.NotificationAction = exports.NotificationType = exports.Role = void 0;
 __exportStar(require("./common"), exports);
 var database_1 = require("./database");
 Object.defineProperty(exports, "Role", { enumerable: true, get: function () { return database_1.Role; } });
+Object.defineProperty(exports, "NotificationType", { enumerable: true, get: function () { return database_1.NotificationType; } });
+Object.defineProperty(exports, "NotificationAction", { enumerable: true, get: function () { return database_1.NotificationAction; } });
 Object.defineProperty(exports, "ApartmentType", { enumerable: true, get: function () { return database_1.ApartmentType; } });
 Object.defineProperty(exports, "BookingStatus", { enumerable: true, get: function () { return database_1.BookingStatus; } });
 Object.defineProperty(exports, "PaymentMethod", { enumerable: true, get: function () { return database_1.PaymentMethod; } });

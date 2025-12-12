@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useId } from "react";
 import classes from "./Calendar.module.scss";
 import { DAY_NAMES, MONTH_NAMES } from "./config";
 import {
@@ -29,30 +30,30 @@ export const Calendar: React.FC<CalendarProps> = ({
   is_loading = false,
 }) => {
   const days = getDaysInMonth({ date: current_month });
-
+  const id = useId();
   const handleDateClick = (date: Date) => {
     if (!isDateAvailable(date)) return;
 
-    // Если нет начальной даты или выбираем новую начальную дату
+    // If there is no start date or we select a new start date
     if (!selected_range.start || (selected_range.start && selected_range.end)) {
       onRangeSelect({ start: date });
       return;
     }
 
-    // Если начальная дата есть, но нет конечной
+    // If there is a start date, but no end date
     if (selected_range.start && !selected_range.end) {
-      // Если выбранная дата совпадает с начальной, игнорируем (не разрешаем одинаковые даты)
+      // If the selected date matches the start date, ignore (do not allow same dates)
       if (date.getTime() === selected_range.start.getTime()) {
         return;
       }
 
-      // Если выбранная дата раньше начальной, делаем её начальной
+      // If the selected date is before the start date, make it the start date
       if (date < selected_range.start) {
         onRangeSelect({ start: date });
         return;
       }
 
-      // Проверяем, что все даты между start и date доступны
+      // Check if all dates between start and date are available
       const dates_between = [];
       const current = new Date(selected_range.start);
       current.setDate(current.getDate() + 1);
@@ -67,12 +68,12 @@ export const Calendar: React.FC<CalendarProps> = ({
       );
 
       if (has_unavailable_dates) {
-        // Если есть недоступные даты между, сбрасываем и начинаем заново
+        // If there are unavailable dates between, reset and start again
         onRangeSelect({ start: date });
         return;
       }
 
-      // Устанавливаем конечную дату
+      // Set the end date
       onRangeSelect({ start: selected_range.start, end: date });
     }
   };
@@ -115,9 +116,10 @@ export const Calendar: React.FC<CalendarProps> = ({
 
       {/* Days grid */}
       <div className={classes.daysGrid}>
-        {days.map((date, index) => (
-          <div
-            key={index}
+        {days.map((date) => (
+          <button
+            type="button"
+            key={`${id}-${date?.toISOString() ?? ""}`}
             className={clsx(classes.day, {
               [classes.empty]: !date,
               [classes.occupied]: date && !isDateAvailable(date),
@@ -137,7 +139,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             onClick={date ? () => handleDateClick(date) : undefined}
           >
             {date?.getDate()}
-          </div>
+          </button>
         ))}
       </div>
 

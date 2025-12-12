@@ -74,7 +74,8 @@ export const NotificationCard = ({
       onClick={handleNotificationClick}
     >
       <td>
-        <div
+        <button
+          type="button"
           className={classes.notification_type_container}
           onClick={(e) => e.stopPropagation()}
         >
@@ -86,7 +87,7 @@ export const NotificationCard = ({
           />
           {getNotificationIcon(notification)}
           <span className={classes.notification_type}>{notification.type}</span>
-        </div>
+        </button>
       </td>
       <td>
         <div className={classes.notification_action}>
@@ -109,6 +110,7 @@ export const NotificationCard = ({
         <div className={classes.actions}>
           {!notification.is_read && (
             <button
+              type="button"
               className={classes.action_button}
               onClick={handleMarkAsRead}
               disabled={markAsRead.isPending}
@@ -118,6 +120,7 @@ export const NotificationCard = ({
             </button>
           )}
           <button
+            type="button"
             className={`${classes.action_button} ${classes.delete_button}`}
             onClick={handleDelete}
             disabled={remove(notification.id).isPending}

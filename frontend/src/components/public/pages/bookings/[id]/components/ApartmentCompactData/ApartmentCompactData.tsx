@@ -10,6 +10,7 @@ import type {
 import { House, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useId } from "react";
 import default_image from "@/../public/common/no-image.jpeg";
 import { Shimmer } from "@/components/styles/ui";
 import { getImageUrl } from "@/lib/api/utils/image-url";
@@ -166,110 +167,113 @@ export const ApartmentCompactData = ({
     </Link>
   );
 
-const ApartmentCompactDataShimmer = () => (
-  <div className={classes.container}>
-    <div className={classes.header}>
-      <Shimmer
-        className={classes.shimmer_icon}
-        style={{ width: "24px", height: "24px" }}
-      />
-      <Shimmer
-        className={classes.shimmer_title}
-        style={{ height: "24px", width: "140px" }}
-      />
-    </div>
-
-    {/* Main Image */}
-    <Shimmer
-      className={classes.image}
-      style={{ height: "180px", width: "100%" }}
-    />
-
-    {/* Thumbnails */}
-    <div className={classes.thumbnails}>
-      {Array.from({ length: 4 }).map((_, index) => (
+const ApartmentCompactDataShimmer = () => {
+  const id = useId();
+  return (
+    <div className={classes.container}>
+      <div className={classes.header}>
         <Shimmer
-          key={index}
-          className={classes.shimmer_thumbnail}
+          className={classes.shimmer_icon}
+          style={{ width: "24px", height: "24px" }}
+        />
+        <Shimmer
+          className={classes.shimmer_title}
+          style={{ height: "24px", width: "140px" }}
+        />
+      </div>
+
+      {/* Main Image */}
+      <Shimmer
+        className={classes.image}
+        style={{ height: "180px", width: "100%" }}
+      />
+
+      {/* Thumbnails */}
+      <div className={classes.thumbnails}>
+        {Array.from({ length: 4 }).map((_) => (
+          <Shimmer
+            key={`${id}`}
+            className={classes.shimmer_thumbnail}
+            style={{ width: "80px", height: "60px" }}
+          />
+        ))}
+        <Shimmer
+          className={classes.shimmer_more}
           style={{ width: "80px", height: "60px" }}
         />
-      ))}
-      <Shimmer
-        className={classes.shimmer_more}
-        style={{ width: "80px", height: "60px" }}
-      />
-    </div>
+      </div>
 
-    <div className={classes.info}>
-      <Shimmer
-        className={classes.shimmer_basic}
-        style={{ height: "20px", width: "200px", marginBottom: "12px" }}
-      />
-
-      <div className={classes.location_and_rating}>
+      <div className={classes.info}>
         <Shimmer
-          className={classes.shimmer_meta}
-          style={{ height: "16px", width: "160px" }}
+          className={classes.shimmer_basic}
+          style={{ height: "20px", width: "200px", marginBottom: "12px" }}
         />
-        <div className={classes.rating}>
+
+        <div className={classes.location_and_rating}>
           <Shimmer
-            className={classes.shimmer_star}
-            style={{ width: "16px", height: "16px" }}
+            className={classes.shimmer_meta}
+            style={{ height: "16px", width: "160px" }}
           />
-          <Shimmer
-            className={classes.shimmer_rating_value}
-            style={{ height: "16px", width: "30px" }}
-          />
-          <Shimmer
-            className={classes.shimmer_review_count}
-            style={{ height: "16px", width: "50px" }}
-          />
+          <div className={classes.rating}>
+            <Shimmer
+              className={classes.shimmer_star}
+              style={{ width: "16px", height: "16px" }}
+            />
+            <Shimmer
+              className={classes.shimmer_rating_value}
+              style={{ height: "16px", width: "30px" }}
+            />
+            <Shimmer
+              className={classes.shimmer_review_count}
+              style={{ height: "16px", width: "50px" }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Amenities */}
+      <div className={classes.amenities}>
+        <Shimmer
+          className={classes.shimmer_section_title}
+          style={{ height: "18px", width: "80px", marginBottom: "12px" }}
+        />
+        <div className={classes.amenities_grid}>
+          {Array.from({ length: 6 }).map((_) => (
+            <div key={`${id}`} className={classes.amenity}>
+              <Shimmer
+                className={classes.shimmer_amenity_icon}
+                style={{ width: "16px", height: "16px" }}
+              />
+              <Shimmer
+                className={classes.shimmer_amenity_name}
+                style={{ height: "14px", width: "60px" }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Beds */}
+      <div className={classes.beds}>
+        <Shimmer
+          className={classes.shimmer_section_title}
+          style={{ height: "18px", width: "180px", marginBottom: "12px" }}
+        />
+        <div className={classes.beds_list}>
+          {Array.from({ length: 2 }).map((_) => (
+            <div key={`${id}`} className={classes.bed_item}>
+              <Shimmer
+                className={classes.shimmer_bed_icon}
+                style={{ width: "16px", height: "16px" }}
+              />
+              <Shimmer
+                className={classes.shimmer_bed_text}
+                style={{ height: "16px", width: "100px" }}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
-
-    {/* Amenities */}
-    <div className={classes.amenities}>
-      <Shimmer
-        className={classes.shimmer_section_title}
-        style={{ height: "18px", width: "80px", marginBottom: "12px" }}
-      />
-      <div className={classes.amenities_grid}>
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div key={index} className={classes.amenity}>
-            <Shimmer
-              className={classes.shimmer_amenity_icon}
-              style={{ width: "16px", height: "16px" }}
-            />
-            <Shimmer
-              className={classes.shimmer_amenity_name}
-              style={{ height: "14px", width: "60px" }}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* Beds */}
-    <div className={classes.beds}>
-      <Shimmer
-        className={classes.shimmer_section_title}
-        style={{ height: "18px", width: "180px", marginBottom: "12px" }}
-      />
-      <div className={classes.beds_list}>
-        {Array.from({ length: 2 }).map((_, index) => (
-          <div key={index} className={classes.bed_item}>
-            <Shimmer
-              className={classes.shimmer_bed_icon}
-              style={{ width: "16px", height: "16px" }}
-            />
-            <Shimmer
-              className={classes.shimmer_bed_text}
-              style={{ height: "16px", width: "100px" }}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
+  );
+};

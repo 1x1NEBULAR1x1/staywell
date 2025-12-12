@@ -12,6 +12,7 @@ export const MainData = ({
     <h1 className={classes.title_container}>
       <span className={classes.title}>{event.name}</span>
       <button
+        type="button"
         className={classes.edit_btn}
         onClick={() => setIsEditModalOpen(true)}
       >

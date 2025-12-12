@@ -42,6 +42,7 @@ export const MainData = ({ setIsEditModalOpen }: MainDataProps) => {
           </div>
         </div>
         <button
+          type="button"
           className={classes.edit_btn}
           onClick={() => setIsEditModalOpen(true)}
         >

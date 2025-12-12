@@ -1,0 +1,48 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.events_section {
+  width: 100%;
+  width: $container-width-xl;
+
+  .results_header {
+    margin-bottom: $spacing-lg;
+
+    .results_count {
+      font-size: $font-size-md;
+      color: $foreground-secondary;
+      margin: 0;
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  .events_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-lg;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-md;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+  }
+
+  .empty_state {
+    text-align: center;
+    padding: $spacing-4xl $spacing-xl;
+    color: $foreground-secondary;
+    font-style: italic;
+    font-size: $font-size-lg;
+  }
+
+  .loading_more {
+    text-align: center;
+    padding: $spacing-lg 0;
+    color: $foreground-secondary;
+    font-size: $font-size-sm;
+  }
+}

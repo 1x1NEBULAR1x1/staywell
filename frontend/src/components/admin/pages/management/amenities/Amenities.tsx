@@ -2,24 +2,20 @@
 
 import { type Amenity, example_amenity } from "@shared/src";
 import { useState } from "react";
-import { CreateButton, ListPage } from "@/components/admin/common/AdminPage";
+import { ListPage } from "@/components/admin/common/AdminPage";
 import { AmenityModal } from "@/components/admin/common/Modal/models/AmenityModal";
 import { AmenityCard, AmenityCardShimmer } from "./components";
 
 export const Amenities = () => {
-  const [modal_data, setModalData] = useState<{
-    is_modal_open: boolean;
-    amenity: Amenity | undefined;
-  }>({ is_modal_open: false, amenity: undefined });
+  const [is_modal_open, setIsModalOpen] = useState(false);
+  const [amenity, setAmenity] = useState<Amenity | undefined>(undefined);
   return (
     <>
       <ListPage
-        create_button={
-          <CreateButton
-            label="Add Amenity"
-            onClick={() =>
-              setModalData({ is_modal_open: true, amenity: undefined })
-            }
+        create_modal={
+          <AmenityModal
+            onClose={() => setIsModalOpen(false)}
+            initial_data={amenity}
           />
         }
         model="AMENITY"
@@ -27,9 +23,7 @@ export const Amenities = () => {
           <AmenityCard
             key={amenity.id}
             amenity={amenity}
-            setEditAmenityData={(amenity) =>
-              setModalData({ is_modal_open: true, amenity })
-            }
+            setEditAmenityData={(amenity) => setAmenity(amenity)}
           />
         )}
         shimmer_item={(key) => <AmenityCardShimmer key={key} />}
@@ -49,12 +43,10 @@ export const Amenities = () => {
           )
           .sort()}
       />
-      {modal_data.is_modal_open && (
+      {is_modal_open && (
         <AmenityModal
-          initial_data={modal_data.amenity}
-          onClose={() =>
-            setModalData({ is_modal_open: false, amenity: undefined })
-          }
+          initial_data={amenity}
+          onClose={() => setIsModalOpen(false)}
         />
       )}
     </>

@@ -1,96 +1,342 @@
 @use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
 
 .booking_list {
-  width: $container-width-xl;
+  width: 100%;
+  max-width: $container-width-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3xl;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+}
+
+.section_header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  h2 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $foreground-main;
+    margin: 0;
+  }
+}
+
+.count_badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 $spacing-sm;
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  color: $foreground-white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba($primary-main, 0.3);
+}
+
+.cards_container {
   display: flex;
   flex-direction: column;
   gap: $spacing-lg;
+}
 
-  .booking_card {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-    padding: $spacing-xl;
-    background-color: $background-main;
-    border: $border-normal;
-    border-radius: $border-radius-md;
-    box-shadow: $box-shadow-sm;
-    text-decoration: none;
-    color: inherit;
-    transition: $transition-normal;
+.booking_card {
+  display: grid;
+  grid-template-columns: 240px 1fr auto;
+  gap: $spacing-xl;
+  background: $background-main;
+  border: 2px solid $border-color;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all $transition-normal;
+  box-shadow: $box-shadow-sm;
+  position: relative;
+
+  &:hover {
+    transform: translateX(4px);
+    box-shadow: $box-shadow-lg;
+    border-color: $primary-main;
+  }
+
+  &.active_card {
+    border-color: $green;
+    background: linear-gradient(to right, rgba($green, 0.02) 0%, $background-main 100%);
+    box-shadow: 0 4px 20px rgba($green, 0.15);
 
     &:hover {
-      box-shadow: $box-shadow;
-      transform: translateY(-2px);
+      border-color: $green;
+      box-shadow: 0 6px 24px rgba($green, 0.25);
     }
+  }
 
-    .booking_info {
-      display: flex;
-      flex-direction: column;
-      gap: $spacing-sm;
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
 
-      .booking_id {
-        font-weight: $font-weight-semibold;
-        font-size: $font-size-lg;
-        color: $primary-dark;
-      }
+.card_image {
+  position: relative;
+  width: 240px;
+  height: 180px;
+  background: $background-light;
+  overflow: hidden;
 
-      .apartment_name {
-        font-weight: $font-weight-normal;
-        font-size: $font-size-md;
-        color: $foreground-main;
-      }
+  img {
+    transition: transform $transition-slow;
+  }
 
-      .booking_status {
-        font-weight: $font-weight-normal;
-        font-size: $font-size-sm;
-        padding: $spacing-xs $spacing-sm;
-        border-radius: $border-radius-xs;
-        width: fit-content;
-        text-transform: uppercase;
+  &:hover img {
+    transform: scale(1.05);
+  }
 
-        &[data-status="confirmed"] {
-          background-color: $green;
-          color: $foreground-white;
-        }
+  @media (max-width: $breakpoint-lg) {
+    width: 100%;
+    height: 200px;
+  }
+}
 
-        &[data-status="pending"] {
-          background-color: $yellow;
-          color: $foreground-main;
-        }
+.active_badge {
+  position: absolute;
+  top: $spacing-md;
+  left: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-md;
+  background: $green;
+  color: $foreground-white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  border-radius: $border-radius-sm;
+  box-shadow: 0 2px 8px rgba($green, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-        &[data-status="cancelled"] {
-          background-color: $red;
-          color: $foreground-white;
-        }
-      }
-    }
+.card_content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-xl 0;
 
-    .booking_dates {
-      display: flex;
-      flex-direction: column;
-      gap: $spacing-xs;
-      font-size: $font-size-sm;
-      color: $foreground-secondary;
+  @media (max-width: $breakpoint-lg) {
+    padding: $spacing-xl;
+  }
+}
 
-      .check_in, .check_out {
-        font-weight: $font-weight-light;
-      }
-    }
+.card_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-md;
+}
 
-    .booking_amount {
-      font-weight: $font-weight-bold;
-      font-size: $font-size-xl;
-      color: $primary-main;
-      align-self: flex-end;
+.apartment_name {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $foreground-main;
+  margin: 0;
+}
+
+.booking_number {
+  font-size: $font-size-sm;
+  color: $foreground-secondary;
+  font-family: 'Courier New', monospace;
+  margin-top: $spacing-xs;
+}
+
+.status_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  border-radius: $border-radius-sm;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.confirmed {
+    background: rgba($green, 0.15);
+    color: color.adjust($green, $lightness: -10%);
+    border: 1px solid rgba($green, 0.3);
+  }
+
+  &.pending {
+    background: rgba($yellow, 0.15);
+    color: color.adjust($yellow, $lightness: -15%);
+    border: 1px solid rgba($yellow, 0.3);
+  }
+
+  &.cancelled {
+    background: rgba($red, 0.15);
+    color: color.adjust($red, $lightness: -10%);
+    border: 1px solid rgba($red, 0.3);
+  }
+
+  &.completed {
+    background: rgba($primary-main, 0.15);
+    color: $primary-dark;
+    border: 1px solid rgba($primary-main, 0.3);
+  }
+}
+
+.booking_details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.detail_item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-size: $font-size-md;
+  color: $foreground-secondary;
+
+  svg {
+    color: $primary-main;
+    flex-shrink: 0;
+  }
+}
+
+.card_actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: $spacing-xl $spacing-xl $spacing-xl 0;
+  gap: $spacing-lg;
+
+  @media (max-width: $breakpoint-lg) {
+    padding: 0 $spacing-xl $spacing-xl $spacing-xl;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.price_section {
+  text-align: right;
+
+  @media (max-width: $breakpoint-lg) {
+    text-align: left;
+  }
+}
+
+.price_label {
+  font-size: $font-size-sm;
+  color: $foreground-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: $spacing-xs;
+}
+
+.price_amount {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-xs;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $green;
+
+  svg {
+    color: $green;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    justify-content: flex-start;
+  }
+}
+
+.view_details {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-lg;
+  background: rgba($primary-main, 0.1);
+  color: $primary-main;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  border-radius: $border-radius-md;
+  transition: all $transition-fast;
+
+  svg {
+    transition: transform $transition-fast;
+  }
+
+  &:hover {
+    background: rgba($primary-main, 0.15);
+
+    svg {
+      transform: translateX(4px);
     }
   }
 }
 
+.empty_state {
+  width: 100%;
+  max-width: 500px;
+  margin: $spacing-5xl auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xl;
+  padding: $spacing-4xl;
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
 
+  svg {
+    color: $foreground-secondary;
+    opacity: 0.5;
+  }
 
+  h3 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $foreground-main;
+    margin: 0;
+  }
 
+  p {
+    font-size: $font-size-md;
+    color: $foreground-secondary;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
 
+.explore_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md $spacing-xl;
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  color: $foreground-white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  border-radius: $border-radius-lg;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba($primary-main, 0.3);
+  transition: all $transition-normal;
 
-
-
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($primary-main, 0.4);
+  }
+}

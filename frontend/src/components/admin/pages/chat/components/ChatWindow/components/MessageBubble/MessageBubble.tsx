@@ -142,6 +142,7 @@ export const MessageBubble = ({
               />
               <div className={classes.edit_actions}>
                 <button
+                  type="button"
                   onClick={handleSaveEdit}
                   className={classes.save_button}
                   disabled={!edit_text.trim() || edit_text === message.message}
@@ -149,6 +150,7 @@ export const MessageBubble = ({
                   Save
                 </button>
                 <button
+                  type="button"
                   onClick={handleCancelEdit}
                   className={classes.cancel_button}
                 >
@@ -165,12 +167,13 @@ export const MessageBubble = ({
                 )}
               </div>
               {is_outgoing && (
-                <div
+                <button
+                  type="button"
                   className={classes.message_menu_trigger}
                   onClick={() => setShowMenu(!show_menu)}
                 >
                   ⋮
-                </div>
+                </button>
               )}
             </>
           )}
@@ -179,10 +182,18 @@ export const MessageBubble = ({
 
         {show_menu && is_outgoing && (
           <div ref={menuRef} className={classes.message_menu}>
-            <button onClick={handleEdit} className={classes.menu_item}>
+            <button
+              type="button"
+              onClick={handleEdit}
+              className={classes.menu_item}
+            >
               ✏️ Edit
             </button>
-            <button onClick={handleDelete} className={classes.menu_item}>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className={classes.menu_item}
+            >
               🗑️ Delete
             </button>
           </div>

@@ -1,0 +1,40 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.header {
+  position: relative;
+  background: transparent;
+  width: $container-width-xl;
+  padding-top: $spacing-2xl;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-lg;
+
+  .navigation {
+    position: absolute;
+    left: 0;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-lg;
+    color: $foreground-secondary;
+    font-weight: $font-weight-light;
+    font-size: $font-size-lg;
+
+    .current_page {
+      color: $primary-dark;
+      font-weight: $font-weight-light;
+      font-size: $font-size-lg;
+    }
+  }
+
+  .title {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-2xl;
+    color: $primary-dark;
+    width: 100%;
+    text-align: center;
+  }
+}

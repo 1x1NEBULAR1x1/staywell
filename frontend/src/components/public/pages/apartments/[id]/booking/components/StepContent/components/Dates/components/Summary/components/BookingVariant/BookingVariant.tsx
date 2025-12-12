@@ -11,11 +11,9 @@ import { getImageUrl } from "@/lib/api";
 import classes from "./BookingVariant.module.scss";
 
 export const BookingVariant = ({
-  nights,
   apartment,
   booking_variant,
 }: {
-  nights: number;
   apartment: ExtendedApartment;
   booking_variant: ExtendedBookingVariant;
 }) => {
@@ -55,8 +53,8 @@ export const BookingVariant = ({
         {/* Top amenities */}
         {apartment.apartment_amenities.length > 0 && (
           <div className={classes.amenities}>
-            {apartment.apartment_amenities.map((apartment_amenity, index) => (
-              <span key={index} className={classes.amenity}>
+            {apartment.apartment_amenities.map((apartment_amenity) => (
+              <span key={apartment_amenity.id} className={classes.amenity}>
                 <Image
                   src={
                     getImageUrl(apartment_amenity.amenity.image) ?? no_image.src

@@ -10,6 +10,7 @@ import {
   Receipt,
   User,
 } from "lucide-react";
+import { useId } from "react";
 import { Shimmer } from "@/components/styles/ui";
 import classes from "./FinalBookingSummary.module.scss";
 
@@ -231,127 +232,137 @@ export const FinalBookingSummary = ({
   );
 };
 
-const FinalBookingSummaryShimmer = () => (
-  <div className={classes.final_summary}>
-    <Shimmer
-      className={classes.shimmer_title}
-      style={{ height: "40px", width: "250px", marginBottom: "32px" }}
-    />
+const FinalBookingSummaryShimmer = () => {
+  const id = useId();
+  return (
+    <div className={classes.final_summary}>
+      <Shimmer
+        className={classes.shimmer_title}
+        style={{ height: "40px", width: "250px", marginBottom: "32px" }}
+      />
 
-    <div className={classes.summary_grid}>
-      {/* Booking Details Section */}
-      <div className={classes.details_section}>
-        <Shimmer
-          className={classes.shimmer_section_title}
-          style={{ height: "20px", width: "140px", marginBottom: "24px" }}
-        />
+      <div className={classes.summary_grid}>
+        {/* Booking Details Section */}
+        <div className={classes.details_section}>
+          <Shimmer
+            className={classes.shimmer_section_title}
+            style={{ height: "20px", width: "140px", marginBottom: "24px" }}
+          />
 
-        <div className={classes.details_grid}>
-          {Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className={classes.detail_item}>
-              <Shimmer
-                className={classes.shimmer_icon}
-                style={{ width: "16px", height: "16px", borderRadius: "50%" }}
-              />
-              <div>
+          <div className={classes.details_grid}>
+            {Array.from({ length: 6 }).map((_) => (
+              <div key={`${id}`} className={classes.detail_item}>
                 <Shimmer
-                  className={classes.shimmer_label}
-                  style={{ height: "14px", width: "80px", marginBottom: "8px" }}
+                  className={classes.shimmer_icon}
+                  style={{ width: "16px", height: "16px", borderRadius: "50%" }}
+                />
+                <div>
+                  <Shimmer
+                    className={classes.shimmer_label}
+                    style={{
+                      height: "14px",
+                      width: "80px",
+                      marginBottom: "8px",
+                    }}
+                  />
+                  <Shimmer
+                    className={classes.shimmer_value}
+                    style={{ height: "18px", width: "120px" }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Transaction Details Section */}
+        <div className={classes.transaction_section}>
+          <Shimmer
+            className={classes.shimmer_section_title}
+            style={{ height: "20px", width: "160px", marginBottom: "24px" }}
+          />
+
+          <div className={classes.transaction_info}>
+            {Array.from({ length: 3 }).map((_) => (
+              <div key={`${id}`} className={classes.transaction_item}>
+                <Shimmer
+                  className={classes.shimmer_icon}
+                  style={{ width: "16px", height: "16px", borderRadius: "50%" }}
+                />
+                <div>
+                  <Shimmer
+                    className={classes.shimmer_label}
+                    style={{
+                      height: "14px",
+                      width: "100px",
+                      marginBottom: "8px",
+                    }}
+                  />
+                  <Shimmer
+                    className={classes.shimmer_value}
+                    style={{ height: "18px", width: "140px" }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Cost Breakdown Section */}
+        <div className={classes.cost_section}>
+          <Shimmer
+            className={classes.shimmer_section_title}
+            style={{ height: "20px", width: "130px", marginBottom: "24px" }}
+          />
+
+          <div className={classes.cost_breakdown}>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div
+                key={`${id}`}
+                className={`${classes.cost_item} ${index === 3 ? classes.total : ""}`}
+              >
+                <Shimmer
+                  className={classes.shimmer_cost_label}
+                  style={{
+                    height: "18px",
+                    width: index === 3 ? "120px" : "200px",
+                  }}
                 />
                 <Shimmer
-                  className={classes.shimmer_value}
-                  style={{ height: "18px", width: "120px" }}
+                  className={classes.shimmer_cost_value}
+                  style={{
+                    height: "18px",
+                    width: index === 3 ? "80px" : "60px",
+                  }}
                 />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Transaction Details Section */}
-      <div className={classes.transaction_section}>
-        <Shimmer
-          className={classes.shimmer_section_title}
-          style={{ height: "20px", width: "160px", marginBottom: "24px" }}
-        />
+        {/* Meta Information Section */}
+        <div className={classes.meta_section}>
+          <Shimmer
+            className={classes.shimmer_section_title}
+            style={{ height: "20px", width: "180px", marginBottom: "24px" }}
+          />
 
-        <div className={classes.transaction_info}>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className={classes.transaction_item}>
-              <Shimmer
-                className={classes.shimmer_icon}
-                style={{ width: "16px", height: "16px", borderRadius: "50%" }}
-              />
-              <div>
+          <div className={classes.meta_info}>
+            {Array.from({ length: 3 }).map((_) => (
+              <div key={`${id}`} className={classes.meta_item}>
                 <Shimmer
                   className={classes.shimmer_label}
-                  style={{
-                    height: "14px",
-                    width: "100px",
-                    marginBottom: "8px",
-                  }}
+                  style={{ height: "14px", width: "70px" }}
                 />
                 <Shimmer
                   className={classes.shimmer_value}
                   style={{ height: "18px", width: "140px" }}
                 />
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Cost Breakdown Section */}
-      <div className={classes.cost_section}>
-        <Shimmer
-          className={classes.shimmer_section_title}
-          style={{ height: "20px", width: "130px", marginBottom: "24px" }}
-        />
-
-        <div className={classes.cost_breakdown}>
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className={`${classes.cost_item} ${index === 3 ? classes.total : ""}`}
-            >
-              <Shimmer
-                className={classes.shimmer_cost_label}
-                style={{
-                  height: "18px",
-                  width: index === 3 ? "120px" : "200px",
-                }}
-              />
-              <Shimmer
-                className={classes.shimmer_cost_value}
-                style={{ height: "18px", width: index === 3 ? "80px" : "60px" }}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Meta Information Section */}
-      <div className={classes.meta_section}>
-        <Shimmer
-          className={classes.shimmer_section_title}
-          style={{ height: "20px", width: "180px", marginBottom: "24px" }}
-        />
-
-        <div className={classes.meta_info}>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className={classes.meta_item}>
-              <Shimmer
-                className={classes.shimmer_label}
-                style={{ height: "14px", width: "70px" }}
-              />
-              <Shimmer
-                className={classes.shimmer_value}
-                style={{ height: "18px", width: "140px" }}
-              />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

@@ -42,7 +42,7 @@ export class ChatWebsocketService {
     await this.connectionService.addConnectedUser(user_id, socket_id);
     // Notify all admins about user online status change
     const lastSeen = await this.connectionService.getLastSeen(user_id);
-    await this.notificationService.notifyUserOnlineStatus(user_id, lastSeen);
+    this.notificationService.notifyUserOnlineStatus(user_id, lastSeen);
   }
 
   /**
@@ -57,7 +57,7 @@ export class ChatWebsocketService {
     if (remainingSockets.length === 0) {
       // User is now offline - send current last seen time
       const lastSeen = await this.connectionService.getLastSeen(user_id);
-      await this.notificationService.notifyUserOnlineStatus(user_id, lastSeen);
+      this.notificationService.notifyUserOnlineStatus(user_id, lastSeen);
     }
   }
 

@@ -1,5 +1,11 @@
 import type { GETTABLE_NAMES, GettableTypes, SortDirection } from "@shared/src";
-import { type ReactNode, useEffect, useState } from "react";
+import {
+  type CSSProperties,
+  type ReactNode,
+  useEffect,
+  useId,
+  useState,
+} from "react";
 import { type ColumnConfig, ColumnNames } from "./components";
 import classes from "./List.module.scss";
 
@@ -30,6 +36,7 @@ export const List = <T extends GettableTypes<GETTABLE_NAMES>["model"]>({
 }: ListProps<T>) => {
   const [is_loaded, setIsLoaded] = useState(false);
   const [show_shimmer, setShowShimmer] = useState(true);
+  const id = useId();
 
   useEffect(() => {
     if (items) {
@@ -62,7 +69,7 @@ export const List = <T extends GettableTypes<GETTABLE_NAMES>["model"]>({
           >
             {!is_loaded
               ? Array.from({ length: shimmer_count }).map((_, index) =>
-                  shimmer(`${index}-shimmer-item`),
+                  shimmer(`${id}-shimmer-item-${index}`),
                 )
               : items?.map((item) => render(item))}
           </tbody>
@@ -74,17 +81,19 @@ export const List = <T extends GettableTypes<GETTABLE_NAMES>["model"]>({
           {!is_loaded
             ? Array.from({ length: shimmer_count }).map((_, index) => (
                 <div
-                  key={`${index}-shimmer-item`}
+                  key={`${id}-shimmer-item-${index}`}
                   className={classes.shimmer_item}
                 >
-                  {shimmer(`${index}-shimmer-item`)}
+                  {shimmer(`${id}-shimmer-item-${index}`)}
                 </div>
               ))
             : items?.map((item, index) => (
                 <div
-                  key={(item as any).id || index}
+                  key={(item as { id: string }).id || `${id}-item-${index}`}
                   className={classes.animated_card}
-                  style={{ ["--animation-order" as any]: index }}
+                  style={{
+                    ["--animation-order" as keyof CSSProperties]: index,
+                  }}
                 >
                   {render(item)}
                 </div>

@@ -17,6 +17,7 @@ export const BookingVariantsSection = () => {
       <div className={classes.header}>
         <h3 className={classes.title}>Booking Variants</h3>
         <button
+          type="button"
           className={classes.add_button}
           onClick={() => setIsAddingVariant(!isAddingVariant)}
         >

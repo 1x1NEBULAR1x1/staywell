@@ -23,8 +23,11 @@ export const NumberInput = ({
 }: NumberInputProps) => {
   return (
     <div className={classes.field}>
-      <label className={classes.label}>{label}</label>
+      <label htmlFor={`number-input-${label}`} className={classes.label}>
+        {label}
+      </label>
       <input
+        id={`number-input-${label}`}
         type="number"
         className={classes.input}
         step={step}

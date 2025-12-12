@@ -1,5 +1,7 @@
 import type { Message } from "@shared/src/database";
 import clsx from "clsx";
+import { format } from "date-fns";
+import { Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useChat } from "@/hooks/public/chat";
@@ -26,8 +28,8 @@ export const MessageBubble = ({
   const [show_menu, setShowMenu] = useState(false);
   const [is_editing, setIsEditing] = useState(false);
   const [edit_text, setEditText] = useState(message.message);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const editInputRef = useRef<HTMLTextAreaElement>(null);
+  const menu_ref = useRef<HTMLDivElement>(null);
+  const edit_input_ref = useRef<HTMLTextAreaElement>(null);
 
   const { editMessage, deleteMessage } = useChat();
 
@@ -44,7 +46,10 @@ export const MessageBubble = ({
   // Handle clicking outside menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menu_ref.current &&
+        !menu_ref.current.contains(event.target as Node)
+      ) {
         setShowMenu(false);
       }
     };
@@ -60,16 +65,11 @@ export const MessageBubble = ({
 
   // Focus edit input when editing starts
   useEffect(() => {
-    if (is_editing && editInputRef.current) {
-      editInputRef.current.focus();
-      editInputRef.current.select();
+    if (is_editing && edit_input_ref.current) {
+      edit_input_ref.current.focus();
+      edit_input_ref.current.select();
     }
   }, [is_editing]);
-
-  const formatted_time = new Date(message.created).toLocaleTimeString("ru-RU", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -132,7 +132,7 @@ export const MessageBubble = ({
           {is_editing ? (
             <div className={classes.edit_container}>
               <textarea
-                ref={editInputRef}
+                ref={edit_input_ref}
                 value={edit_text}
                 onChange={(e) => setEditText(e.target.value)}
                 onKeyDown={handleKeyPress}
@@ -142,17 +142,19 @@ export const MessageBubble = ({
               />
               <div className={classes.edit_actions}>
                 <button
+                  type="button"
                   onClick={handleSaveEdit}
                   className={classes.save_button}
                   disabled={!edit_text.trim() || edit_text === message.message}
                 >
-                  Сохранить
+                  Save
                 </button>
                 <button
+                  type="button"
                   onClick={handleCancelEdit}
                   className={classes.cancel_button}
                 >
-                  Отмена
+                  Cancel
                 </button>
               </div>
             </div>
@@ -161,29 +163,42 @@ export const MessageBubble = ({
               <div className={classes.message_text}>
                 {message.message}
                 {message.edited && (
-                  <span className={classes.edited_mark}>(изменено)</span>
+                  <span className={classes.edited_mark}>(edited)</span>
                 )}
               </div>
               {is_outgoing && (
-                <div
+                <button
+                  type="button"
                   className={classes.message_menu_trigger}
                   onClick={() => setShowMenu(!show_menu)}
                 >
                   ⋮
-                </div>
+                </button>
               )}
             </>
           )}
         </div>
-        <div className={classes.message_time}>{formatted_time}</div>
+        <div className={classes.message_time}>
+          {format(new Date(message.created), "HH:mm")}
+        </div>
 
         {show_menu && is_outgoing && (
-          <div ref={menuRef} className={classes.message_menu}>
-            <button onClick={handleEdit} className={classes.menu_item}>
-              ✏️ Редактировать
+          <div ref={menu_ref} className={classes.message_menu}>
+            <button
+              type="button"
+              onClick={handleEdit}
+              className={classes.menu_item}
+            >
+              <Pencil size={16} />
+              Edit
             </button>
-            <button onClick={handleDelete} className={classes.menu_item}>
-              🗑️ Удалить
+            <button
+              type="button"
+              onClick={handleDelete}
+              className={classes.menu_item}
+            >
+              <Trash size={16} />
+              Delete
             </button>
           </div>
         )}

@@ -1,61 +1,69 @@
 import type { ExtendedApartment } from "@shared/src/types/apartments-section/extended.types";
+import Image from "next/image";
 import Link from "next/link";
-import budget_room from "@/../public/pages/home/rooms/room-budget-room.jpg";
-import executive_room from "@/../public/pages/home/rooms/room-executive-room.jpg";
-import luxury_suite from "@/../public/pages/home/rooms/room-luxury-suite.jpg";
-import standard_room from "@/../public/pages/home/rooms/room-standard-room.jpg";
-import superior_room from "@/../public/pages/home/rooms/room-superior-room.jpg";
 import classes from "./ApartmentCard.module.scss";
+
+type ApartmentCardProps = {
+  apartment: ExtendedApartment;
+  isLarge?: boolean;
+};
 
 export const ApartmentCard = ({
   apartment,
-}: {
-  apartment: ExtendedApartment;
-}) => (
-  <Link
-    className={classes.right_images_bottom_image}
-    href={`/apartments/${apartment.id}`}
-  >
-    <div className={classes.badge}>
-      ${apartment.cheapest_variant?.price || "N/A"}
-      <p className={classes.pernight}>per night</p>
-    </div>
-    <div className={classes.room_title}>
-      {apartment.name || getTypeDisplayName(apartment.type)}
-    </div>
-    <img
-      src={apartment.image || getTypeImage(apartment.type)}
-      alt={apartment.name || getTypeDisplayName(apartment.type)}
-    />
-  </Link>
-);
+  isLarge = false,
+}: ApartmentCardProps) => {
+  const imageUrl =
+    apartment.images?.[0]?.image ||
+    apartment.image ||
+    "/placeholder-apartment.jpg";
+  const price =
+    apartment.booking_variants?.[0]?.price ||
+    apartment.cheapest_variant?.price ||
+    0;
 
-export const getTypeImage = (type?: string) => {
-  switch (type) {
-    case "LUXURY":
-      return luxury_suite.src;
-    case "BUDGET":
-      return budget_room.src;
-    case "SUPERIOR":
-      return superior_room.src;
-    case "EXCLUSIVE":
-      return executive_room.src;
-    default:
-      return standard_room.src;
-  }
+  return (
+    <Link
+      className={`${classes.card} ${isLarge ? classes.card_large : ""}`}
+      href={`/apartments/${apartment.id}`}
+    >
+      <div className={classes.badge}>
+        ${price}
+        <span className={classes.pernight}>per night</span>
+      </div>
+      <div className={classes.room_title}>
+        {getTypeDisplayName(apartment.type)}
+      </div>
+      <Image
+        src={imageUrl}
+        alt={getTypeDisplayName(apartment.type)}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        style={{ objectFit: "cover" }}
+      />
+    </Link>
+  );
 };
 
-export const getTypeDisplayName = (type?: string) => {
-  switch (type) {
-    case "LUXURY":
-      return "Luxury Suite";
-    case "BUDGET":
-      return "Budget Room";
-    case "SUPERIOR":
-      return "Superior Room";
-    case "EXCLUSIVE":
-      return "Executive Room";
-    default:
-      return "Standard Room";
-  }
+// Helper function to get display name for apartment type
+export const getTypeDisplayName = (type: string): string => {
+  const typeMap: Record<string, string> = {
+    BUDGET: "Budget Room",
+    STANDARD: "Standard Room",
+    EXCLUSIVE: "Executive Room",
+    SUPERIOR: "Superior Room",
+    LUXURY: "Luxury Suite",
+  };
+  return typeMap[type] || type;
+};
+
+// Helper function to get default image for apartment type
+export const getTypeImage = (type: string): string => {
+  const imageMap: Record<string, string> = {
+    BUDGET: "/images/apartments/budget.jpg",
+    STANDARD: "/images/apartments/standard.jpg",
+    EXCLUSIVE: "/images/apartments/executive.jpg",
+    SUPERIOR: "/images/apartments/superior.jpg",
+    LUXURY: "/images/apartments/luxury.jpg",
+  };
+  return imageMap[type] || "/placeholder-apartment.jpg";
 };

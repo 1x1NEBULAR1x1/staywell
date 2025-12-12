@@ -61,7 +61,6 @@ export const Summary = ({
                 ) : cheapest_variant ? (
                   <BookingVariant
                     booking_variant={cheapest_variant}
-                    nights={nights}
                     apartment={apartment}
                   />
                 ) : (

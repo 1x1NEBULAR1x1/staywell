@@ -88,12 +88,14 @@ export const BedsTab = ({ apartment }: { apartment: ExtendedApartment }) => {
           </div>
           <div className={classes.header_actions}>
             <button
+              type="button"
               className={classes.toggle_button}
               onClick={() => setShowAvailableBeds(!show_available_beds)}
             >
               {show_available_beds ? "Hide Available" : "Show Available"}
             </button>
             <button
+              type="button"
               className={classes.filter_button}
               onClick={() => setShowExcluded(!show_excluded)}
             >
@@ -101,6 +103,7 @@ export const BedsTab = ({ apartment }: { apartment: ExtendedApartment }) => {
               {show_excluded ? "Hide Excluded" : "Show Excluded"}
             </button>
             <button
+              type="button"
               className={classes.add_button}
               onClick={() => setIsBedTypeModalOpen(true)}
             >
@@ -123,7 +126,8 @@ export const BedsTab = ({ apartment }: { apartment: ExtendedApartment }) => {
             ) : (
               <div className={classes.available_grid}>
                 {available_bed_types.map((bed_type) => (
-                  <div
+                  <button
+                    type="button"
                     key={bed_type.id}
                     className={classes.available_bed_card}
                     onClick={() => handleAddBed(bed_type)}
@@ -139,11 +143,11 @@ export const BedsTab = ({ apartment }: { apartment: ExtendedApartment }) => {
                     </div>
                     <div className={classes.bed_info}>
                       <span className={classes.bed_name}>{bed_type.name}</span>
-                      <button className={classes.add_icon}>
+                      <div className={classes.add_icon}>
                         <Plus size={16} />
-                      </button>
+                      </div>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             )}

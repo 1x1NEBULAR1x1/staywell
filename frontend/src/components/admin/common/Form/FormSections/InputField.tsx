@@ -35,10 +35,11 @@ export const InputField = <T extends FieldValues>({
   return (
     <div className={styles.admin_form_section}>
       <div className={styles.admin_form_field}>
-        <label className={styles.admin_form_label}>
+        <label htmlFor={`${name}-input`} className={styles.admin_form_label}>
           {label} {required && "*"}
         </label>
         <input
+          id={`${name}-input`}
           type={type}
           className={`${styles.admin_form_input} ${errors[name] ? styles.admin_form_input_error : ""}`}
           disabled={is_loading}

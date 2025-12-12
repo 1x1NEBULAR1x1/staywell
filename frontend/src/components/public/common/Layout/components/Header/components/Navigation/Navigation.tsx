@@ -15,8 +15,8 @@ export const Navigation = () => (
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/events", label: "Events" },
   { href: "/apartments", label: "Apartments" },
+  { href: "/events", label: "Events" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

@@ -26,6 +26,7 @@ export const AdditionalOptions = ({
         <Package className={classes.header_icon} />
         <h3 className={classes.title}>Additional Services</h3>
         <button
+          type="button"
           className={classes.edit_button}
           onClick={() => setIsEditModalOpen(true)}
         >

@@ -3,7 +3,7 @@ import Link from "next/link";
 import {
   getTypeDisplayName,
   getTypeImage,
-} from "@/components/public/pages/home/components/Recomendations/components";
+} from "@/components/public/pages/home/components/Recomendations/components/ApartmentCard/ApartmentCard";
 import classes from "./ApartmentCard.module.scss";
 
 export const ApartmentCard = ({

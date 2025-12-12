@@ -8,7 +8,7 @@
   box-shadow: $box-shadow;
   overflow: hidden;
   transition: $transition-normal;
-  border: 1px solid $border-color-main;
+  border: $border-normal;
 
   &:hover {
     box-shadow: $box-shadow-md;
@@ -81,7 +81,7 @@
     font-size: $font-size-sm;
     color: $foreground-main;
     font-weight: $font-weight-light;
-    border-bottom: 1px solid $border-color-main;
+    border-bottom: $border-normal;
   }
 
   &_days {
@@ -89,7 +89,7 @@
     font-size: $font-size-md;
     color: $foreground-main;
     font-weight: $font-weight-normal;
-    border-bottom: 1px solid $border-color-main;
+    border-bottom: $border-normal;
   }
 
   &_message {
@@ -97,7 +97,7 @@
     font-size: $font-size-sm;
     color: $foreground-main;
     font-weight: $font-weight-normal;
-    border-bottom: 1px solid $border-color-main;
+    border-bottom: $border-normal;
   }
 
 
@@ -107,7 +107,7 @@
       align-items: center;
       gap: $spacing-sm;
       padding: $spacing-sm 0;
-      border-bottom: 1px solid $border-color-main;
+      border-bottom: $border-normal;
     }
 
     &_avatar {
@@ -151,7 +151,7 @@
       flex-direction: column;
       gap: $spacing-xs;
       padding: $spacing-sm 0;
-      border-bottom: 1px solid $border-color-main;
+      border-bottom: $border-normal;
     }
 
     &_item {

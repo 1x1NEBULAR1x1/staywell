@@ -89,6 +89,7 @@ export const AmenitiesTab = ({
           </div>
           <div className={classes.header_actions}>
             <button
+              type="button"
               className={classes.toggle_button}
               onClick={() =>
                 setShowAvailableAmenities(!show_available_amenities)
@@ -97,6 +98,7 @@ export const AmenitiesTab = ({
               {show_available_amenities ? "Hide Available" : "Show Available"}
             </button>
             <button
+              type="button"
               className={classes.filter_button}
               onClick={() => setShowExcluded(!show_excluded)}
             >
@@ -105,6 +107,7 @@ export const AmenitiesTab = ({
             </button>
             <button
               className={classes.add_button}
+              type="button"
               onClick={() => setIsAddAmenityModalOpen(true)}
             >
               <Plus size={18} />
@@ -126,7 +129,8 @@ export const AmenitiesTab = ({
             ) : (
               <div className={classes.available_grid}>
                 {available_amenities.map((amenity) => (
-                  <div
+                  <button
+                    type="button"
                     key={amenity.id}
                     className={classes.available_amenity_card}
                     onClick={() => handleAddAmenity(amenity)}
@@ -150,10 +154,10 @@ export const AmenitiesTab = ({
                         </span>
                       )}
                     </div>
-                    <button className={classes.add_icon}>
+                    <div className={classes.add_icon}>
                       <Plus size={16} />
-                    </button>
-                  </div>
+                    </div>
+                  </button>
                 ))}
               </div>
             )}
@@ -169,7 +173,7 @@ export const AmenitiesTab = ({
             setEditingAmenity(undefined);
           }}
           refetch={refetch}
-          editing_amenity={editing_amenity}
+          initial_data={editing_amenity}
         />
       )}
     </div>

@@ -1,1 +1,1 @@
-export { Error, Loading } from "./States";
+export { ErrorMessage, LoadingMessage } from "./States";

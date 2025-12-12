@@ -3,10 +3,7 @@ import { PrismaService } from 'src/lib/prisma';
 import { User } from '@shared/src/database';
 import { ExtendedBookingAdditionalOption } from '@shared/src/types/bookings-section';
 import { CheckService } from './check.service';
-import {
-  CreateBookingAdditionalOptionDto,
-  UpdateBookingAdditionalOptionDto,
-} from '../dto';
+import { UpdateBookingAdditionalOptionDto } from '../dto';
 
 @Injectable()
 export class CrudService {

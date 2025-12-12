@@ -11,9 +11,9 @@ import { TransferDetailsFiltersDto } from '../dto';
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(
+  customFilters = (
     options: TransferDetailsFiltersDto,
-  ): Prisma.TransferDetailWhereInput {
+  ): Prisma.TransferDetailWhereInput => {
     const { user_id, bank_name, account_number, swift, payer_name } = options;
     const filters: Prisma.TransferDetailWhereInput = {};
     if (user_id) filters.user_id = user_id;
@@ -28,7 +28,7 @@ export class ListService {
     if (payer_name)
       filters.payer_name = { contains: payer_name, mode: 'insensitive' };
     return filters;
-  }
+  };
   /**
    * Find all transfer details with filtering and pagination
    * @param filters - Query parameters for filtering and pagination

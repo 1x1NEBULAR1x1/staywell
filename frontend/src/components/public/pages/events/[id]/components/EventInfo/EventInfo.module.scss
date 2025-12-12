@@ -1,0 +1,204 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.event_info {
+  width: $container-width-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .main_section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: $spacing-xl;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr;
+      gap: $spacing-lg;
+    }
+
+    .info_content {
+      flex: 2;
+
+      .section_title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-normal;
+        color: $primary-dark;
+        margin-bottom: $spacing-lg;
+      }
+
+      .description {
+        font-size: $font-size-md;
+        font-weight: $font-weight-light;
+        color: $foreground-light;
+        margin-bottom: $spacing-xl;
+        line-height: 1.6;
+      }
+
+      .event_details {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-lg;
+
+        .detail_item {
+          display: flex;
+          align-items: flex-start;
+          gap: $spacing-md;
+
+          .detail_icon {
+            width: 24px;
+            height: 24px;
+            color: $primary-main;
+            flex-shrink: 0;
+            margin-top: 2px;
+          }
+
+          .guide_avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: $primary-main;
+            color: $foreground-white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: $font-weight-semibold;
+            font-size: $font-size-sm;
+            flex-shrink: 0;
+          }
+
+          .detail_content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .detail_label {
+              font-size: $font-size-sm;
+              color: $foreground-secondary;
+              font-weight: $font-weight-normal;
+            }
+
+            .detail_value {
+              font-size: $font-size-md;
+              color: $foreground-main;
+              font-weight: $font-weight-normal;
+            }
+          }
+        }
+      }
+    }
+
+    .booking_section {
+      flex: 1;
+      position: sticky;
+      top: $spacing-lg;
+
+      @media (max-width: $breakpoint-lg) {
+        position: static;
+      }
+
+      .booking_card {
+        background: $background-main;
+        border: $border-normal;
+        border-radius: $border-radius-lg;
+        padding: $spacing-xl;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-lg;
+        box-shadow: $box-shadow;
+
+        @media (max-width: $breakpoint-lg) {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .booking_title {
+          font-size: $font-size-lg;
+          font-weight: $font-weight-normal;
+          color: $primary-dark;
+          margin: 0;
+          text-align: center;
+        }
+
+        .price_section {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: $spacing-sm;
+
+          .price {
+            font-size: $font-size-3xl;
+            font-weight: $font-weight-bold;
+            color: $green;
+          }
+
+          .price_period {
+            font-size: $font-size-lg;
+            color: $foreground-secondary;
+            white-space: nowrap;
+            font-weight: $font-weight-light;
+          }
+        }
+
+        .availability {
+          text-align: center;
+
+          .availability_text {
+            font-size: $font-size-sm;
+            color: $yellow;
+            font-weight: $font-weight-normal;
+          }
+        }
+
+        .book_button {
+          width: 100%;
+          padding: $spacing-md $spacing-lg;
+          background-color: rgba($primary-main, 0.9);
+          color: rgba($foreground-white, 0.9);
+          border: none;
+          border-radius: $border-radius-sm;
+          box-shadow: $box-shadow;
+          font-size: $font-size-lg;
+          font-weight: $font-weight-semibold;
+          cursor: pointer;
+          transition: all $transition-fast;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+
+          &:hover:not(.book_button_disabled) {
+            background-color: $primary-main;
+            color: $foreground-white;
+            transform: translateY(-2px);
+            box-shadow: $box-shadow-lg;
+          }
+
+          .book_button_disabled {
+            background-color: $foreground-secondary;
+            color: $foreground-light;
+            cursor: not-allowed;
+
+            &:hover {
+              background-color: $foreground-secondary;
+              color: $foreground-light;
+              transform: none;
+              box-shadow: $box-shadow;
+            }
+          }
+        }
+
+        .book_button_disabled {
+          background-color: $foreground-secondary !important;
+          color: $foreground-light !important;
+          cursor: not-allowed !important;
+
+          &:hover {
+            background-color: $foreground-secondary !important;
+            color: $foreground-light !important;
+            transform: none !important;
+            box-shadow: $box-shadow !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -22,16 +22,16 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $border-color-main;
+    background: $border-color;
     border-radius: $border-radius-sm;
     transition: background $transition-fast;
 
     &:hover {
-      background: color.adjust($border-color-main, $lightness: -10%);
+      background: color.adjust($border-color, $lightness: -10%);
     }
 
     &:active {
-      background: color.adjust($border-color-main, $lightness: -20%);
+      background: color.adjust($border-color, $lightness: -20%);
     }
   }
 

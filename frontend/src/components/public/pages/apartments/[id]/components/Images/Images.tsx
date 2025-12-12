@@ -15,7 +15,7 @@ interface ImageData {
 }
 
 export const Images = ({ apartment }: { apartment: ExtendedApartment }) => {
-  const allImages: ImageData[] = [
+  const all_images: ImageData[] = [
     {
       id: "main",
       image: apartment.image || no_image.src,
@@ -28,8 +28,8 @@ export const Images = ({ apartment }: { apartment: ExtendedApartment }) => {
     })),
   ];
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [current_image_index, setCurrentImageIndex] = useState(0);
+  const [is_modal_open, setIsModalOpen] = useState(false);
 
   const handleThumbnailClick = (index: number) => {
     setCurrentImageIndex(index);
@@ -39,7 +39,7 @@ export const Images = ({ apartment }: { apartment: ExtendedApartment }) => {
     setIsModalOpen(true);
   };
 
-  const currentImage = allImages[currentImageIndex];
+  const currentImage = all_images[current_image_index];
 
   return (
     <>
@@ -51,18 +51,20 @@ export const Images = ({ apartment }: { apartment: ExtendedApartment }) => {
             fill
             className={classes.main_image}
             sizes="(max-width: 768px) 100vw, 60vw"
+            quality={95}
             priority
             onClick={handleMainImageClick}
           />
         </div>
 
-        {allImages.length > 1 && (
+        {all_images.length > 1 && (
           <div className={classes.thumbnails_container}>
             <div className={classes.thumbnails_slider}>
-              {allImages.map((image, index) => (
+              {all_images.map((image, index) => (
                 <button
+                  type="button"
                   key={image.id}
-                  className={`${classes.thumbnail} ${index === currentImageIndex ? classes.thumbnail_active : ""}`}
+                  className={`${classes.thumbnail} ${index === current_image_index ? classes.thumbnail_active : ""}`}
                   onClick={() => handleThumbnailClick(index)}
                 >
                   <Image
@@ -70,7 +72,8 @@ export const Images = ({ apartment }: { apartment: ExtendedApartment }) => {
                     alt={image.name || "Apartment"}
                     fill
                     className={classes.thumbnail_image}
-                    sizes="120px"
+                    sizes="140px"
+                    quality={90}
                   />
                 </button>
               ))}
@@ -80,10 +83,10 @@ export const Images = ({ apartment }: { apartment: ExtendedApartment }) => {
       </div>
 
       <ImageModal
-        isOpen={isModalOpen}
+        is_open={is_modal_open}
         onClose={() => setIsModalOpen(false)}
-        images={allImages}
-        currentIndex={currentImageIndex}
+        images={all_images}
+        current_index={current_image_index}
         onImageChange={setCurrentImageIndex}
       />
     </>

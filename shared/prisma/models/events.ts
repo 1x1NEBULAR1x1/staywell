@@ -276,22 +276,28 @@ export async function seedEvents(prisma: PrismaClient) {
     const { images, ...data } = event;
 
     try {
-      const createdEvent = await prisma.event.upsert({
-        where: { id: event.id, name: event.name },
-        update: data,
-        create: data,
-      });
+      let existingEvent = await prisma.event.findFirst({ where: { name: event.name } });
+      if (existingEvent) {
+        await prisma.event.update({
+          where: { id: existingEvent.id },
+          data: data,
+        });
+      } else {
+        existingEvent = await prisma.event.create({
+          data: data,
+        });
+      }
 
 
       if (images && images.length > 0) {
         await prisma.eventImage.deleteMany({
-          where: { event_id: createdEvent.id }
+          where: { event_id: existingEvent.id }
         });
 
         for (const image of images) {
           await prisma.eventImage.create({
             data: {
-              event_id: createdEvent.id,
+              event_id: existingEvent.id,
               name: image.name,
               image: image.image,
               description: image.description

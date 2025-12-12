@@ -15,7 +15,7 @@ import { PrismaService } from 'src/lib/prisma';
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(options: ReviewsFiltersDto) {
+  customFilters = (options: ReviewsFiltersDto) => {
     const { apartment_id, user_id, booking_id, min_rating } = options;
     const filters: Prisma.ReviewWhereInput = {};
     if (apartment_id) filters.apartment_id = apartment_id;
@@ -26,7 +26,7 @@ export class ListService {
       filters.rating.gte = min_rating;
     }
     return filters;
-  }
+  };
   /**
    * Find all reviews for a apartment with optional filtering
    * @param apartment_id Apartment ID

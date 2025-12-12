@@ -15,19 +15,19 @@ export const useInfinityEvents = (
   filters: Omit<EventsFilters, "skip"> = { take: 12 },
   options?: {
     enabled?: boolean;
+    initial_data?: BaseListResult<ExtendedEvent>;
   },
 ) => {
   const { selected_dates, guests, selected_events } = useBookingStore();
   const api = new GetApi("EVENT");
-
   const query = useInfiniteQuery({
     queryKey: ["events", "infinite", filters, selected_dates, guests],
     queryFn: async ({ pageParam = 0 }) => {
       const result = await api.get({
         ...filters,
         skip: pageParam * filters.take,
-        min_start: selected_dates.start,
-        min_end: selected_dates.end,
+        min_start: filters.min_start || selected_dates.start,
+        max_end: filters.max_end || selected_dates.end,
         min_capacity: guests,
       });
       return result.data;
@@ -41,10 +41,13 @@ export const useInfinityEvents = (
       return has_more ? pages.length : undefined;
     },
     initialPageParam: 0,
-    enabled:
-      options?.enabled !== false &&
-      Boolean(selected_dates.start) &&
-      Boolean(selected_dates.end),
+    enabled: options?.enabled !== false && Boolean(selected_dates.start),
+    initialData: options?.initial_data
+      ? {
+          pages: [options.initial_data],
+          pageParams: [0],
+        }
+      : undefined,
   });
 
   // Flat array of all events, filtered by availability and not selected

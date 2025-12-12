@@ -31,6 +31,7 @@ export const BulkActions = ({
       <div className={classes.bulk_actions_content}>
         <div className={classes.selection_info}>
           <button
+            type="button"
             className={classes.select_all_button}
             onClick={handleSelectAll}
             title={allSelected ? "Deselect all" : "Select all"}
@@ -45,6 +46,7 @@ export const BulkActions = ({
         </div>
         <div className={classes.bulk_buttons}>
           <button
+            type="button"
             className={`${classes.bulk_button} ${classes.mark_read_button}`}
             onClick={handleBulkMarkAsRead}
             disabled={markAsRead.isPending}

@@ -30,7 +30,6 @@ export const CheckboxInput = ({
           type="checkbox"
           className={classes.checkbox}
           checked={value === true}
-          indeterminate={value === undefined}
           onChange={handleChange}
         />
         <span className={classes.text}>

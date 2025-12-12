@@ -75,9 +75,17 @@ export const ImageUploader = <T extends FieldValues>({
     height: `${height}px`,
   };
 
+  const onInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // First call the standard onChange from register
+    const registerOnChange = register(image_file_field_name).onChange;
+    if (registerOnChange) registerOnChange(e);
+    // Then our custom handler for preview
+    handleImageChange(e);
+  };
+
   return (
     <div className={`${classes.image_uploader} ${className}`}>
-      {/* Превью изображения слева */}
+      {/* Left image preview */}
       <div className={classes.image_uploader_preview_container}>
         {image_type === "file" ? (
           <div
@@ -95,17 +103,7 @@ export const ImageUploader = <T extends FieldValues>({
                     image_file_field_name,
                     getValidationRules<T>(accepted_types, max_size_in_mb),
                   )}
-                  onChange={(e) => {
-                    // Сначала вызываем стандартный onChange из register
-                    const registerOnChange = register(
-                      image_file_field_name,
-                    ).onChange;
-                    if (registerOnChange) {
-                      registerOnChange(e);
-                    }
-                    // Затем наш кастомный обработчик для превью
-                    handleImageChange(e);
-                  }}
+                  onChange={onInputFile}
                   style={{ display: "none" }}
                 />
                 <div className={classes.image_uploader_preview}>
@@ -137,17 +135,7 @@ export const ImageUploader = <T extends FieldValues>({
                     image_file_field_name,
                     getValidationRules<T>(accepted_types, max_size_in_mb),
                   )}
-                  onChange={(e) => {
-                    // Сначала вызываем стандартный onChange из register
-                    const registerOnChange = register(
-                      image_file_field_name,
-                    ).onChange;
-                    if (registerOnChange) {
-                      registerOnChange(e);
-                    }
-                    // Затем наш кастомный обработчик для превью
-                    handleImageChange(e);
-                  }}
+                  onChange={onInputFile}
                 />
                 <div className={classes.image_uploader_placeholder}>
                   <Camera size={24} />
@@ -192,11 +180,11 @@ export const ImageUploader = <T extends FieldValues>({
         )}
       </div>
 
-      {/* Контролы справа */}
+      {/* Right controls */}
       <div className={classes.image_uploader_content}>
-        <label className={classes.image_uploader_label}>{label}</label>
+        <p className={classes.image_uploader_label}>{label}</p>
 
-        {/* Переключатель типа изображения */}
+        {/* Image type switcher */}
         <Switch
           image_type={isImageType(image_type) ? image_type : "file"}
           handleTypeChange={handleTypeChange}

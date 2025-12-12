@@ -54,12 +54,15 @@ export const BookingVariant = ({
 
         <div className={classes.variant_controls}>
           <div className={classes.control_group}>
-            <label className={classes.control_label}>Price:</label>
+            <label htmlFor="price-input" className={classes.control_label}>
+              Price:
+            </label>
             <input
               type="number"
               min="0"
               step="0.01"
               value={booking_variant.price}
+              id="price-input"
               onChange={(e) =>
                 handleUpdate({ price: parseFloat(e.target.value) || 0 })
               }
@@ -69,10 +72,13 @@ export const BookingVariant = ({
           </div>
 
           <div className={classes.control_group}>
-            <label className={classes.control_label}>Capacity:</label>
+            <label htmlFor="capacity-input" className={classes.control_label}>
+              Capacity:
+            </label>
             <input
               type="number"
               min="1"
+              id="capacity-input"
               value={booking_variant.capacity}
               onChange={(e) =>
                 handleUpdate({ capacity: parseInt(e.target.value, 10) || 1 })
@@ -86,6 +92,7 @@ export const BookingVariant = ({
 
       <div className={classes.variant_actions}>
         <button
+          type="button"
           className={`${classes.availability_button} ${booking_variant.is_available ? classes.available : classes.unavailable}`}
           onClick={() =>
             handleUpdate({ is_available: !booking_variant.is_available })
@@ -96,6 +103,7 @@ export const BookingVariant = ({
         </button>
 
         <button
+          type="button"
           className={classes.remove_button}
           onClick={handleRemove}
           disabled={remove_mutation.isPending}

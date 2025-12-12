@@ -92,7 +92,7 @@ export class StripeService {
       metadata: {
         transaction_id: transaction.id,
         user_id: user.id,
-        booking_id: create_booking_dto.booking_variant_id,
+        booking_id: booking_id,
       },
     });
 
@@ -121,9 +121,10 @@ export class StripeService {
         currency: 'usd',
         product_data: {
           name: `Booking: ${booking_variant.apartment.name}`,
-          images: this.configService.getOrThrow('IS_DEV')
-            ? [this.getProductImageUrl(booking_variant.apartment.image)]
-            : undefined,
+          images:
+            process.env.NODE_ENV === 'development'
+              ? [this.getProductImageUrl(booking_variant.apartment.image)]
+              : undefined,
           description: `Accommodation from ${start_date.toDateString()} to ${end_date.toDateString()}`,
           tax_code: 'txcd_20030000',
         },
@@ -160,9 +161,10 @@ export class StripeService {
           currency: 'usd',
           product_data: {
             name: option.name,
-            images: this.configService.getOrThrow('IS_DEV')
-              ? [this.getProductImageUrl(option.image)]
-              : undefined,
+            images:
+              process.env.NODE_ENV === 'development'
+                ? [this.getProductImageUrl(option.image)]
+                : undefined,
             description: option.description,
             tax_code: 'txcd_20030000',
           },
@@ -188,9 +190,10 @@ export class StripeService {
           currency: 'usd',
           product_data: {
             name: booking_event.event.name,
-            images: this.configService.getOrThrow('IS_DEV')
-              ? [this.getProductImageUrl(booking_event.event.image)]
-              : undefined,
+            images:
+              process.env.NODE_ENV === 'development'
+                ? [this.getProductImageUrl(booking_event.event.image)]
+                : undefined,
             description: booking_event.event.description,
             tax_code: 'txcd_20030000',
           },

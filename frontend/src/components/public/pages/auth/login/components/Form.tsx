@@ -29,25 +29,26 @@ export const Form = () => {
   const onSubmit = () => {
     setFormData((prev) => ({ ...prev, errors: [] }));
     console.log(form_data);
-    if (
-      false &&
-      !form_data.password.match(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      )
-    ) {
-      setFormData((prev) => ({
-        ...prev,
-        password: "",
-        errors: [
-          ...prev.errors,
-          {
-            message:
-              "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
-            path: "password",
-          },
-        ],
-      }));
-    }
+    // TODO Fix P@SSword! validation
+    // if (
+    //   false &&
+    //   !form_data.password.match(
+    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    //   )
+    // ) {
+    //   setFormData((prev) => ({
+    //     ...prev,
+    //     password: "",
+    //     errors: [
+    //       ...prev.errors,
+    //       {
+    //         message:
+    //           "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
+    //         path: "password",
+    //       },
+    //     ],
+    //   }));
+    // }
     if (!form_data.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setFormData((prev) => ({
         ...prev,

@@ -34,6 +34,7 @@ export const ChatInput = ({
           />
         </div>
         <button
+          type="button"
           className={classes.input_button}
           onClick={onSend}
           disabled={!message_value.trim() || is_sending}

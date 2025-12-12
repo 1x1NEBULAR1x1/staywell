@@ -12,7 +12,7 @@ import { PrismaService } from 'src/lib/prisma';
 export class ListService {
   constructor(private prisma: PrismaService) {}
 
-  customFilters(options: ApartmentBedsFiltersDto) {
+  customFilters = (options: ApartmentBedsFiltersDto) => {
     const { bed_type_id, min_count, max_count, apartment_id } = options;
     const filters: Prisma.ApartmentBedWhereInput = {};
     if (apartment_id) filters.apartment_id = apartment_id;
@@ -23,7 +23,7 @@ export class ListService {
       if (max_count) filters.count.lte = max_count;
     }
     return filters;
-  }
+  };
   /**
    * Search for all apartment_beds data by filters
    * @param apartment_id Apartment ID to filter by

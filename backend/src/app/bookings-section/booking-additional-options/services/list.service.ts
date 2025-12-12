@@ -16,7 +16,7 @@ export class ListService {
     private readonly checkService: CheckService,
   ) {}
 
-  customFilters(options: BookingAdditionalOptionsFiltersDto) {
+  customFilters = (options: BookingAdditionalOptionsFiltersDto) => {
     const { booking_id, additional_option_id, min_amount, max_amount } =
       options;
     const filters: Prisma.BookingAdditionalOptionWhereInput = {};
@@ -26,7 +26,7 @@ export class ListService {
     if (min_amount) filters.amount = { gte: min_amount };
     if (max_amount) filters.amount = { lte: max_amount };
     return filters;
-  }
+  };
   /**
    * Finds booking-option relationships based on filter criteria
    * @param filterDto Filter and pagination parameters

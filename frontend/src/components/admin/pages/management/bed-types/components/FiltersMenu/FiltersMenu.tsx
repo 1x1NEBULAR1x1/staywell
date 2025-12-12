@@ -4,9 +4,7 @@ import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import classes from "./FiltersMenu.module.scss";
 
-type FiltersMenuProps = {};
-
-export const FiltersMenu = ({}: FiltersMenuProps) => {
+export const FiltersMenu = () => {
   const [is_open, setIsOpen] = useState(false);
 
   return (

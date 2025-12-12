@@ -5,5 +5,5 @@ export default async function layout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AccountProvider>{children}</AccountProvider>;
+  return <AccountProvider initial_data={null}>{children}</AccountProvider>;
 }

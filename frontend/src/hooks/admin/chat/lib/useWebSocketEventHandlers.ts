@@ -38,57 +38,57 @@ export const useWebSocketEventHandlers = (
   } = options;
 
   const { user } = useAccount();
-  const chatStore = useChatStore();
-  const chatStoreRef = useRef(chatStore);
-  chatStoreRef.current = chatStore;
+  const store = useChatStore();
+  const store_ref = useRef(store);
+  store_ref.current = store;
 
   useEffect(() => {
     if (!socket) return;
 
     // Message events
     socket.on("new_message", (data: { message: Message }) => {
-      const existingMessages = chatStoreRef.current.messages;
-      const newMessage = data.message;
+      const existing_messages = store_ref.current.messages;
+      const new_message = data.message;
 
       // Check if this is a replacement for an optimistic message
-      const optimisticIndex = existingMessages.findIndex(
+      const optimistic_index = existing_messages.findIndex(
         (msg) =>
           msg.id.startsWith("temp-") && // optimistic messages have temp IDs
-          msg.sender_id === newMessage.sender_id &&
-          msg.message === newMessage.message &&
+          msg.sender_id === new_message.sender_id &&
+          msg.message === new_message.message &&
           Math.abs(
             new Date(msg.created).getTime() -
-              new Date(newMessage.created).getTime(),
+              new Date(new_message.created).getTime(),
           ) < 5000, // within 5 seconds
       );
 
-      let updatedMessages;
-      if (optimisticIndex !== -1) {
+      let updated_messages: Message[];
+      if (optimistic_index !== -1) {
         // Replace optimistic message with real one
-        updatedMessages = [...existingMessages];
-        updatedMessages[optimisticIndex] = newMessage;
+        updated_messages = [...existing_messages];
+        updated_messages[optimistic_index] = new_message;
       } else {
         // Add new message
-        updatedMessages = [...existingMessages, newMessage];
+        updated_messages = [...existing_messages, new_message];
       }
 
-      chatStoreRef.current.setMessages(
-        updatedMessages.sort(
-          (a, b) =>
+      store_ref.current.setMessages(
+        updated_messages.sort(
+          (a: Message, b: Message) =>
             new Date(a.created).getTime() - new Date(b.created).getTime(),
         ),
       );
 
       // If this message is for the currently selected chat, reload history to ensure sync
-      const senderId = data.message.sender_id;
-      const receiverId = data.message.receiver_id;
-      const chatPartnerId = senderId === user?.id ? receiverId : senderId;
+      const sender_id = data.message.sender_id;
+      const receiver_id = data.message.receiver_id;
+      const chat_partner_id = sender_id === user?.id ? receiver_id : sender_id;
 
-      if (selected_chat_id === chatPartnerId && getHistory) {
+      if (selected_chat_id === chat_partner_id && getHistory) {
         console.log(
           "New message received for selected chat, reloading history",
         );
-        getHistory(chatPartnerId);
+        getHistory(chat_partner_id);
       }
 
       // Avoid duplicates
@@ -96,11 +96,11 @@ export const useWebSocketEventHandlers = (
     });
 
     socket.on("message_edited", (data: { message: Message }) => {
-      chatStoreRef.current.setMessages(
-        chatStoreRef.current.messages
-          .map((m) => (m.id === data.message.id ? data.message : m))
+      store_ref.current.setMessages(
+        store_ref.current.messages
+          .map((m: Message) => (m.id === data.message.id ? data.message : m))
           .sort(
-            (a, b) =>
+            (a: Message, b: Message) =>
               new Date(a.created).getTime() - new Date(b.created).getTime(),
           ),
       );
@@ -108,8 +108,10 @@ export const useWebSocketEventHandlers = (
     });
 
     socket.on("message_deleted", (data: { message_id: string }) => {
-      chatStoreRef.current.setMessages(
-        chatStoreRef.current.messages.filter((m) => m.id !== data.message_id),
+      store_ref.current.setMessages(
+        store_ref.current.messages.filter(
+          (m: Message) => m.id !== data.message_id,
+        ),
       );
     });
 
@@ -124,18 +126,18 @@ export const useWebSocketEventHandlers = (
       }) => {
         if (data.skip === 0) {
           // First load or refresh - replace all messages
-          chatStoreRef.current.setMessages(data.items);
+          store_ref.current.setMessages(data.items);
         } else {
           // Pagination - append new messages
-          const existingMessageIds = new Set(
-            chatStoreRef.current.messages.map((m) => m.id),
+          const existing_message_ids = new Set(
+            store_ref.current.messages.map((m: Message) => m.id),
           );
-          const newMessages = data.items.filter(
-            (m) => !existingMessageIds.has(m.id),
+          const new_messages = data.items.filter(
+            (m: Message) => !existing_message_ids.has(m.id),
           );
-          chatStoreRef.current.setMessages([
-            ...chatStoreRef.current.messages,
-            ...newMessages,
+          store_ref.current.setMessages([
+            ...store_ref.current.messages,
+            ...new_messages,
           ]);
         }
       },
@@ -146,24 +148,24 @@ export const useWebSocketEventHandlers = (
       "chats_loaded",
       (data: { items: ChatWithLastMessage[]; total: number }) => {
         // Initialize online_users with data from loaded chats
-        const newOnlineUsers = { ...chatStoreRef.current.online_users };
+        const new_online_users = { ...store_ref.current.online_users };
         data.items.forEach((chat) => {
           if (chat.last_seen) {
             // Set last seen time from server data
-            newOnlineUsers[chat.user.id] = new Date(chat.last_seen).getTime();
+            new_online_users[chat.user.id] = new Date(chat.last_seen).getTime();
           }
         });
 
-        chatStoreRef.current.setOnlineUsers(newOnlineUsers);
+        store_ref.current.setOnlineUsers(new_online_users);
 
-        chatStoreRef.current.setChats(data.items);
+        store_ref.current.setChats(data.items);
       },
     );
 
     // Chats updated (when new messages arrive or read status changes)
     socket.on("chats_updated", () => {
       // Refresh the chats list when it gets updated
-      if (chatStoreRef.current.chats.length > 0) {
+      if (store_ref.current.chats.length > 0) {
         socket.emit("get_chats", { skip: 0, take: 50 });
       }
     });
@@ -184,7 +186,7 @@ export const useWebSocketEventHandlers = (
     socket.on(
       "user_online_status",
       (data: { user_id: string; last_seen: Date | null }) => {
-        chatStoreRef.current.updateUserLastSeen(data.user_id, data.last_seen);
+        store_ref.current.updateUserLastSeen(data.user_id, data.last_seen);
         onUserOnlineStatus?.(data);
       },
     );

@@ -39,6 +39,7 @@ export const MainData = ({
         </span>
       </div>
       <button
+        type="button"
         className={classes.edit_btn}
         onClick={() => setIsEditModalOpen(true)}
       >

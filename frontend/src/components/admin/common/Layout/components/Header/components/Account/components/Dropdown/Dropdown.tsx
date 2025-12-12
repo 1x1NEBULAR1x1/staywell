@@ -30,7 +30,11 @@ export const Dropdown = ({
       <span>Settings</span>
     </Link>
     <div className={classes.dropdown_divider}></div>
-    <button className={classes.dropdown_item} onClick={handleLogout}>
+    <button
+      type="button"
+      className={classes.dropdown_item}
+      onClick={handleLogout}
+    >
       <LogOut size={16} />
       <span>Logout</span>
     </button>

@@ -7,7 +7,7 @@ import { ChatUserItem, EmptyMessage } from "./components";
 
 export const ChatUserList = () => {
   const selected_chat_id = useQPId();
-  const { chats, isTyping, getUserLastSeen } = useChat();
+  const { chats, isTyping } = useChat();
 
   return chats.length > 0 ? (
     <div className={classes.list}>

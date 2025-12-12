@@ -1,4 +1,5 @@
 @use '@/components/styles/_variables.scss' as *;
+@use 'sass:color';
 
 .user_info {
   background: $background-main;
@@ -43,7 +44,7 @@
     transition: background-color $transition-fast;
 
     &:hover {
-      background: darken($primary-main, 10%);
+      background: color.adjust($primary-main, $lightness: -10%);
     }
 
     .link_icon {
@@ -119,13 +120,13 @@
     font-weight: $font-weight-normal;
 
     &.verified {
-      background: lighten($green, 40%);
-      color: darken($green, 20%);
+      background: color.adjust($green, $lightness: 40%);
+      color: color.adjust($green, $lightness: -20%);
     }
 
     &.not_verified {
-      background: lighten($yellow, 40%);
-      color: darken($yellow, 20%);
+      background: color.adjust($yellow, $lightness: 40%);
+      color: color.adjust($yellow, $lightness: -20%);
     }
   }
 }

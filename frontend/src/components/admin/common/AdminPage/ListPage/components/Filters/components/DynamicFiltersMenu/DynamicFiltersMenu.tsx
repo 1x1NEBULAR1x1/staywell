@@ -27,20 +27,20 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({
   const [is_open, setIsOpen] = useState(false);
 
   const renderFilterField = <M extends GETTABLE_NAMES>(key: string) => {
-    const fieldConfig = config[key];
+    const field_config = config[key];
     const label =
-      fieldConfig.label ||
+      field_config.label ||
       key
         .split("_")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
     const value = filters[key as keyof GettableTypes<M>["filters"]];
 
-    const onChange = (newValue: any) => {
-      setFilters({ ...filters, [key]: newValue });
+    const onChange = (new_value: unknown) => {
+      setFilters({ ...filters, [key]: new_value });
     };
 
-    switch (fieldConfig.type) {
+    switch (field_config.type) {
       case "string":
         return (
           <TextInput
@@ -48,7 +48,7 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({
             label={label}
             value={value ? String(value) : undefined}
             onChange={onChange}
-            placeholder={fieldConfig.placeholder}
+            placeholder={field_config.placeholder}
           />
         );
 
@@ -57,13 +57,15 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({
         return (
           <NumberInput
             key={key}
-            step={fieldConfig.type === "integer" ? 1 : fieldConfig.step || 0.01}
+            step={
+              field_config.type === "integer" ? 1 : field_config.step || 0.01
+            }
             label={label}
             value={value ? Number(value) : undefined}
             onChange={onChange}
-            min={fieldConfig.min}
-            max={fieldConfig.max}
-            placeholder={fieldConfig.placeholder}
+            min={field_config.min}
+            max={field_config.max}
+            placeholder={field_config.placeholder}
           />
         );
 
@@ -84,7 +86,7 @@ export const DynamicFiltersMenu = <M extends GETTABLE_NAMES>({
             label={label}
             value={value ? String(value) : undefined}
             onChange={onChange}
-            options={fieldConfig.options.map((opt) => ({
+            options={field_config.options.map((opt) => ({
               label: opt,
               value: opt,
             }))}

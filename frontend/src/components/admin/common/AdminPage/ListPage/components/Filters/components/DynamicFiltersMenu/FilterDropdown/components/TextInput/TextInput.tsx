@@ -17,8 +17,11 @@ export const TextInput = ({
 }: TextInputProps) => {
   return (
     <div className={classes.field}>
-      <label className={classes.label}>{label}</label>
+      <label htmlFor={`text-input-${label}`} className={classes.label}>
+        {label}
+      </label>
       <input
+        id={`text-input-${label}`}
         type="text"
         className={classes.input}
         value={value || ""}

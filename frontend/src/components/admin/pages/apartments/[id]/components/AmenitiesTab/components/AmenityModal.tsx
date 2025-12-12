@@ -15,46 +15,45 @@ type FormData = CruddableTypes<"AMENITY">["create"] & {
 interface AmenityModalProps {
   onClose: () => void;
   refetch: () => void;
-  editing_amenity?: ExtendedAmenity;
+  initial_data?: ExtendedAmenity;
 }
 
 export const AmenityModal = ({
   onClose,
   refetch,
-  editing_amenity,
+  initial_data,
 }: AmenityModalProps) => {
   const toast = useToast();
-  const mutation = editing_amenity
-    ? useModel("AMENITY").update(editing_amenity.id)
-    : useModel("AMENITY").create();
+  const update_mutation = useModel("AMENITY").update(initial_data?.id ?? "");
+  const create_mutation = useModel("AMENITY").create();
 
   const form = useForm<FormData>({
     defaultValues: {
-      name: editing_amenity?.name ?? "",
-      image: editing_amenity?.image ?? "",
-      description: editing_amenity?.description ?? "",
-      image_type: editing_amenity?.image ? "url" : "file",
+      name: initial_data?.name ?? "",
+      image: initial_data?.image ?? "",
+      description: initial_data?.description ?? "",
+      image_type: initial_data?.image ? "url" : "file",
       files: [],
-      url: editing_amenity?.image ?? "",
+      url: initial_data?.image ?? "",
     },
   });
 
   const handleCreate = async (data: FormData) => {
     try {
-      await mutation.mutateAsync({
+      await (initial_data ? update_mutation : create_mutation).mutateAsync({
         name: data.name,
         image: data.image_type === "url" ? data.url : undefined,
         file: data.image_type === "file" ? data.files[0] : undefined,
         description: data.description,
       });
       toast.success(
-        `Amenity ${!editing_amenity ? "created" : "updated"} successfully`,
+        `Amenity ${!initial_data ? "created" : "updated"} successfully`,
       );
       onClose();
     } catch (error) {
       isAxiosError(error) &&
         toast.error(
-          `Error during ${!editing_amenity ? "creating" : "updating"}: ${error.message}`,
+          `Error during ${!initial_data ? "creating" : "updating"}: ${error.message}`,
         );
       console.error(error);
     } finally {
@@ -70,11 +69,15 @@ export const AmenityModal = ({
       form={form}
       onSubmit={handleCreate}
       model="AMENITY"
-      is_loading={mutation.isPending}
-      id={editing_amenity?.id}
+      is_loading={
+        initial_data ? update_mutation.isPending : create_mutation.isPending
+      }
+      id={initial_data?.id}
     >
       <ImageUploader
-        is_loading={mutation.isPending}
+        is_loading={
+          initial_data ? update_mutation.isPending : create_mutation.isPending
+        }
         register={form.register}
         errors={form.formState.errors}
         setValue={form.setValue}

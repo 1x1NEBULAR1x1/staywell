@@ -12,27 +12,28 @@ const invalidate_queries = (filters: Partial<SessionsFilters>) => {
   });
 };
 /**
- * Хук для работы с сессиями пользователя
+ * Hook for working with user sessions
  */
 export const useSessions = (filters: SessionsFilters) => {
+  const api = new SessionsApi();
   const toast = useToast();
   /**
-   * Получение активных сессий пользователя
+   * Getting active user sessions
    */
   const useGet = (filters: SessionsFilters) =>
     useQuery({
       queryKey: QUERY_KEYS("SESSION").get(filters),
-      queryFn: () => SessionsApi.get(filters),
+      queryFn: () => api.get(filters),
       enabled: !!filters.user_id,
       select: (data) => data.data,
     });
 
   /**
-   * Деактивация конкретной сессии
+   * Deactivating specific session
    */
   const useDeactivate = () =>
     useMutation({
-      mutationFn: SessionsApi.deactivate_session,
+      mutationFn: api.deactivate_session,
       onSuccess: () => {
         toast.success("Session has been deactivated successfully");
         invalidate_queries(filters);
@@ -41,11 +42,11 @@ export const useSessions = (filters: SessionsFilters) => {
     });
 
   /**
-   * Деактивация всех остальных сессий (кроме текущей)
+   * Deactivating all other sessions (except the current one)
    */
   const useDeactivateAll = () =>
     useMutation({
-      mutationFn: () => SessionsApi.deactivate_all_sessions(filters.user_id),
+      mutationFn: () => api.deactivate_all_sessions(filters.user_id),
       onSuccess: () => {
         toast.success("All sessions have been deactivated successfully");
         invalidate_queries(filters);
@@ -55,8 +56,7 @@ export const useSessions = (filters: SessionsFilters) => {
 
   const useDelete = () =>
     useMutation({
-      mutationFn: (session_id: string) =>
-        SessionsApi.delete_session(session_id),
+      mutationFn: (session_id: string) => api.delete_session(session_id),
       onSuccess: () => {
         toast.success("Session has been deleted successfully");
         invalidate_queries(filters);

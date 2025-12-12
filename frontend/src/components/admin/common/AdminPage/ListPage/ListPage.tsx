@@ -36,9 +36,9 @@ export const ListPage = <M extends GETTABLE_NAMES>({
   sort_by_list,
 }: ListPageProps<M>) => {
   const { filters, setFilters } = useModelFilters({ model });
-  const [is_modal_open, setIsModalOpen] = create_modal
-    ? useState(false)
-    : [undefined, () => {}];
+  const [is_modal_open, setIsModalOpen] = useState<boolean | undefined>(
+    create_modal ? false : undefined,
+  );
   const { data } = useModel(model).get(filters);
 
   const handleSort = (field: keyof GettableTypes<M>["model"]) => {

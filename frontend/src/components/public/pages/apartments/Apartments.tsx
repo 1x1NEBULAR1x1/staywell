@@ -1,19 +1,17 @@
 "use client";
 
 import type { ApartmentsFilters } from "@shared/src/types/apartments-section";
+import { Filters } from "@/components/public/common/components/Filters";
 import { useModelFilters } from "@/hooks/admin/actions";
 import { useInfinityApartments } from "@/hooks/public/apartments/useInfinityApartments";
 import { useBookingStore } from "@/stores/public/pages/booking/useBookingStore";
 import classes from "./Apartments.module.scss";
 import { ApartmentsList } from "./components/ApartmentsList";
-import { Filters } from "./components/Filters";
 import { Header } from "./components/Header";
 
 export const Apartments = () => {
   const { setSelectedDates, selected_dates, guests, setGuests } =
     useBookingStore();
-  console.log("guests", guests);
-  console.log("selected_dates", selected_dates);
   const { filters, setFilters, debounced_filters } = useModelFilters({
     model: "APARTMENT",
     default_filters: {
@@ -30,7 +28,6 @@ export const Apartments = () => {
       delay: 500,
     },
   });
-  console.log(filters.start_date, filters.end_date);
 
   const { apartments, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
     useInfinityApartments(debounced_filters);

@@ -1,211 +1,73 @@
 "use client";
 
-import type { BaseListResult } from "@shared/src/common/base-types/base-list-result.interface";
-import type { ExtendedApartment } from "@shared/src/types/apartments-section/extended.types";
-import Link from "next/link";
-import { useCallback, useEffect } from "react";
-import { Shimmer } from "@/components/styles/ui";
-import { useInfinityApartments } from "@/hooks/public/apartments";
-import { useHomePageStore } from "@/stores/public/pages/home/useHomePageStore";
-import { getTypeDisplayName, getTypeImage } from "./components";
+import type { ExtendedApartment } from "@shared/src/types/apartments-section";
+import { useMemo } from "react";
+import { ApartmentCard } from "./components";
 import classes from "./Recomendations.module.scss";
 
+const APARTMENT_TYPES = [
+  "BUDGET",
+  "STANDARD",
+  "EXCLUSIVE",
+  "SUPERIOR",
+  "LUXURY",
+];
+
 export const Recomendations = ({
-  initial_data,
+  apartments,
 }: {
-  initial_data?: BaseListResult<ExtendedApartment>;
+  apartments: ExtendedApartment[];
 }) => {
-  const { filters, setIsApartmentsLoading } = useHomePageStore();
+  // Select exactly 5 apartments with different types where possible
+  const recomendations_apartments = useMemo(() => {
+    const result: ExtendedApartment[] = [];
+    const used_types = new Set<string>();
 
-  const { apartments, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
-    useInfinityApartments(
-      {
-        ...filters,
-        take: 12,
-        is_available: true,
-      },
-      {
-        initial_data: initial_data,
-      },
-    );
-
-  useEffect(() => {
-    setIsApartmentsLoading(isLoading);
-  }, [isLoading, setIsApartmentsLoading]);
-
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      isFetchingNextPage
-    ) {
-      return;
+    // First pass: try to get one of each type
+    for (const type of APARTMENT_TYPES) {
+      if (result.length >= 5) break;
+      const apartment = apartments.find(
+        (apt) => apt.type === type && !used_types.has(apt.type),
+      );
+      if (apartment) {
+        result.push(apartment);
+        used_types.add(apartment.type);
+      }
     }
-    if (hasNextPage) {
-      loadMore();
+
+    // Second pass: fill remaining slots with any available apartments
+    if (result.length < 5) {
+      for (const apartment of apartments) {
+        if (result.length >= 5) break;
+        if (!result.find((a) => a.id === apartment.id)) {
+          result.push(apartment);
+        }
+      }
     }
-  }, [hasNextPage, isFetchingNextPage, loadMore]);
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  // Берем первые 5 квартир для отображения в рекомендациях
-  const featuredApartments = apartments.slice(0, 5);
-
-  if (isLoading && apartments.length === 0) return <RecomendationsShimmer />;
+    // Sort by APARTMENT_TYPES order in descending order (LUXURY -> BUDGET)
+    return result.sort((a, b) => {
+      const index_a = APARTMENT_TYPES.indexOf(a.type);
+      const index_b = APARTMENT_TYPES.indexOf(b.type);
+      return index_b - index_a;
+    });
+  }, [apartments]);
 
   return (
-    <section className={classes.section_recommendations}>
-      <p className={classes.title}>Most Picked</p>
+    recomendations_apartments && (
+      <section className={classes.section_recommendations}>
+        <h2 className={classes.title}>Most Picked</h2>
 
-      <div className={classes.images_container}>
-        {featuredApartments[0] && (
-          <div className={classes.left_image}>
-            <Link
-              className={classes.image}
-              href={`/apartments/${featuredApartments[0].id}`}
-            >
-              <div className={classes.badge}>
-                ${featuredApartments[0].booking_variants?.[0]?.price || "N/A"}
-                <p className={classes.pernight}>per night</p>
-              </div>
-              <div className={classes.room_title}>
-                {getTypeDisplayName(featuredApartments[0].type)}
-              </div>
-              <img
-                src={
-                  featuredApartments[0].image ||
-                  getTypeImage(featuredApartments[0].type)
-                }
-                alt={getTypeDisplayName(featuredApartments[0].type)}
-              />
-            </Link>
+        <div className={classes.grid_container}>
+          <div className={classes.large_card}>
+            <ApartmentCard apartment={recomendations_apartments[0]} isLarge />
           </div>
-        )}
 
-        <div className={classes.images}>
-          {featuredApartments[1] && (
-            <Link
-              className={classes.image}
-              href={`/apartments/${featuredApartments[1].id}`}
-            >
-              <div className={classes.badge}>
-                ${featuredApartments[1].booking_variants?.[0]?.price || "N/A"}
-                <p className={classes.pernight}>per night</p>
-              </div>
-              <div className={classes.room_title}>
-                {getTypeDisplayName(featuredApartments[1].type)}
-              </div>
-              <img
-                src={
-                  featuredApartments[1].image ||
-                  getTypeImage(featuredApartments[1].type)
-                }
-                alt={getTypeDisplayName(featuredApartments[1].type)}
-              />
-            </Link>
-          )}
-
-          {featuredApartments[2] && (
-            <Link
-              className={classes.image}
-              href={`/apartments/${featuredApartments[2].id}`}
-            >
-              <div className={classes.badge}>
-                ${featuredApartments[2].booking_variants?.[0]?.price || "N/A"}
-                <p className={classes.pernight}>per night</p>
-              </div>
-              <div className={classes.room_title}>
-                {getTypeDisplayName(featuredApartments[2].type)}
-              </div>
-              <img
-                src={
-                  featuredApartments[2].image ||
-                  getTypeImage(featuredApartments[2].type)
-                }
-                alt={getTypeDisplayName(featuredApartments[2].type)}
-              />
-            </Link>
-          )}
+          {recomendations_apartments.slice(1).map((apartment) => (
+            <ApartmentCard key={apartment.id} apartment={apartment} />
+          ))}
         </div>
-
-        <div className={classes.images}>
-          {featuredApartments[3] && (
-            <Link
-              className={classes.image}
-              href={`/apartments/${featuredApartments[3].id}`}
-            >
-              <div className={classes.badge}>
-                ${featuredApartments[3].booking_variants?.[0]?.price || "N/A"}
-                <p className={classes.pernight}>per night</p>
-              </div>
-              <div className={classes.room_title}>
-                {getTypeDisplayName(featuredApartments[3].type)}
-              </div>
-              <img
-                src={
-                  featuredApartments[3].image ||
-                  getTypeImage(featuredApartments[3].type)
-                }
-                alt={getTypeDisplayName(featuredApartments[3].type)}
-              />
-            </Link>
-          )}
-
-          {featuredApartments[4] && (
-            <Link
-              className={classes.image}
-              href={`/apartments/${featuredApartments[4].id}`}
-            >
-              <div className={classes.badge}>
-                ${featuredApartments[4].booking_variants?.[0]?.price || "N/A"}
-                <p className={classes.pernight}>per night</p>
-              </div>
-              <div className={classes.room_title}>
-                {getTypeDisplayName(featuredApartments[4].type)}
-              </div>
-              <img
-                src={
-                  featuredApartments[4].images?.[0]?.image ||
-                  getTypeImage(featuredApartments[4].type)
-                }
-                alt={getTypeDisplayName(featuredApartments[4].type)}
-              />
-            </Link>
-          )}
-        </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 };
-
-const RecomendationsShimmer = () => (
-  <section className={classes.section_recommendations}>
-    <p className={classes.title}>Most Picked</p>
-    <div className={classes.images_container}>
-      <div className={classes.left_image}>
-        <Shimmer className={classes.image_shimmer}>
-          <div />
-        </Shimmer>
-      </div>
-      <div className={classes.images}>
-        <Shimmer className={classes.image_shimmer}>
-          <div />
-        </Shimmer>
-        <Shimmer className={classes.image_shimmer}>
-          <div />
-        </Shimmer>
-      </div>
-      <div className={classes.images}>
-        <Shimmer className={classes.image_shimmer}>
-          <div />
-        </Shimmer>
-        <Shimmer className={classes.image_shimmer}>
-          <div />
-        </Shimmer>
-      </div>
-    </div>
-  </section>
-);

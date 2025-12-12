@@ -2,7 +2,7 @@
 
 import { type AdditionalOption, example_additional_option } from "@shared/src";
 import { useState } from "react";
-import { CreateButton, ListPage } from "@/components/admin/common/AdminPage";
+import { ListPage } from "@/components/admin/common/AdminPage";
 import { AdditionalOptionModal } from "@/components/admin/common/Modal/models/AdditionalOptionModal";
 import {
   AdditionalOptionCard,
@@ -10,22 +10,17 @@ import {
 } from "./components";
 
 export const AdditionalOptions = () => {
-  const [modal_data, setModalData] = useState<{
-    is_modal_open: boolean;
-    additional_option: AdditionalOption | undefined;
-  }>({ is_modal_open: false, additional_option: undefined });
+  const [is_modal_open, setIsModalOpen] = useState(false);
+  const [additional_option, setAdditionalOption] = useState<
+    AdditionalOption | undefined
+  >(undefined);
   return (
     <>
       <ListPage
-        create_button={
-          <CreateButton
-            label="Add Additional Option"
-            onClick={() =>
-              setModalData({
-                is_modal_open: true,
-                additional_option: undefined,
-              })
-            }
+        create_modal={
+          <AdditionalOptionModal
+            onClose={() => setIsModalOpen(false)}
+            initial_data={additional_option}
           />
         }
         model="ADDITIONAL_OPTION"
@@ -34,7 +29,7 @@ export const AdditionalOptions = () => {
             key={additional_option.id}
             additional_option={additional_option}
             setEditAdditionalOptionData={(additional_option) =>
-              setModalData({ is_modal_open: true, additional_option })
+              setAdditionalOption(additional_option)
             }
           />
         )}
@@ -53,12 +48,10 @@ export const AdditionalOptions = () => {
           )
           .sort()}
       />
-      {modal_data.is_modal_open && (
+      {is_modal_open && (
         <AdditionalOptionModal
-          initial_data={modal_data.additional_option}
-          onClose={() =>
-            setModalData({ is_modal_open: false, additional_option: undefined })
-          }
+          initial_data={additional_option}
+          onClose={() => setIsModalOpen(false)}
         />
       )}
     </>

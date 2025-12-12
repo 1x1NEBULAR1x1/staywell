@@ -1,4 +1,1 @@
-export {
-  FinalBookingSummary,
-  FinalBookingSummaryShimmer,
-} from "./FinalBookingSummary";
+export { FinalBookingSummary } from "./FinalBookingSummary";

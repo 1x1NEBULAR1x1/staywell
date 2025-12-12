@@ -52,6 +52,7 @@ export const FormField = <T extends FieldValues>({
       case "textarea":
         return (
           <textarea
+            id={`${name}-textarea`}
             className={`${classes.admin_form_textarea} ${errors[name] ? classes.admin_form_textarea_error : ""}`}
             placeholder={placeholder}
             disabled={disabled}
@@ -62,6 +63,7 @@ export const FormField = <T extends FieldValues>({
       case "select":
         return (
           <select
+            id={`${name}-select`}
             className={`${classes.admin_form_select} ${errors[name] ? classes.admin_form_select_error : ""}`}
             disabled={disabled}
             {...register(name, rules)}
@@ -76,6 +78,7 @@ export const FormField = <T extends FieldValues>({
       default:
         return (
           <input
+            id={`${name}-input`}
             type={type}
             className={`${classes.admin_form_input} ${errors[name] ? classes.admin_form_input_error : ""}`}
             placeholder={placeholder}
@@ -88,7 +91,7 @@ export const FormField = <T extends FieldValues>({
 
   return (
     <div className={classes.admin_form_field}>
-      <label className={classes.admin_form_label}>
+      <label htmlFor={`${name}-${type}`} className={classes.admin_form_label}>
         {label} {is_required && "*"}
       </label>
 

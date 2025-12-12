@@ -41,7 +41,11 @@ export const FilterDropdown = ({
 
   return (
     <div className={classes.container} ref={dropdownRef}>
-      <button className={classes.filter_button} onClick={onToggle}>
+      <button
+        type="button"
+        className={classes.filter_button}
+        onClick={onToggle}
+      >
         <SlidersHorizontal className={classes.icon} />
         <p>Filters</p>
       </button>
@@ -50,7 +54,13 @@ export const FilterDropdown = ({
         <div className={classes.dropdown}>
           <div className={classes.header}>
             <h3 className={classes.title}>Filters</h3>
-            <X className={classes.close_icon} onClick={onClose} />
+            <button
+              type="button"
+              className={classes.close_icon}
+              onClick={onClose}
+            >
+              <X size={16} />
+            </button>
           </div>
           <div className={classes.content}>{children}</div>
         </div>

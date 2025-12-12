@@ -1,85 +1,340 @@
 @use '@/components/styles/_variables.scss' as *;
 
-.success_message {
-  width: $container-width-xl;
-  background-color: $background-main;
-  border: $border-normal;
-  border-radius: $border-radius-md;
-  padding: $spacing-3xl;
-  box-shadow: $box-shadow-sm;
+.success_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: $spacing-2xl 0;
+  min-height: 70vh;
+}
+
+.success_card {
+  width: 100%;
+  max-width: 700px;
+  background: linear-gradient(135deg, $background-main 0%, $background-light 100%);
+  border-radius: $border-radius-xl;
+  padding: $spacing-4xl $spacing-3xl;
+  box-shadow: $box-shadow-xl;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: $spacing-xl;
+  gap: $spacing-2xl;
+  position: relative;
+  overflow: hidden;
 
-  .success_icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  // Decorative background elements
+  &::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba($green, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
   }
 
-  .success_title {
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
-    color: $green;
-    margin: 0;
-  }
-
-  .success_description {
-    font-size: $font-size-lg;
-    color: $foreground-secondary;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0;
-  }
-
-  .actions {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-lg;
-    width: 100%;
-    max-width: 400px;
-
-    .primary_button, .secondary_button {
-      display: inline-block;
-      padding: $spacing-lg $spacing-xl;
-      border-radius: $border-radius-md;
-      text-decoration: none;
-      font-weight: $font-weight-semibold;
-      font-size: $font-size-md;
-      text-align: center;
-      transition: $transition-normal;
-    }
-
-    .primary_button {
-      background-color: $primary-main;
-      color: $foreground-white;
-      border: 2px solid $primary-main;
-
-      &:hover {
-        background-color: $primary-dark;
-        border-color: $primary-dark;
-      }
-    }
-
-    .secondary_button {
-      background-color: transparent;
-      color: $primary-main;
-      border: 2px solid $primary-main;
-
-      &:hover {
-        background-color: $primary-main;
-        color: $foreground-white;
-      }
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba($primary-light, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
   }
 }
 
+.icon_wrapper {
+  position: relative;
+  margin-bottom: $spacing-md;
+  animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
+.success_icon {
+  position: relative;
+  z-index: 2;
+  color: $green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($green, 0.1);
+  border-radius: 50%;
+  padding: $spacing-xl;
+  box-shadow: 0 8px 24px rgba($green, 0.2);
+}
 
+.icon_glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba($green, 0.3) 0%, transparent 60%);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
 
+.message_section {
+  text-align: center;
+  z-index: 1;
+}
 
+.title {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: $foreground-main;
+  margin: 0 0 $spacing-sm 0;
+  animation: fade-in-up 0.5s ease-out 0.2s both;
+}
 
+.subtitle {
+  font-size: $font-size-lg;
+  color: $foreground-secondary;
+  margin: 0;
+  animation: fade-in-up 0.5s ease-out 0.3s both;
+}
 
+.booking_summary {
+  width: 100%;
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $box-shadow;
+  z-index: 1;
+  animation: fade-in-up 0.5s ease-out 0.4s both;
+}
 
+.summary_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-md;
+  border-bottom: 2px solid $border-color;
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $foreground-main;
+    margin: 0;
+  }
+}
+
+.booking_number {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: $spacing-xs;
+
+  span {
+    font-size: $font-size-sm;
+    color: $foreground-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  code {
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $primary-main;
+    background: rgba($primary-main, 0.1);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-xs;
+    font-family: 'Courier New', monospace;
+  }
+}
+
+.summary_grid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.summary_item {
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background: $background-light;
+  border-radius: $border-radius-md;
+  transition: transform $transition-fast;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+.item_icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  color: $foreground-white;
+  border-radius: $border-radius-md;
+  box-shadow: 0 4px 12px rgba($primary-main, 0.2);
+}
+
+.item_content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  flex: 1;
+}
+
+.item_label {
+  font-size: $font-size-sm;
+  color: $foreground-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: $font-weight-semibold;
+}
+
+.item_value {
+  font-size: $font-size-md;
+  color: $foreground-main;
+  font-weight: $font-weight-semibold;
+}
+
+.item_value_amount {
+  font-size: $font-size-2xl;
+  color: $green;
+  font-weight: $font-weight-bold;
+}
+
+.item_detail {
+  font-size: $font-size-sm;
+  color: $foreground-secondary;
+}
+
+.email_notification {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background: rgba($primary-main, 0.05);
+  border-radius: $border-radius-md;
+  border-left: 4px solid $primary-main;
+  margin-top: $spacing-md;
+
+  svg {
+    color: $primary-main;
+    flex-shrink: 0;
+  }
+
+  span {
+    font-size: $font-size-sm;
+    color: $foreground-main;
+    line-height: 1.5;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-md;
+  width: 100%;
+  z-index: 1;
+  animation: fade-in-up 0.5s ease-out 0.5s both;
+
+  @media (max-width: $breakpoint-sm) {
+    flex-direction: column;
+  }
+}
+
+.primary_button,
+.secondary_button {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg $spacing-xl;
+  border-radius: $border-radius-lg;
+  text-decoration: none;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-md;
+  text-align: center;
+  transition: all $transition-normal;
+  cursor: pointer;
+}
+
+.primary_button {
+  background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+  color: $foreground-white;
+  border: none;
+  box-shadow: 0 4px 15px rgba($primary-main, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($primary-main, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.secondary_button {
+  background-color: $background-main;
+  color: $primary-main;
+  border: 2px solid $primary-main;
+
+  &:hover {
+    background-color: rgba($primary-main, 0.05);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Animations
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  70% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}

@@ -211,8 +211,10 @@
         display: flex;
         gap: $spacing-md;
         padding: $spacing-md;
+        border: none;
         border-bottom: $border-normal;
         cursor: pointer;
+        background: transparent;
         transition: background $transition-fast;
         position: relative;
 
@@ -232,24 +234,7 @@
           }
         }
 
-        .notification_icon {
-          width: 40px;
-          height: 40px;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: $border-radius-md;
-          background: $background-light;
-
-          .icon {
-            width: 20px;
-            height: 20px;
-            color: $foreground-main;
-          }
-        }
-
-        &.booking .notification_icon {
+        &[data-type="BOOKING"] .notification_icon {
           background: rgba($primary-light, 0.1);
 
           .icon {
@@ -257,7 +242,7 @@
           }
         }
 
-        &.reservation .notification_icon {
+        &[data-type="RESERVATION"] .notification_icon {
           background: rgba($green, 0.1);
 
           .icon {
@@ -265,7 +250,7 @@
           }
         }
 
-        &.message .notification_icon {
+        &[data-type="MESSAGE"] .notification_icon {
           background: rgba($primary-main, 0.1);
 
           .icon {
@@ -273,7 +258,7 @@
           }
         }
 
-        &.error .notification_icon {
+        &[data-type="ERROR"] .notification_icon {
           background: rgba($red, 0.1);
 
           .icon {
@@ -281,90 +266,107 @@
           }
         }
 
-        &.warning .notification_icon {
+        &[data-type="WARNING"] .notification_icon {
           background: rgba($yellow, 0.1);
 
           .icon {
             color: $yellow;
           }
         }
+      }
 
-        .notification_content {
-          flex: 1;
-          min-width: 0;
+      .notification_icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $border-radius-md;
+        background: $background-light;
 
-          .notification_header {
-            display: flex;
-            align-items: center;
-            gap: $spacing-xs;
-            margin-bottom: $spacing-xs;
-
-            .notification_type {
-              font-size: $font-size-sm;
-              font-weight: $font-weight-semibold;
-              color: $foreground-main;
-              text-transform: capitalize;
-            }
-
-            .action_icon {
-              width: 14px;
-              height: 14px;
-              color: $foreground-secondary;
-            }
-
-            .notification_time {
-              margin-left: auto;
-              font-size: $font-size-xs;
-              color: $foreground-secondary;
-              white-space: nowrap;
-            }
-          }
-
-          .notification_message {
-            font-size: $font-size-md;
-            color: $foreground-secondary;
-            margin: 0;
-            line-height: 1.5;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-          }
-        }
-
-        .unread_indicator {
-          position: absolute;
-          top: 50%;
-          right: $spacing-md;
-          transform: translateY(-50%);
-          width: 8px;
-          height: 8px;
-          background: $primary-main;
-          border-radius: 50%;
+        .icon {
+          width: 20px;
+          height: 20px;
+          color: $foreground-main;
         }
       }
-    }
 
-    .dropdown_footer {
-      padding: $spacing-sm;
-      border-top: $border-normal;
+      .notification_content {
+        flex: 1;
+        min-width: 0;
 
-      .view_all_button {
-        width: 100%;
-        padding: $spacing-sm;
-        border: none;
-        background: transparent;
-        color: $primary-main;
-        font-size: $font-size-md;
-        font-weight: $font-weight-semibold;
-        cursor: pointer;
-        border-radius: $border-radius-md;
-        transition: background $transition-fast;
+        .notification_header {
+          display: flex;
+          align-items: center;
+          gap: $spacing-xs;
+          margin-bottom: $spacing-xs;
 
-        &:hover {
-          background: $primary-disabled;
+          .notification_type {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-semibold;
+            color: $foreground-main;
+            text-transform: capitalize;
+          }
+
+          .action_icon {
+            width: 14px;
+            height: 14px;
+            color: $foreground-secondary;
+          }
+
+          .notification_time {
+            margin-left: auto;
+            font-size: $font-size-xs;
+            color: $foreground-secondary;
+            white-space: nowrap;
+          }
         }
+
+        .notification_message {
+          font-size: $font-size-md;
+          color: $foreground-secondary;
+          margin: 0;
+          line-height: 1.5;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+
+      .unread_indicator {
+        position: absolute;
+        top: 50%;
+        right: $spacing-md;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        background: $primary-main;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .dropdown_footer {
+    padding: $spacing-sm;
+    border-top: $border-normal;
+
+    .view_all_button {
+      width: 100%;
+      padding: $spacing-sm;
+      border: none;
+      background: transparent;
+      color: $primary-main;
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      cursor: pointer;
+      border-radius: $border-radius-md;
+      transition: background $transition-fast;
+
+      &:hover {
+        background: $primary-disabled;
       }
     }
   }

@@ -15,7 +15,7 @@ import {
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(options: BookingEventsFiltersDto) {
+  customFilters = (options: BookingEventsFiltersDto) => {
     const { booking_id, event_id, transaction_id, user_id } = options;
     const filters: Prisma.BookingEventWhereInput = {};
     if (user_id) filters.booking = { user_id };
@@ -23,7 +23,7 @@ export class ListService {
     if (event_id) filters.event_id = event_id;
     if (transaction_id) filters.transaction_id = transaction_id;
     return filters;
-  }
+  };
   /**
    * Find all event bookings with filtering and pagination
    * @param filterDto - Query parameters for filtering and pagination

@@ -8,7 +8,7 @@ import { AdditionalOptionsFiltersDto } from '../dto';
 export class ListService {
   constructor(private readonly prisma: PrismaService) {}
 
-  customFilters(options: AdditionalOptionsFiltersDto) {
+  customFilters = (options: AdditionalOptionsFiltersDto) => {
     const { name, min_price, max_price } = options;
     const filters: Prisma.AdditionalOptionWhereInput = {};
     if (name) {
@@ -23,7 +23,7 @@ export class ListService {
       if (max_price !== undefined) filters.price.lte = max_price;
     }
     return filters;
-  }
+  };
   /**
    * Finds additional options based on filter criteria
    * @param filters Filter and pagination parameters

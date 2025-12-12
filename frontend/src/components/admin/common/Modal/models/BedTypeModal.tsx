@@ -20,9 +20,8 @@ interface BedTypeModalProps {
 
 export const BedTypeModal = ({ onClose, initial_data }: BedTypeModalProps) => {
   const toast = useToast();
-  const mutation = initial_data
-    ? useModel("BED_TYPE").update(initial_data.id)
-    : useModel("BED_TYPE").create();
+  const update_mutation = useModel("BED_TYPE").update(initial_data?.id ?? "");
+  const create_mutation = useModel("BED_TYPE").create();
 
   const form = useForm<FormData>({
     defaultValues: {
@@ -36,7 +35,7 @@ export const BedTypeModal = ({ onClose, initial_data }: BedTypeModalProps) => {
 
   const handleSubmit = async (data: FormData) => {
     try {
-      await mutation.mutateAsync({
+      await (initial_data ? update_mutation : create_mutation).mutateAsync({
         name: data.name,
         image: data.image_type === "url" ? data.url : undefined,
         file: data.image_type === "file" ? data.files[0] : undefined,
@@ -64,11 +63,15 @@ export const BedTypeModal = ({ onClose, initial_data }: BedTypeModalProps) => {
       form={form}
       onSubmit={handleSubmit}
       model="BED_TYPE"
-      is_loading={mutation.isPending}
+      is_loading={
+        initial_data ? update_mutation.isPending : create_mutation.isPending
+      }
       id={initial_data?.id}
     >
       <ImageUploader
-        is_loading={mutation.isPending}
+        is_loading={
+          initial_data ? update_mutation.isPending : create_mutation.isPending
+        }
         register={form.register}
         errors={form.formState.errors}
         setValue={form.setValue}

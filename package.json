@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "pnpm --parallel --recursive dev",
     "build": "pnpm --recursive build",
-    "start": "pnpm --recursive start"
+    "start": "pnpm --recursive start",
+    "lint": "pnpm --recursive lint"
   },
   "devDependencies": {
     "@prisma/client": "^6.13.0",

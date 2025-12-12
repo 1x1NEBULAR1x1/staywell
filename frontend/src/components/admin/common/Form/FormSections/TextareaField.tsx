@@ -35,10 +35,14 @@ export const TextareaField = <T extends FieldValues>({
   return (
     <div className={classes.admin_form_section}>
       <div className={classes.admin_form_field}>
-        <label className={classes.admin_form_label}>
+        <label
+          htmlFor={`${name}-textarea`}
+          className={classes.admin_form_label}
+        >
           {label} {required && "*"}
         </label>
         <textarea
+          id={`${name}-textarea`}
           className={`${classes.admin_form_textarea} ${errors[name] ? classes.admin_form_textarea_error : ""}`}
           placeholder={placeholder}
           disabled={is_loading}

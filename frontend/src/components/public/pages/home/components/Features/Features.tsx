@@ -8,9 +8,7 @@ import tranquility_zone from "@/../public/pages/home/features/feature-tranquilit
 import view_from_the_window from "@/../public/pages/home/features/feature-view-from-the-window.jpg";
 import classes from "./Features.module.scss";
 
-type FeaturesProps = {};
-
-export const Features = ({}: FeaturesProps) => (
+export const Features = () => (
   <section className={classes.section_features}>
     <div className={classes.features_group_columns}>
       <div className={classes.feature_group}>

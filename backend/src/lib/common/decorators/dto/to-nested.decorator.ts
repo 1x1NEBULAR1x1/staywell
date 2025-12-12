@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 interface ToNestedOptions {
-  type: Function;
+  type: new (...args: any[]) => any;
   required?: boolean;
   description?: string;
   example?: object[];

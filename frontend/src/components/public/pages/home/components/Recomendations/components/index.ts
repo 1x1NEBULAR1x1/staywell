@@ -1,5 +1,1 @@
-export {
-  ApartmentCard,
-  getTypeDisplayName,
-  getTypeImage,
-} from "./ApartmentCard";
+export { ApartmentCard } from "./ApartmentCard";

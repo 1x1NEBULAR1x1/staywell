@@ -8,21 +8,14 @@ import { useBookingAdditionalOptions } from "@/hooks/public/booking/useBookingAd
 import { SelectedAdditionalOptionCard } from "./components/SelectedAdditionalOptionCard/SelectedAdditionalOptionCard";
 import classes from "./SelectedAdditionalOptions.module.scss";
 
-type SelectedAdditionalOptionsProps = {
-  onNext?: () => void;
-};
-
-export const SelectedAdditionalOptions = ({
-  onNext,
-}: SelectedAdditionalOptionsProps) => {
+export const SelectedAdditionalOptions = () => {
   const { selected_additional_options } = useBookingAdditionalOptions();
   const { additional_options } = useBookingAdditionalOptions();
   const { getNextStep } = useBookingState();
-  const params = useParams();
-  const apartmentId = params.id as string;
+  const { id } = useParams<{ id: string }>();
 
   // Calculate total price
-  const totalPrice = selected_additional_options.reduce(
+  const total_price = selected_additional_options.reduce(
     (total, selected_additional_option) => {
       const additional_option = additional_options.find(
         (ao) => ao.id === selected_additional_option.additional_option_id,
@@ -63,11 +56,11 @@ export const SelectedAdditionalOptions = ({
           <div className={classes.total}>
             <span className={classes.total_label}>Total:</span>
             <span className={classes.total_amount}>
-              ${totalPrice.toFixed(2)}
+              ${total_price.toFixed(2)}
             </span>
           </div>
           <Link
-            href={`/apartments/${apartmentId}/booking/${getNextStep("additional_options")}`}
+            href={`/apartments/${id}/booking/${getNextStep("additional_options")}`}
             className={classes.next_button}
           >
             <span>Continue</span>

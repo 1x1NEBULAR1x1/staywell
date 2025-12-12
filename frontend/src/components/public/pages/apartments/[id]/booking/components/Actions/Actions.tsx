@@ -28,7 +28,7 @@ export const Actions = ({ id, label, current_step }: ActionsProps) => {
           {label}
         </Link>
       ) : (
-        <button className={classes.next_button} disabled>
+        <button type="button" className={classes.next_button} disabled>
           {label}
         </button>
       )}

@@ -6,9 +6,7 @@ import { useAccount } from "@/hooks/common/useAccount";
 import { Account, Navigation } from "./components";
 import classes from "./Header.module.scss";
 
-type HeaderProps = {};
-
-export const Header = ({}: HeaderProps) => {
+export const Header = () => {
   const account = useAccount();
   return (
     <header className={classes.header}>
@@ -20,7 +18,7 @@ export const Header = ({}: HeaderProps) => {
         <Navigation />
         {account.user ? (
           <Account user={account.user} />
-        ) : !account.user ? (
+        ) : account.is_loading ? (
           <div className={classes.login_button}>
             <Loader2 className={classes.loader} />
           </div>

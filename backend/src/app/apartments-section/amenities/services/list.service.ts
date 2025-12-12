@@ -8,12 +8,12 @@ import { BaseListResult } from '@shared/src/common/base-types/base-list-result.i
 export class ListService {
   constructor(private prisma: PrismaService) {}
 
-  customFilters(options: AmenitiesFiltersDto) {
+  customFilters = (options: AmenitiesFiltersDto) => {
     const { name } = options;
     const filters: Prisma.AmenityWhereInput = {};
     if (name) filters.name = { contains: name, mode: 'insensitive' };
     return filters;
-  }
+  };
   /**
    * Finds all amenities based on filter criteria
    * @param filters Filter parameters and pagination
@@ -24,7 +24,7 @@ export class ListService {
   ): Promise<BaseListResult<Amenity>> {
     const query_options = this.prisma.buildQuery<Amenity>({
       filters,
-      customFilters: (options) => this.customFilters(options),
+      customFilters: this.customFilters,
     });
     const { items, total } = await this.prisma.findWithPagination<Amenity>({
       model: this.prisma.amenity,

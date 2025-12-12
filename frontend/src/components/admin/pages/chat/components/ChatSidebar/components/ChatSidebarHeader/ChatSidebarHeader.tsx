@@ -11,6 +11,7 @@ export const ChatSidebarHeader = () => {
   return (
     <div className={classes.header}>
       <button
+        type="button"
         className={classes.collapse_button}
         onClick={toggleCollapse}
         title={is_collapsed ? "Expand chat" : "Collapse chat"}

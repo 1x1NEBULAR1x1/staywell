@@ -21,13 +21,14 @@ export const useNotifications = () => {
     },
   });
 
-  const get = (filters: NotificationsFilters) =>
-    useQuery({
+  const get = (filters: NotificationsFilters) => {
+    return useQuery({
       queryKey: QUERY_KEYS("NOTIFICATION").get(filters),
       queryFn: () => api.get(filters),
       select: (data) => data.data,
       refetchInterval: 30000, // 30 seconds
     });
+  };
 
   return {
     ...actions,

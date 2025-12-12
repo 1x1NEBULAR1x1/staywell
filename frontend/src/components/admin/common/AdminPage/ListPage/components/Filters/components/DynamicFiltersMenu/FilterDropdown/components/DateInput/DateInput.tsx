@@ -11,8 +11,11 @@ type DateInputProps = {
 export const DateInput = ({ label, value, onChange }: DateInputProps) => {
   return (
     <div className={classes.field}>
-      <label className={classes.label}>{label}</label>
+      <label htmlFor={`date-input-${label}`} className={classes.label}>
+        {label}
+      </label>
       <input
+        id={`date-input-${label}`}
         type="date"
         className={classes.input}
         value={

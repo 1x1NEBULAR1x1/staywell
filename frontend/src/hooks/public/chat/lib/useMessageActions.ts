@@ -23,17 +23,17 @@ export const useMessageActions = (
   options: UseMessageActionsOptions,
 ): UseMessageActionsReturn => {
   const { socket, is_connected } = options;
-  const chatStore = useUserChatStore();
+  const store = useUserChatStore();
   const { user } = useAccount();
 
   // Create optimistic message for immediate UI update
   const createOptimisticMessage = useCallback(
-    (message: string, booking_id?: string): Message => {
+    (message: string, booking_id?: string): Message | undefined => {
       const tempId = `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
+      if (!user) return;
       return {
         id: tempId,
-        sender_id: user?.id,
+        sender_id: user.id,
         receiver_id: SUPPORT_CHAT_ID,
         message,
         booking_id: booking_id || null,
@@ -53,12 +53,14 @@ export const useMessageActions = (
       if (!socket || !is_connected || !user) return;
 
       // Create optimistic message and add to messages list
-      const optimisticMessage = createOptimisticMessage(message, booking_id);
-      chatStore.setMessages(
-        [...chatStore.messages, optimisticMessage].sort(
-          (a, b) =>
-            new Date(a.created).getTime() - new Date(b.created).getTime(),
-        ),
+      const optimistic_message = createOptimisticMessage(message, booking_id);
+      store.setMessages(
+        [...store.messages, optimistic_message]
+          .filter((e) => typeof e !== "undefined")
+          .sort(
+            (a, b) =>
+              new Date(a.created).getTime() - new Date(b.created).getTime(),
+          ),
       );
 
       // Send message to server
@@ -68,7 +70,7 @@ export const useMessageActions = (
         booking_id,
       });
     },
-    [socket, is_connected, user, chatStore, createOptimisticMessage],
+    [socket, is_connected, user, store, createOptimisticMessage],
   );
 
   const editMessage = useCallback(

@@ -12,13 +12,13 @@ import { PrismaService } from 'src/lib/prisma';
 export class ListService {
   constructor(private prisma: PrismaService) {}
 
-  customFilters(options: ApartmentAmenitiesFiltersDto) {
+  customFilters = (options: ApartmentAmenitiesFiltersDto) => {
     const { amenity_id, apartment_id } = options;
     const filters: Prisma.ApartmentAmenityWhereInput = {};
     if (amenity_id) filters.amenity_id = amenity_id;
     if (apartment_id) filters.apartment_id = apartment_id;
     return filters;
-  }
+  };
 
   /**
    * Find all Apartment Amenities based on filter criteria

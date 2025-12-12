@@ -29,8 +29,8 @@ export class PrismaService
    * @param valid_keys Array of valid property keys for type T
    * @returns Filtered object containing only valid properties
    */
-  private filterValidFields<T extends Record<string, any>>(
-    obj: Record<string, any>,
+  private filterValidFields<T extends Record<string, unknown>>(
+    obj: Record<string, unknown>,
     valid_keys: string[],
   ): Partial<T> {
     const result: Partial<T> = {};
@@ -42,7 +42,7 @@ export class PrismaService
         obj[key] !== null &&
         obj[key] !== ''
       ) {
-        result[key as keyof T] = obj[key];
+        result[key as keyof T] = obj[key] as T[keyof T];
       }
     }
 
@@ -166,7 +166,8 @@ export class PrismaService
       if ('search' in where) delete where.search;
     }
 
-    const [items, count] = await Promise.all([
+    const [items, count] = (await Promise.all([
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       model.findMany({
         skip,
         take,
@@ -174,11 +175,12 @@ export class PrismaService
         orderBy: order_by,
         include,
       }),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       model.count({ where }),
-    ]);
+    ])) as [T[], number];
 
     return {
-      items: items as T[],
+      items,
       total: count,
     };
   }
