@@ -2,7 +2,7 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/hooks/common";
-import classes from "./Form.module.scss";
+import classes from "../../Form.module.scss";
 
 export const Form = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -69,7 +69,7 @@ export const Form = () => {
     <div className={classes.form}>
       <div className={classes.form_group}>
         <label htmlFor="email" className={classes.form_input_label}>
-          Username
+          Email
         </label>
 
         <div className={classes.form_input_container}>
@@ -77,7 +77,7 @@ export const Form = () => {
             name="email"
             type="email"
             className={classes.form_input}
-            placeholder="Email"
+            placeholder="Enter email"
             onInput={(e) => setFormValue("email", e.currentTarget.value)}
           />
         </div>
@@ -100,7 +100,7 @@ export const Form = () => {
             name="password"
             type={showPassword ? "text" : "password"}
             className={classes.form_input}
-            placeholder="8+ characters"
+            placeholder="Enter password"
             onInput={(e) => setFormValue("password", e.currentTarget.value)}
           />
           {!showPassword ? (
@@ -124,17 +124,6 @@ export const Form = () => {
           ))}
       </div>
       <div className={classes.form_button_container}>
-        <p className={classes.form_terms}>
-          By signing up, you agree to our&nbsp;
-          <a href="/terms-conditions" className={classes.form_terms_link}>
-            Terms & Conditions
-          </a>
-          &nbsp;and&nbsp;
-          <a href="/privacy-policy" className={classes.form_terms_link}>
-            Privacy Policy
-          </a>
-          .
-        </p>
         <button
           type="submit"
           className={classes.form_button}

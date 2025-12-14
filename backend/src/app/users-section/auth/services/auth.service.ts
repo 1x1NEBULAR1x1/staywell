@@ -19,10 +19,10 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly crud: CrudService,
     private readonly sessions: SessionsService,
-  ) {}
+  ) { }
 
   async register(data: RegisterDto, ip_address: string, user_agent: string) {
-    const { email, password } = data;
+    const { email, password, first_name, last_name, phone_number } = data;
     // Check if user with this email exists
     if (await this.crud.findOne({ email }, true))
       throw new ConflictException('User with this email already exists');
@@ -30,7 +30,7 @@ export class AuthService {
     const hash = await argon2.hash(password);
     // Create new user
     const user = await this.prisma.user.create({
-      data: { ...data, password_hash: hash },
+      data: { email, password_hash: hash, first_name, last_name, phone_number },
     });
     // Create session for user in Redis
     const session_result = await this.sessions.create({

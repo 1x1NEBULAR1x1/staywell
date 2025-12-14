@@ -23,7 +23,6 @@
     font-family: var(--font-poppins);
     color: $foreground-main;
     width: 80%;
-    background-color: transparent;
     outline: none;
     border: none;
 
@@ -38,6 +37,7 @@
     &_container {
       border: $border-input;
       border-radius: $border-radius-sm;
+      background-color: $background-main;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -58,8 +58,18 @@
   &_button {
     width: 100%;
     background-color: $primary-main;
+    color: $foreground-white;
     border-radius: $border-radius-md;
     padding: $spacing-md $spacing-lg;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-light;
+    border: none;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: $primary-light;
+    }
 
     &_container {
       width: 100%;
@@ -70,9 +80,27 @@
   }
 
   &_terms {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-sm;
     font-size: $font-size-md;
     font-weight: $font-weight-light;
     color: $foreground-main;
+
+    &_checkbox {
+      width: $font-size-md;
+      height: $font-size-md;
+      color: $foreground-main;
+      cursor: pointer;
+      accent-color: $primary-main;
+      height: $font-size-lg;
+      width: $font-size-lg;
+      border-radius: $border-radius-sm;
+      border: $border-input;
+      padding: $spacing-xs;
+    }
 
     &_link {
       color: $primary-main;
@@ -87,10 +115,13 @@
     cursor: pointer;
   }
 
+  &_login_link,
   &_register_link {
-    font-size: $font-size-xl;
+    text-decoration: underline;
+    text-align: center;
+    font-size: $font-size-md;
     font-weight: $font-weight-light;
-    color: $primary-main;
+    color: $foreground-main;
     cursor: pointer;
   }
 }

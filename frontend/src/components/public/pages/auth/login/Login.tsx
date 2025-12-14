@@ -2,7 +2,7 @@ import Image from "next/image";
 import hero_image from "@/../public/pages/home/hero-image.jpg";
 import { Logo } from "@/components/common/Logo";
 import { Form } from "./components/Form";
-import classes from "./Login.module.scss";
+import classes from "../AuthPage.module.scss";
 
 export const Login = () => {
   return (

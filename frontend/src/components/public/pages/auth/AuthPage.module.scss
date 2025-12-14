@@ -3,20 +3,26 @@
 
 .page {
   width: 100%;
-  height: 100lvh;
-  scrollbar-width: none;
+  min-height: 100lvh;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: $spacing-lg;
+  align-items: flex-start;
+  justify-content: flex-start;
   background-color: $background-light;
+  overflow-x: hidden;
 }
 
 .image_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 50%;
-  height: 100%;
-  position: relative;
+  height: 100lvh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
 
 .image {
@@ -45,12 +51,14 @@
 
 .form_container {
   width: 50%;
-  height: 100%;
-  padding: $spacing-3xl $spacing-4xl;
+  min-height: 100lvh;
+  margin-left: 50%;
+  padding: $spacing-3xl $spacing-6xl;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .from_title {
@@ -61,14 +69,4 @@
   font-family: var(--font-poppins);
   color: $foreground-main;
   padding-bottom: $spacing-3xl;
-}
-
-.form_container {
-  width: 50%;
-  padding: $spacing-sm $spacing-6xl;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  outline: none;
 }

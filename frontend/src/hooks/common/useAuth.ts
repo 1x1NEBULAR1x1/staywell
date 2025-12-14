@@ -1,5 +1,5 @@
-import type { Login, Register } from "@shared/src";
-import { useMutation } from "@tanstack/react-query";
+import type { AuthResponse, Login, Register } from "@shared/src";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ export interface UseAuthReturn {
   login: (data: Login) => void;
   register: (data: Register) => void;
   logout: () => void;
+  register_mutation: UseMutationResult<AuthResponse, unknown, Register>;
   changePassword: (data: {
     current_password: string;
     new_password: string;
@@ -149,6 +150,7 @@ export const useAuth = (): UseAuthReturn => {
     login,
     register,
     logout,
+    register_mutation,
     changePassword: (data: {
       current_password: string;
       new_password: string;
