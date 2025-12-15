@@ -6,7 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AuthenticatedIoAdapter } from './lib/websocket/adapter';
 import { ConfigService } from '@nestjs/config';
-// import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -39,16 +39,15 @@ async function bootstrap(): Promise<void> {
   });
   app.setGlobalPrefix('api');
 
-  // Swagger documentation - TODO: Fix circular dependency in Prisma models
-  // const config = new DocumentBuilder()
-  //   .setTitle('StayWell API')
-  //   .setDescription('API for StayWell')
-  //   .setVersion('1.0')
-  //   .addBearerAuth()
-  //   .build();
+  const config = new DocumentBuilder()
+    .setTitle('StayWell API')
+    .setDescription('API for StayWell')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
 
-  // const document = SwaggerModule.createDocument(app, config);
-  // SwaggerModule.setup('api/docs', app, document);
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
 
   const port = process.env.PORT || 3001;
   await app.listen(port);
