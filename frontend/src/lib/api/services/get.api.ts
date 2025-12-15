@@ -10,9 +10,9 @@ import { api } from "@/lib/api/axios";
 import { getImageUrl } from "@/lib/api/utils/image-url";
 
 /**
- * Интерфейс для работы с моделью из API
- * @param M - имя модели из GETTABLE_NAMES
- * @returns экземпляр IGetApi
+ * Interface for working with model from API
+ * @param M - model name from GETTABLE_NAMES
+ * @returns IGetApi instance
  */
 export interface IGetApi<M extends GETTABLE_NAMES> {
   endpoint: `${string}/${GETTABLE_PATHS}`;
@@ -22,9 +22,9 @@ export interface IGetApi<M extends GETTABLE_NAMES> {
   find: (id: string) => Promise<AxiosResponse<GettableTypes<M>["model"]>>;
 }
 /**
- * Класс для работы с моделью из API
- * @param model - имя модели из GETTABLE_NAMES
- * @returns экземпляр GetApi
+ * Class for working with model from API
+ * @param model - model name from GETTABLE_NAMES
+ * @returns GetApi instance
  */
 export class GetApi<M extends GETTABLE_NAMES> implements IGetApi<M> {
   constructor(protected model: M) {}
@@ -59,9 +59,9 @@ export class GetApi<M extends GETTABLE_NAMES> implements IGetApi<M> {
   public endpoint: `${string}/${GETTABLE_PATHS}` =
     `${process.env.NEXT_PUBLIC_API_URL}/${GETTABLE_DATA[this.model]}`;
   /**
-   * Получает записи от API по фильтрам
-   * @param filters - фильтры для запроса
-   * @returns Promise с данными
+   * Gets records from API by filters
+   * @param filters - request filters
+   * @returns Promise with data
    */
   get = async (
     filters: GettableTypes<M>["filters"],
@@ -80,10 +80,10 @@ export class GetApi<M extends GETTABLE_NAMES> implements IGetApi<M> {
     };
   };
   /**
-   * Получает запись от API по id
-   * @param id - id записи
-   * @param headers - headers для запроса
-   * @returns Promise с данными
+   * Gets record from API by id
+   * @param id - record id
+   * @param headers - request headers
+   * @returns Promise with data
    */
   find = async (id: string, headers?: AxiosHeaders) => {
     const response = await api.get<GettableTypes<M>["model"]>(

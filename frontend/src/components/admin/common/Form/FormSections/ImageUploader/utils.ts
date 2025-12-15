@@ -5,7 +5,7 @@ import type {
   UseFormSetValue,
 } from "react-hook-form";
 
-// Проверка валидности URL изображения
+// Check image URL validity
 export const isValidImageUrl = (url: string): boolean => {
   try {
     const urlObj = new URL(url);
@@ -39,7 +39,7 @@ export const isValidImageUrl = (url: string): boolean => {
   }
 };
 
-// Генерация правил валидации
+// Generate validation rules
 export const getValidationRules = <T extends FieldValues>(
   acceptedTypes: string[],
   maxSizeInMB: number,
@@ -51,7 +51,7 @@ export const getValidationRules = <T extends FieldValues>(
         if (!files?.[0]) return true;
         const file = files[0];
         if (file.size > maxSizeInMB * 1024 * 1024) {
-          return `Размер файла не должен превышать ${maxSizeInMB} МБ`;
+          return `File size must not exceed ${maxSizeInMB} MB`;
         }
         return true;
       },
@@ -63,7 +63,7 @@ export const getValidationRules = <T extends FieldValues>(
           const typeNames = acceptedTypes
             .map((type) => type.split("/")[1].toUpperCase())
             .join(", ");
-          return `Разрешены только файлы ${typeNames}`;
+          return `Only ${typeNames} files are allowed`;
         }
         return true;
       },

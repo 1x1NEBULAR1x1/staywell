@@ -13,14 +13,14 @@ export class FilesService {
   }
 
   /**
-   * Создает директорию для загрузки файлов, если она не существует
+   * Creates upload directory if it doesn't exist
    */
   private ensureUploadDir() {
     if (!fs.existsSync(this.uploadPath)) {
       fs.mkdirSync(this.uploadPath, { recursive: true });
     }
 
-    // Создаем директории для разных типов файлов
+    // Create directories for different file types
     const modelDirectories = Object.values(ImagePaths);
     modelDirectories.forEach((dir) => {
       const modelDir = path.join(this.uploadPath, dir);
@@ -31,10 +31,10 @@ export class FilesService {
   }
 
   /**
-   * Сохраняет файл изображения для указанной модели
-   * @param file - загруженный файл
-   * @param dir_name - название модели
-   * @returns путь к сохраненному файлу
+   * Saves image file for specified model
+   * @param file - uploaded file
+   * @param dir_name - model name
+   * @returns path to saved file
    */
   saveImage({
     file,
@@ -43,35 +43,35 @@ export class FilesService {
     file: Express.Multer.File;
     dir_name: ImagePaths;
   }): string {
-    // Валидируем имя модели
+    // Validate model name
     if (!this.isValidImage(file))
       throw new Error(
-        'Недопустимый формат файла. Разрешены только JPEG, PNG и WebP',
+        'Invalid file format. Only JPEG, PNG and WebP are allowed',
       );
 
     if (!this.isValidSize(file, 5))
-      throw new Error('Размер файла не должен превышать 5 МБ');
+      throw new Error('File size must not exceed 5 MB');
 
     if (!ImagePaths[dir_name]) {
-      throw new Error(`Недопустимая directory: ${dir_name}`);
+      throw new Error(`Invalid directory: ${dir_name}`);
     }
-    // Очищаем имя файла от специальных символов и пробелов
+    // Clean filename from special characters and spaces
     const cleanOriginalName = file.originalname
-      .replace(/[^a-zA-Z0-9.-]/g, '_') // заменяем все специальные символы на подчеркивания
-      .replace(/_+/g, '_') // заменяем множественные подчеркивания на одинарные
-      .replace(/^_|_$/g, ''); // удаляем подчеркивания в начале и конце
+      .replace(/[^a-zA-Z0-9.-]/g, '_') // replace all special characters with underscores
+      .replace(/_+/g, '_') // replace multiple underscores with single
+      .replace(/^_|_$/g, ''); // remove underscores at the beginning and end
     const singularModel = dir_name.endsWith('s')
       ? dir_name.slice(0, -1)
       : dir_name;
     const fileName = `${singularModel}_${Date.now()}_${cleanOriginalName}`;
     const filePath = path.join(this.uploadPath, dir_name, fileName);
     fs.writeFileSync(filePath, file.buffer);
-    // Возвращаем относительный путь для хранения в БД
+    // Return relative path for storing in DB
     return `/static/${ImagePaths[dir_name]}/${fileName}`;
   }
   /**
-   * Удаляет файл изображения
-   * @param imagePath - путь к изображению
+   * Deletes image file
+   * @param imagePath - path to image
    */
   deleteImage(imagePath: string) {
     if (!imagePath || !imagePath.startsWith('/static/')) {
@@ -86,9 +86,9 @@ export class FilesService {
     }
   }
   /**
-   * Проверяет, является ли файл допустимым изображением
-   * @param file - проверяемый файл
-   * @returns true, если файл является изображением
+   * Checks if file is a valid image
+   * @param file - file to check
+   * @returns true if file is an image
    */
   isValidImage(file: Express.Multer.File): boolean {
     const allowedMimeTypes = [
@@ -100,10 +100,10 @@ export class FilesService {
     return allowedMimeTypes.includes(file.mimetype);
   }
   /**
-   * Проверяет размер файла
-   * @param file - проверяемый файл
-   * @param maxSizeInMB - максимальный размер в МБ
-   * @returns true, если размер файла допустим
+   * Checks file size
+   * @param file - file to check
+   * @param maxSizeInMB - maximum size in MB
+   * @returns true if file size is valid
    */
   isValidSize(file: Express.Multer.File, maxSizeInMB: number = 5): boolean {
     const maxSizeInBytes = maxSizeInMB * 1024 * 1024;

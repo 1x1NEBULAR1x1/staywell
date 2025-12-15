@@ -9,6 +9,8 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
+      "!**/*.test.ts",
+      "!**/*.test.tsx",
       "!node_modules",
       "!.next",
       "!dist",
@@ -49,6 +51,7 @@
       },
       "a11y": {
         "noRedundantAlt": "off",
+        "useAltText": "off",
         "useSemanticElements": "off",
         "useFocusableInteractive": "off"
       },

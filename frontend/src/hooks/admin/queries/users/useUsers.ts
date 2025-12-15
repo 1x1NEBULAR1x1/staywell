@@ -11,7 +11,7 @@ const invalidate_queries = (id?: string) => {
 };
 
 /**
- * Хук для работы с пользователями
+ * Hook for working with users
  */
 export const useUsers = () => {
   const api = new UsersApi();

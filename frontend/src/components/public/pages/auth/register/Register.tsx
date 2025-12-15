@@ -1,8 +1,8 @@
 import Image from "next/image";
 import hero_image from "@/../public/pages/home/hero-image.jpg";
 import { Logo } from "@/components/common/Logo";
-import { Form } from "./components/Form";
 import classes from "../AuthPage.module.scss";
+import { Form } from "./components/Form";
 
 export const Register = () => {
   return (

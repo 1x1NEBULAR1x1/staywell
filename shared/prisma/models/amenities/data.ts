@@ -3,7 +3,7 @@ import { Prisma } from '../../../src/database';
 
 const dir_name = `/static/${ImagePaths.AMENITIES}/`;
 
-// Для переиспользования в апартаментах, позволяет по именам удобно добавлять/удалять/изменять amenities
+// For reuse in apartments, allows to easily add/remove/modify amenities by names
 export const amenities_names = ['WiFi', 'Iron', 'Air conditioning', 'Hair dryer', 'Key card', 'Safe', 'Washing machine', 'Mini bar', 'Stove'] as const;
 export type AmenitiesNames = typeof amenities_names[number];
 

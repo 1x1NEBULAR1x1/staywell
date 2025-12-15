@@ -1,14 +1,14 @@
 import { GETTABLE_NAMES, GETTABLE_PATHS, CRUDDABLE_NAMES, CRUDDABLE_PATHS } from "./data";
 /**
- * Преобразует GETTABLE_PATHS в GETTABLE_NAMES
- * @param path - путь модели (например, "locales")
- * @returns ключ модели (например, "LOCALE") или null если не найден
+ * Converts GETTABLE_PATHS to GETTABLE_NAMES
+ * @param path - model path (e.g., "locales")
+ * @returns model key (e.g., "LOCALE") or null if not found
  */
 export declare function getGettableNameFromPath(path: GETTABLE_PATHS): GETTABLE_NAMES | null;
 /**
- * Проверяет, является ли строка валидным GETTABLE_PATHS
- * @param path - строка для проверки
- * @returns true если путь валиден
+ * Checks if string is valid GETTABLE_PATHS
+ * @param path - string to check
+ * @returns true if path is valid
  */
 export declare function isGettablePath(path: string): path is GETTABLE_PATHS;
 /**
@@ -24,14 +24,14 @@ export declare const isCruddableName: (value: string) => value is CRUDDABLE_NAME
  */
 export declare const isCruddablePath: (value: string) => value is CRUDDABLE_PATHS;
 /**
- * Получает имя модели для связанного поля
- * @param field_name - имя поля
- * @returns имя модели или null если не найден
+ * Gets model name for related field
+ * @param field_name - field name
+ * @returns model name or null if not found
  */
 export declare const getRelationModelName: (field_name: string) => GETTABLE_NAMES | null;
 /**
- * Получает главное поле для связанной модели
- * @param item - объект модели
+ * Gets main field for related model
+ * @param item - model object
  * @returns label
  */
 export declare const getRelationModelLabel: (item: object) => string;

@@ -6,9 +6,9 @@ import type { ReactNode } from "react";
 import { query_client } from "@/lib/api";
 
 /**
- * Компонент для обертывания приложения необходимыми провайдерами
- * @param children - Дочерние компоненты
- * @returns Обернутые провайдерами компоненты
+ * Component for wrapping application with necessary providers
+ * @param children - Child components
+ * @returns Components wrapped with providers
  */
 export function Providers({ children }: { children: ReactNode }) {
   return (

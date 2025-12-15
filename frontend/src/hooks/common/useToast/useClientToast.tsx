@@ -5,8 +5,8 @@ import type { ToastType } from "@/components/common/providers/ToastProvider/Toas
 import { useToast } from "./useToast";
 
 /**
- * Хук для безопасного использования тостов в клиентских компонентах
- * Предотвращает проблемы с гидрацией в Next.js
+ * Hook for safe usage of toasts in client components
+ * Prevents hydration issues in Next.js
  */
 export const useClientToast = () => {
   const toast = useToast();
@@ -17,7 +17,7 @@ export const useClientToast = () => {
     return () => setIsMounted(false);
   }, []);
 
-  // Создаем безопасные обертки над методами тоста
+  // Create safe wrappers over toast methods
   const safeShowToast = (
     message: string,
     type: ToastType,

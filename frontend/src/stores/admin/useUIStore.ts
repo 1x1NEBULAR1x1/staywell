@@ -2,27 +2,27 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface UIState {
-  // Состояния сайдбаров
+  // Sidebar states
   isMainSidebarCollapsed: boolean;
   isSecondarySidebarCollapsed: boolean;
 
-  // Методы для управления состояниями
+  // Methods for state management
   toggleMainSidebar: () => void;
   toggleSecondarySidebar: () => void;
   setMainSidebarCollapsed: (isCollapsed: boolean) => void;
   setSecondarySidebarCollapsed: (isCollapsed: boolean) => void;
 }
 /**
- * Store для управления UI состояниями с персистентностью в localStorage
+ * Store for managing UI states with localStorage persistence
  */
 export const useUIStore = create<UIState>()(
   persist(
     (set) => ({
-      // Начальные состояния
+      // Initial states
       isMainSidebarCollapsed: false,
       isSecondarySidebarCollapsed: false,
 
-      // Методы для изменения состояния
+      // Methods for state modification
       toggleMainSidebar: () =>
         set((state) => ({
           isMainSidebarCollapsed: !state.isMainSidebarCollapsed,
@@ -40,9 +40,9 @@ export const useUIStore = create<UIState>()(
         set({ isSecondarySidebarCollapsed: isCollapsed }),
     }),
     {
-      name: "ui-storage", // имя для хранения в localStorage
+      name: "ui-storage", // name for localStorage storage
       partialize: (state) => ({
-        // Сохраняем только эти свойства в localStorage
+        // Save only these properties in localStorage
         isMainSidebarCollapsed: state.isMainSidebarCollapsed,
         isSecondarySidebarCollapsed: state.isSecondarySidebarCollapsed,
       }),

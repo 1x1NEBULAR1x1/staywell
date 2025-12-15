@@ -12,10 +12,7 @@ export const ApartmentCard = ({
   apartment,
   isLarge = false,
 }: ApartmentCardProps) => {
-  const imageUrl =
-    apartment.images?.[0]?.image ||
-    apartment.image ||
-    "/placeholder-apartment.jpg";
+  const imageUrl = apartment.image || getTypeImage(apartment.type);
   const price =
     apartment.booking_variants?.[0]?.price ||
     apartment.cheapest_variant?.price ||

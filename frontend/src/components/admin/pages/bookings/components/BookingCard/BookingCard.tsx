@@ -22,7 +22,7 @@ export const BookingCard = ({ booking }: { booking: ExtendedBooking }) => {
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // Логика редактирования
+    // Edit logic
   };
 
   return (

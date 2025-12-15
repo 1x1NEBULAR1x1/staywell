@@ -5,9 +5,9 @@ import {
 } from "../types";
 
 /**
- * Преобразует GETTABLE_PATHS в GETTABLE_NAMES
- * @param path - путь модели (например, "locales")
- * @returns ключ модели (например, "LOCALE") или null если не найден
+ * Converts GETTABLE_PATHS to GETTABLE_NAMES
+ * @param path - model path (e.g., "locales")
+ * @returns model key (e.g., "LOCALE") or null if not found
  */
 export function getGettableNameFromPath(path: GETTABLE_PATHS): GETTABLE_NAMES | null {
   const entry = Object.entries(GETTABLE_DATA).find(([_, value]) => value === path);
@@ -16,9 +16,9 @@ export function getGettableNameFromPath(path: GETTABLE_PATHS): GETTABLE_NAMES | 
 }
 
 /**
- * Проверяет, является ли строка валидным GETTABLE_PATHS
- * @param path - строка для проверки
- * @returns true если путь валиден
+ * Checks if string is valid GETTABLE_PATHS
+ * @param path - string to check
+ * @returns true if path is valid
  */
 export function isGettablePath(path: string): path is GETTABLE_PATHS {
   return Object.values(GETTABLE_DATA).includes(path as GETTABLE_PATHS);
@@ -47,9 +47,9 @@ export const isCruddablePath = (value: string): value is CRUDDABLE_PATHS => {
 
 
 /**
- * Получает имя модели для связанного поля
- * @param field_name - имя поля
- * @returns имя модели или null если не найден
+ * Gets model name for related field
+ * @param field_name - field name
+ * @returns model name or null if not found
  */
 export const getRelationModelName = (field_name: string): GETTABLE_NAMES | null => {
   switch (field_name) {
@@ -58,8 +58,8 @@ export const getRelationModelName = (field_name: string): GETTABLE_NAMES | null 
 };
 
 /**
- * Получает главное поле для связанной модели
- * @param item - объект модели
+ * Gets main field for related model
+ * @param item - model object
  * @returns label
  */
 export const getRelationModelLabel = (item: object): string => {
@@ -85,9 +85,9 @@ export const getRelationModelLabel = (item: object): string => {
 
 
 // /** TODO: uncomment before completion
-//  * Получает опции для сортировки по полям модели
-//  * @param model - имя модели
-//  * @returns опции для сортировки
+//  * Gets options for sorting by model fields
+//  * @param model - model name
+//  * @returns sorting options
 //  */
 // export const getSortFieldOptions = (model: GETTABLE_NAMES) => {
 //   return getModelFields(model).concat([{ value: '', label: 'any' }]);

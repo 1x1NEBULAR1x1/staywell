@@ -30,8 +30,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   handleRequest<T = AuthenticatedUser>(err: Error | null, user: T | false): T {
     if (err || !user)
       throw (
-        err ||
-        new UnauthorizedException('Доступ запрещен. Пожалуйста, авторизуйтесь.')
+        err || new UnauthorizedException('Access denied. Please authenticate.')
       );
     return user;
   }

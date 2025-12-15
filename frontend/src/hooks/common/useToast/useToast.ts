@@ -2,56 +2,56 @@ import { useContext } from "react";
 import type { ToastType } from "@/components/common/providers/ToastProvider/Toast/Toast";
 import { ToastContext } from "@/components/common/providers/ToastProvider/ToastContext";
 
-// Хук для удобного использования функций уведомлений
+// Hook for convenient usage of notification functions
 export const useToast = () => {
   const context = useContext(ToastContext);
 
   if (!context) {
-    throw new Error("useToast должен использоваться внутри ToastProvider");
+    throw new Error("useToast must be used inside ToastProvider");
   }
 
   return {
     /**
-     * Показать уведомление
-     * @param message - текст сообщения
-     * @param type - тип уведомления (success, error, warning, info)
-     * @param duration - длительность показа в миллисекундах (по умолчанию 3000)
+     * Show notification
+     * @param message - message text
+     * @param type - notification type (success, error, warning, info)
+     * @param duration - display duration in milliseconds (default 3000)
      */
     showToast: (message: string, type: ToastType, duration?: number) => {
       context.showToast(message, type, duration);
     },
 
     /**
-     * Показать уведомление об успехе
-     * @param message - текст сообщения
-     * @param duration - длительность показа в миллисекундах
+     * Show success notification
+     * @param message - message text
+     * @param duration - display duration in milliseconds
      */
     success: (message: string, duration?: number) => {
       context.success(message, duration);
     },
 
     /**
-     * Показать уведомление об ошибке
-     * @param message - текст сообщения
-     * @param duration - длительность показа в миллисекундах
+     * Show error notification
+     * @param message - message text
+     * @param duration - display duration in milliseconds
      */
     error: (message: string, duration?: number) => {
       context.error(message, duration);
     },
 
     /**
-     * Показать предупреждение
-     * @param message - текст сообщения
-     * @param duration - длительность показа в миллисекундах
+     * Show warning
+     * @param message - message text
+     * @param duration - display duration in milliseconds
      */
     warning: (message: string, duration?: number) => {
       context.warning(message, duration);
     },
 
     /**
-     * Показать информационное уведомление
-     * @param message - текст сообщения
-     * @param duration - длительность показа в миллисекундах
+     * Show info notification
+     * @param message - message text
+     * @param duration - display duration in milliseconds
      */
     info: (message: string, duration?: number) => {
       context.info(message, duration);

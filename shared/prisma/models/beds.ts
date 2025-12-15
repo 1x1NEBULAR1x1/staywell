@@ -3,7 +3,7 @@ import { ImagePaths } from '../../src/common/image-paths.enum';
 
 const dir_name = `/static/${ImagePaths.BED_TYPES}/`
 
-// Для переиспользования в апартаментах, позволяет по именам удобно добавлять/удалять/изменять beds
+// For reuse in apartments, allows to easily add/remove/modify beds by names
 export const bed_types_names = ['Single bed', 'Double bed', 'Couch bed'] as const;
 export type BedTypesNames = typeof bed_types_names[number];
 

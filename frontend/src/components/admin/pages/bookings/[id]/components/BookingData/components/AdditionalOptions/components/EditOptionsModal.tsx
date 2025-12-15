@@ -30,7 +30,7 @@ export const EditOptionsModal = ({
 }: EditOptionsModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  // Получаем все доступные опции
+  // Get all available options
   const { data: allOptions } = useModel("ADDITIONAL_OPTION").get({
     skip: 0,
     take: 1000,
@@ -57,7 +57,7 @@ export const EditOptionsModal = ({
     setIsLoading(true);
 
     try {
-      // Удаляем существующие опции
+      // Delete existing options
       for (const currentOption of current_options) {
         await fetch(`/api/booking-additional-options/${currentOption.id}`, {
           method: "DELETE",
@@ -65,7 +65,7 @@ export const EditOptionsModal = ({
         });
       }
 
-      // Добавляем новые опции
+      // Add new options
       for (const option of data.options) {
         if (option.additional_option_id && option.amount > 0) {
           await fetch("/api/booking-additional-options", {

@@ -56,7 +56,7 @@ export const useWebSocketConnection = (
       setTimeout(() => connectRef.current?.().catch(console.error), 1000);
     } catch (error) {
       console.error("Failed to refresh token:", error);
-      toast.error("Сессия истекла. Пожалуйста, войдите снова.");
+      toast.error("Session expired. Please login again.");
     } finally {
       isRefreshingTokenRef.current = false;
     }
@@ -125,7 +125,7 @@ export const useWebSocketConnection = (
       ) {
         refreshTokenAndReconnect();
       } else {
-        toast.error("Ошибка подключения к чату");
+        toast.error("Chat connection error");
       }
 
       onConnectError?.(error);
@@ -137,7 +137,7 @@ export const useWebSocketConnection = (
     });
 
     socket.on("error", (error) => {
-      toast.error(error.message || "Ошибка чата");
+      toast.error(error.message || "Chat error");
       onError?.(error);
     });
 

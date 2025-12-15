@@ -41,18 +41,18 @@ export const useBookingDates = ({ apartment_id }: { apartment_id: string }) => {
     [occupied_dates],
   );
 
-  // Проверка, является ли дата доступной для выбора
+  // Check if date is available for selection
   const isDateAvailable = useCallback(
     (date: Date): boolean => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      // Дата должна быть в будущем и не занята
+      // Date must be in future and not occupied
       return date >= today && !isDateOccupied(date);
     },
     [isDateOccupied],
   );
 
-  // Переход к следующему/предыдущему месяцу
+  // Navigate to next/previous month
   const navigateMonth = useCallback((direction: "prev" | "next") => {
     setCurrentMonth((prev) => {
       const newMonth = new Date(prev);

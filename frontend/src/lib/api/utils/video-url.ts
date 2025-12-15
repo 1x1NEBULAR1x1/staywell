@@ -1,18 +1,18 @@
 export const getVideoUrl = (url: string): string => {
   if (url.includes("youtube") || url.includes("youtu.be")) {
-    // Если уже embed ссылка, возвращаем как есть
+    // If already embed link, return as is
     if (url.includes("/embed/")) {
       return url;
     }
 
-    // Извлекаем ID видео из различных форматов YouTube ссылок
+    // Extract video ID from various YouTube link formats
     let videoId = "";
 
-    // Формат youtu.be/ID
+    // Format youtu.be/ID
     if (url.includes("youtu.be/")) {
       videoId = url.split("youtu.be/")[1]?.split("?")[0] || "";
     }
-    // Формат youtube.com/watch?v=ID
+    // Format youtube.com/watch?v=ID
     else if (url.includes("youtube.com/watch?v=")) {
       videoId = url.split("v=")[1]?.split("&")[0] || "";
     }

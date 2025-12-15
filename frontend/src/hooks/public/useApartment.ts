@@ -4,10 +4,10 @@ import { GetApi } from "@/lib/api";
 const apartmentsApi = new GetApi("APARTMENT");
 
 /**
- * Хук для получения одной квартиры по ID
- * @param id - ID квартиры
- * @param options - опции запроса
- * @returns Данные квартиры
+ * Hook for getting one apartment by ID
+ * @param id - Apartment ID
+ * @param options - query options
+ * @returns Apartment data
  */
 export const useApartment = (
   id: string,

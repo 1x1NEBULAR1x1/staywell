@@ -35,7 +35,7 @@ export const useImageUploader = <T extends FieldValues>({
     : "file";
   const image_url = watch(image_url_field_name);
 
-  // Обработка изменения файла
+  // Handle file change
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -52,7 +52,7 @@ export const useImageUploader = <T extends FieldValues>({
     }
   };
 
-  // Обработка изменения URL
+  // Handle URL change
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
     set_value_wrapper.setStringValue(image_url_field_name, url, {
@@ -66,7 +66,7 @@ export const useImageUploader = <T extends FieldValues>({
     }
   };
 
-  // Обработка удаления изображения
+  // Handle image removal
   const handleRemoveImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -79,14 +79,14 @@ export const useImageUploader = <T extends FieldValues>({
     });
     setPreviewImage(null);
 
-    // Очищаем файловый инпут с type guard
+    // Clear file input with type guard
     const fileInput = document.querySelector(`input[type="file"]`);
     if (fileInput instanceof HTMLInputElement) {
       fileInput.value = "";
     }
   };
 
-  // Переключение типа изображения
+  // Toggle image type
   const handleTypeChange = (type: "file" | "url") => {
     set_value_wrapper.setImageTypeValue(image_type_field_name, type, {
       shouldValidate: false,
@@ -100,7 +100,7 @@ export const useImageUploader = <T extends FieldValues>({
     setPreviewImage(null);
   };
 
-  // Следим за изменениями URL для предпросмотра
+  // Watch URL changes for preview
   useEffect(() => {
     const typeString = String(image_type);
     if (typeString === "url" && image_url) {

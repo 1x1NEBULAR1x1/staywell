@@ -3,8 +3,8 @@ import { UserWithoutPassword } from '@shared/src';
 import { AuthenticatedRequest } from '@shared/src/types/users-section';
 
 /**
- * Декоратор для получения данных текущего пользователя из запроса
- * Использует типизацию для корректного возврата значения в зависимости от параметра
+ * Decorator to get current user data from request
+ * Uses typing for correct return value depending on parameter
  */
 export const Auth = createParamDecorator(
   (

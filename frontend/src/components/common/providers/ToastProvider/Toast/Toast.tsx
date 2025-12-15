@@ -14,25 +14,25 @@ export interface ToastProps {
 
 /**
  * Toast component
- * @param message - сообщение для отображения
- * @param type - тип уведомления
- * @param duration - длительность уведомления
- * @param onClose - функция для вызова при закрытии уведомления
+ * @param message - message to display
+ * @param type - notification type
+ * @param duration - notification duration
+ * @param onClose - function to call when closing notification
  */
 const Toast: FC<ToastProps> = ({ message, type, duration = 3000, onClose }) => {
   const [is_visible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Запускаем анимацию появления
+    // Start appear animation
     const show_timer = setTimeout(() => {
       setIsVisible(true);
     }, 10);
 
-    // Запускаем таймер для автоматического закрытия
+    // Start timer for auto-close
     const timer = setTimeout(() => {
       setIsVisible(false);
 
-      // Даем время на анимацию скрытия перед удалением из DOM
+      // Give time for hide animation before removing from DOM
       setTimeout(() => {
         onClose();
       }, 300);

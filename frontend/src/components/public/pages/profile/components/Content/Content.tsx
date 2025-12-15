@@ -14,7 +14,7 @@ import {
 export const Content = () => {
   const pathname = usePathname();
 
-  // Извлекаем активную вкладку из пути
+  // Extract active tab from path
   const active_tab =
     pathname === "/profile" ? "" : pathname.replace("/profile/", "");
 

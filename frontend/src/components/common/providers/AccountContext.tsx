@@ -26,31 +26,31 @@ export interface AccountContextType {
 }
 
 /**
- * Контекст для данных пользователя
+ * Context for user data
  */
 const AccountContext = createContext<AccountContextType | undefined>(undefined);
 
 /**
- * Хук для использования контекста пользователя
+ * Hook for using user context
  */
 export const useAccount = (): AccountContextType => {
   const context = useContext(AccountContext);
   if (!context) {
-    throw new Error("useAccount должен использоваться внутри AccountProvider");
+    throw new Error("useAccount must be used inside AccountProvider");
   }
 
   return context;
 };
 
 /**
- * Проверка, нужно ли отключить запросы на текущей странице
+ * Check if queries should be disabled on current page
  */
 const shouldDisableQueries = (pathname: string): boolean => {
   return pathname.includes("/auth");
 };
 
 /**
- * Провайдер контекста пользователя
+ * User context provider
  */
 export const AccountProvider = ({
   children,
@@ -89,7 +89,7 @@ export const AccountProvider = ({
   const is_authenticated = !should_disable_auth && !!data;
 
   /**
-   * Обновление данных пользователя
+   * Update user data
    */
   const updateUser = (data: Partial<User>) => {
     if (user) {
@@ -100,7 +100,7 @@ export const AccountProvider = ({
   };
 
   /**
-   * Очистка данных пользователя
+   * Clear user data
    */
   const clearUser = () => {
     setUser(null);

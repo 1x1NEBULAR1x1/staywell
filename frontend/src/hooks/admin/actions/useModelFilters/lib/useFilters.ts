@@ -74,7 +74,7 @@ export function useFilters<
   permanent_fields,
   //debounce_settings = { fields: [], delay: 1000 },
 }: UseFiltersOptions<B>): UseFiltersReturn<B> {
-  // Мемоизируем permanent_fields чтобы избежать бесконечного рендеринга
+  // Memoize permanent_fields to avoid infinite rendering
   const memoized_permanent_fields = useMemo(
     () => permanent_fields || {},
     [permanent_fields],

@@ -23,9 +23,7 @@ export class CrudService {
     private readonly notificationsService: NotificationsService,
     private readonly bookingVariantsService: BookingVariantsService,
   ) {}
-
   notification_type = NotificationType.BOOKING;
-
   /**
    * Finds a booking by ID
    * @param id Booking ID
@@ -74,20 +72,17 @@ export class CrudService {
         where: { id: data.booking_variant_id },
       }),
     ]);
-
     const booking = await this.prisma.booking.update({
       where: { id },
       data,
       include: EXTENDED_BOOKING_INCLUDE,
     });
-
     // Determine notification action
     let action: NotificationAction = NotificationAction.UPDATE;
     if (data.status === BookingStatus.CONFIRMED)
       action = NotificationAction.CONFIRM;
     if (data.status === BookingStatus.COMPLETED)
       action = NotificationAction.COMPLETE;
-
     // Create notification
     await this.notificationsService.create({
       data: {
@@ -97,7 +92,6 @@ export class CrudService {
         user_id: booking.user_id,
       },
     });
-
     return booking;
   }
 }

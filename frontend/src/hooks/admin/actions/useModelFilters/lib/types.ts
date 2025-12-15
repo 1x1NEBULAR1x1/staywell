@@ -11,7 +11,7 @@ type IsDebounceableField<FieldName extends string> =
       ? false
       : true;
 
-// Извлекаем только строковые поля из TypeScript типов фильтров
+// Extract only string fields from TypeScript filter types
 type ExtractStringFilterKeys<T> = T extends Record<string, unknown>
   ? {
       [K in keyof T]: K extends string
@@ -25,14 +25,14 @@ type ExtractStringFilterKeys<T> = T extends Record<string, unknown>
   : never;
 
 /**
- * Автоматически сгенерированные поля для debounce функциональности
- * На основе типов фильтров из GettableTypes
- * Включает только строковые поля из всех типов фильтров, исключая:
- * - ID поля (заканчивающиеся на _id)
- * - Базовые поля фильтрации (skip, take, sort, etc.)
- * - Enum поля (union строковых литералов)
+ * Automatically generated fields for debounce functionality
+ * Based on filter types from GettableTypes
+ * Includes only string fields from all filter types, excluding:
+ * - ID fields (ending with _id)
+ * - Base filtering fields (skip, take, sort, etc.)
+ * - Enum fields (union of string literals)
  *
- * Тип автоматически анализирует TypeScript типы и извлекает только поля типа string | undefined
+ * Type automatically analyzes TypeScript types and extracts only string | undefined fields
  */
 export type DebounceableField<M extends GETTABLE_NAMES> =
   ExtractStringFilterKeys<GettableTypes<M>["filters"]>;

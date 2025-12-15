@@ -1,16 +1,16 @@
-// Функция для формирования URL с параметрами запроса
+// Function for formatting URL with query parameters
 export const formatQueryPath = (basePath: string, param: unknown): string => {
   if (!param) return basePath;
 
-  // Если параметр - объект, преобразуем его в строку запроса
+  // If parameter is object, convert it to query string
   if (typeof param === "object") {
     const queryParams = Object.entries(param)
       .filter(([key, value]) => {
-        // Для skip и take всегда включаем в запрос, если они числа (включая 0)
+        // For skip and take always include in query if they are numbers (including 0)
         if (key === "skip" || key === "take") {
           return typeof value === "number";
         }
-        // Для остальных параметров фильтруем пустые значения
+        // For other parameters filter empty values
         return value !== undefined && value !== "";
       })
       .map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`)
@@ -19,6 +19,6 @@ export const formatQueryPath = (basePath: string, param: unknown): string => {
     return queryParams ? `${basePath}?${queryParams}` : basePath;
   }
 
-  // Если параметр - строка или число, добавляем как id
+  // If parameter is string or number, add as id
   return `${basePath}/${encodeURIComponent(String(param))}`;
 };

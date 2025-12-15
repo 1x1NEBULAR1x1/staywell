@@ -29,7 +29,7 @@ export function ToEnum<
   } = options;
 
   return function (target: object, propertyKey: string | symbol) {
-    // Преобразуем enum в массив строковых значений для Swagger
+    // Convert enum to array of string values for Swagger
     const enumValues = Object.values(enum_value);
 
     ApiProperty({

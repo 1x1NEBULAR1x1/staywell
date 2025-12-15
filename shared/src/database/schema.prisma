@@ -83,11 +83,11 @@ model Message {
   is_read     Boolean @default(false)
   booking_id  String?
 
-  // Для редактирования сообщений
+  // For message editing
   edited     DateTime?
-  replace_to String? // ID заменяющего сообщения
+  replace_to String? // ID of replacing message
 
-  // Для мягкого удаления
+  // For soft delete
   is_excluded Boolean @default(false)
 
   created DateTime @default(now())
@@ -96,7 +96,7 @@ model Message {
   sender  User     @relation("sent_messages", fields: [sender_id], references: [id])
   booking Booking? @relation(fields: [booking_id], references: [id])
 
-  // Самореференция для цепочки замен
+  // Self-reference for replacement chain
   replaces    Message?  @relation("message_replacements", fields: [replace_to], references: [id])
   replaced_by Message[] @relation("message_replacements")
 

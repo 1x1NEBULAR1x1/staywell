@@ -17,7 +17,7 @@ export class UpdateUserDto implements UpdateUser {
   @ToString({
     required: false,
     description: 'First name',
-    example: 'Иван',
+    example: 'John',
     min: 1,
     max: 255,
   })
@@ -26,7 +26,7 @@ export class UpdateUserDto implements UpdateUser {
   @ToString({
     required: false,
     description: 'Last name',
-    example: 'Иванов',
+    example: 'Doe',
     min: 1,
     max: 255,
   })

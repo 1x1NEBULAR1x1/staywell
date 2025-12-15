@@ -14,7 +14,7 @@ const DEFAULT_FILTERS: SessionsFilters = {
 };
 
 /**
- * Хук для управления фильтрами сессий с дебонсом
+ * Hook for managing session filters with debounce
  */
 export const useSessionsFilters = (
   options?: Partial<UseFiltersOptions<SessionsFilters>>,

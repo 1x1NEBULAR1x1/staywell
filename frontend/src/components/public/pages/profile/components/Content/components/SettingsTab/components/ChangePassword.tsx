@@ -38,10 +38,10 @@ export const ChangePassword = () => {
         new_password: data.new_password,
       });
 
-      toast.success("Пароль успешно изменён");
+      toast.success("Password successfully changed");
       form.reset();
     } catch (error) {
-      // Ошибка уже обрабатывается в useAuth
+      // Error is already handled in useAuth
       console.error("Failed to change password:", error);
     }
   };
@@ -56,24 +56,24 @@ export const ChangePassword = () => {
   return (
     <div className={classes.change_password}>
       <div className={classes.section_header}>
-        <h3>Смена пароля</h3>
-        <p>Обновите пароль для защиты вашего аккаунта</p>
+        <h3>Change Password</h3>
+        <p>Update your password to protect your account</p>
       </div>
 
       <form onSubmit={form.handleSubmit(handleSubmit)} className={classes.form}>
         <div className={classes.password_fields}>
           <div className={classes.password_field}>
             <InputField
-              label="Текущий пароль"
+              label="Current Password"
               name="current_password"
               type={showPasswords.current ? "text" : "password"}
               register={form.register}
               errors={form.formState.errors}
               rules={{
-                required: "Текущий пароль обязателен",
+                required: "Current password is required",
                 minLength: {
                   value: 6,
-                  message: "Пароль должен содержать минимум 6 символов",
+                  message: "Password must contain at least 6 characters",
                 },
               }}
             />
@@ -88,22 +88,22 @@ export const ChangePassword = () => {
 
           <div className={classes.password_field}>
             <InputField
-              label="Новый пароль"
+              label="New Password"
               name="new_password"
               type={showPasswords.new ? "text" : "password"}
               register={form.register}
               errors={form.formState.errors}
               rules={{
-                required: "Новый пароль обязателен",
+                required: "New password is required",
                 minLength: {
                   value: 6,
-                  message: "Пароль должен содержать минимум 6 символов",
+                  message: "Password must contain at least 6 characters",
                 },
                 validate: {
                   not_same_as_current: (value) => {
                     const currentPassword = form.getValues("current_password");
                     if (currentPassword && value === currentPassword) {
-                      return "Новый пароль должен отличаться от текущего";
+                      return "New password must be different from current";
                     }
                     return true;
                   },
@@ -121,18 +121,18 @@ export const ChangePassword = () => {
 
           <div className={classes.password_field}>
             <InputField
-              label="Подтверждение пароля"
+              label="Confirm Password"
               name="confirm_password"
               type={showPasswords.confirm ? "text" : "password"}
               register={form.register}
               errors={form.formState.errors}
               rules={{
-                required: "Подтверждение пароля обязательно",
+                required: "Password confirmation is required",
                 validate: {
                   matches: (value) => {
                     const newPassword = form.getValues("new_password");
                     if (value !== newPassword) {
-                      return "Пароли не совпадают";
+                      return "Passwords do not match";
                     }
                     return true;
                   },

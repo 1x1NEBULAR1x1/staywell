@@ -15,20 +15,20 @@ interface RoleGuardProps {
 }
 
 /**
- * Проверка, является ли текущая страница страницей аутентификации
+ * Check if current page is authentication page
  */
 const isAuthPage = (pathname: string): boolean => {
-  // Проверяем, содержит ли путь /auth
+  // Check if path contains /auth
   return pathname.includes("/auth");
 };
 
 /**
- * Компонент для проверки ролей пользователя
- * @param children - Дочерние компоненты, которые показываются при наличии доступа
- * @param required_role - Требуемая роль или массив ролей
- * @param redirect_to - Путь для редиректа при отсутствии доступа
- * @param fallback - Компонент для отображения при отсутствии доступа (вместо редиректа)
- * @param require_auth - Требуется ли авторизация (по умолчанию true)
+ * Component for checking user roles
+ * @param children - Child components shown when access is granted
+ * @param required_role - Required role or array of roles
+ * @param redirect_to - Path to redirect when access is denied
+ * @param fallback - Component to display when access is denied (instead of redirect)
+ * @param require_auth - Whether authentication is required (default true)
  */
 export const RoleGuard = ({
   children,
@@ -41,22 +41,22 @@ export const RoleGuard = ({
   const router = useRouter();
   const pathname = usePathname();
 
-  // Если мы на странице аутентификации, просто рендерим детей без проверок
+  // If on auth page, just render children without checks
   const isOnAuthPage = isAuthPage(pathname);
 
   useEffect(() => {
-    // Пропускаем проверки на страницах аутентификации
+    // Skip checks on auth pages
     if (isOnAuthPage) return;
-    // Ждем полного завершения загрузки данных пользователя
+    // Wait for user data loading to complete
     if (is_loading) return;
 
-    // Проверяем авторизацию
+    // Check authentication
     if (require_auth && !is_authenticated) {
       if (fallback) return;
       return router.push(redirect_to);
     }
 
-    // Проверяем роль, если она указана
+    // Check role if specified
     if (required_roles && user) {
       if (!required_roles.includes(user.role)) {
         if (fallback) return;
@@ -75,10 +75,10 @@ export const RoleGuard = ({
     isOnAuthPage,
   ]);
 
-  // На страницах аутентификации всегда рендерим детей
+  // Always render children on auth pages
   if (isOnAuthPage) return <>{children}</>;
 
-  // Показываем индикатор загрузки
+  // Show loading indicator
   if (is_loading) {
     return (
       <div className={classes.loading_container}>
@@ -87,25 +87,25 @@ export const RoleGuard = ({
     );
   }
 
-  // Проверяем авторизацию
+  // Check authentication
   if (require_auth && !is_authenticated) return fallback;
 
-  // Проверяем роль, если она указана
+  // Check role if specified
   if (required_roles && user) {
     if (!required_roles.includes(user.role)) return fallback;
   }
 
-  // Проверяем, не заблокирован ли пользователь
+  // Check if user is blocked
   if (!user?.is_active) {
     return (
       fallback || (
         <div className={classes.banned_container}>
           <div className={classes.banned_container_content}>
             <h1 className={classes.banned_container_content_title}>
-              Аккаунт заблокирован
+              Account Blocked
             </h1>
             <p className={classes.banned_container_content_description}>
-              Ваш аккаунт был заблокирован администратором.
+              Your account has been blocked by administrator.
             </p>
           </div>
         </div>

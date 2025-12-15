@@ -4,9 +4,9 @@ import { api, createFormData } from "@/lib/api/axios";
 import { GetApi, type IGetApi } from "./get.api";
 
 /**
- * Интерфейс для работы с моделью из API
- * @param M - имя модели из CRUDDABLE_NAMES
- * @returns экземпляр ICrudApi
+ * Interface for working with model from API
+ * @param M - model name from CRUDDABLE_NAMES
+ * @returns ICrudApi instance
  */
 export interface ICrudApi<M extends CRUDDABLE_NAMES> extends IGetApi<M> {
   create: (
@@ -19,9 +19,9 @@ export interface ICrudApi<M extends CRUDDABLE_NAMES> extends IGetApi<M> {
   delete: (id: string) => Promise<AxiosResponse<CruddableTypes<M>["model"]>>;
 }
 /**
- * Класс для работы с моделью из API
- * @param model - имя модели из CRUDDABLE_NAMES
- * @returns экземпляр CrudApi
+ * Class for working with model from API
+ * @param model - model name from CRUDDABLE_NAMES
+ * @returns CrudApi instance
  */
 export class CrudApi<M extends CRUDDABLE_NAMES>
   extends GetApi<M>
@@ -31,9 +31,9 @@ export class CrudApi<M extends CRUDDABLE_NAMES>
     super(model);
   }
   /**
-   * Создает запись в API
-   * @param data - данные для создания
-   * @returns Promise с данными
+   * Creates record in API
+   * @param data - data for creation
+   * @returns Promise with data
    */
   create = (data: CruddableTypes<M>["create"]) =>
     api.post<CruddableTypes<M>["model"]>(
@@ -42,10 +42,10 @@ export class CrudApi<M extends CRUDDABLE_NAMES>
     );
 
   /**
-   * Обновляет запись в API
-   * @param id - id записи
-   * @param data - данные для обновления
-   * @returns Promise с данными
+   * Updates record in API
+   * @param id - record id
+   * @param data - data for update
+   * @returns Promise with data
    */
   update = (id: string, data: CruddableTypes<M>["update"]) =>
     api.put<CruddableTypes<M>["model"]>(
@@ -53,9 +53,9 @@ export class CrudApi<M extends CRUDDABLE_NAMES>
       ...("file" in data ? createFormData(data) : [data]),
     );
   /**
-   * Удаляет запись в API
-   * @param id - id записи
-   * @returns Promise с данными
+   * Deletes record in API
+   * @param id - record id
+   * @returns Promise with data
    */
   delete = (id: string) =>
     api.delete<CruddableTypes<M>["model"]>(`${this.endpoint}/${id}`);

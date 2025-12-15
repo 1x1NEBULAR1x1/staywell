@@ -1,5 +1,5 @@
 import type { AuthResponse, Login, Register } from "@shared/src";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { type UseMutationResult, useMutation } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,8 +25,8 @@ export interface UseAuthReturn {
   auth_error: string | null;
 }
 /**
- * Хук для работы с авторизацией
- * @returns Методы и состояния для работы с авторизацией
+ * Hook for working with authentication
+ * @returns Methods and states for authentication
  */
 export const useAuth = (): UseAuthReturn => {
   const authApi = new AuthApi();
@@ -40,93 +40,93 @@ export const useAuth = (): UseAuthReturn => {
   const router = useRouter();
   const [auth_error, setAuthError] = useState<string | null>(null);
   /**
-   * Мутация для входа в систему
+   * Mutation for login
    */
   const login_mutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      setAuthError(null); // Очищаем ошибку при успехе
+      setAuthError(null); // Clear error on success
       authApi.onSuccessLogin({ data, refetchUser, router });
     },
     onError: (error: unknown) => {
       console.warn(error);
       const errorMessage = isAxiosError(error)
         ? error.response?.data?.message
-        : "Ошибка входа в систему";
+        : "Login error";
       setAuthError(errorMessage);
     },
   });
 
   /**
-   * Мутация для регистрации пользователя
+   * Mutation for user registration
    */
   const register_mutation = useMutation({
     mutationFn: authApi.register,
     onSuccess: (data) => {
-      setAuthError(null); // Очищаем ошибку при успехе
+      setAuthError(null); // Clear error on success
       authApi.onSuccessLogin({ data, refetchUser, router });
     },
     onError: (error: unknown) => {
       const errorMessage = isAxiosError(error)
         ? error.response?.data?.message
-        : "Ошибка регистрации";
+        : "Registration error";
       setAuthError(errorMessage);
     },
   });
 
   /**
-   * Мутация для выхода из системы
+   * Mutation for logout
    */
   const logout_mutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
-      setAuthError(null); // Очищаем ошибку при успехе
+      setAuthError(null); // Clear error on success
       authApi.onSuccessLogout({ clearUser, router });
     },
     onError: (error: unknown) => {
       const errorMessage = isAxiosError(error)
         ? error.response?.data?.message
-        : "Ошибка выхода из системы";
+        : "Logout error";
       setAuthError(errorMessage);
     },
   });
 
-  // Обновляем ошибку при изменении ошибок из AccountContext
+  // Update error when AccountContext errors change
   useEffect(() => {
     if (error && is_error) {
       const errorMessage = isAxiosError(error)
         ? error.response?.data?.message
-        : "Ошибка аутентификации";
+        : "Authentication error";
       setAuthError(errorMessage);
     }
   }, [error, is_error]);
 
   /**
-   * Метод для входа в систему
+   * Method for login
    */
   const login = (data: Login) => {
-    setAuthError(null); // Очищаем предыдущие ошибки
+    setAuthError(null); // Clear previous errors
     login_mutation.mutate(data);
   };
 
   /**
-   * Метод для регистрации пользователя
+   * Method for user registration
    */
   const register = (data: Register) => {
-    setAuthError(null); // Очищаем предыдущие ошибки
+    setAuthError(null); // Clear previous errors
     register_mutation.mutate(data);
   };
 
   /**
-   * Метод для выхода из системы
+   * Method for logout
    */
   const logout = () => {
-    setAuthError(null); // Очищаем предыдущие ошибки
+    setAuthError(null); // Clear previous errors
     logout_mutation.mutateAsync();
   };
 
   /**
-   * Мутация для смены пароля
+   * Mutation for password change
    */
   const change_password_mutation = useMutation({
     mutationFn: authApi.changePassword,
@@ -134,13 +134,13 @@ export const useAuth = (): UseAuthReturn => {
       console.warn(error);
       const errorMessage = isAxiosError(error)
         ? error.response?.data?.message
-        : "Ошибка смены пароля";
+        : "Password change error";
       setAuthError(errorMessage);
     },
   });
 
   /**
-   * Очистка ошибки авторизации
+   * Clear authentication error
    */
   const clearAuthError = () => {
     setAuthError(null);

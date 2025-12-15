@@ -113,7 +113,7 @@ export const ChatMessages = ({
     return (
       <div className={classes.messages} ref={messages_container_ref}>
         <div style={{ textAlign: "center", padding: "20px" }}>
-          Загрузка сообщений...
+          Loading messages...
         </div>
       </div>
     );
@@ -125,7 +125,7 @@ export const ChatMessages = ({
         <div className={classes.messages_empty}>
           <div className={classes.messages_empty_icon}>💬</div>
           <div className={classes.messages_empty_text}>
-            Начните разговор с поддержкой
+            Start a conversation with support
           </div>
         </div>
       </div>

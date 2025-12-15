@@ -19,7 +19,7 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly crud: CrudService,
     private readonly sessions: SessionsService,
-  ) { }
+  ) {}
 
   async register(data: RegisterDto, ip_address: string, user_agent: string) {
     const { email, password, first_name, last_name, phone_number } = data;

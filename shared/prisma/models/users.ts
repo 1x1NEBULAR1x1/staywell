@@ -5,7 +5,7 @@ import * as argon2 from 'argon2';
 const users_dir_name = `/static/${ImagePaths.USERS}`;
 
 export async function seedUsers(prisma: PrismaClient) {
-  // Создание администратора
+  // Create administrator
   try {
     await createAdmin(prisma);
   } catch (error) {
@@ -13,7 +13,7 @@ export async function seedUsers(prisma: PrismaClient) {
 
   }
 
-  // Создание тестовых пользователей
+  // Create test users
   // Jon Snow
   await prisma.user.create({
     data: {
@@ -55,7 +55,7 @@ export async function seedUsers(prisma: PrismaClient) {
 
 
 
-// Функция для создания администратора
+// Function to create administrator
 const createAdmin = async (prisma: PrismaClient) => {
   try {
     console.log('🌱 Clearing database...');

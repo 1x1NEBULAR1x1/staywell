@@ -19,27 +19,27 @@ import {
 } from "./lib";
 
 /**
- * Хук для работы с моделями через API (полный CRUD)
- * @param model Имя модели из CRUDDABLE_NAMES
- * @returns Методы для работы с моделями
+ * Hook for working with models through API (full CRUD)
+ * @param model Model name from CRUDDABLE_NAMES
+ * @returns Methods for working with models
  */
 export function useModel<M extends CRUDDABLE_NAMES>(
   model: M,
 ): UseModelCruddable<M>;
 
 /**
- * Хук для работы с моделями через API (только для чтения)
- * @param model Имя модели из GETTABLE_NAMES (исключая CRUDDABLE_NAMES)
- * @returns Методы для работы с моделями
+ * Hook for working with models through API (read-only)
+ * @param model Model name from GETTABLE_NAMES (excluding CRUDDABLE_NAMES)
+ * @returns Methods for working with models
  */
 export function useModel<M extends GETTABLE_NAMES>(
   model: M,
 ): UseModelGettableOnly<M>;
 
 /**
- * Хук для работы с моделями через API
- * @param model Имя модели
- * @returns Методы для работы с моделями
+ * Hook for working with models through API
+ * @param model Model name
+ * @returns Methods for working with models
  */
 export function useModel<M extends GETTABLE_NAMES>(model: M): UseModel<M> {
   const crudApi = isCruddableName(model) ? new CrudApi(model) : undefined;
@@ -73,24 +73,24 @@ export function useModel<M extends GETTABLE_NAMES>(model: M): UseModel<M> {
         get,
         find,
         /**
-         * Создает запись в API
-         * @returns Мутация для создания записи
+         * Creates record in API
+         * @returns Mutation for creating record
          */
         create: crudApi
           ? () => initCreateMutation({ api: crudApi, model })
           : undefined,
         /**
-         * Обновляет запись в API
-         * @param id -  Id записи
-         * @returns Мутация для обновления записи
+         * Updates record in API
+         * @param id - Record ID
+         * @returns Mutation for updating record
          */
         update: crudApi
           ? (id: string) => initUpdateMutation({ api: crudApi, model, id })
           : undefined,
         /**
-         * Удаляет запись в API
-         * @param id - Id записи
-         * @returns Мутация для удаления записи
+         * Deletes record in API
+         * @param id - Record ID
+         * @returns Mutation for deleting record
          */
         remove: crudApi
           ? (id: string) => initDeleteMutation({ api: crudApi, model, id })

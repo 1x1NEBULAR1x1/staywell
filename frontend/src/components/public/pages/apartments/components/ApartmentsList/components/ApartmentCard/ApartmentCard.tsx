@@ -11,10 +11,7 @@ export const ApartmentCard = ({
 }: {
   apartment: ExtendedApartment;
 }) => {
-  const imageUrl =
-    apartment.images?.[0]?.image ||
-    apartment.image ||
-    getTypeImage(apartment.type);
+  const imageUrl = apartment.image || getTypeImage(apartment.type);
   const price = apartment.cheapest_variant?.price || apartment.price;
   const capacity = apartment.capacity || apartment.max_capacity;
 

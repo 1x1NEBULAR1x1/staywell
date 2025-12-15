@@ -1,10 +1,10 @@
 "use client";
 import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/hooks/common";
-import Link from "next/link";
 import classes from "../../Form.module.scss";
-import { useRouter } from "next/navigation";
 
 export const Form = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -20,7 +20,16 @@ export const Form = () => {
     phone_number: string;
     email: string;
     errors: { message: string; path: string }[];
-  }>({ email: "", password: "", confirm_password: "", terms_and_conditions: false, first_name: "", last_name: "", phone_number: "", errors: [] });
+  }>({
+    email: "",
+    password: "",
+    confirm_password: "",
+    terms_and_conditions: false,
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    errors: [],
+  });
 
   const setFormValue = (
     path: keyof Omit<typeof form_data, "errors">,
@@ -36,7 +45,16 @@ export const Form = () => {
   const onSubmit = async () => {
     setFormData((prev) => ({ ...prev, errors: [] }));
     if (!form_data.terms_and_conditions) {
-      setFormData((prev) => ({ ...prev, errors: [...prev.errors, { message: "You must agree to the terms and conditions", path: "terms_and_conditions" }] }));
+      setFormData((prev) => ({
+        ...prev,
+        errors: [
+          ...prev.errors,
+          {
+            message: "You must agree to the terms and conditions",
+            path: "terms_and_conditions",
+          },
+        ],
+      }));
       return;
     }
     console.log(form_data);
@@ -61,7 +79,13 @@ export const Form = () => {
     //   }));
     // }
     if (form_data.password !== form_data.confirm_password) {
-      setFormData((prev) => ({ ...prev, errors: [...prev.errors, { message: "Passwords do not match", path: "confirm_password" }] }));
+      setFormData((prev) => ({
+        ...prev,
+        errors: [
+          ...prev.errors,
+          { message: "Passwords do not match", path: "confirm_password" },
+        ],
+      }));
       return;
     }
     if (!form_data.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
@@ -75,7 +99,13 @@ export const Form = () => {
       }));
     }
     if (form_data.errors.length > 0) return;
-    const result = await register_mutation.mutateAsync({ email: form_data.email, password: form_data.password, first_name: form_data.first_name, last_name: form_data.last_name, phone_number: form_data.phone_number });
+    const result = await register_mutation.mutateAsync({
+      email: form_data.email,
+      password: form_data.password,
+      first_name: form_data.first_name,
+      last_name: form_data.last_name,
+      phone_number: form_data.phone_number,
+    });
     if (result.user) router.push("/");
   };
 
@@ -224,7 +254,9 @@ export const Form = () => {
             type={showPassword ? "text" : "password"}
             className={classes.form_input}
             placeholder="Confirm Password"
-            onInput={(e) => setFormValue("confirm_password", e.currentTarget.value)}
+            onInput={(e) =>
+              setFormValue("confirm_password", e.currentTarget.value)
+            }
           />
           {!showPassword ? (
             <EyeOff
@@ -255,7 +287,9 @@ export const Form = () => {
             id="terms_and_conditions"
             checked={form_data.terms_and_conditions}
             className={classes.form_terms_checkbox}
-            onChange={(e) => setFormValue("terms_and_conditions", e.currentTarget.checked)}
+            onChange={(e) =>
+              setFormValue("terms_and_conditions", e.currentTarget.checked)
+            }
           />
           <p>
             By signing up, you agree to our&nbsp;
@@ -287,6 +321,6 @@ export const Form = () => {
           Login
         </Link>
       </div>
-    </div >
+    </div>
   );
 };

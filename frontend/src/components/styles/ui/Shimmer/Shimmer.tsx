@@ -8,11 +8,11 @@ type ShimmerProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 /**
- * Компонент Shimmer создает серый элемент с анимацией загрузки.
- * Когда show_animation=true, показывает серый фон с анимацией.
- * Когда show_animation=false, показывает children без анимации.
+ * Shimmer component creates gray element with loading animation.
+ * When show_animation=true, shows gray background with animation.
+ * When show_animation=false, shows children without animation.
  *
- * Все размеры и формы наследуются от родителя через CSS.
+ * All sizes and shapes are inherited from parent via CSS.
  */
 export const Shimmer = ({
   className,

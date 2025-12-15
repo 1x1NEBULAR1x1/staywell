@@ -1,89 +1,89 @@
 # StayWell
 
-Проект состоит из трёх частей: бекенд, фронтенд и общего пакета с типами и базой данных. Общий пакет нужен для удобного использования и наследования как на бекенде, так и на фронтенде - он уменьшает количество кода, предотвращает дублирование и решает проблему несоответствия типов
+Projekt składa się z trzech części: backendu, frontendu i wspólnego pakietu z typami i bazą danych. Wspólny pakiet jest potrzebny do wygodnego użytkowania i dziedziczenia zarówno w backendzie, jak i frontendzie - zmniejsza ilość kodu, zapobiega duplikowaniu i rozwiązuje problem niezgodności typów
 
-## Архитектура проекта
+## Architektura projektu
 
-Проект построен по монолитной архитектуре с разделением на три основные части:
+Projekt zbudowany jest w oparciu o architekturę monolityczną z podziałem na trzy główne części:
 
-- **Backend** (NestJS) - REST API + WebSocket сервер
-- **Frontend** (Next.js) - веб-приложение для администраторов и пользователей
-- **Shared** - общие типы данных, модели базы данных и утилиты
+- **Backend** (NestJS) - serwer REST API + WebSocket
+- **Frontend** (Next.js) - aplikacja webowa dla administratorów i użytkowników
+- **Shared** - wspólne typy danych, modele bazy danych i narzędzia
 
-### Технологический стек
+### Stos technologiczny
 
 #### Backend
 - **Framework**: NestJS (Node.js)
-- **Язык**: TypeScript
-- **База данных**: PostgreSQL
-- **ORM**: Prisma  (извлекается из shared пакета)
-- **Кэширование**: Redis
-- **Аутентификация**: JWT
-- **Валидация**: class-validator
-- **Документация API**: Swagger
-- **WebSocket**: Socket.IO для чата
+- **Język**: TypeScript
+- **Baza danych**: PostgreSQL
+- **ORM**: Prisma (importowany z pakietu shared)
+- **Cachowanie**: Redis
+- **Uwierzytelnianie**: JWT
+- **Walidacja**: class-validator
+- **Dokumentacja API**: Swagger
+- **WebSocket**: Socket.IO dla czatu
 
 #### Frontend
 - **Framework**: Next.js 15 (App Router)
-- **Язык**: TypeScript
+- **Język**: TypeScript
 - **UI**: React 19
-- **Стилизация**: SCSS Modules
-- **Состояние**: Zustand
-- **Запросы**: TanStack Query (React Query)
-- **Формы**: React Hook Form
-- **Иконки**: Lucide React
-- **Линтер**: Biome
+- **Stylowanie**: SCSS Modules
+- **Stan**: Zustand
+- **Zapytania**: TanStack Query (React Query)
+- **Formularze**: React Hook Form
+- **Ikony**: Lucide React
+- **Linter**: Biome
 
 #### Shared
 - **ORM**: Prisma
-- **Типы**: Генерируются по схеме базы данных + вручную прописаны расширенные типы для отношений между моделями
-- **Сборка**: TypeScript Compiler
+- **Typy**: Generowane na podstawie schematu bazy danych + ręcznie dodane rozszerzone typy dla relacji między modelami
+- **Budowanie**: TypeScript Compiler
 
-## 📊 Модель данных
+## Model danych
 
-### Основные сущности
+### Główne encje
 
-#### 🏠 Апартаменты (Apartments)
-- Типы: BUDGET, STANDARD, EXCLUSIVE, SUPERIOR, LUXURY
-- Характеристики: номер, этаж, вместимость, удобства
-- Изображения и описания
-- Варианты бронирования с ценами
+#### Apartamenty (Apartments)
+- Typy: BUDGET, STANDARD, EXCLUSIVE, SUPERIOR, LUXURY
+- Charakterystyki: numer, piętro, pojemność, udogodnienia
+- Zdjęcia i opisy
+- Warianty rezerwacji z cenami
 
-#### 👥 Пользователи (Users)
-- Роли: USER, ADMIN, GUIDE
-- Профили с аватарами и контактными данными
-- Верификация email и телефона
+#### Użytkownicy (Users)
+- Role: USER, ADMIN, GUIDE
+- Profile z awatarami i danymi kontaktowymi
+- Weryfikacja email i telefonu
 
-#### 📅 Бронирования (Bookings)
-- Статусы: PENDING, CONFIRMED, COMPLETED, CANCELLED
-- Период проживания
-- Дополнительные услуги
-- Связанные транзакции
+#### Rezerwacje (Bookings)
+- Statusy: PENDING, CONFIRMED, COMPLETED, CANCELLED
+- Okres pobytu
+- Dodatkowe usługi
+- Powiązane transakcje
 
-#### 💳 Транзакции (Transactions)
-- Типы: DEPOSIT, PAYMENT, REFUND, FINE
-- Статусы: PENDING, SUCCESS, CANCELLED, FAILED
-- Методы оплаты: CASH, CARD, TRANSFER
+#### Transakcje (Transactions)
+- Typy: DEPOSIT, PAYMENT, REFUND, FINE
+- Statusy: PENDING, SUCCESS, CANCELLED, FAILED
+- Metody płatności: CASH, CARD, TRANSFER
 
-#### 🎭 События (Events)
-- Мероприятия с гидами
-- Бронирование мест
-- Связанные транзакции
+#### Wydarzenia (Events)
+- Wydarzenia z przewodnikami
+- Rezerwacja miejsc
+- Powiązane transakcje
 
-#### 💬 Сообщения (Messages)
-- Чат между пользователями и администраторами
-- Поддержка редактирования и мягкого удаления
-- Группировка по бронированиям
+#### Wiadomości (Messages)
+- Czat między użytkownikami a administratorami
+- Wsparcie dla edycji i soft delete
+- Grupowanie według rezerwacji
 
-#### ⭐ Отзывы (Reviews)
-- Рейтинги апартаментов и бронирований
-- Комментарии пользователей
+#### Recenzje (Reviews)
+- Oceny apartamentów i rezerwacji
+- Komentarze użytkowników
 
-### ERD Схема базы данных
+### Schemat ERD bazy danych
 
 ```mermaid
 erDiagram
-    %% Пользователи и аутентификация
+    %% Users and authentication
     User {
         string id PK
         string email UK
@@ -101,7 +101,7 @@ erDiagram
         datetime updated
     }
 
-    %% Апартаменты
+    %% Apartments
     Apartment {
         string id PK
         string image
@@ -122,7 +122,7 @@ erDiagram
         boolean is_excluded
     }
 
-    %% Справочники
+    %% Dictionaries
     Amenity {
         string id PK
         string name UK
@@ -153,7 +153,7 @@ erDiagram
         boolean is_excluded
     }
 
-    %% Бронирования и резервирования
+    %% Bookings and reservations
     Reservation {
         string id PK
         string user_id FK
@@ -188,7 +188,7 @@ erDiagram
         datetime updated
     }
 
-    %% Финансы
+    %% Finance
     Transaction {
         string id PK
         float amount
@@ -227,7 +227,7 @@ erDiagram
         datetime updated
     }
 
-    %% События и мероприятия
+    %% Events
     Event {
         string id PK
         string name
@@ -254,7 +254,7 @@ erDiagram
         boolean is_excluded
     }
 
-    %% Коммуникации
+    %% Communications
     Message {
         string id PK
         string sender_id FK
@@ -269,7 +269,7 @@ erDiagram
         datetime updated
     }
 
-    %% Отзывы
+    %% Reviews
     Review {
         string id PK
         string user_id FK
@@ -282,7 +282,7 @@ erDiagram
         boolean is_excluded
     }
 
-    %% Связи многие-ко-многим
+    %% Many-to-many relations
     ApartmentAmenity {
         string id PK
         string amenity_id FK
@@ -333,74 +333,71 @@ erDiagram
         boolean is_excluded
     }
 
-    %% Связи между сущностями
-    User ||--o{ Reservation : "создает"
-    User ||--o{ Booking : "бронирует"
-    User ||--o{ Transaction : "платит"
-    User ||--o{ CardDetail : "имеет"
-    User ||--o{ TransferDetail : "использует"
-    User ||--o{ Review : "пишет"
-    User ||--o{ Message : "отправляет"
-    User ||--o{ Event : "ведет_как_гид"
+    %% Relations between entities
+    User ||--o{ Reservation : "creates"
+    User ||--o{ Booking : "books"
+    User ||--o{ Transaction : "pays"
+    User ||--o{ CardDetail : "has"
+    User ||--o{ TransferDetail : "uses"
+    User ||--o{ Review : "writes"
+    User ||--o{ Message : "sends"
+    User ||--o{ Event : "guides"
 
-    Apartment ||--o{ ApartmentImage : "имеет"
-    Apartment ||--o{ ApartmentBed : "содержит"
-    Apartment ||--o{ ApartmentAmenity : "предоставляет"
-    Apartment ||--o{ BookingVariant : "предлагает"
-    Apartment ||--o{ Reservation : "резервируется"
-    Apartment ||--o{ Review : "оценивается"
+    Apartment ||--o{ ApartmentImage : "has"
+    Apartment ||--o{ ApartmentBed : "contains"
+    Apartment ||--o{ ApartmentAmenity : "provides"
+    Apartment ||--o{ BookingVariant : "offers"
+    Apartment ||--o{ Reservation : "is_reserved"
+    Apartment ||--o{ Review : "is_reviewed"
 
-    Amenity ||--o{ ApartmentAmenity : "предоставляется"
-    BedType ||--o{ ApartmentBed : "используется"
-    AdditionalOption ||--o{ BookingAdditionalOption : "добавляется"
+    Amenity ||--o{ ApartmentAmenity : "is_provided"
+    BedType ||--o{ ApartmentBed : "is_used"
+    AdditionalOption ||--o{ BookingAdditionalOption : "is_added"
 
-    BookingVariant ||--o{ Booking : "бронируется"
-    Booking ||--|| Transaction : "оплачивается"
-    Booking ||--o{ BookingEvent : "включает"
-    Booking ||--o{ BookingAdditionalOption : "расширяется"
-    Booking ||--o{ Review : "оценивается"
-    Booking ||--o{ Message : "обсуждается"
+    BookingVariant ||--o{ Booking : "is_booked"
+    Booking ||--|| Transaction : "is_paid"
+    Booking ||--o{ BookingEvent : "includes"
+    Booking ||--o{ BookingAdditionalOption : "is_extended"
+    Booking ||--o{ Review : "is_reviewed"
+    Booking ||--o{ Message : "is_discussed"
 
-    Event ||--o{ EventImage : "иллюстрируется"
-    Event ||--o{ BookingEvent : "бронируется"
-    BookingEvent ||--|| Transaction : "оплачивается"
+    Event ||--o{ EventImage : "is_illustrated"
+    Event ||--o{ BookingEvent : "is_booked"
+    BookingEvent ||--|| Transaction : "is_paid"
 
-    CardDetail ||--o{ Transaction : "используется"
-    TransferDetail ||--o{ Transaction : "используется"
+    CardDetail ||--o{ Transaction : "is_used"
+    TransferDetail ||--o{ Transaction : "is_used"
 
-    Message ||--o{ Message : "заменяет"
+    Message ||--o{ Message : "replaces"
 ```
 
-## 🚀 Запуск проекта
+## 🚀 Uruchomienie projektu
 
-### Предварительные требования
+### Wymagania wstępne
 - Node.js 18+
 - PostgreSQL 15+
 - Redis 7+
 - pnpm
 
-### Установка зависимостей
+### Instalacja zależności
 ```bash
-# Установка всех зависимостей
+# Instalacja wszystkich zależności
 pnpm install
 ```
 
-### Настройка базы данных  // сейчас не нужно, для заметки
+### Konfiguracja bazy danych
 ```bash
-# Запуск контейнеров базы данных
-docker-compose up -d
-
-# Создание и применение миграций
+# Tworzenie i aplikacja migracji
 cd shared
 pnpm prisma migrate dev
 
-# Заполнение начальными данными
+# Wypełnienie danymi początkowymi
 pnpm db:seed
 ```
 
-### Переменные окружения
+### Zmienne środowiskowe
 
-Создайте файлы `.env` в корневых директориях backend и frontend:
+Utwórz pliki `.env` w katalogach głównych backend i frontend:
 
 #### Backend (.env)
 ```env
@@ -412,184 +409,152 @@ JWT_EXPIRES_IN="24h"
 
 FRONTEND_URL="http://localhost:3000"
 
-# Email настройки (опционально)
+# Ustawienia Email (opcjonalne)
 SMTP_HOST=""
 SMTP_PORT=""
 SMTP_USER=""
 SMTP_PASS=""
 
-# Stripe/Payment настройки (опционально)
+# Ustawienia Stripe/Payment (opcjonalne)
 STRIPE_SECRET_KEY=""
 STRIPE_WEBHOOK_SECRET=""
 ```
 
-#### Frontend (.env.local)
+#### Frontend (.env)
 ```env
 NEXT_PUBLIC_API_URL="http://localhost:3001/api"
 NEXT_PUBLIC_WS_URL="ws://localhost:3001"
 ```
 
-### Запуск в режиме разработки
+### Uruchomienie w trybie deweloperskim
 ```bash
-# Запуск всех сервисов параллельно (вывод с задержкой, не рекомендуется)
+# Uruchomienie wszystkich serwisów równolegle (wyjście z opóźnieniem, niezalecane)
 pnpm dev
 
-# Или по отдельности:
+# Lub osobno:
 # Backend
 pnpm --filter backend dev
 
-# Frontend (в новом терминале)
+# Frontend (w nowym terminalu)
 pnpm --filter frontend dev
 ```
 
-### Продакшн сборка
+### Build produkcyjny
 ```bash
-# Сборка всех сервисов
+# Budowanie wszystkich serwisów
 pnpm build
 
-# Запуск в продакшне
+# Uruchomienie w produkcji
 pnpm start
 ```
 
-## 📁 Структура проекта
+## Struktura projektu
 
 ```
 staywell/
-├── backend/                    # NestJS API сервер
+├── backend/                    # Serwer NestJS API
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── apartments-section/    # Модуль апартаментов
-│   │   │   │   ├── apartments/        # CRUD апартаментов
-│   │   │   │   ├── amenities/         # Удобства
-│   │   │   │   ├── bed-types/         # Типы кроватей
-│   │   │   │   ├── reviews/           # Отзывы
-│   │   │   │   └── module.ts          # Модуль секции
-│   │   │   ├── bookings-section/      # Модуль бронирований
-│   │   │   ├── events-section/        # Модуль событий
-│   │   │   ├── transactions-section/  # Модуль транзакций
-│   │   │   ├── users-section/         # Модуль пользователей
-│   │   │   ├── app.module.ts          # Главный модуль
+│   │   │   ├── apartments-section/    # Moduł apartamentów
+│   │   │   │   ├── apartments/        # CRUD apartamentów
+│   │   │   │   ├── amenities/         # Udogodnienia
+│   │   │   │   ├── bed-types/         # Typy łóżek
+│   │   │   │   ├── reviews/           # Recenzje
+│   │   │   │   └── module.ts          # Moduł sekcji
+│   │   │   ├── bookings-section/      # Moduł rezerwacji
+│   │   │   ├── events-section/        # Moduł wydarzeń
+│   │   │   ├── transactions-section/  # Moduł transakcji
+│   │   │   ├── users-section/         # Moduł użytkowników
+│   │   │   ├── app.module.ts          # Moduł główny
 │   │   │   └── app.module.ts
-│   │   └── lib/                       # Общие утилиты
-│   │       ├── common/                # Декораторы, гварды, интерсепторы
-│   │       ├── files/                 # Работа с файлами
-│   │       ├── prisma/                # Prisma клиент
-│   │       ├── redis/                 # Redis клиент
-│   │       └── websocket/             # WebSocket адаптер
-│   └── uploads/                       # Загруженные файлы
-├── frontend/                  # Next.js приложение
+│   │   └── lib/                       # Wspólne narzędzia
+│   │       ├── common/                # Dekoratory, guardy, interceptory
+│   │       ├── files/                 # Praca z plikami
+│   │       ├── prisma/                # Klient Prisma
+│   │       ├── redis/                 # Klient Redis
+│   │       └── websocket/             # Adapter WebSocket
+│   └── uploads/                       # Przesłane pliki
+├── frontend/                  # Aplikacja Next.js
 │   ├── src/
 │   │   ├── app/                       # App Router
-│   │   │   ├── admin/                 # Админ панель
-│   │   │   │   ├── apartments/        # Управление апартаментами
-│   │   │   │   ├── bookings/          # Управление бронированиями
-│   │   │   │   ├── events/            # Управление событиями
-│   │   │   │   ├── users/             # Управление пользователями
-│   │   │   │   ├── services/          # Управление услугами
-│   │   │   │   └── layout.tsx         # Админ лейаут
-│   │   │   ├── auth/                  # Аутентификация
-│   │   │   │   ├── login/             # Вход
-│   │   │   │   └── register/          # Регистрация
-│   │   │   └── (app)/                 # Публичная часть
-│   │   │       ├── apartment/[id]/    # Страница апартамента
-│   │   │       └── page.tsx           # Главная страница
-│   │   ├── components/                # Компоненты
-│   │   │   ├── admin/                 # Админ компоненты
-│   │   │   │   ├── common/            # Общие (AdminPage, Layout)
-│   │   │   │   └── pages/             # Страничные компоненты
-│   │   │   ├── common/                # Общие компоненты
-│   │   │   └── public/                # Публичные компоненты
-│   │   ├── hooks/                     # React хуки
-│   │   │   ├── admin/                 # Админ хуки
-│   │   │   ├── common/                # Общие хуки
-│   │   │   └── public/                # Публичные хуки
-│   │   ├── lib/                       # Утилиты и API
-│   │   │   └── api/                   # API клиенты
-│   │   └── stores/                    # Zustand stores
-│   └── public/                        # Статические файлы
-├── shared/                    # Общая библиотека
-│   ├── prisma/                        # Схема БД и миграции
+│   │   │   ├── admin/                 # Panel administratora
+│   │   │   │   ├── apartments/        # Zarządzanie apartamentami
+│   │   │   │   ├── bookings/          # Zarządzanie rezerwacjami
+│   │   │   │   ├── events/            # Zarządzanie wydarzeniami
+│   │   │   │   ├── users/             # Zarządzanie użytkownikami
+│   │   │   │   ├── services/          # Zarządzanie usługami
+│   │   │   │   └── layout.tsx         # Layout administratora
+│   │   │   ├── auth/                  # Uwierzytelnianie
+│   │   │   │   ├── login/             # Logowanie
+│   │   │   │   └── register/          # Rejestracja
+│   │   │   └── (app)/                 # Część publiczna
+│   │   │       ├── apartment/[id]/    # Strona apartamentu
+│   │   │       └── page.tsx           # Strona główna
+│   │   ├── components/                # Komponenty
+│   │   │   ├── admin/                 # Komponenty administratora
+│   │   │   │   ├── common/            # Wspólne (AdminPage, Layout)
+│   │   │   │   └── pages/             # Komponenty stron
+│   │   │   ├── common/                # Komponenty wspólne
+│   │   │   └── public/                # Komponenty publiczne
+│   │   ├── hooks/                     # Hooki React
+│   │   │   ├── admin/                 # Hooki administratora
+│   │   │   ├── common/                # Hooki wspólne
+│   │   │   └── public/                # Hooki publiczne
+│   │   ├── lib/                       # Narzędzia i API
+│   │   │   └── api/                   # Klienty API
+│   │   └── stores/                    # Sklepy Zustand
+│   └── public/                        # Pliki statyczne
+├── shared/                    # Wspólna biblioteka
+│   ├── prisma/                        # Schemat bazy danych i migracje
 │   ├── src/
-│   │   ├── common/                    # Общие типы
-│   │   ├── database/                  # Prisma клиент
-│   │   ├── models/                    # Модели данных
-│   │   └── types/                     # Сгенерированные типы
-│   └── seeds/                         # Начальные данные
-└── nginx.conf                 # Nginx конфигурация
+│   │   ├── common/                    # Wspólne typy
+│   │   ├── database/                  # Klient Prisma
+│   │   ├── models/                    # Modele danych
+│   │   └── types/                     # Wygenerowane typy
+│   └── seeds/                         # Dane początkowe
+└── nginx.conf                 # Konfiguracja Nginx
 ```
 
-## 🔧 Backend API
+## Backend API
 
-### Архитектура модулей
+### Architektura modułów
 
-Каждый функциональный модуль следует паттерну:
+Każdy moduł funkcjonalny następuje wzorzec:
 ```
 module/
-├── controller.ts           # HTTP контроллер
-├── services/               # Бизнес логика
-│   ├── crud.service.ts     # Основные CRUD операции
-│   ├── list.service.ts     # Операции списка с фильтрами
-│   └── *.service.ts        # Специфичные сервисы
+├── controller.ts           # Kontroler HTTP
+├── services/               # Logika biznesowa
+│   ├── crud.service.ts     # Podstawowe operacje CRUD
+│   ├── list.service.ts     # Operacje listy z filtrami
+│   └── *.service.ts        # Specyficzne serwisy
 ├── dto/                    # Data Transfer Objects
-│   ├── create.dto.ts       # DTO создания
-│   ├── update.dto.ts       # DTO обновления
-│   ├── filters.dto.ts      # DTO фильтров
-│   └── index.ts            # Экспорты
-└── module.ts               # NestJS модуль
+│   ├── create.dto.ts       # DTO tworzenia
+│   ├── update.dto.ts       # DTO aktualizacji
+│   ├── filters.dto.ts      # DTO filtrów
+│   └── index.ts            # Eksporty
+└── module.ts               # Moduł NestJS
 ```
 
-## 🎨 Frontend компоненты
+## Komponenty Frontend
 
-### Архитектура компонентов
+### Architektura komponentów
 
-Компоненты организованы по принципу атомарного дизайна:
+Komponenty zorganizowane są według zasad atomic design:
 
-#### Admin компоненты
-- **common/** - Общие компоненты (AdminPage, Layout, Form)
-- **pages/** - Страничные компоненты с бизнес логикой
+#### Komponenty Admin
+- **common/** - Komponenty wspólne (AdminPage, Layout, Form)
+- **pages/** - Komponenty stron z logiką biznesową
 
-#### Структура страничного компонента
+#### Struktura komponentu strony
 ```
 PageComponent/
-├── PageComponent.tsx        # Основной компонент
-├── PageComponent.module.scss # Стили
-├── index.ts                 # Экспорт
-└── components/              # Вложенные компоненты
+├── PageComponent.tsx        # Główny komponent
+├── PageComponent.module.scss # Style
+├── index.ts                 # Eksport
+└── components/              # Zagnieżdżone komponenty
     ├── SubComponent/
     │   ├── SubComponent.tsx
     │   ├── SubComponent.module.scss
     │   └── index.ts
     └── index.ts
-```
-
-### UI паттерны
-
-#### AdminPage
-Обертка для всех админ страниц с заголовком и навигацией.
-
-#### BaseFormModal
-Универсальный модал для форм с react-hook-form интеграцией.
-
-#### Shimmer
-Компонент загрузки с анимацией скелета.
-
-#### ListPage
-Универсальный компонент списка с фильтрами, пагинацией и действиями.
-
-## 📱 Адаптивный дизайн
-
-### SCSS архитектура - /frontend/src/components/styles/
-
-- **Variables**: _variables.scss Глобальные переменные цветов, шрифтов, отступов
-- **Mixins**: _mixins.scss Переиспользуемые стили
-- **Modules**: Компонентные стили
-
-### Backend тесты
-```bash
-pnpm --filter backend lint
-```
-
-### Frontend тесты
-```bash
-pnpm --filter frontend lint
 ```

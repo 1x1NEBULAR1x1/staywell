@@ -15,7 +15,7 @@ import {
 } from "@/lib/api";
 
 /**
- * API для работы с пользователями
+ * API for working with users
  */
 export class UsersApi {
   endpoint = `${process.env.NEXT_PUBLIC_API_URL}/users`;
@@ -45,10 +45,10 @@ export class UsersApi {
   }
 
   /**
-   * Обновление пользователя
-   * @param where - Условие для обновления пользователя
-   * @param user - Данные для обновления пользователя
-   * @returns Результат обновления пользователя, загрузка и ошибка
+   * Update user
+   * @param where - Condition for user update
+   * @param user - Data for user update
+   * @returns User update result, loading and error
    */
   async update(
     where: Prisma.UserWhereUniqueInput,

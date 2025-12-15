@@ -12,7 +12,7 @@ export interface DatesConfigResult {
 }
 
 /**
- * API для работы с апартаментами
+ * API for working with apartments
  */
 export class ApartmentsApi extends CrudApi<"APARTMENT"> {
   constructor() {
@@ -20,10 +20,10 @@ export class ApartmentsApi extends CrudApi<"APARTMENT"> {
   }
 
   /**
-   * Получает конфиг занятых дат для апартамента
-   * @param id - ID апартамента
-   * @param params - параметры запроса (год, месяц)
-   * @returns Promise с конфигом дат
+   * Gets config of occupied dates for apartment
+   * @param id - Apartment ID
+   * @param params - request parameters (year, month)
+   * @returns Promise with dates config
    */
   getDatesConfig = (
     id: string,
@@ -34,11 +34,11 @@ export class ApartmentsApi extends CrudApi<"APARTMENT"> {
     });
 
   /**
-   * Проверяет доступность апартамента на заданный период
-   * @param id - ID апартамента
-   * @param start_date - дата начала
-   * @param end_date - дата окончания
-   * @returns Promise с результатом проверки
+   * Checks apartment availability for given period
+   * @param id - Apartment ID
+   * @param start_date - start date
+   * @param end_date - end date
+   * @returns Promise with check result
    */
   checkAvailability = (id: string, start_date: Date, end_date: Date) =>
     api.get(`${this.endpoint}/available/${id}`, {

@@ -133,7 +133,7 @@ export const InlineProfileForm = ({
                   if (value) {
                     const birthDate = new Date(String(value));
                     const today = new Date();
-                    today.setHours(0, 0, 0, 0); // Сбрасываем время на начало дня
+                    today.setHours(0, 0, 0, 0); // Reset time to start of day
                     if (birthDate >= today) {
                       return "Date of birth must be before today";
                     }

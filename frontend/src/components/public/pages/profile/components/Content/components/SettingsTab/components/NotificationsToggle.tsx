@@ -26,12 +26,12 @@ export const NotificationsToggle = () => {
         updateUser(response.data);
         toast.success(
           user.email_notifications
-            ? "Email уведомления отключены"
-            : "Email уведомления включены",
+            ? "Email notifications disabled"
+            : "Email notifications enabled",
         );
       }
     } catch (error) {
-      toast.error("Не удалось обновить настройки уведомлений");
+      toast.error("Failed to update notification settings");
       console.error("Failed to update notifications:", error);
     } finally {
       setIsLoading(false);
@@ -43,8 +43,8 @@ export const NotificationsToggle = () => {
   return (
     <div className={classes.notifications_toggle}>
       <div className={classes.section_header}>
-        <h3>Email уведомления</h3>
-        <p>Получайте важные уведомления на email</p>
+        <h3>Email Notifications</h3>
+        <p>Receive important notifications via email</p>
       </div>
 
       <div className={classes.toggle_container}>
@@ -57,12 +57,12 @@ export const NotificationsToggle = () => {
           {user.email_notifications ? (
             <>
               <Bell size={20} />
-              <span>Включены</span>
+              <span>Enabled</span>
             </>
           ) : (
             <>
               <BellOff size={20} />
-              <span>Отключены</span>
+              <span>Disabled</span>
             </>
           )}
         </button>
