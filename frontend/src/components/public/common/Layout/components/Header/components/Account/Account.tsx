@@ -6,8 +6,6 @@ import {
   Calendar,
   ChevronDown,
   LogOut,
-  MessageSquare,
-  Settings,
   User,
 } from "lucide-react";
 import Image from "next/image";

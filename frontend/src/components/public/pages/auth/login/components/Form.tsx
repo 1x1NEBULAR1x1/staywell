@@ -3,12 +3,13 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/hooks/common";
 import classes from "../../Form.module.scss";
+import { useRouter } from "next/navigation";
 
 export const Form = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const toggleShowPassword = () => setShowPassword(!showPassword);
-  const { login } = useAuth();
-
+  const { login_mutation } = useAuth();
+  const router = useRouter();
   const [form_data, setFormData] = useState<{
     password: string;
     email: string;
@@ -26,7 +27,7 @@ export const Form = () => {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setFormData((prev) => ({ ...prev, errors: [] }));
     console.log(form_data);
     // TODO Fix P@SSword! validation
@@ -62,7 +63,10 @@ export const Form = () => {
     if (form_data.errors.length > 0) {
       return;
     }
-    login({ email: form_data.email, password: form_data.password });
+
+    if ((await login_mutation.mutateAsync({ email: form_data.email, password: form_data.password })).user) {
+      router.push("/");
+    }
   };
 
   return (

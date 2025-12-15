@@ -11,6 +11,7 @@ export interface UseAuthReturn {
   register: (data: Register) => void;
   logout: () => void;
   register_mutation: UseMutationResult<AuthResponse, unknown, Register>;
+  login_mutation: UseMutationResult<AuthResponse, unknown, Login>;
   changePassword: (data: {
     current_password: string;
     new_password: string;
@@ -151,6 +152,7 @@ export const useAuth = (): UseAuthReturn => {
     register,
     logout,
     register_mutation,
+    login_mutation,
     changePassword: (data: {
       current_password: string;
       new_password: string;

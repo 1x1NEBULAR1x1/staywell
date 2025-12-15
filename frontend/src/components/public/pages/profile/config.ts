@@ -1,19 +1,12 @@
 import {
-  ArrowLeftRight,
   Bell,
-  CreditCard,
   Headset,
-  History,
-  Settings,
   User,
 } from "lucide-react";
 
 export const profile_tabs = [
   "settings",
   "notification",
-  "cards",
-  "transfers",
-  "history",
   "support",
 ] as const;
 
@@ -39,11 +32,6 @@ export const profile_tabs_config: ProfileTabConfig[] = [
     href: "notification",
     label: "Notification",
     icon: Bell,
-  },
-  {
-    href: "history",
-    label: "History",
-    icon: History,
   },
   {
     href: "support",

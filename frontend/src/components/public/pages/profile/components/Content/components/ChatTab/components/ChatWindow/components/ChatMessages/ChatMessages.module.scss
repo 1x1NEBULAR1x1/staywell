@@ -5,6 +5,7 @@
   overflow-y: auto;
   padding: $spacing-lg;
   display: flex;
+  max-height: 50lvh;
   flex-direction: column;
   gap: $spacing-md;
   background-color: $background-light;

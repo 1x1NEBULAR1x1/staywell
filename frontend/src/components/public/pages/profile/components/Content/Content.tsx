@@ -3,12 +3,10 @@
 import { usePathname } from "next/navigation";
 import classes from "./Content.module.scss";
 import {
-  CardsTab,
   ChatTab,
   NotificationTab,
   ProfileInfoTab,
   SettingsTab,
-  TransfersTab,
 } from "./components";
 
 export const Content = () => {
@@ -26,14 +24,10 @@ export const Content = () => {
         return <SettingsTab />;
       case "notification":
         return <NotificationTab />;
-      case "cards":
-        return <CardsTab />;
-      case "transfers":
-        return <TransfersTab />;
-      case "history":
+      case "support":
         return <ChatTab />;
       default:
-        return <ProfileInfoTab />;
+        return null;
     }
   };
 
