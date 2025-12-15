@@ -36,24 +36,9 @@ export const profile_tabs_config: ProfileTabConfig[] = [
     icon: User,
   },
   {
-    href: "settings",
-    label: "Settings",
-    icon: Settings,
-  },
-  {
     href: "notification",
     label: "Notification",
     icon: Bell,
-  },
-  {
-    href: "cards",
-    label: "Cards",
-    icon: CreditCard,
-  },
-  {
-    href: "transfers",
-    label: "Transfers",
-    icon: ArrowLeftRight,
   },
   {
     href: "history",

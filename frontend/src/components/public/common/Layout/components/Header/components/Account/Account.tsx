@@ -94,35 +94,11 @@ export const Account = ({ user }: { user: SafeUser }) => {
             className={classes.dropdown_item}
             onClick={() => {
               setIsDropdownOpen(false);
-              router.push("/chat");
-            }}
-          >
-            <MessageSquare size={16} />
-            <span>Chat</span>
-          </button>
-
-          <button
-            type="button"
-            className={classes.dropdown_item}
-            onClick={() => {
-              setIsDropdownOpen(false);
               router.push("/bookings");
             }}
           >
             <Calendar size={16} />
-            <span>Booking</span>
-          </button>
-
-          <button
-            type="button"
-            className={classes.dropdown_item}
-            onClick={() => {
-              setIsDropdownOpen(false);
-              router.push("/settings");
-            }}
-          >
-            <Settings size={16} />
-            <span>Settings</span>
+            <span>Bookings</span>
           </button>
 
           <button
