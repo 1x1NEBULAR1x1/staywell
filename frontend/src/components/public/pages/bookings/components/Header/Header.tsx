@@ -11,6 +11,3 @@ export const Header = ({ title }: { title: string }) => (
     <h2 className={classes.title}>{title}</h2>
   </div>
 );
-
-
-

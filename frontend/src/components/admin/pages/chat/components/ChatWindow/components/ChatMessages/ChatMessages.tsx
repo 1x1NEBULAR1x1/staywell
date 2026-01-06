@@ -3,6 +3,7 @@ import default_avatar from "@/../public/common/default-avatar.png";
 import { useChat } from "@/hooks/admin/chat/useChat";
 import { useAccount } from "@/hooks/common/useAccount";
 import { useQPId } from "@/hooks/common/useId";
+import { getImageUrl } from "@/lib/api";
 import { MessageBubble } from "../MessageBubble";
 import classes from "./ChatMessages.module.scss";
 
@@ -218,8 +219,8 @@ export const ChatMessages = ({
           is_outgoing={message.sender_id === current_user?.id}
           sender_avatar={
             message.sender_id === current_user?.id
-              ? (current_user?.image ?? default_avatar.src)
-              : selected_user_avatar
+              ? (getImageUrl(current_user?.image) ?? default_avatar.src)
+              : (getImageUrl(selected_user_avatar) ?? default_avatar.src)
           }
           is_new={new_message_ids.has(message.id)}
         />
@@ -229,7 +230,7 @@ export const ChatMessages = ({
         <div className={classes.messages_typing}>
           <div className={classes.messages_typing_indicator}>
             <img
-              src={selected_user_avatar}
+              src={getImageUrl(selected_user_avatar) ?? default_avatar.src}
               alt="Typing avatar"
               className={classes.messages_typing_avatar}
             />

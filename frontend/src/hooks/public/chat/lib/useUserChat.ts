@@ -35,14 +35,6 @@ export const useUserChat = (
   const connection = useWebSocketConnection({
     onConnect: () => {
       chatStore.setIsConnected(true);
-      // Auto-join support chat after connection
-      if (!hasConnectedRef.current) {
-        hasConnectedRef.current = true;
-        console.log("Connected to chat, joining support chat");
-        setTimeout(() => {
-          chatActions.joinSupportChat();
-        }, 500);
-      }
     },
     onDisconnect: (reason) => {
       chatStore.setIsConnected(false);
@@ -70,6 +62,15 @@ export const useUserChat = (
     ...connection,
     getHistory: historyActions.getHistory,
   });
+
+  // Auto-join support chat after connection
+  useEffect(() => {
+    if (connection.is_connected && !hasConnectedRef.current) {
+      hasConnectedRef.current = true;
+      console.log("Connected to chat, joining support chat");
+      chatActions.joinSupportChat();
+    }
+  }, [connection.is_connected, chatActions]);
 
   // Message actions
   const messageActions = useMessageActions(connection);

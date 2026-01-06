@@ -1,19 +1,41 @@
 @use '@/components/styles/_variables.scss' as *;
 
+// Profile edit form wrapper
+.profile_form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+}
+
 // Profile edit layout
 .profile_edit_layout {
   display: flex;
   flex-direction: row;
   gap: $spacing-xl;
   align-items: flex-start;
+  background: $background-main;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid $background-light;
+  transition: all $transition-fast;
+
+  &:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    padding: $spacing-lg;
   }
 
   .image_section {
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
   }
 
   .fields_section {
@@ -22,6 +44,136 @@
     flex-direction: column;
     gap: $spacing-lg;
     min-width: 0;
-    margin-bottom: $spacing-2xl;
+    width: 100%;
+
+    // Override admin form styles for better appearance
+    :global(.admin_form_section) {
+      margin: 0;
+    }
+
+    :global(.admin_form_field) {
+      gap: $spacing-xs;
+    }
+
+    :global(.admin_form_label) {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+      margin-bottom: $spacing-xs;
+      letter-spacing: 0.3px;
+    }
+
+    :global(.admin_form_input) {
+      padding: $spacing-sm $spacing-md;
+      border: 1px solid $background-light;
+      border-radius: $border-radius-md;
+      font-size: $font-size-md;
+      color: $foreground-main;
+      background: $background-main;
+      transition: all $transition-fast;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-main;
+        box-shadow: 0 0 0 3px rgba($primary-main, 0.1);
+        background: $background-main;
+      }
+
+      &:hover:not(:disabled) {
+        border-color: rgba($primary-main, 0.5);
+      }
+
+      &::placeholder {
+        color: $foreground-secondary;
+      }
+    }
+
+    :global(.admin_form_input_error) {
+      border-color: $red;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($red, 0.1);
+      }
+    }
+
+    :global(.admin_form_error) {
+      font-size: $font-size-xs;
+      color: $red;
+      margin-top: $spacing-xs;
+      display: block;
+    }
+  }
+}
+
+// Actions wrapper
+.actions_wrapper {
+  :global(.actions) {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: flex-end;
+    padding: $spacing-lg;
+    background: $background-light;
+    border-radius: $border-radius-md;
+    border-top: 1px solid $background-light;
+
+    @media (max-width: 768px) {
+      flex-direction: column-reverse;
+      padding: $spacing-md;
+    }
+
+    :global(.actions_button) {
+      padding: $spacing-sm $spacing-lg;
+      border-radius: $border-radius-md;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-normal;
+      cursor: pointer;
+      transition: all $transition-fast;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      min-width: 120px;
+      justify-content: center;
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    :global(.actions_button_primary) {
+      background: linear-gradient(135deg, $primary-main 0%, $primary-light 100%);
+      color: $foreground-white;
+      box-shadow: 0 2px 8px rgba($primary-main, 0.2);
+
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($primary-main, 0.3);
+        background: linear-gradient(135deg, rgba($primary-main, 0.9) 0%, rgba($primary-light, 0.9) 100%);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      &:disabled {
+        background: $background-disabled;
+        color: $foreground-light;
+        box-shadow: none;
+      }
+    }
+
+    :global(.actions_button_secondary) {
+      background: transparent;
+      color: $foreground-secondary;
+      border: 1px solid $background-light;
+
+      &:hover:not(:disabled) {
+        background: $background-main;
+        border-color: $foreground-secondary;
+        color: $foreground-main;
+      }
+    }
   }
 }

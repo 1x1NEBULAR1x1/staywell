@@ -1,0 +1,66 @@
+@use '@/components/styles/_variables.scss' as *;
+
+.detail_item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background: $background-light;
+  border-radius: $border-radius-md;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .icon {
+    flex-shrink: 0;
+    width: $font-size-4xl;
+    height: $font-size-4xl;
+    aspect-ratio: 1/1;
+    border-radius: $border-radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $background-main;
+    color: $primary-main;
+    box-shadow: 0 1px 4px rgba($primary-main, 0.08);
+
+    &>svg {
+      width: 50%;
+      height: 50%;
+    }
+  }
+
+  .detail_content {
+    flex: 1;
+    min-width: 0;
+
+    .detail_label {
+      font-size: $font-size-xs;
+      font-weight: $font-weight-normal;
+      color: $foreground-secondary;
+      margin: 0 0 4px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .detail_value {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-normal;
+      color: $foreground-main;
+      margin: 0 0 4px 0;
+      word-break: break-word;
+    }
+
+    .detail_note {
+      font-size: $font-size-xs;
+      color: $foreground-light;
+      margin: 0;
+      font-style: italic;
+    }
+  }
+}
+

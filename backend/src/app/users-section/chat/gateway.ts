@@ -74,6 +74,20 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       // Join admin room if user is admin
       if (user.role === Role.ADMIN) {
         await client.join('admins');
+        // Notify all users that support is now online
+        const lastSeen = new Date();
+        this.chatWebsocketService
+          .getNotificationService()
+          .notifySupportOnlineStatus(lastSeen);
+      } else {
+        // For regular users, send current support status
+        const adminSockets = await this.server.in('admins').fetchSockets();
+        const isSupportOnline = adminSockets.length > 0;
+        const lastSeen = isSupportOnline ? new Date() : null; // If no admins online, we'll need to get last seen from somewhere
+        client.emit('user_online_status', {
+          user_id: 'support',
+          last_seen: lastSeen,
+        });
       }
 
       // Send confirmation of connection
@@ -91,7 +105,30 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       const user = (client.data as { user: UserWithoutPassword }).user;
       if (user) {
+        const wasAdmin = user.role === Role.ADMIN;
         await this.chatWebsocketService.removeConnectedUser(user.id, client.id);
+
+        // If admin disconnected, check if any admins are still online
+        if (wasAdmin) {
+          // Check if there are any other admins online
+          const adminSockets = await this.server.in('admins').fetchSockets();
+          const isAnyAdminOnline = adminSockets.length > 0;
+
+          if (!isAnyAdminOnline) {
+            // No admins online - notify users that support is offline
+            const lastSeen = await this.chatWebsocketService.getLastSeen(
+              user.id,
+            );
+            this.chatWebsocketService
+              .getNotificationService()
+              .notifySupportOnlineStatus(lastSeen);
+          } else {
+            // Other admins are still online - support is still online
+            this.chatWebsocketService
+              .getNotificationService()
+              .notifySupportOnlineStatus(new Date());
+          }
+        }
       }
     } catch (error: unknown) {
       console.error(
@@ -116,7 +153,19 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       await this.chatWebsocketService.updateLastSeen(user.id);
 
       // Join room for specific chat
-      const roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+      let roomName: string;
+      if (data.chat_partner_id === 'support') {
+        // Users joining support
+        roomName = `chat_${[user.id, 'support'].sort().join('_')}`;
+      } else {
+        // Admins joining user chat or direct chats
+        if (user.role === Role.ADMIN) {
+          // For admin-user chats, use the standardized support room format
+          roomName = `chat_${[data.chat_partner_id, 'support'].sort().join('_')}`;
+        } else {
+          roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+        }
+      }
       await client.join(roomName);
 
       client.emit('chat_joined', { chat_partner_id: data.chat_partner_id });
@@ -136,7 +185,16 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     if (!user) return;
 
     // Leave room for specific chat
-    const roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+    let roomName: string;
+    if (data.chat_partner_id === 'support') {
+      roomName = `chat_${[user.id, 'support'].sort().join('_')}`;
+    } else {
+      if (user.role === Role.ADMIN) {
+        roomName = `chat_${[data.chat_partner_id, 'support'].sort().join('_')}`;
+      } else {
+        roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+      }
+    }
     await client.leave(roomName);
   }
 
@@ -272,10 +330,27 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const user = (client.data as { user: UserWithoutPassword }).user;
     if (!user) return;
 
-    // Send event to chat partner
-    const roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+    // Determine room name
+    let roomName: string;
+    if (data.chat_partner_id === 'support') {
+      roomName = `chat_${[user.id, 'support'].sort().join('_')}`;
+    } else {
+      if (user.role === Role.ADMIN) {
+        roomName = `chat_${[data.chat_partner_id, 'support'].sort().join('_')}`;
+      } else {
+        roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+      }
+    }
+
+    // If admin is typing to a user, send as support
+    // If user is typing to support, send as user
+    const sender_id =
+      user.role === Role.ADMIN && data.chat_partner_id !== 'support'
+        ? 'support'
+        : user.id;
+
     client.to(roomName).emit('user_typing', {
-      user_id: user.id,
+      user_id: sender_id,
       chat_partner_id: data.chat_partner_id,
       is_typing: true,
     });
@@ -289,10 +364,27 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const user = (client.data as { user: UserWithoutPassword }).user;
     if (!user) return;
 
-    // Send event to chat partner
-    const roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+    // Determine room name
+    let roomName: string;
+    if (data.chat_partner_id === 'support') {
+      roomName = `chat_${[user.id, 'support'].sort().join('_')}`;
+    } else {
+      if (user.role === Role.ADMIN) {
+        roomName = `chat_${[data.chat_partner_id, 'support'].sort().join('_')}`;
+      } else {
+        roomName = `chat_${[user.id, data.chat_partner_id].sort().join('_')}`;
+      }
+    }
+
+    // If admin is typing to a user, send as support
+    // If user is typing to support, send as user
+    const sender_id =
+      user.role === Role.ADMIN && data.chat_partner_id !== 'support'
+        ? 'support'
+        : user.id;
+
     client.to(roomName).emit('user_typing', {
-      user_id: user.id,
+      user_id: sender_id,
       chat_partner_id: data.chat_partner_id,
       is_typing: false,
     });

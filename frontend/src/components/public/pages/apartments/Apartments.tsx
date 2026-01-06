@@ -20,9 +20,9 @@ export const Apartments = () => {
       ...(selected_dates.end && { end_date: selected_dates.end }),
       skip: 0,
       take: 30,
-      is_available: false, //TODO: change to true
+      is_available: true,
     },
-    permanent_fields: { take: 30, skip: 0, is_available: false }, //TODO: change to true
+    permanent_fields: { take: 30, skip: 0, is_available: true },
     debounce_settings: {
       fields: ["start_date", "end_date", "min_price", "max_price"],
       delay: 500,

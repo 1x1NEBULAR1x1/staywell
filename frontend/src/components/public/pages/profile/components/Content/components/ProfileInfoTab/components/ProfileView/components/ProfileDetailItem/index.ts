@@ -1,0 +1,1 @@
+export { ProfileDetailItem } from "./ProfileDetailItem";

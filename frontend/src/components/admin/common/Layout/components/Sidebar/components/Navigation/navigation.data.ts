@@ -1,5 +1,5 @@
 import { GETTABLE_ICONS } from "@shared/src/models/icons";
-import { Command, LayoutList, MessageSquare, Settings } from "lucide-react";
+import { Command, LayoutList, MessageSquare } from "lucide-react";
 
 export type NavButtonProps = {
   icon: typeof Command;
@@ -24,11 +24,6 @@ export const main_buttons: NavButtonProps[] = [
     href: "/admin/events",
   },
   {
-    icon: GETTABLE_ICONS.RESERVATION,
-    label: "Reservations",
-    href: "/admin/reservations",
-  },
-  {
     icon: GETTABLE_ICONS.BOOKING,
     label: "Bookings",
     href: "/admin/bookings",
@@ -50,15 +45,5 @@ export const secondary_buttons: NavButtonProps[] = [
     icon: MessageSquare,
     label: "Chat",
     href: "/admin/chat",
-  },
-  {
-    icon: GETTABLE_ICONS.TRANSACTION,
-    label: "Transactions",
-    href: "/admin/transactions",
-  },
-  {
-    icon: Settings,
-    label: "Settings",
-    href: "/admin/settings",
   },
 ];

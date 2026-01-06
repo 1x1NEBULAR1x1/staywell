@@ -2,6 +2,7 @@ import type { UserWithoutPassword } from "@shared/src";
 import clsx from "clsx";
 import Image from "next/image";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import { getImageUrl } from "@/lib/api";
 import classes from "./ChatWindowHeader.module.scss";
 
 interface ChatWindowHeaderProps {
@@ -29,7 +30,8 @@ const formatLastSeen = (timestamp: number) => {
 export const ChatWindowHeader = ({ selected_user }: ChatWindowHeaderProps) => {
   const { getUserLastSeen } = useChat();
   const full_name = `${selected_user.first_name} ${selected_user.last_name}`;
-  const avatar_url = selected_user.image || "/common/default-avatar.png";
+  const avatar_url =
+    getImageUrl(selected_user.image) || "/common/default-avatar.png";
 
   const lastSeen = getUserLastSeen(selected_user.id);
   const isOnline = lastSeen

@@ -1,9 +1,9 @@
 "use client";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/hooks/common";
 import classes from "../../Form.module.scss";
-import { useRouter } from "next/navigation";
 
 export const Form = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -64,7 +64,14 @@ export const Form = () => {
       return;
     }
 
-    if ((await login_mutation.mutateAsync({ email: form_data.email, password: form_data.password })).user) {
+    if (
+      (
+        await login_mutation.mutateAsync({
+          email: form_data.email,
+          password: form_data.password,
+        })
+      ).user
+    ) {
       router.push("/");
     }
   };

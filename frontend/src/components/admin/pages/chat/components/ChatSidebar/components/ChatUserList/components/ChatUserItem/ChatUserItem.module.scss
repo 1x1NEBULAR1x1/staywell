@@ -2,13 +2,15 @@
 
 .user_item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: $spacing-md;
   padding: $spacing-md;
   border: none;
   cursor: pointer;
   transition: $transition-fast;
   position: relative;
+  width: 100%;
+  justify-content: flex-start;
 
   &:hover {
     background-color: $background-light;
@@ -28,6 +30,16 @@
     }
   }
 
+  &_collapsed {
+    justify-content: center;
+    padding: $spacing-sm;
+
+    .user_item_avatar {
+      width: $font-size-3xl;
+      height: $font-size-3xl;
+    }
+  }
+
   &_avatar_container {
     position: relative;
     flex-shrink: 0;
@@ -41,6 +53,7 @@
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
+    transition: all $transition-fast;
   }
 
   &_online_indicator {
@@ -90,6 +103,8 @@
     font-size: $font-size-sm;
     color: $foreground-secondary;
     white-space: nowrap;
+    width: 100%;
+    text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.4;
@@ -105,22 +120,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: $spacing-md;
-    height: auto;
-    aspect-ratio: 1/1;
-    bottom: $spacing-md;
-    right: $spacing-lg;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    top: 0;
+    right: 0;
     background-color: $primary-main;
     color: $foreground-white;
     font-size: $font-size-xs;
     font-weight: $font-weight-bold;
     line-height: 1;
-    padding: $spacing-xs;
-    border-radius: 50%;
+    border-radius: 9px;
+    border: 2px solid $background-main;
+    z-index: 10;
 
     .user_item_active & {
       background-color: $foreground-white;
       color: $primary-main;
+    }
+
+    .user_item_collapsed & {
+      top: -2px;
+      right: -2px;
     }
   }
 }

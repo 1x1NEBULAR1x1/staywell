@@ -25,8 +25,13 @@ export class ChatRoomService {
       });
 
       if (!partner) throw new NotFoundException('Chat partner not found');
+    } else if (user.role === Role.USER) {
+      // Users can only join support chat
+      if (chat_partner_id !== 'support') {
+        throw new ForbiddenException('Users can only join support chat');
+      }
     } else {
-      throw new ForbiddenException('Only users and admins can join chats');
+      throw new ForbiddenException('Invalid user role');
     }
   }
 

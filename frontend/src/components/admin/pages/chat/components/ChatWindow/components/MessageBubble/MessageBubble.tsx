@@ -2,7 +2,9 @@ import type { Message } from "@shared/src/database";
 import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import default_avatar from "@/../public/common/default-avatar.png";
 import { useChat } from "@/hooks/admin/chat/useChat";
+import { getImageUrl } from "@/lib/api";
 import classes from "./MessageBubble.module.scss";
 
 interface MessageBubbleProps {
@@ -76,10 +78,10 @@ export const MessageBubble = ({
     setShowMenu(false);
   };
 
-  const handleSaveEdit = async () => {
+  const handleSaveEdit = () => {
     if (edit_text.trim() && edit_text !== message.message) {
       try {
-        await editMessage(message.id, edit_text.trim());
+        editMessage(message.id, edit_text.trim());
         onEdit?.(message.id, edit_text.trim());
       } catch (error) {
         console.error("Failed to edit message:", error);
@@ -93,9 +95,9 @@ export const MessageBubble = ({
     setIsEditing(false);
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     try {
-      await deleteMessage(message.id);
+      deleteMessage(message.id);
       onDelete?.(message.id);
     } catch (error) {
       console.error("Failed to delete message:", error);
@@ -121,7 +123,7 @@ export const MessageBubble = ({
       })}
     >
       <Image
-        src={sender_avatar}
+        src={getImageUrl(sender_avatar) ?? default_avatar.src}
         alt="Avatar"
         width={40}
         height={40}

@@ -2,11 +2,12 @@
 
 import type { UpdateUser, UserWithoutPassword } from "@shared/src";
 import { isAxiosError } from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ActionsSection, InputField } from "@/components/admin/common/Form";
 import { useUsers } from "@/hooks/admin/queries/users";
-import { useAccount } from "@/hooks/common";
 import { useToast } from "@/hooks/common/useToast";
+import { query_client } from "@/lib/api";
 import { ImagePreview } from "./components/ImagePreview";
 import classes from "./InlineProfileForm.module.scss";
 
@@ -25,8 +26,8 @@ export const InlineProfileForm = ({
   onSuccess,
 }: InlineProfileFormProps) => {
   const update_mutation = useUsers().update(user.id);
-  const { updateUser } = useAccount();
   const toast = useToast();
+  const [image_changed, setImageChanged] = useState<boolean>(false);
   const form = useForm<FormData>({
     mode: "onChange",
     defaultValues: {
@@ -52,7 +53,8 @@ export const InlineProfileForm = ({
       };
       const response = await update_mutation.mutateAsync(submitData);
       if (response.data) {
-        updateUser(response.data);
+        console.log("response.data", response.data);
+        query_client.invalidateQueries({ queryKey: ["account"] });
         toast.success("Profile updated successfully");
         onSuccess();
       }
@@ -74,7 +76,10 @@ export const InlineProfileForm = ({
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleSubmit)}>
+    <form
+      onSubmit={form.handleSubmit(handleSubmit)}
+      className={classes.profile_form}
+    >
       {/* Main content with image and fields side by side */}
       <div className={classes.profile_edit_layout}>
         {/* Profile Image */}
@@ -82,7 +87,10 @@ export const InlineProfileForm = ({
           <ImagePreview
             imageFile={form.watch("file")}
             currentImage={user.image}
-            onFileSelect={(file) => form.setValue("file", file)}
+            onFileSelect={(file) => {
+              form.setValue("file", file);
+              setImageChanged(true);
+            }}
           />
         </div>
 
@@ -160,17 +168,20 @@ export const InlineProfileForm = ({
         </div>
       </div>
 
-      <ActionsSection
-        is_loading={update_mutation.isPending}
-        is_valid={
-          form.formState.isValid &&
-          Object.keys(form.formState.dirtyFields).length > 0
-        }
-        handleClose={handleCancel}
-        model="USER"
-        action="update"
-        id={user.id}
-      />
+      <div className={classes.actions_wrapper}>
+        <ActionsSection
+          is_loading={update_mutation.isPending}
+          is_valid={
+            (form.formState.isValid &&
+              Object.keys(form.formState.touchedFields).length > 0) ||
+            image_changed
+          }
+          handleClose={handleCancel}
+          model="USER"
+          action="update"
+          id={user.id}
+        />
+      </div>
     </form>
   );
 };

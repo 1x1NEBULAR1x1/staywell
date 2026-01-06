@@ -2,25 +2,18 @@
 
 import type { SafeUser } from "@shared/src";
 import clsx from "clsx";
-import {
-  Calendar,
-  ChevronDown,
-  LogOut,
-  User,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import default_avatar from "@/../public/common/default-avatar.png";
-import { useAuth } from "@/hooks/common";
+import { useNotifications } from "@/hooks/common/useNotifications";
 import { getImageUrl } from "@/lib/api";
 import classes from "./Account.module.scss";
+import { Dropdown } from "./components/Dropdown/Dropdown";
 
 export const Account = ({ user }: { user: SafeUser }) => {
   const [is_dropdown_open, setIsDropdownOpen] = useState(false);
-  const dropdown_ref = useRef<HTMLButtonElement>(null);
-  const router = useRouter();
-  const { logout, is_logout_loading } = useAuth();
+  const dropdown_ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -39,10 +32,17 @@ export const Account = ({ user }: { user: SafeUser }) => {
     };
   }, [is_dropdown_open]);
 
-  const handleLogout = () => {
-    setIsDropdownOpen(false);
-    logout();
-  };
+  const { get } = useNotifications();
+
+  const { data: notifications } = get({
+    is_read: false,
+    take: 1000,
+    skip: 0,
+  });
+
+  const unread_count =
+    notifications?.items?.filter((notification) => !notification.is_read)
+      .length || 0;
 
   const getUserDisplayName = () => {
     if (user.first_name && user.last_name) {
@@ -52,78 +52,46 @@ export const Account = ({ user }: { user: SafeUser }) => {
   };
 
   return (
-    <button
-      type="button"
-      className={classes.account}
-      ref={dropdown_ref}
-      onClick={() => setIsDropdownOpen(!is_dropdown_open)}
-    >
-      <div className={classes.user_info}>
-        <div className={classes.avatar_container}>
-          <Image
-            src={getImageUrl(user.image) ?? default_avatar.src}
-            alt="User Avatar"
-            width={400}
-            height={400}
-            quality={100}
-            className={classes.avatar}
+    <div className={classes.account_wrapper} ref={dropdown_ref}>
+      <button
+        type="button"
+        className={classes.account}
+        onClick={() => setIsDropdownOpen(!is_dropdown_open)}
+      >
+        <div className={classes.user_info}>
+          <div className={classes.avatar_container}>
+            <Image
+              src={getImageUrl(user.image) ?? default_avatar.src}
+              alt="User Avatar"
+              width={400}
+              height={400}
+              quality={100}
+              className={classes.avatar}
+            />
+            {unread_count > 0 && (
+              <span className={classes.badge}>
+                {unread_count > 99 ? "99+" : unread_count}
+              </span>
+            )}
+          </div>
+          <div className={classes.user_details}>
+            <div className={classes.user_name}>{getUserDisplayName()}</div>
+            <div className={classes.user_email}>{user.email}</div>
+          </div>
+        </div>
+
+        <div className={classes.dropdown_toggle}>
+          <ChevronDown
+            size={20}
+            className={clsx(
+              classes.chevron,
+              is_dropdown_open && classes.chevron_rotated,
+            )}
           />
         </div>
-        <div className={classes.user_details}>
-          <div className={classes.user_name}>{getUserDisplayName()}</div>
-          <div className={classes.user_email}>{user.email}</div>
-        </div>
-      </div>
+      </button>
 
-      <div className={classes.dropdown_toggle}>
-        <ChevronDown
-          size={20}
-          className={clsx(
-            classes.chevron,
-            is_dropdown_open && classes.chevron_rotated,
-          )}
-        />
-      </div>
-
-      {is_dropdown_open && (
-        <div className={classes.dropdown}>
-          <button
-            type="button"
-            className={classes.dropdown_item}
-            onClick={() => {
-              setIsDropdownOpen(false);
-              router.push("/bookings");
-            }}
-          >
-            <Calendar size={16} />
-            <span>Bookings</span>
-          </button>
-
-          <button
-            type="button"
-            className={classes.dropdown_item}
-            onClick={() => {
-              setIsDropdownOpen(false);
-              router.push("/profile");
-            }}
-          >
-            <User size={16} />
-            <span>Profile</span>
-          </button>
-
-          <div className={classes.dropdown_divider}></div>
-
-          <button
-            type="button"
-            className={classes.dropdown_item}
-            onClick={handleLogout}
-            disabled={is_logout_loading}
-          >
-            <LogOut size={16} />
-            <span>{is_logout_loading ? "Signing out..." : "Logout"}</span>
-          </button>
-        </div>
-      )}
-    </button>
+      {is_dropdown_open && <Dropdown setIsDropdownOpen={setIsDropdownOpen} />}
+    </div>
   );
 };

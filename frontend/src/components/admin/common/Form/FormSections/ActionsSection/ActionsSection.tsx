@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  type CRUDDABLE_NAMES,
-  type GETTABLE_NAMES,
-  isCruddableName,
-} from "@shared/src";
+import { type GETTABLE_NAMES, isCruddableName } from "@shared/src";
 import { Loader, Save, Trash, X } from "lucide-react";
 import { useModel } from "@/hooks/admin/queries/useModel";
 import classes from "./ActionsSection.module.scss";
@@ -26,12 +22,15 @@ export function ActionsSection<M extends GETTABLE_NAMES>({
   action = "create",
   id,
 }: ActionsSectionProps<M>) {
-  const delete_mutation = useModel(model as CRUDDABLE_NAMES).remove(id ?? "");
+  const delete_mutation =
+    model && isCruddableName(model)
+      ? useModel(model).remove(id ?? "")
+      : undefined;
 
   return (
     <div className={classes.actions}>
       <div className={classes.actions_left}>
-        {id && model && isCruddableName(model) && delete_mutation && (
+        {id && model && delete_mutation && (
           <button
             type="button"
             className={`${classes.actions_button} ${classes.actions_button_secondary}`}

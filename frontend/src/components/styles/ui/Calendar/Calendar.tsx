@@ -116,10 +116,10 @@ export const Calendar: React.FC<CalendarProps> = ({
 
       {/* Days grid */}
       <div className={classes.daysGrid}>
-        {days.map((date) => (
+        {days.map((date, index) => (
           <button
             type="button"
-            key={`${id}-${date?.toISOString() ?? ""}`}
+            key={`${id}-${date?.toISOString() ?? ""}-${index}`}
             className={clsx(classes.day, {
               [classes.empty]: !date,
               [classes.occupied]: date && !isDateAvailable(date),

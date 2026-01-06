@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AdminPage } from "@/components/admin/common/AdminPage";
 import { useUsers } from "@/hooks/admin/queries/users/useUsers";
+import { AdminChatProvider } from "../../chat/components";
 import {
   BookingsTab,
   EventsTab,
@@ -53,14 +54,16 @@ export const User = ({ id }: { id: string }) => {
 
   return (
     <AdminPage title={`${user.first_name} ${user.last_name}`}>
-      <div className={classes.user_profile}>
-        <UserProfileSidebar
-          user={user}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-        <div className={classes.content}>{renderTabContent()}</div>
-      </div>
+      <AdminChatProvider>
+        <div className={classes.user_profile}>
+          <UserProfileSidebar
+            user={user}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <div className={classes.content}>{renderTabContent()}</div>
+        </div>
+      </AdminChatProvider>
     </AdminPage>
   );
 };

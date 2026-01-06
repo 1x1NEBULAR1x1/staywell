@@ -1,3 +1,4 @@
+import { MessageSquare } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import default_avatar from "@/../public/common/default-avatar.png";
 import { useAccount } from "@/hooks/common/useAccount";
@@ -52,8 +53,7 @@ export const ChatMessages = ({
 
   // Scroll management
   useEffect(() => {
-    if (!messages_container_ref.current || is_loading || messages.length === 0)
-      return;
+    if (!messages_container_ref.current || is_loading) return;
 
     const container = messages_container_ref.current;
     const is_at_bottom =
@@ -61,21 +61,21 @@ export const ChatMessages = ({
       100;
 
     // First load or new message (should_scroll = true)
-    if (should_scroll) {
+    if (should_scroll && messages.length > 0) {
       // Use setTimeout to let DOM update
       setTimeout(() => {
         if (messages_container_ref.current) {
-          // Smooth scroll when sending message
+          // Smooth scroll when sending message or initial load
           messages_container_ref.current.scrollTo({
             top: messages_container_ref.current.scrollHeight,
-            behavior: "smooth",
+            behavior: should_scroll ? "smooth" : "auto",
           });
           onScrollComplete();
         }
       }, 0);
     }
     // New messages at the bottom - scroll only if user was already at bottom
-    else if (is_at_bottom) {
+    else if (!should_scroll && is_at_bottom && messages.length > 0) {
       container.scrollTop = container.scrollHeight;
     }
   }, [messages, is_loading, should_scroll, onScrollComplete]);
@@ -123,7 +123,9 @@ export const ChatMessages = ({
     return (
       <div className={classes.messages} ref={messages_container_ref}>
         <div className={classes.messages_empty}>
-          <div className={classes.messages_empty_icon}>💬</div>
+          <div className={classes.messages_empty_icon}>
+            <MessageSquare size={24} />
+          </div>
           <div className={classes.messages_empty_text}>
             Start a conversation with support
           </div>

@@ -60,8 +60,8 @@ export const ApartmentsList = ({
         {/* Show skeletons while loading initial data */}
         {isLoading &&
           apartments.length === 0 &&
-          Array.from({ length: 6 }).map(() => (
-            <ApartmentCardSkeleton key={`${id}-skeleton`} />
+          Array.from({ length: 6 }).map((_, index) => (
+            <ApartmentCardSkeleton key={`${id}-skeleton-${index}`} />
           ))}
 
         {/* Show actual apartments */}

@@ -106,7 +106,8 @@ export class ChatWebsocketService {
     user: UserWithoutPassword,
     data: EditMessageDto,
   ): Promise<Message> {
-    return await this.messagingService.editMessage(user, data);
+    const message = await this.messagingService.editMessage(user, data);
+    return message;
   }
 
   /**
@@ -154,5 +155,19 @@ export class ChatWebsocketService {
     chat_partner_id: string,
   ): Promise<void> {
     await this.roomService.joinChat(user, chat_partner_id);
+  }
+
+  /**
+   * Get notification service (for gateway access)
+   */
+  getNotificationService(): ChatNotificationService {
+    return this.notificationService;
+  }
+
+  /**
+   * Get last seen time for user
+   */
+  async getLastSeen(user_id: string): Promise<Date | null> {
+    return await this.connectionService.getLastSeen(user_id);
   }
 }

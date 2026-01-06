@@ -7,6 +7,29 @@ import { useAccount } from "@/hooks/common/useAccount";
 import type { ChatWithLastMessage } from "./types";
 import { useChatStore } from "./useChatStore";
 
+/**
+ * Sort messages by creation time, taking into account replace_to relationships
+ * Messages that replace others should be sorted by the original message's creation time
+ */
+function sortMessagesByCreationTime(a: Message, b: Message): number {
+  const getEffectiveCreationTime = (msg: Message): Date => {
+    // If this message replaces another, use the replaced message's creation time
+    // This ensures edited messages stay in their original position
+    if (msg.replace_to) {
+      // Find the original message's creation time
+      // For now, we'll use the current message's creation time
+      // In a full implementation, we'd need to track the original creation time
+      return new Date(msg.created);
+    }
+    return new Date(msg.created);
+  };
+
+  const timeA = getEffectiveCreationTime(a).getTime();
+  const timeB = getEffectiveCreationTime(b).getTime();
+
+  return timeA - timeB;
+}
+
 interface UseMessageActionsOptions {
   socket: Socket | null;
   is_connected: boolean;
@@ -127,18 +150,54 @@ export const useMessageActions = (
 
   const editMessage = useCallback(
     (message_id: string, new_message: string) => {
-      if (!socket || !is_connected) return;
+      if (!socket || !is_connected || !user) return;
+
+      // Find the original message to preserve its creation time
+      const originalMessage = store.messages.find((m) => m.id === message_id);
+      if (!originalMessage) return;
+
+      // Create optimistic edited message
+      const tempId = `temp-edit-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const optimisticEditedMessage: Message = {
+        id: tempId,
+        sender_id: user.id,
+        receiver_id: originalMessage.receiver_id,
+        message: new_message,
+        booking_id: originalMessage.booking_id,
+        is_read: false,
+        edited: new Date(),
+        replace_to: message_id,
+        is_excluded: false,
+        created: originalMessage.created, // Preserve original creation time
+        updated: new Date(),
+      };
+
+      // Replace the original message with the edited one optimistically
+      store.setMessages(
+        store.messages
+          .map((m: Message) =>
+            m.id === message_id ? optimisticEditedMessage : m,
+          )
+          .sort(sortMessagesByCreationTime),
+      );
+
       socket.emit("edit_message", { message_id, message: new_message });
     },
-    [socket, is_connected],
+    [socket, is_connected, user, store],
   );
 
   const deleteMessage = useCallback(
     (message_id: string) => {
       if (!socket || !is_connected) return;
+
+      // Remove message optimistically
+      store.setMessages(
+        store.messages.filter((m: Message) => m.id !== message_id),
+      );
+
       socket.emit("delete_message", { message_id });
     },
-    [socket, is_connected],
+    [socket, is_connected, store],
   );
 
   const markMessagesAsRead = useCallback(

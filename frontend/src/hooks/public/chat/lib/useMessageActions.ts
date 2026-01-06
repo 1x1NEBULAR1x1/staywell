@@ -50,21 +50,41 @@ export const useMessageActions = (
 
   const sendMessage = useCallback(
     (message: string, booking_id?: string) => {
-      if (!socket || !is_connected || !user) return;
+      if (!socket || !is_connected || !user) {
+        console.warn(
+          "Cannot send message: socket not connected or user not available",
+          {
+            socket: !!socket,
+            is_connected,
+            user: !!user,
+          },
+        );
+        return;
+      }
+
+      console.log("Sending message to support:", message);
 
       // Create optimistic message and add to messages list
       const optimistic_message = createOptimisticMessage(message, booking_id);
-      store.setMessages(
-        [...store.messages, optimistic_message]
-          .filter((e) => typeof e !== "undefined")
-          .sort(
-            (a, b) =>
-              new Date(a.created).getTime() - new Date(b.created).getTime(),
-          ),
-      );
+      if (optimistic_message) {
+        store.setMessages(
+          [...store.messages, optimistic_message]
+            .filter((e) => typeof e !== "undefined")
+            .sort(
+              (a, b) =>
+                new Date(a.created).getTime() - new Date(b.created).getTime(),
+            ),
+        );
+      }
 
       // Send message to server
       socket.emit("send_message", {
+        receiver_id: SUPPORT_CHAT_ID,
+        message,
+        booking_id,
+      });
+
+      console.log("Message sent via WebSocket:", {
         receiver_id: SUPPORT_CHAT_ID,
         message,
         booking_id,

@@ -1,2 +1,3 @@
 export { InlineProfileForm } from "./InlineProfileForm";
-export { ImagePreview } from "./InlineProfileForm/components/ImagePreview";
+export { ProfileHeader } from "./ProfileHeader";
+export { ProfileView } from "./ProfileView";

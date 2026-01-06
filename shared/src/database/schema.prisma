@@ -83,11 +83,9 @@ model Message {
   is_read     Boolean @default(false)
   booking_id  String?
 
-  // For message editing
   edited     DateTime?
-  replace_to String? // ID of replacing message
+  replace_to String?
 
-  // For soft delete
   is_excluded Boolean @default(false)
 
   created DateTime @default(now())
@@ -134,8 +132,7 @@ model Apartment {
   booking_variants    BookingVariant[]
   reviews             Review[]
 
-  @@index([id])
-  @@index([number])
+  @@index([id, number])
   @@map("apartments")
 }
 
@@ -320,9 +317,7 @@ model Booking {
   reviews                    Review[]
   messages                   Message[]
 
-  @@index([user_id])
-  @@index([start, end])
-  @@index([status])
+  @@index([user_id, status])
   @@map("bookings")
 }
 

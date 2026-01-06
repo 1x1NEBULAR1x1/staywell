@@ -4,7 +4,9 @@ import { format } from "date-fns";
 import { Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import default_avatar from "@/../public/common/default-avatar.png";
 import { useChat } from "@/hooks/public/chat";
+import { getImageUrl } from "@/lib/api";
 import classes from "./MessageBubble.module.scss";
 
 interface MessageBubbleProps {
@@ -121,7 +123,7 @@ export const MessageBubble = ({
       })}
     >
       <Image
-        src={sender_avatar}
+        src={getImageUrl(sender_avatar) ?? default_avatar.src}
         alt="Avatar"
         width={40}
         height={40}

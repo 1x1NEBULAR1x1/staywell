@@ -1,1 +1,0 @@
-export { TransfersTab } from "./TransfersTab";

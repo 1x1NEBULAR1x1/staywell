@@ -2,12 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import classes from "./Content.module.scss";
-import {
-  ChatTab,
-  NotificationTab,
-  ProfileInfoTab,
-  SettingsTab,
-} from "./components";
+import { ChatTab, NotificationTab, ProfileInfoTab } from "./components";
 
 export const Content = () => {
   const pathname = usePathname();
@@ -19,11 +14,17 @@ export const Content = () => {
   const renderContent = () => {
     switch (active_tab) {
       case "":
-        return <ProfileInfoTab />;
-      case "settings":
-        return <SettingsTab />;
+        return (
+          <main className={classes.content}>
+            <ProfileInfoTab />
+          </main>
+        );
       case "notification":
-        return <NotificationTab />;
+        return (
+          <main className={classes.content}>
+            <NotificationTab />
+          </main>
+        );
       case "support":
         return <ChatTab />;
       default:
@@ -31,5 +32,5 @@ export const Content = () => {
     }
   };
 
-  return <main className={classes.content}>{renderContent()}</main>;
+  return renderContent();
 };

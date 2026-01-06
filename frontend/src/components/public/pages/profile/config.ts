@@ -1,14 +1,6 @@
-import {
-  Bell,
-  Headset,
-  User,
-} from "lucide-react";
+import { Bell, Headset, User } from "lucide-react";
 
-export const profile_tabs = [
-  "settings",
-  "notification",
-  "support",
-] as const;
+export const profile_tabs = ["settings", "notification", "support"] as const;
 
 export type ProfileTab = (typeof profile_tabs)[number];
 

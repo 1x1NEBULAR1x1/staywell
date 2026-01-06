@@ -67,7 +67,7 @@ export class ChatMessagingService {
     });
 
     // Send notification through WebSocket
-    this.notificationService.notifyNewMessage(message);
+    await this.notificationService.notifyNewMessage(message);
 
     return message;
   }
@@ -121,7 +121,7 @@ export class ChatMessagingService {
     });
 
     // Notify about edited message
-    this.notificationService.notifyMessageEdited(editedMessage);
+    await this.notificationService.notifyMessageEdited(editedMessage);
 
     return editedMessage;
   }
@@ -156,7 +156,7 @@ export class ChatMessagingService {
     });
 
     // Notify about deleted message
-    this.notificationService.notifyMessageDeleted(message);
+    await this.notificationService.notifyMessageDeleted(message);
   }
 
   /**
@@ -199,6 +199,6 @@ export class ChatMessagingService {
     }
 
     // Notify chat partner that messages were read
-    this.notificationService.notifyMessagesRead(user.id, chat_partner_id);
+    await this.notificationService.notifyMessagesRead(user.id, chat_partner_id);
   }
 }
